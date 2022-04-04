@@ -2,8 +2,12 @@
     session_start();
 
     if(isset($_POST['upload'])) {
-        var_dump($_POST);
-        var_dump($_FILES);
+        require "./Model/Assignments.php";
+        $objAsign = new Assignments;
+
+        $create = $objAsign->createAssignment($_POST, $_FILES);
+
+        var_dump($create);
     }
 
 ?>

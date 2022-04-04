@@ -44,4 +44,20 @@ class AssignmentQuestion
     {
         return $this->assignmentId;
     }
+
+    public function uploadFile() {
+        $stmt = $this->dbConn->prepare("INSERT INTO assignment_questions VALUES (null, :filename, :upload_date, null)");
+        $stmt->bindParam(":filename", $this->questionFileName);
+        $stmt->bindParam(":upload_date", $this->questionUploadDate);
+
+        try {
+            if($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }
