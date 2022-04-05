@@ -9,7 +9,7 @@
         
         if($login['is_ok']) {
             $_SESSION['user'] = $login['data'];
-            header("location: assigment.php");
+            header("location: assignment.php");
         }
 
     }
