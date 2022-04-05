@@ -6,11 +6,10 @@ class Courses
     private $CourseDesc;
     private $dbConn;
 
-
     public function __construct()
     {
-        require_once("DbConnect.php");
-        $db = new DbConnect;
+        require_once 'DbConnect.php';
+        $db = new DbConnect();
         $this->dbConn = $db->connect();
     }
 
@@ -41,5 +40,22 @@ class Courses
     public function setCourseDesc($desc)
     {
         $this->CourseDesc = $desc;
+    }
+
+    public function getAllCourse()
+    {
+        $stmnt = $this->dbConn->prepare(
+            'SELECT * FROM courses'
+        );
+
+
+        try {
+            if ($stmnt->execute()) {
+                $allCourse = $stmnt->fetch(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $allCourse;
     }
 }

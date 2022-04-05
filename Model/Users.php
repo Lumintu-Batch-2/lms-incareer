@@ -1,6 +1,7 @@
 <?php
 
-class Users {
+class Users
+{
     private $userId;
     private $userName;
     private $userPassword;
@@ -9,51 +10,60 @@ class Users {
 
     public function __construct()
     {
-        require_once("DbConnect.php");
-        $db = new DbConnect;
+        require_once 'DbConnect.php';
+        $db = new DbConnect();
         $this->dbConn = $db->connect();
     }
 
-    public function getUserId() {
+    public function getUserId()
+    {
         return $this->userId;
     }
 
-    public function setUserId($id) {
+    public function setUserId($id)
+    {
         $this->userId = $id;
     }
 
-    public function getUserName() {
+    public function getUserName()
+    {
         return $this->userName;
     }
 
-    public function setUserName($name) {
+    public function setUserName($name)
+    {
         $this->userName = $name;
     }
 
-    public function getUserPassword() {
+    public function getUserPassword()
+    {
         return $this->userPassword;
     }
 
-    public function setUserPassword($pass) {
+    public function setUserPassword($pass)
+    {
         $this->userPassword = $pass;
     }
 
-    public function getUserRole(){
+    public function getUserRole()
+    {
         return $this->userRole;
     }
 
-    public function setUserRole($role) {
+    public function setUserRole($role)
+    {
         $this->userRole = $role;
     }
 
-
-    public function getUserByUsername() {
-
-        $stmnt = $this->dbConn->prepare("SELECT * FROM users WHERE username = :username");
-        $stmnt->bindParam(":username", $this->userName);
+    public function getUserByUsername()
+    {
+        $stmnt = $this->dbConn->prepare(
+            'SELECT * FROM users WHERE username = :username'
+        );
+        $stmnt->bindParam(':username', $this->userName);
 
         try {
-            if($stmnt->execute()) {
+            if ($stmnt->execute()) {
                 $userData = $stmnt->fetch(PDO::FETCH_ASSOC);
             }
         } catch (Exception $e) {
@@ -63,17 +73,18 @@ class Users {
         return $userData;
     }
 
-    public function loginUser($data) {
+    public function loginUser($data)
+    {
         $is_ok = false;
-        $msg = "";
+        $msg = '';
 
-        if(!is_string($data['username'])) {
-            $msg = "Username tidak valid!";
+        if (!is_string($data['username'])) {
+            $msg = 'Username tidak valid!';
             goto out;
         }
 
-        if(!is_string($data['password'])) {
-            $msg = "Password tidak valid!";
+        if (!is_string($data['password'])) {
+            $msg = 'Password tidak valid!';
             goto out;
         }
 
@@ -82,24 +93,22 @@ class Users {
 
         $userData = $this->getUserByUsername();
 
-        if(empty($userData)) {
-            $msg =  "Data tidak ditemukan";
+        if (empty($userData)) {
+            $msg = 'Data tidak ditemukan';
             goto out;
         }
 
-        if($data['password'] == $userData['password']) {
-            $msg = "Login berhasil!";
+        if ($data['password'] == $userData['password']) {
+            $msg = 'Login berhasil!';
             $is_ok = true;
             goto out;
         }
 
-        out: {
-            return [
-                "is_ok" => $is_ok,
-                "msg" => $msg,
-                "data" => $userData,
-            ];
-        }
-
+        out:
+        return [
+            'is_ok' => $is_ok,
+            'msg' => $msg,
+            'data' => $userData,
+        ];
     }
 }
