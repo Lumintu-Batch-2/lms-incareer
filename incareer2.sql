@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 04, 2022 at 09:35 AM
+-- Generation Time: Apr 05, 2022 at 05:26 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -52,12 +52,12 @@ CREATE TABLE `assignment_questions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `assignment_submitions`
+-- Table structure for table `assignment_submissions`
 --
 
-CREATE TABLE `assignment_submitions` (
-  `assignment_submition_id` int(10) UNSIGNED NOT NULL,
-  `submition_filename` varchar(255) NOT NULL,
+CREATE TABLE `assignment_submissions` (
+  `assignment_submission_id` int(10) UNSIGNED NOT NULL,
+  `submission_filename` varchar(255) NOT NULL,
   `submitted_date` datetime NOT NULL,
   `assignment_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -100,15 +100,6 @@ CREATE TABLE `users` (
   `role` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`user_id`, `username`, `password`, `role`) VALUES
-(1, 'andy f noya', '', NULL),
-(2, 'paijo', '', NULL),
-(3, 'admin', '1234', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -129,19 +120,22 @@ CREATE TABLE `user_assignments` (
 -- Indexes for table `assignments`
 --
 ALTER TABLE `assignments`
-  ADD PRIMARY KEY (`assignment_id`);
+  ADD PRIMARY KEY (`assignment_id`),
+  ADD KEY `fk_subjects` (`subject_id`);
 
 --
 -- Indexes for table `assignment_questions`
 --
 ALTER TABLE `assignment_questions`
-  ADD PRIMARY KEY (`assignment_question_id`);
+  ADD PRIMARY KEY (`assignment_question_id`),
+  ADD KEY `fk_assign` (`assignment_id`);
 
 --
--- Indexes for table `assignment_submitions`
+-- Indexes for table `assignment_submissions`
 --
-ALTER TABLE `assignment_submitions`
-  ADD PRIMARY KEY (`assignment_submition_id`);
+ALTER TABLE `assignment_submissions`
+  ADD PRIMARY KEY (`assignment_submission_id`),
+  ADD KEY `fk_assignment` (`assignment_id`);
 
 --
 -- Indexes for table `courses`
@@ -153,7 +147,8 @@ ALTER TABLE `courses`
 -- Indexes for table `subjects`
 --
 ALTER TABLE `subjects`
-  ADD PRIMARY KEY (`subject_id`);
+  ADD PRIMARY KEY (`subject_id`),
+  ADD KEY `fk_courses` (`course_id`);
 
 --
 -- Indexes for table `users`
@@ -165,7 +160,9 @@ ALTER TABLE `users`
 -- Indexes for table `user_assignments`
 --
 ALTER TABLE `user_assignments`
-  ADD PRIMARY KEY (`user_assigment_id`);
+  ADD PRIMARY KEY (`user_assigment_id`),
+  ADD KEY `fk_assignments` (`assignment_id`),
+  ADD KEY `fk_users` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -184,10 +181,10 @@ ALTER TABLE `assignment_questions`
   MODIFY `assignment_question_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `assignment_submitions`
+-- AUTO_INCREMENT for table `assignment_submissions`
 --
-ALTER TABLE `assignment_submitions`
-  MODIFY `assignment_submition_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `assignment_submissions`
+  MODIFY `assignment_submission_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -212,6 +209,41 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_assignments`
   MODIFY `user_assigment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `assignments`
+--
+ALTER TABLE `assignments`
+  ADD CONSTRAINT `fk_subjects` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `assignment_questions`
+--
+ALTER TABLE `assignment_questions`
+  ADD CONSTRAINT `fk_assign` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`assignment_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `assignment_submissions`
+--
+ALTER TABLE `assignment_submissions`
+  ADD CONSTRAINT `fk_assignment` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`assignment_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD CONSTRAINT `fk_courses` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user_assignments`
+--
+ALTER TABLE `user_assignments`
+  ADD CONSTRAINT `fk_assignments` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`assignment_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
