@@ -45,4 +45,83 @@ class AssignmentSubmission
     {
         return $this->assignmentId;
     }
+    // public function saveSubmission() {
+    //     $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES(null, :name, :start_date, :end_date, :desc, null)");
+
+    //     $stmt->bindParam(":name", $this->assignmentName);
+    //     $stmt->bindParam(":start_date", $this->assignmentStartDate);
+    //     $stmt->bindParam(":end_date", $this->assignmentEndDate);
+    //     $stmt->bindParam(":desc", $this->assignmentDesc);
+
+    //     try {
+    //         if($stmt->execute()) {
+    //             return true;
+    //         } else {
+    //             return false;
+    //         }
+
+    //     } catch (Exception $e) {
+    //         return $e->getMessage();
+    //     }
+    // }
+
+    public function createAssignmentSubmission($file)
+    {
+        $is_ok = false;
+        $msg = "";
+
+
+        $objQuest = new AssignmentSubmission;
+
+        $validExtention = ['pdf', 'doc', 'docx', 'xlsx', 'txt', 'png', 'jpg', 'jpeg', 'ppt'];
+        $fileExtention = explode(".", $file['filename']['name']);
+        $fileExtention = strtolower(end($fileExtention));
+
+        if (!in_array($fileExtention, $validExtention)) {
+            $msg = "Format file tidak didukung!";
+            goto out;
+        }
+
+        $objQuest->setSubmissionFileName($file['filename']['name']);
+        date_default_timezone_set('Asia/Jakarta');
+        $objQuest->setSubmissionUploadDate(date("Y-m-d H:i:s"));
+
+        $path = "./Upload/Assignment/Submission/Submission";
+        move_uploaded_file($file['filename']['tmp_name'], $path . $file['filename']['name']);
+
+        // $save = $this->saveSubmission();
+        $upload = $objQuest->uploadFile();
+
+        if ($upload) {
+            $msg = "Berhasil membuat tugas!";
+            $is_ok = true;
+            goto out;
+        } else {
+            $msg = "Gagal membuat tugas!";
+            goto out;
+        }
+
+        out: {
+            return [
+                "is_ok" => $is_ok,
+                "msg" => $msg,
+            ];
+        }
+    }
+    public function uploadFile()
+    {
+        $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES (null, :filename, :upload_date, null)");
+        $stmt->bindParam(":filename", $this->submissionFileName);
+        $stmt->bindParam(":upload_date", $this->submissionUploadDate);
+
+        try {
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }

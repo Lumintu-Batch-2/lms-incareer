@@ -1,12 +1,11 @@
 <?php
 
-    session_start();
-
-?>
+session_start(); ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +19,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 </head>
+
 <body>
     <a class="btn btn-primary" href="./create_assignment.php">Buat tugas</a>
+    <a href="submission.php" class="btn btn-danger">Submission</a>
+    <a href="course.php" class="btn btn-danger">Course</a>
 </body>
+
 </html>
