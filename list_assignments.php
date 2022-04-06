@@ -64,10 +64,10 @@ if(isset($_GET['act'])) {
             </tr>
         </thead>
         <tbody>
-            <?php foreach($allAssignments as $row => $quest) : ?>
+            <?php foreach($allAssignments as $row => $assignment) : ?>
                 <?php 
-                    $arrStartDate = explode(" ", $quest['assignment_start_date']);
-                    $arrEndDate = explode(" ", $quest['assignment_end_date']);
+                    $arrStartDate = explode(" ", $assignment['assignment_start_date']);
+                    $arrEndDate = explode(" ", $assignment['assignment_end_date']);
 
                     // var_dump($arrEndDate);
                     $startDate = $arrStartDate[0];
@@ -76,15 +76,15 @@ if(isset($_GET['act'])) {
                 
                 ?>
                 <tr>
-                    <td><?=$quest['assignment_name'] ?></td>
+                    <td><?=$assignment['assignment_name'] ?></td>
                     <td><?=$startDate; ?></td>
                     <td><?=$dueDate; ?></td>
                     <td><?=$dueTime; ?></td>
-                    <td><?=$quest['assignment_desc'] ?></td>
+                    <td><?=$assignment['assignment_desc'] ?></td>
                     <td>
-                        <button type="button" value="<?=$quest['assignment_id'];?>" class="btn btn-primary edit-assignment">Edit Cuyy</button>
-                        <a class="btn btn-primary" href="list_assignments.php?act=edit&assign_id=<?=$quest['assignment_id'];?>">Edit</a>
-                        <a class="btn btn-danger" href="list_assignments.php?act=delete&assign_id=<?=$quest['assignment_id'];?>">Hapus</a>
+                        <button type="button" value="<?=$assignment['assignment_id'];?>" class="btn btn-primary edit-assignment">Edit Cuyy</button>
+                        <a class="btn btn-primary" href="list_assignments.php?act=edit&assign_id=<?=$assignment['assignment_id'];?>">Edit</a>
+                        <a class="btn btn-danger" href="list_assignments.php?act=delete&assign_id=<?=$assignment['assignment_id'];?>">Hapus</a>
                     </td>
                 </tr>
             <?php endforeach ?>

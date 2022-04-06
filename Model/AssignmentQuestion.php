@@ -60,4 +60,18 @@ class AssignmentQuestion
             return $e->getMessage();
         }
     }
+
+    public function getAllQuestions() {
+        $stmt = $this->dbConn->prepare("SELECT * FROM assignment_questions");
+
+        try {
+            if($stmt->execute()) {
+                $allQuestions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $allQuestions;
+    }
 }
