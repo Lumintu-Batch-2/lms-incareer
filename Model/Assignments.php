@@ -171,13 +171,15 @@ class Assignments
             "UPDATE assignments SET assignment_name = :name, 
                                     assignment_start_date = :start_date,
                                     assignment_end_date = :end_date,
-                                    assignment_desc = :desc"
+                                    assignment_desc = :desc
+                                    WHERE assignment_id = :id"
         );
 
         $stmt->bindParam(":name", $this->assignmentName);
         $stmt->bindParam(":start_date", $this->assignmentStartDate);
         $stmt->bindParam(":end_date", $this->assignmentEndDate);
         $stmt->bindParam(":desc", $this->assignmentDesc);
+        $stmt->bindParam(":id", $this->assignmentId);
 
         try {
             if($stmt->execute()) {
@@ -187,6 +189,75 @@ class Assignments
             }
         } catch (Exception $e) {
             return $e->getMessage();
+        }
+    }
+
+    public function editAssignment($data, $file) {
+        $is_ok = false;
+        $msg = "";
+
+        if(!is_string($data['title'])) {
+            $msg = "Judul tidak valid!";
+            goto out;
+        }
+
+        if(!is_string($data['desc'])) {
+            $msg = "Deskripsi tidak valid!";
+            goto out;
+        }
+
+        if(empty($data['start-date'])) {
+            $msg = "Tanggal mulai tidak boleh kosong!";
+            goto out;
+        }
+
+        if(empty($data['end-date'])) {
+            $msg = "Tanggal selesai tidak boleh kosong!";
+            goto out;
+        }
+
+        $this->setAssignmentName($data['title']);
+        $this->setAssignmentStartDate($data['start-date']);
+        $this->setAssignmentEndDate($data['end-date']);
+        $this->setAssignmentDesc($data['desc']);
+        $this->setAssignmentId($data['id']);
+
+        require_once("AssignmentQuestion.php");
+        $objQuest = new AssignmentQuestion;
+
+        $validExtention = ['pdf', 'doc', 'docx', 'xlsx', 'txt', 'png', 'jpg', 'jpeg', 'ppt'];
+        $fileExtention = explode(".", $file['filename']['name']);
+        $fileExtention = strtolower(end($fileExtention));
+
+        if(!in_array($fileExtention, $validExtention)) {
+            $msg = "Format file tidak didukung!";
+            goto out;
+        }
+
+        $objQuest->setQuestionFileName($file['filename']['name']);
+        date_default_timezone_set('Asia/Jakarta');
+        $objQuest->setQuestionUploadDate(date("Y-m-d H:i:s"));
+
+        $path = "./Upload/Assignment/Questions/";
+        move_uploaded_file($file['filename']['tmp_name'], $path . $file['filename']['name']);
+
+        $edit = $this->updateAssignment();
+        $upload = $objQuest->uploadFile();
+
+        if($edit && $upload) {
+            $msg = "Berhasil mengubah tugas!";
+            $is_ok = true;
+            goto out;
+        } else {
+            $msg = "Gagal mengubah tugas!";
+            goto out;
+        }
+
+        out: {
+            return [
+                "is_ok" => $is_ok,
+                "msg" => $msg,
+            ];
         }
     }
 
@@ -203,5 +274,20 @@ class Assignments
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    public function getAssignmentById($id) {
+        $stmt = $this->dbConn->prepare("SELECT * FROM assignments WHERE assignment_id = :id");
+        $stmt->bindParam(":id", $id);
+
+        try {
+            if($stmt->execute()) {
+                $assigmentData = $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $assigmentData;
     }
 }

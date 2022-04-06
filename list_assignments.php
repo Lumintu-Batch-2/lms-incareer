@@ -31,6 +31,15 @@ if(isset($_GET['act'])) {
     }
 }
 
+if(isset($_POST['edit_assignment'])) {
+    $edit = $objAssignment->editAssignment($_POST, $_FILES);
+    $edit_status = $edit['is_ok'] ? "true" : "false";
+    var_dump($edit);
+    if($edit) {
+        header("location: list_assignments.php?edit=" . $edit_status . "&msg=" . $edit['msg']);
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -82,65 +91,61 @@ if(isset($_GET['act'])) {
                     <td><?=$dueTime; ?></td>
                     <td><?=$assignment['assignment_desc'] ?></td>
                     <td>
-                        <button type="button" value="<?=$assignment['assignment_id'];?>" class="btn btn-primary edit-assignment">Edit Cuyy</button>
-                        <a class="btn btn-primary" href="list_assignments.php?act=edit&assign_id=<?=$assignment['assignment_id'];?>">Edit</a>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?=$assignment['assignment_id'];?>">Edit</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal<?=$assignment['assignment_id'];?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit Assignment</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="POST" enctype="multipart/form-data">
+                                        <div class="modal-body">
+
+                                            <?php 
+                                                $assigments = $objAssignment->getAssignmentById($assignment['assignment_id']);
+                                                // var_dump($assigments);
+                                            ?>
+                                                <input type="hidden" name="id" value="<?=$assigments['assignment_id'];?>">
+                                                <label for="title">Assignment Title: </label>
+                                                <input type="text" id="title" name="title" value="<?=$assigments['assignment_name'];?>">
+                                                <br>
+                                                <label for="start-date">Tanggal mulai: </label>
+                                                <input type="datetime-local" name="start-date" id="start-date" value="<?=date("Y-m-d\TH:i:s", strtotime($assigments['assignment_start_date']));?>">
+                                                <br>
+                                                <label for="end-date">Tanggal akhir: </label>
+                                                <input type="datetime-local" name="end-date" id="end-date" value="<?=date("Y-m-d\TH:i:s", strtotime($assigments['assignment_end_date']));?>">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlFile1">Tambahkan file</label>
+                                                    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="filename">
+                                                </div>
+                                                <label for="desc">Deksripsi: </label>
+                                                <br>
+                                                <textarea name="desc" id="desc" cols="30" rows="10" value><?=$assigments['assignment_desc'];?></textarea>
+                                                <br>
+                                            <?php ?>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary" name="edit_assignment">Save changes</button>
+                                        </div>
+
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <a class="btn btn-primary" href="list_assignments.php?act=edit&assign_id=<?=$assignment['assignment_id'];?>">Edit</a> -->
                         <a class="btn btn-danger" href="list_assignments.php?act=delete&assign_id=<?=$assignment['assignment_id'];?>">Hapus</a>
                     </td>
                 </tr>
             <?php endforeach ?>
         </tbody>
     </table>
-    <button type="button" value="OK" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Edit
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Assignment</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form method="POST" enctype="multipart/form-data">
-                <label for="title">Assignment Title: </label>
-                <input type="text" id="title" name="title">
-                <br>
-                <label for="start-date">Tanggal mulai: </label>
-                <input type="datetime-local" name="start-date" id="start-date">
-                <label for="end-date">Tanggal akhir: </label>
-                <input type="datetime-local" name="end-date" id="end-date">
-                <div class="form-group">
-                    <label for="exampleFormControlFile1">Tambahkan file</label>
-                    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="filename">
-                </div>
-                <label for="desc">Deksripsi: </label>
-                <br>
-                <textarea name="desc" id="desc" cols="30" rows="10"></textarea>
-                <br>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-        </div>
-    </div>
-    </div>
-
-    <script>
-        $(document).ready(function() {
-            $(".edit-assignment").on("click", function(e) {
-                // e.preventDefault();
-                let val = $(".edit-assignment").val();
-
-                console.log(val);
-            })
-        })
-    </script>
     
 </body>
 </html>
