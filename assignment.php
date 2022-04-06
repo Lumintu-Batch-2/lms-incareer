@@ -24,6 +24,7 @@ session_start(); ?>
     <a class="btn btn-primary" href="./create_assignment.php">Buat tugas</a>
     <a href="submission.php" class="btn btn-danger">Submission</a>
     <a href="course.php" class="btn btn-danger">Course</a>
+    <a href="submissionlist.php" class="btn btn-danger">Submission List</a>
 </body>
 
 </html>
