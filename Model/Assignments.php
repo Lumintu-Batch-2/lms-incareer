@@ -151,4 +151,57 @@ class Assignments
             ];
         }
     }
+
+    public function getAllAssigment() {
+        $stmt = $this->dbConn->prepare("SELECT * FROM assignments");
+
+        try {
+            if($stmt->execute()) {
+                $assignments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $assignments;
+    }
+
+    public function updateAssignment() {
+        $stmt = $this->dbConn->prepare(
+            "UPDATE assignments SET assignment_name = :name, 
+                                    assignment_start_date = :start_date,
+                                    assignment_end_date = :end_date,
+                                    assignment_desc = :desc"
+        );
+
+        $stmt->bindParam(":name", $this->assignmentName);
+        $stmt->bindParam(":start_date", $this->assignmentStartDate);
+        $stmt->bindParam(":end_date", $this->assignmentEndDate);
+        $stmt->bindParam(":desc", $this->assignmentDesc);
+
+        try {
+            if($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function deleteAssignment() {
+        $stmt = $this->dbConn->prepare("DELETE FROM assignments WHERE assignment_id = :id");
+        $stmt->bindParam(":id", $this->assignmentId);
+
+        try {
+            if($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }
