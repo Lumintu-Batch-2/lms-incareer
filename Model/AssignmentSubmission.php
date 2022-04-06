@@ -73,12 +73,19 @@ class AssignmentSubmission
 
         $objQuest = new AssignmentSubmission;
 
-        $validExtention = ['pdf', 'doc', 'docx', 'xlsx', 'txt', 'png', 'jpg', 'jpeg', 'ppt'];
+        $validExtention = ['pdf', 'doc', 'docx', 'xlsx', 'txt', 'png', 'jpg', 'jpeg', 'ppt', 'pdf', 'rar', 'zip'];
         $fileExtention = explode(".", $file['filename']['name']);
         $fileExtention = strtolower(end($fileExtention));
+        $filesize = $file['filename']['size'];
 
         if (!in_array($fileExtention, $validExtention)) {
             $msg = "Format file tidak didukung!";
+            goto out;
+        }
+
+        if ($filesize > 2000000) {
+            $msg = "Ukuran file tidak boleh lebih dari 2 Mb";
+            var_dump($filesize);
             goto out;
         }
 
@@ -123,5 +130,21 @@ class AssignmentSubmission
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
+    public function getAllAssignment()
+    {
+        $stmnt = $this->dbConn->prepare(
+            'SELECT * FROM assignment_submissions'
+        );
+
+
+        try {
+            if ($stmnt->execute()) {
+                $allAssignment = $stmnt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $allAssignment;
     }
 }
