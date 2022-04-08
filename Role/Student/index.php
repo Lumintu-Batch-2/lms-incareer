@@ -1,6 +1,12 @@
 <?php
 
-session_start(); ?>
+session_start();
+
+require "../../Model/Courses.php";
+$objCourse = new Courses;
+$allCourses = $objCourse->gelAllCourseByUserId($_SESSION['user']['user_id']);
+
+?>
 
 
 <!DOCTYPE html>
@@ -27,6 +33,25 @@ session_start(); ?>
     <a href="submissionlist.php" class="btn btn-danger">Submission List</a>
     <a href="list_assignments.php" class="btn btn-primary">List Assignment</a>
     <a href="question_list.php" class="btn btn-primary">Question List</a>
+
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Link</th>
+        </thead>
+        <tbody>
+            <?php foreach ($allCourses as $key => $course) : ?>
+                <tr>
+                    <td><?= $course['course_id']; ?></td>
+                    <td><?= $course['course_name']; ?></td>
+                    <td><?= $course['course_desc']; ?></td>
+                    <td><a href="./course.php?course_id=<?= $course['course_id']; ?>">Link</a></td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
 </body>
 
 </html>

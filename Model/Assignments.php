@@ -64,46 +64,47 @@ class Assignments
         return $this->subjectId;
     }
 
-    public function saveAssignment() {
+    public function saveAssignment()
+    {
         $stmt = $this->dbConn->prepare("INSERT INTO assignments VALUES(null, :name, :start_date, :end_date, :desc, null)");
-        
+
         $stmt->bindParam(":name", $this->assignmentName);
         $stmt->bindParam(":start_date", $this->assignmentStartDate);
         $stmt->bindParam(":end_date", $this->assignmentEndDate);
         $stmt->bindParam(":desc", $this->assignmentDesc);
 
         try {
-            if($stmt->execute()) {
+            if ($stmt->execute()) {
                 return true;
             } else {
                 return false;
             }
-
         } catch (Exception $e) {
             return $e->getMessage();
         }
     }
 
-    public function createAssignment($data, $file) {
+    public function createAssignment($data, $file)
+    {
         $is_ok = false;
         $msg = "";
 
-        if(!is_string($data['title'])) {
+        if (!is_string($data['title'])) {
             $msg = "Judul tidak valid!";
             goto out;
         }
 
-        if(!is_string($data['desc'])) {
+        if (!is_string($data['desc'])) {
             $msg = "Deskripsi tidak valid!";
             goto out;
         }
 
-        if(empty($data['start-date'])) {
+        if (empty($data['start-date'])) {
             $msg = "Tanggal mulai tidak boleh kosong!";
             goto out;
         }
 
-        if(empty($data['end-date'])) {
+        if (empty($data['end-date'])) {
             $msg = "Tanggal selesai tidak boleh kosong!";
             goto out;
         }
@@ -120,7 +121,7 @@ class Assignments
         $fileExtention = explode(".", $file['filename']['name']);
         $fileExtention = strtolower(end($fileExtention));
 
-        if(!in_array($fileExtention, $validExtention)) {
+        if (!in_array($fileExtention, $validExtention)) {
             $msg = "Format file tidak didukung!";
             goto out;
         }
@@ -135,7 +136,7 @@ class Assignments
         $save = $this->saveAssignment();
         $upload = $objQuest->uploadFile();
 
-        if($save && $upload) {
+        if ($save && $upload) {
             $msg = "Berhasil membuat tugas!";
             $is_ok = true;
             goto out;
@@ -152,11 +153,12 @@ class Assignments
         }
     }
 
-    public function getAllAssigment() {
+    public function getAllAssigment()
+    {
         $stmt = $this->dbConn->prepare("SELECT * FROM assignments");
 
         try {
-            if($stmt->execute()) {
+            if ($stmt->execute()) {
                 $assignments = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
         } catch (Exception $e) {
@@ -166,7 +168,8 @@ class Assignments
         return $assignments;
     }
 
-    public function updateAssignment() {
+    public function updateAssignment()
+    {
         $stmt = $this->dbConn->prepare(
             "UPDATE assignments SET assignment_name = :name, 
                                     assignment_start_date = :start_date,
@@ -182,7 +185,7 @@ class Assignments
         $stmt->bindParam(":id", $this->assignmentId);
 
         try {
-            if($stmt->execute()) {
+            if ($stmt->execute()) {
                 return true;
             } else {
                 return false;
@@ -192,26 +195,27 @@ class Assignments
         }
     }
 
-    public function editAssignment($data, $file) {
+    public function editAssignment($data, $file)
+    {
         $is_ok = false;
         $msg = "";
 
-        if(!is_string($data['title'])) {
+        if (!is_string($data['title'])) {
             $msg = "Judul tidak valid!";
             goto out;
         }
 
-        if(!is_string($data['desc'])) {
+        if (!is_string($data['desc'])) {
             $msg = "Deskripsi tidak valid!";
             goto out;
         }
 
-        if(empty($data['start-date'])) {
+        if (empty($data['start-date'])) {
             $msg = "Tanggal mulai tidak boleh kosong!";
             goto out;
         }
 
-        if(empty($data['end-date'])) {
+        if (empty($data['end-date'])) {
             $msg = "Tanggal selesai tidak boleh kosong!";
             goto out;
         }
@@ -229,7 +233,7 @@ class Assignments
         $fileExtention = explode(".", $file['filename']['name']);
         $fileExtention = strtolower(end($fileExtention));
 
-        if(!in_array($fileExtention, $validExtention)) {
+        if (!in_array($fileExtention, $validExtention)) {
             $msg = "Format file tidak didukung!";
             goto out;
         }
@@ -244,7 +248,7 @@ class Assignments
         $edit = $this->updateAssignment();
         $upload = $objQuest->uploadFile();
 
-        if($edit && $upload) {
+        if ($edit && $upload) {
             $msg = "Berhasil mengubah tugas!";
             $is_ok = true;
             goto out;
@@ -261,12 +265,13 @@ class Assignments
         }
     }
 
-    public function deleteAssignment() {
+    public function deleteAssignment()
+    {
         $stmt = $this->dbConn->prepare("DELETE FROM assignments WHERE assignment_id = :id");
         $stmt->bindParam(":id", $this->assignmentId);
 
         try {
-            if($stmt->execute()) {
+            if ($stmt->execute()) {
                 return true;
             } else {
                 return false;
@@ -276,12 +281,13 @@ class Assignments
         }
     }
 
-    public function getAssignmentById($id) {
+    public function getAssignmentById($id)
+    {
         $stmt = $this->dbConn->prepare("SELECT * FROM assignments WHERE assignment_id = :id");
         $stmt->bindParam(":id", $id);
 
         try {
-            if($stmt->execute()) {
+            if ($stmt->execute()) {
                 $assigmentData = $stmt->fetch(PDO::FETCH_ASSOC);
             }
         } catch (Exception $e) {
@@ -289,5 +295,24 @@ class Assignments
         }
 
         return $assigmentData;
+    }
+
+    public function getAssignmentBySubjectId($id)
+    {
+        $stmt = $this->dbConn->prepare(
+            "SELECT * FROM assignments WHERE subject_id = :sid"
+        );
+
+        $stmt->bindParam(":sid", $id);
+
+        try {
+            if ($stmt->execute()) {
+                $assigments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $assigments;
     }
 }
