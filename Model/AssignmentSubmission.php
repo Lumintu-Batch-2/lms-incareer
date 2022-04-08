@@ -65,7 +65,7 @@ class AssignmentSubmission
     //     }
     // }
 
-    public function createAssignmentSubmission($file)
+    public function createAssignmentSubmission($file, $id)
     {
         $is_ok = false;
         $msg = "";
@@ -93,11 +93,13 @@ class AssignmentSubmission
         date_default_timezone_set('Asia/Jakarta');
         $objQuest->setSubmissionUploadDate(date("Y-m-d H:i:s"));
 
-        $path = "./Upload/Assignment/Submission/Submission";
+        // $path = "./Upload/Assignment/Submission";
+
+        $path = "../../Upload/Assignment/Submission/";
         move_uploaded_file($file['filename']['tmp_name'], $path . $file['filename']['name']);
 
         // $save = $this->saveSubmission();
-        $upload = $objQuest->uploadFile();
+        $upload = $objQuest->uploadFile($id);
 
         if ($upload) {
             $msg = "Berhasil membuat tugas!";
@@ -115,11 +117,12 @@ class AssignmentSubmission
             ];
         }
     }
-    public function uploadFile()
+    public function uploadFile($id)
     {
-        $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES (null, :filename, :upload_date, null)");
+        $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES (null, :filename, :upload_date, :asid)");
         $stmt->bindParam(":filename", $this->submissionFileName);
         $stmt->bindParam(":upload_date", $this->submissionUploadDate);
+        $stmt->bindParam(":asid", $id);
 
         try {
             if ($stmt->execute()) {

@@ -52,4 +52,23 @@ class Subjects
     {
         $this->courseId = $id;
     }
+
+    public function getSubjectByCourseId($id)
+    {
+        $stmt = $this->dbConn->prepare(
+            "SELECT * FROM subjects WHERE course_id = :cid"
+        );
+
+        $stmt->bindParam(":cid", $id);
+
+        try {
+            if ($stmt->execute()) {
+                $allSubject = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $allSubject;
+    }
 }
