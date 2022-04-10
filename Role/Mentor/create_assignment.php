@@ -6,11 +6,17 @@ if (isset($_POST['upload'])) {
     $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id']);
     $create_status = $create['is_ok'] ? "true" : "false";
 
-    if($create_status) {
+    if($create['is_ok']) {
         echo "
         <script>
-            alert('Berhasil membuat tugas baru!');
+            alert('" . $create['msg'] . "');
             location.replace('assignment.php?subject_id=". $_GET['subject_id'] ."')
+        </script>";
+    } else {
+        echo "
+        <script>
+            alert('" . $create['msg'] . "');
+            location.replace('create_assignment.php?subject_id=". $_GET['subject_id'] ."')
         </script>";
     }
 }

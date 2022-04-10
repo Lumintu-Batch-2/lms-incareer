@@ -90,6 +90,11 @@ class Assignments
         $is_ok = false;
         $msg = "";
 
+        if(empty($data['title'])) {
+            $msg = "Judul tidak boleh kosong";
+            goto out;
+        }
+
         if (!is_string($data['title'])) {
             $msg = "Judul tidak valid!";
             goto out;

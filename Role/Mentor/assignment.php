@@ -18,7 +18,13 @@ if(isset($_GET['act'])) {
                     if($edit) {
                         echo "
                         <script>
-                            alert('Berhasil memperbarui tugas!');
+                            alert('" . $edit['msg'] . "');
+                            location.replace('assignment.php?subject_id=". $_GET['subject_id'] ."')
+                        </script>";
+                    } else {
+                        echo "
+                        <script>
+                            alert('" . $edit['msg'] . "');
                             location.replace('assignment.php?subject_id=". $_GET['subject_id'] ."')
                         </script>";
                     }
