@@ -58,9 +58,9 @@ class Users
     public function getUserByUsername()
     {
         $stmnt = $this->dbConn->prepare(
-            'SELECT * FROM users WHERE username = :username'
+            "SELECT * FROM users WHERE username = BINARY :username"
         );
-        $stmnt->bindParam(':username', $this->userName);
+        $stmnt->bindParam(":username", $this->userName);
 
         try {
             if ($stmnt->execute()) {

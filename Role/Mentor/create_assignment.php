@@ -1,10 +1,24 @@
 <?php
 session_start();
 if (isset($_POST['upload'])) {
-    require "./Model/Assignments.php";
+    require "../../Model/Assignments.php";
     $objAsign = new Assignments;
-    $create = $objAsign->createAssignment($_POST, $_FILES);
-    var_dump($create);
+    $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id']);
+    $create_status = $create['is_ok'] ? "true" : "false";
+
+    if($create['is_ok']) {
+        echo "
+        <script>
+            alert('" . $create['msg'] . "');
+            location.replace('assignment.php?subject_id=". $_GET['subject_id'] ."')
+        </script>";
+    } else {
+        echo "
+        <script>
+            alert('" . $create['msg'] . "');
+            location.replace('create_assignment.php?subject_id=". $_GET['subject_id'] ."')
+        </script>";
+    }
 }
 
 ?>

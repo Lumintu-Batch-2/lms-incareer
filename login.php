@@ -3,7 +3,7 @@
 session_start();
 
 if (isset($_POST['login'])) {
-    require dir(__FILE__) . "./Model/Users.php";
+    require dirname(__FILE__) . "/Model/Users.php";
     $objUser = new Users;
     $login = $objUser->loginUser($_POST);
 
