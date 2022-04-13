@@ -45,10 +45,11 @@ class AssignmentQuestion
         return $this->assignmentId;
     }
 
-    public function uploadFile() {
-        $stmt = $this->dbConn->prepare("INSERT INTO assignment_questions VALUES (null, :filename, :upload_date, null)");
+    public function uploadFile($id) {
+        $stmt = $this->dbConn->prepare("INSERT INTO assignment_questions VALUES (null, :filename, :upload_date, :assignment_id)");
         $stmt->bindParam(":filename", $this->questionFileName);
         $stmt->bindParam(":upload_date", $this->questionUploadDate);
+        $stmt->bindParam(":assignment_id", $id);
 
         try {
             if($stmt->execute()) {
