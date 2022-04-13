@@ -150,4 +150,23 @@ class AssignmentSubmission
         }
         return $allAssignment;
     }
+
+    public function getAllAssignmentBySubject($id)
+    {
+        $stmnt = $this->dbConn->prepare(
+            'select assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, users.username FROM assignment_submissions, users where assignment_submissions.assignment_id in (SELECT assignments.assignment_id FROM assignments,subjects WHERE assignments.subject_id= :id AND assignments.subject_id IN (SELECT subjects.subject_id FROM subjects, courses WHERE subjects.course_id IN (SELECT user_courses.course_id FROM user_courses WHERE user_courses.user_id in (SELECT users.user_id FROM users)))) GROUP BY assignment_submissions.assignment_submission_id'
+        );
+        $stmnt->bindParam(":id", $id);
+
+
+
+        try {
+            if ($stmnt->execute()) {
+                $allAssignment = $stmnt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $allAssignment;
+    }
 }
