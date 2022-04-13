@@ -6,7 +6,7 @@ require "../../Model/Assignments.php";
 
 $objAssignment = new Assignments;
 
-$allAssignments = $objAssignment->getAllAssigment();
+$allAssignments = $objAssignment->getAssignmentBySubjectId($_GET['subject_id']);
 
 if(isset($_GET['act'])) {
     switch($_GET['act']) {
