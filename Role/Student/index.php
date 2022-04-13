@@ -1,6 +1,35 @@
 <?php
 
+
 session_start();
+// require('./login.php')
+if (!isset($_SESSION['user'])) {
+    header("location: ../../login.php");
+}
+
+// if ($_SESSION['user']['role'] == 2) {
+//     echo "<script>alert('Akses Ditolak');
+//     location.replace('../Mentor/index.php')</script>";
+// } elseif ($_SESSION['user']['role'] == 3) {
+//     echo "<script>alert('Akses Ditolak');
+//     location.replace('../../login.php')</script>";
+//     // header("location: ../../login.php");
+// }
+
+switch ($_SESSION['user']['role']) {
+    case 2:
+        echo "<script>alert('Akses Ditolak');
+    location.replace('../Mentor/index.php')</script>";
+        break;
+    case 3:
+        echo "<script>alert('Akses Ditolak');
+    location.replace('../../login.php')</script>";
+        break;
+
+    default:
+        break;
+}
+
 
 require "../../Model/Courses.php";
 $objCourse = new Courses;
@@ -27,12 +56,12 @@ $allCourses = $objCourse->gelAllCourseByUserId($_SESSION['user']['user_id']);
 </head>
 
 <body>
-    <a class="btn btn-primary" href="./create_assignment.php">Buat tugas</a>
+    <!-- <a class="btn btn-primary" href="./create_assignment.php">Buat tugas</a>
     <a href="submission.php" class="btn btn-danger">Submission</a>
     <a href="course.php" class="btn btn-danger">Course</a>
     <a href="submissionlist.php" class="btn btn-danger">Submission List</a>
     <a href="list_assignments.php" class="btn btn-primary">List Assignment</a>
-    <a href="question_list.php" class="btn btn-primary">Question List</a>
+    <a href="question_list.php" class="btn btn-primary">Question List</a> -->
 
     <table>
         <thead>

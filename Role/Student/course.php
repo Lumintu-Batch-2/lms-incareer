@@ -1,5 +1,23 @@
 <?php
 session_start();
+// require('./login.php')
+if (!isset($_SESSION['user'])) {
+    header("location: ../../login.php");
+}
+
+switch ($_SESSION['user']['role']) {
+    case 2:
+        echo "<script>alert('Akses Ditolak');
+    location.replace('../Mentor/index.php')</script>";
+        break;
+    case 3:
+        echo "<script>alert('Akses Ditolak');
+    location.replace('../../login.php')</script>";
+        break;
+
+    default:
+        break;
+}
 
 require_once('../../Model/Subjects.php');
 
