@@ -90,7 +90,7 @@ class Assignments
         $is_ok = false;
         $msg = "";
 
-        if(empty($data['title'])) {
+        if (empty($data['title'])) {
             $msg = "Judul tidak boleh kosong";
             goto out;
         }
@@ -138,7 +138,7 @@ class Assignments
         $objQuest->setQuestionUploadDate(date("Y-m-d H:i:s"));
 
         // $path = "../../Upload/Assignment/Questions/";
-        $path = dirname(__DIR__) . '/Upload/Assignment/Questions/' ;
+        $path = dirname(__DIR__) . '/Upload/Assignment/Questions/';
 
 
         move_uploaded_file($file['filename']['tmp_name'], $path . $file['filename']['name']);
@@ -243,9 +243,9 @@ class Assignments
         $fileExtention = explode(".", $file['filename']['name']);
         $fileExtention = strtolower(end($fileExtention));
 
-        
 
-        if(empty($file)) {
+
+        if (empty($file)) {
             if (!in_array($fileExtention, $validExtention)) {
                 $msg = "Format file tidak didukung!";
                 goto out;
@@ -256,7 +256,7 @@ class Assignments
         date_default_timezone_set('Asia/Jakarta');
         $objQuest->setQuestionUploadDate(date("Y-m-d H:i:s"));
 
-        $path = dirname(__DIR__) . '/Upload/Assignment/Questions/' ;
+        $path = dirname(__DIR__) . '/Upload/Assignment/Questions/';
         move_uploaded_file($file['filename']['tmp_name'], $path . $file['filename']['name']);
 
         $edit = $this->updateAssignment();
@@ -322,6 +322,24 @@ class Assignments
         try {
             if ($stmt->execute()) {
                 $assigments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $assigments;
+    }
+    public function getAssignmentByAssignmentId($id)
+    {
+        $stmt = $this->dbConn->prepare(
+            "SELECT * FROM assignments WHERE assignment_id = :sid"
+        );
+
+        $stmt->bindParam(":sid", $id);
+
+        try {
+            if ($stmt->execute()) {
+                $assigments = $stmt->fetch(PDO::FETCH_ASSOC);
             }
         } catch (Exception $e) {
             return $e->getMessage();
