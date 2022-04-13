@@ -2,6 +2,34 @@
 
 session_start();
 
+$loginPath = "../../login.php";
+
+if(!isset($_SESSION['user'])) {
+    header("location: " . $loginPath );
+    die;
+}
+
+switch($_SESSION['user']['role']) {
+    case 1:
+        echo "
+        <script>
+            alert('Akses ditolak!');
+            location.replace('../Student/');
+        </script>
+        ";
+        break;
+    case 3:
+        echo "
+        <script>
+            alert('Akses ditolak!');
+            location.replace('../Admin/');
+        </script>
+        ";
+        break;
+    default:
+        break;
+}
+
 require "../../Model/Assignments.php";
 
 $objAssignment = new Assignments;
