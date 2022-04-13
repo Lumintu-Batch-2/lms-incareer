@@ -1,10 +1,22 @@
 <?php
 session_start();
-if (isset($_POST['submit'])) {
-    require "../../Model/AssignmentSubmission.php";
-    $sub = new AssignmentSubmission;
-    $create = $sub->createAssignmentSubmission($_FILES, $_GET['assignment_id']);
-    var_dump($create);
+// require('./login.php')
+if (!isset($_SESSION['user'])) {
+    header("location: ../../login.php");
+}
+
+switch ($_SESSION['user']['role']) {
+    case 2:
+        echo "<script>alert('Akses Ditolak');
+    location.replace('../Mentor/index.php')</script>";
+        break;
+    case 3:
+        echo "<script>alert('Akses Ditolak');
+    location.replace('../../login.php')</script>";
+        break;
+
+    default:
+        break;
 }
 // echo $_GET['assignment_id'];
 
