@@ -31,10 +31,12 @@ class AssignmentSubmission
     }
     public function setSubmissionUploadDate($date)
     {
+        date_default_timezone_set("Asia/Bangkok");
         $this->submissionUploadDate = $date;
     }
     public function getSubmissionUploadDate()
     {
+        date_default_timezone_set("Asia/Bangkok");
         return $this->submissionUploadDate;
     }
     public function setAssignmentId($id)
@@ -67,9 +69,12 @@ class AssignmentSubmission
 
     public function createAssignmentSubmission($file, $id)
     {
+        date_default_timezone_set("Asia/Bangkok");
         $is_ok = false;
         $msg = "";
-
+        require_once('assignments.php');
+        $objassign = new Assignments;
+        $assignment = $objassign->getAssignmentByAssignmentId($id);
 
         $objQuest = new AssignmentSubmission;
 
@@ -77,9 +82,19 @@ class AssignmentSubmission
         $fileExtention = explode(".", $file['filename']['name']);
         $fileExtention = strtolower(end($fileExtention));
         $filesize = $file['filename']['size'];
-
+        date_default_timezone_set("Asia/Bangkok");
+        $dateupload = date("Y-m-d H:i:s");
         if (!in_array($fileExtention, $validExtention)) {
             $msg = "Format file tidak didukung!";
+            goto out;
+        }
+
+        if ($dateupload < $assignment['assignment_start_date']) {
+            $msg = "Assignment Belum Dimulai";
+            goto out;
+        }
+        if ($dateupload > $assignment['assignment_end_date']) {
+            $msg = "Assignment sudah melebihi deadline";
             goto out;
         }
 
@@ -90,8 +105,9 @@ class AssignmentSubmission
         }
 
         $objQuest->setSubmissionFileName($file['filename']['name']);
-        date_default_timezone_set('Asia/Jakarta');
-        $objQuest->setSubmissionUploadDate(date("Y-m-d H:i:s"));
+        date_default_timezone_set("Asia/Bangkok");
+        $date = date("Y-m-d H:i:s");
+        $objQuest->setSubmissionUploadDate($date);
 
         // $path = "./Upload/Assignment/Submission";
 
@@ -118,7 +134,9 @@ class AssignmentSubmission
         }
     }
     public function uploadFile($id)
+
     {
+        date_default_timezone_set("Asia/Bangkok");
         $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES (null, :filename, :upload_date, :asid)");
         $stmt->bindParam(":filename", $this->submissionFileName);
         $stmt->bindParam(":upload_date", $this->submissionUploadDate);
@@ -139,6 +157,25 @@ class AssignmentSubmission
         $stmnt = $this->dbConn->prepare(
             'SELECT * FROM assignment_submissions'
         );
+
+
+        try {
+            if ($stmnt->execute()) {
+                $allAssignment = $stmnt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $allAssignment;
+    }
+
+    public function getAllAssignmentBySubject($id)
+    {
+        $stmnt = $this->dbConn->prepare(
+            'select assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, users.username FROM assignment_submissions, users where assignment_submissions.assignment_id in (SELECT assignments.assignment_id FROM assignments,subjects WHERE assignments.subject_id= :id AND assignments.subject_id IN (SELECT subjects.subject_id FROM subjects, courses WHERE subjects.course_id IN (SELECT user_courses.course_id FROM user_courses WHERE user_courses.user_id in (SELECT users.user_id FROM users)))) GROUP BY assignment_submissions.assignment_submission_id'
+        );
+        $stmnt->bindParam(":id", $id);
+
 
 
         try {
