@@ -49,7 +49,7 @@
 
             $objAssignment = new AssignmentSubmission;
 
-            $allAssignments = $objAssignment->getAllAssignmentBySubject($_GET['subject_id']);
+            $allAssignments = $objAssignment->getAllAssignmentBySubject($_GET['assignment_id'], $_GET['subject_id']);
             var_dump($allAssignments);
             // var_dump($allAssignments);
             foreach ($allAssignments as $row => $assignment) :
