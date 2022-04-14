@@ -31,6 +31,8 @@ switch($_SESSION['user']['role']) {
 }
 
 require "../../Model/Assignments.php";
+require "../../Model/AssignmentSubmission.php";
+
 
 $objAssignment = new Assignments;
 
@@ -161,10 +163,25 @@ if (isset($_GET['act'])) {
                                             <br>
                                             <label for="end-date">Tanggal akhir: </label>
                                             <input type="datetime-local" name="end-date" id="end-date" value="<?= date("Y-m-d\TH:i", strtotime($assigments['assignment_end_date'])); ?>">
-                                            <div class="form-group">
-                                                <label for="exampleFormControlFile1">Tambahkan file</label>
-                                                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="filename">
-                                            </div>
+
+                                            <?php 
+                                            
+                                            $objSubmission = new AssignmentSubmission;
+
+                                            $allSubmissions = $objSubmission->getAllSubmissionByAssignmentId($assigments['assignment_id']);
+                                            // var_dump($allSubmissions);
+
+                                            if(!$allSubmissions) {
+                                            
+                                            ?>
+
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlFile1">Tambahkan file</label>
+                                                    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="filename">
+                                                </div>
+
+                                            <?php } ?>
+                                            
                                             <label for="desc">Deksripsi: </label>
                                             <br>
                                             <textarea name="desc" id="desc" cols="30" rows="10" value><?= $assigments['assignment_desc']; ?></textarea>

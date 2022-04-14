@@ -169,4 +169,22 @@ class AssignmentSubmission
         }
         return $allAssignment;
     }
+
+    public function getAllSubmissionByAssignmentId($id) {
+        $stmnt = $this->dbConn->prepare(
+            "SELECT * FROM `assignment_submissions` WHERE `assignment_submissions`.`assignment_id` = :id"
+        );
+
+        $stmnt->bindParam(":id", $id);
+
+        try {
+            if($stmnt->execute()) {
+                $submissions = $stmnt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $submissions;
+    }
 }
