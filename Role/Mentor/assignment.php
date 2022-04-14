@@ -43,6 +43,8 @@ if (isset($_GET['act'])) {
         case "edit":
             if (isset($_GET['assign_id'])) {
                 if (isset($_POST['edit_assignment'])) {
+                    // var_dump($_FILES);
+                    // die;
                     $edit = $objAssignment->editAssignment($_POST, $_FILES, $_GET['subject_id']);
                     $edit_status = $edit['is_ok'] ? "true" : "false";
                     if ($edit) {
@@ -169,7 +171,6 @@ if (isset($_GET['act'])) {
                                             $objSubmission = new AssignmentSubmission;
 
                                             $allSubmissions = $objSubmission->getAllSubmissionByAssignmentId($assigments['assignment_id']);
-                                            // var_dump($allSubmissions);
 
                                             if(!$allSubmissions) {
                                             

@@ -47,32 +47,13 @@ class AssignmentSubmission
     {
         return $this->assignmentId;
     }
-    // public function saveSubmission() {
-    //     $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES(null, :name, :start_date, :end_date, :desc, null)");
-
-    //     $stmt->bindParam(":name", $this->assignmentName);
-    //     $stmt->bindParam(":start_date", $this->assignmentStartDate);
-    //     $stmt->bindParam(":end_date", $this->assignmentEndDate);
-    //     $stmt->bindParam(":desc", $this->assignmentDesc);
-
-    //     try {
-    //         if($stmt->execute()) {
-    //             return true;
-    //         } else {
-    //             return false;
-    //         }
-
-    //     } catch (Exception $e) {
-    //         return $e->getMessage();
-    //     }
-    // }
 
     public function createAssignmentSubmission($file, $id)
     {
         date_default_timezone_set("Asia/Bangkok");
         $is_ok = false;
         $msg = "";
-        require_once('assignments.php');
+        require_once('Assignments.php');
         $objassign = new Assignments;
         $assignment = $objassign->getAssignmentByAssignmentId($id);
 
