@@ -18,6 +18,13 @@ switch ($_SESSION['user']['role']) {
     default:
         break;
 }
+if (isset($_POST['submit'])) {
+    require "../../Model/AssignmentSubmission.php";
+    $sub = new AssignmentSubmission;
+    $create = $sub->createAssignmentSubmission($_FILES, $_GET['assignment_id']);
+    var_dump($create);
+}
+
 // echo $_GET['assignment_id'];
 
 ?>
