@@ -74,14 +74,26 @@ class Assignments
         $stmt->bindParam(":desc", $this->assignmentDesc);
         $stmt->bindParam(":sid", $this->subjectId);
 
+        $id = "";
+
         try {
             if ($stmt->execute()) {
-                return true;
+
+                $id = $this->dbConn->lastInsertId();
+                $is_ok = true;
+                goto out;
             } else {
-                return false;
+                $is_ok = false;
             }
         } catch (Exception $e) {
             return $e->getMessage();
+        }
+
+        out: {
+            return [
+                "assignment_id" => $id,
+                "is_ok" => $is_ok
+            ];
         }
     }
 
@@ -144,9 +156,9 @@ class Assignments
         move_uploaded_file($file['filename']['tmp_name'], $path . $file['filename']['name']);
 
         $save = $this->saveAssignment();
-        $upload = $objQuest->uploadFile();
+        $upload = $objQuest->uploadFile($save['assignment_id']);
 
-        if ($save && $upload) {
+        if ($save['is_ok'] && $upload) {
             $msg = "Berhasil membuat tugas!";
             $is_ok = true;
             goto out;
@@ -236,8 +248,7 @@ class Assignments
         $this->setAssignmentDesc($data['desc']);
         $this->setAssignmentId($data['id']);
 
-        require_once("AssignmentQuestion.php");
-        $objQuest = new AssignmentQuestion;
+        
 
         $validExtention = ['pdf', 'doc', 'docx', 'xlsx', 'txt', 'png', 'jpg', 'jpeg', 'ppt'];
         $fileExtention = explode(".", $file['filename']['name']);
@@ -245,24 +256,30 @@ class Assignments
 
 
 
-        if (empty($file)) {
+        if ($file['filename']['size'] > 0) {
             if (!in_array($fileExtention, $validExtention)) {
                 $msg = "Format file tidak didukung!";
                 goto out;
             }
+
+            require_once("AssignmentQuestion.php");
+            $objQuest = new AssignmentQuestion;
+
+            $objQuest->setQuestionFileName($file['filename']['name']);
+            date_default_timezone_set('Asia/Jakarta');
+            $objQuest->setQuestionUploadDate(date("Y-m-d H:i:s"));
+
+            $path = dirname(__DIR__) . '/Upload/Assignment/Questions/';
+            move_uploaded_file($file['filename']['tmp_name'], $path . $file['filename']['name']);
+
+            $objQuest->uploadFile($data['id']);
+
         }
-
-        $objQuest->setQuestionFileName($file['filename']['name']);
-        date_default_timezone_set('Asia/Jakarta');
-        $objQuest->setQuestionUploadDate(date("Y-m-d H:i:s"));
-
-        $path = dirname(__DIR__) . '/Upload/Assignment/Questions/';
-        move_uploaded_file($file['filename']['tmp_name'], $path . $file['filename']['name']);
+        
 
         $edit = $this->updateAssignment();
-        $upload = $objQuest->uploadFile();
 
-        if ($edit && $upload) {
+        if ($edit) {
             $msg = "Berhasil mengubah tugas!";
             $is_ok = true;
             goto out;

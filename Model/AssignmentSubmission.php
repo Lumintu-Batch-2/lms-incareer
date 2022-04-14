@@ -47,32 +47,13 @@ class AssignmentSubmission
     {
         return $this->assignmentId;
     }
-    // public function saveSubmission() {
-    //     $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES(null, :name, :start_date, :end_date, :desc, null)");
-
-    //     $stmt->bindParam(":name", $this->assignmentName);
-    //     $stmt->bindParam(":start_date", $this->assignmentStartDate);
-    //     $stmt->bindParam(":end_date", $this->assignmentEndDate);
-    //     $stmt->bindParam(":desc", $this->assignmentDesc);
-
-    //     try {
-    //         if($stmt->execute()) {
-    //             return true;
-    //         } else {
-    //             return false;
-    //         }
-
-    //     } catch (Exception $e) {
-    //         return $e->getMessage();
-    //     }
-    // }
 
     public function createAssignmentSubmission($file, $id)
     {
         date_default_timezone_set("Asia/Bangkok");
         $is_ok = false;
         $msg = "";
-        require_once('assignments.php');
+        require_once('Assignments.php');
         $objassign = new Assignments;
         $assignment = $objassign->getAssignmentByAssignmentId($id);
 
@@ -186,5 +167,23 @@ class AssignmentSubmission
             return $e->getMessage();
         }
         return $allAssignment;
+    }
+
+    public function getAllSubmissionByAssignmentId($id) {
+        $stmnt = $this->dbConn->prepare(
+            "SELECT * FROM `assignment_submissions` WHERE `assignment_submissions`.`assignment_id` = :id"
+        );
+
+        $stmnt->bindParam(":id", $id);
+
+        try {
+            if($stmnt->execute()) {
+                $submissions = $stmnt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $submissions;
     }
 }
