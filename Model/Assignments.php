@@ -7,6 +7,7 @@ class Assignments
     private $assignmentEndDate;
     private $assignmentDesc;
     private $subjectId;
+    private $assignmentType;
     private $dbConn;
 
     public function __construct()
@@ -62,6 +63,14 @@ class Assignments
     public function getSubjectId()
     {
         return $this->subjectId;
+    }
+    public function setAssignmentType($type)
+    {
+        $this->assignmentType = $type;
+    }
+    public function getAssignmentType()
+    {
+        return $this->assignmentType;
     }
 
     public function saveAssignment()
@@ -248,7 +257,7 @@ class Assignments
         $this->setAssignmentDesc($data['desc']);
         $this->setAssignmentId($data['id']);
 
-        
+
 
         $validExtention = ['pdf', 'doc', 'docx', 'xlsx', 'txt', 'png', 'jpg', 'jpeg', 'ppt'];
         $fileExtention = explode(".", $file['filename']['name']);
@@ -273,9 +282,8 @@ class Assignments
             move_uploaded_file($file['filename']['tmp_name'], $path . $file['filename']['name']);
 
             $objQuest->uploadFile($data['id']);
-
         }
-        
+
 
         $edit = $this->updateAssignment();
 

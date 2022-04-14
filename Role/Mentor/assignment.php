@@ -4,12 +4,12 @@ session_start();
 
 $loginPath = "../../login.php";
 
-if(!isset($_SESSION['user'])) {
-    header("location: " . $loginPath );
+if (!isset($_SESSION['user'])) {
+    header("location: " . $loginPath);
     die;
 }
 
-switch($_SESSION['user']['role']) {
+switch ($_SESSION['user']['role']) {
     case 1:
         echo "
         <script>
@@ -138,7 +138,7 @@ if (isset($_GET['act'])) {
                     <td><?= $assignment['assignment_desc'] ?></td>
                     <td>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>">Edit</button>
-                        <a class="btn btn-info" href="assignment_collection.php?subject_id=<?= $assignment['assignment_id']; ?>">Assignment Collection</a>
+                        <a class="btn btn-info" href="assignment_collection.php?assignment_id=<?= $assignment['assignment_id'] . "&subject_id=" . $_GET['subject_id']; ?>">Assignment Collection</a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal<?= $assignment['assignment_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -166,14 +166,14 @@ if (isset($_GET['act'])) {
                                             <label for="end-date">Tanggal akhir: </label>
                                             <input type="datetime-local" name="end-date" id="end-date" value="<?= date("Y-m-d\TH:i", strtotime($assigments['assignment_end_date'])); ?>">
 
-                                            <?php 
-                                            
+                                            <?php
+
                                             $objSubmission = new AssignmentSubmission;
 
                                             $allSubmissions = $objSubmission->getAllSubmissionByAssignmentId($assigments['assignment_id']);
 
-                                            if(!$allSubmissions) {
-                                            
+                                            if (!$allSubmissions) {
+
                                             ?>
 
                                                 <div class="form-group">
@@ -182,7 +182,7 @@ if (isset($_GET['act'])) {
                                                 </div>
 
                                             <?php } ?>
-                                            
+
                                             <label for="desc">Deksripsi: </label>
                                             <br>
                                             <textarea name="desc" id="desc" cols="30" rows="10" value><?= $assigments['assignment_desc']; ?></textarea>

@@ -5,6 +5,7 @@ class AssignmentSubmission
     private $submissionFileName;
     private $submissionUploadDate;
     private $assignmentId;
+    private $assignmentToken;
     private $dbConn;
 
     public function __construct()
@@ -46,6 +47,15 @@ class AssignmentSubmission
     public function getAssignmentId()
     {
         return $this->assignmentId;
+    }
+    public function setAssignmentToken($token)
+    {
+        $this->assignmentToken = $token;
+    }
+
+    public function getAssignmentToken()
+    {
+        return $this->assignmentToken;
     }
 
     public function createAssignmentSubmission($file, $id)
@@ -150,12 +160,13 @@ class AssignmentSubmission
         return $allAssignment;
     }
 
-    public function getAllAssignmentBySubject($id)
+    public function getAllAssignmentBySubject($assignment_id, $subject_id)
     {
         $stmnt = $this->dbConn->prepare(
-            'select assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, users.username FROM assignment_submissions, users where assignment_submissions.assignment_id in (SELECT assignments.assignment_id FROM assignments,subjects WHERE assignments.subject_id= :id AND assignments.subject_id IN (SELECT subjects.subject_id FROM subjects, courses WHERE subjects.course_id IN (SELECT user_courses.course_id FROM user_courses WHERE user_courses.user_id in (SELECT users.user_id FROM users)))) GROUP BY assignment_submissions.assignment_submission_id'
+            'select assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, users.username FROM assignment_submissions, users where assignment_submissions.assignment_id= :assignment_id AND assignment_submissions.assignment_id in (SELECT assignments.assignment_id FROM assignments,subjects WHERE assignments.subject_id= :subject_id AND assignments.subject_id IN (SELECT subjects.subject_id FROM subjects, courses WHERE subjects.course_id IN (SELECT user_courses.course_id FROM user_courses WHERE user_courses.user_id in (SELECT users.user_id FROM users)))) GROUP BY assignment_submissions.assignment_submission_id'
         );
-        $stmnt->bindParam(":id", $id);
+        $stmnt->bindParam(":assignment_id", $assignment_id);
+        $stmnt->bindParam(":subject_id", $subject_id);
 
 
 
@@ -169,7 +180,8 @@ class AssignmentSubmission
         return $allAssignment;
     }
 
-    public function getAllSubmissionByAssignmentId($id) {
+    public function getAllSubmissionByAssignmentId($id)
+    {
         $stmnt = $this->dbConn->prepare(
             "SELECT * FROM `assignment_submissions` WHERE `assignment_submissions`.`assignment_id` = :id"
         );
@@ -177,7 +189,7 @@ class AssignmentSubmission
         $stmnt->bindParam(":id", $id);
 
         try {
-            if($stmnt->execute()) {
+            if ($stmnt->execute()) {
                 $submissions = $stmnt->fetchAll(PDO::FETCH_ASSOC);
             }
         } catch (Exception $e) {
