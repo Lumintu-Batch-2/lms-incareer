@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 // require('./login.php')
 if (!isset($_SESSION['user'])) {
@@ -22,7 +23,14 @@ if (isset($_POST['submit'])) {
     require "../../Model/AssignmentSubmission.php";
     $sub = new AssignmentSubmission;
     $create = $sub->createAssignmentSubmission($_FILES, $_GET['assignment_id']);
-    var_dump($create);
+
+    if ($create["is_ok"] == false) {
+        $message = $create["msg"];
+        $assignmentId = $_GET['assignment_id'];
+        echo "<script>alert('$message');
+        location.replace('./submission.php?assignment_id='+ $assignmentId);
+        </script>";
+    }
 }
 
 // echo $_GET['assignment_id'];
