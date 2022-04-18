@@ -198,4 +198,55 @@ class AssignmentSubmission
 
         return $submissions;
     }
+
+    public function saveSubmission()
+    {
+        $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES(null, :name, :date, :token, :aid)");
+
+        $stmt->bindParam(":name", $this->submissionFileName);
+        $stmt->bindParam(":date", $this->submissionUploadDate);
+        $stmt->bindParam(":aid", $this->assignmentId);
+        $stmt->bindParam(":token", $this->submissionFileName);
+
+        $id = "";
+
+        try {
+            if ($stmt->execute()) {
+                $id = $this->dbConn->lastInsertId();
+                $is_ok = true;
+                goto out;
+            } else {
+                $is_ok = false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        out: {
+            return [
+                "submission_id" => $id,
+                "is_ok" => $is_ok
+            ];
+        }
+    }
+
+    public function updateSubmission() {
+        $stmt = $this->dbConn->prepare(
+            "UPDATE assignment_submissions SET submission_filename = :name, submitted_date = :date WHERE assignment_submission_id = :id"
+        );
+
+        $stmt->bindParam(":name", $this->submissionFileName);
+        $stmt->bindParam(":date", $this->submissionUploadDate);
+        $stmt->bindParam(":id", $this->assignmentSubmissionId);
+
+        try {
+            if($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }

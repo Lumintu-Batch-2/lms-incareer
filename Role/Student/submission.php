@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 // require('./login.php')
 if (!isset($_SESSION['user'])) {
@@ -23,7 +22,7 @@ if (isset($_POST['submit'])) {
     require "../../Model/AssignmentSubmission.php";
     $sub = new AssignmentSubmission;
     $create = $sub->createAssignmentSubmission($_FILES, $_GET['assignment_id']);
-
+    
     if ($create["is_ok"] == false) {
         $message = $create["msg"];
         $assignmentId = $_GET['assignment_id'];
@@ -33,7 +32,7 @@ if (isset($_POST['submit'])) {
     }
 }
 
-// echo $_GET['assignment_id'];
+echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] . "'";
 
 ?>
 <!doctype html>
@@ -53,17 +52,6 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-    <!-- <form action="" method="POST" enctype="multipart/form-data">
-        <div class="container">
-
-            <div class="mb-3 mt-5">
-                <label for="formFile" class="form-label">Upload File</label>
-                
-                <input type="file" class="form-control" id="exampleFormControlFile1" name="filename">
-                <button class="btn btn-primary mt-5" type="submit" name="submit">Submit Assignment</button>
-            </div>
-        </div>
-    </form> -->
 
     <form action="" method="POST" enctype="multipart/form-data">
         <div class="container">
@@ -92,7 +80,7 @@ if (isset($_POST['submit'])) {
                                     <strong> Choose a file</strong> or drag it here.
                                 </p>
                             </div>
-                            <input type="file" name="filename" class="dropzone">
+                            <input type="file" name="filename" id="fileInput" class="dropzone" multiple>
                         </div>
                     </div>
                 </div>
@@ -100,7 +88,7 @@ if (isset($_POST['submit'])) {
             <div class="row mt-5">
                 <div class="col-md-12">
                     <!-- <button type="submit" class="btn btn-primary pull-right">Upload</button> -->
-                    <button class="btn btn-primary mt-5" type="submit" name="submit">Submit Assignment</button>
+                    <button class="btn btn-primary mt-5" type="submit" id="uploadSubmission" name="submit">Submit Assignment</button>
 
                 </div>
             </div>
@@ -175,6 +163,48 @@ if (isset($_POST['submit'])) {
             boxZone.empty();
             previewZone.addClass('hidden');
             reset(dropzone);
+        });
+
+
+        // Buttuon upload
+        $("#uploadSubmission").click(function(e) {
+            e.preventDefault();
+
+            let fileData = document.getElementById("fileInput");
+            let assignmentId = document.getElementById("assignment_id");
+            let assignment_id = assignmentId.value;
+
+            let data = {
+                assigId: assignment_id,
+                count: fileData.files.length
+            }
+
+            $.ajax({
+                url: "insert_submission.php",
+                type: "post",
+                data: data,
+                success: function(data) {
+                    let dataJson = JSON.parse(data);
+                    // console.log(dataJson[0].submission_id);
+                    for(i = 0; i < fileData.files.length; i++) {
+                        let formData = new FormData();
+                        formData.append("data", fileData.files[i]);
+                        formData.append("submission_id", dataJson[i].submission_id);
+
+                        $.ajax({
+                            url: "upload_submission.php",
+                            type: "post",
+                            data: formData,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success: function(data) {
+                                console.log(data);
+                            }
+                        })
+                    }
+                }
+            })
         });
     </script>
 
