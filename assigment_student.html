@@ -10,7 +10,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="./CSS/UploafField.css">
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link
+    href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+    rel="stylesheet"/>
+    <link
+    href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css"
+    rel="stylesheet"
+/>
     <!-- Tailwindcss -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
@@ -32,6 +40,20 @@
         }
     </script>
     <style>
+        .filepond--panel-root {
+            background-color: #eee;
+            border: 2.5px dashed grey;
+        }
+        
+       .filepond--credits{
+           display: none !important;
+       }
+
+        .active{
+            color: #DDB07F !important;
+            border-bottom: solid 4px #DDB07F;
+        }
+
         .in-active{
             width: 80px !important;
             padding: 20px 15px !important;
@@ -88,12 +110,7 @@
                                 <p class="text-white font-semibold">Courses</p>
                             </a>
                         </li>
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="./Img/icons/discussion_icon.svg" alt="Forum Icon">
-                                <p class="font-semibold">Forum Dicussion</p>
-                            </a>
-                        </li>
+
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="./Img/icons/schedule_icon.svg" alt="Schedule Icon">
@@ -195,9 +212,9 @@
             <div class="bg-white w-full h-[50px] flex content-center px-10">
                 <ul class="flex items-center gap-x-8">
                     <li class="text-dark-green hover:text-cream hover:border-b-4 hover:border-cream h-[50px] flex items-center font-semibold  cursor-pointer">
-                        <p>Assignment</p>
+                        <p>Session</p>
                     </li>
-                    <li class="text-dark-green hover:text-cream hover:border-b-4 hover:border-cream h-[50px] flex items-center font-semibold  cursor-pointer">Forum Discussion</li>
+                    <li class="text-dark-green hover:text-cream hover:border-b-4 hover:border-cream h-[50px] flex items-center font-semibold  cursor-pointer active">Assignment</li>
                 </ul>
             </div>
 
@@ -209,17 +226,15 @@
 
             <!-- Table Assignment -->
             <div>
-                <table class="shadow-lg bg-white" style="width: 100%">
+                <table class="shadow-lg bg-white px-4" style="width: 100%">
                     <colgroup>
                         <col span="1" style="width: 10%">
                         <col span="1" style="width: 10%">
                         <col span="1" style="width: 10%">
                         <col span="1" style="width: 10%">
                         <col span="1" style="width: 5%">
-                        <col span="1" style="width: 5%">
-                        <col span="1" style="width: 15%">
                         <col span="1" style="width: 20%">
-                        <col span="1" style="width: 5%">
+                        <col span="1" style="width: 10%">
                     </colgroup>
                     <thead>
                         <tr class="text-dark-green">
@@ -228,10 +243,8 @@
                             <th class="border-b text-center px-4 py-2">Due Date</th>
                             <th class="border-b text-center px-4 py-2">Due Time</th>
                             <th class="border-b text-center px-4 py-2">Questions</th>
-                            <th class="border-b text-center px-4 py-2">Upload</th>
-                            <th class="border-b text-center px-4 py-2">Submission Time</th>
-                            <th class="border-b text-center px-4 py-2">Assignment Collection</th>
-                            <th class="border-b text-center px-4 py-2">Actions</th>
+                            <th class="border-b text-center px-4 py-2">Submission Upload</th>
+                            <th class="border-b text-center px-4 py-2">Assigment History</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -242,11 +255,8 @@
                             <td class="border-b px-4 py-2 text-center">23:59</td>
                             <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="./Img/icons/download_icon.svg" alt="Download Icon" ></td>
                             <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="./Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal"></td>
-                            <td class="border-b px-4 py-2 text-center">26-02-2022 13:00</td>
-                            <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="./Img/icons/binoculars_icon.svg" alt="Collection Icon"></td>
                             <td class="border-b px-4 py-2 flex items-center gap-x-2">
-                                <img class="w-7 mx-auto cursor-pointer" src="./Img/icons/edit_icon.svg" alt="Edit Icon">
-                                <img class="w-7 mx-auto cursor-pointer" src="./Img/icons/delete_icon.svg" alt="Remove Icon">
+                               <img class="w-7 mx-auto cursor-pointer" src="./Img/icons/info_icon.svg" alt="Info Icon"  type="button" data-modal-toggle="history">
                             </td>
                         </tr>
                         <tr>
@@ -256,24 +266,22 @@
                             <td class="border-b px-4 py-2 text-center">23:59</td>
                             <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="./Img/icons/download_icon.svg" alt="Download Icon"></td>
                             <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="./Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal"></td>
-                            <td class="border-b px-4 py-2 text-center">26-02-2022 13:00</td>
-                            <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="./Img/icons/binoculars_icon.svg" alt="Collection Icon"></td>
                             <td class="border-b px-4 py-2 flex items-center gap-x-2">
-                                <img class="w-7 mx-auto cursor-pointer" src="./Img/icons/edit_icon.svg" alt="Edit Icon">
-                                <img class="w-7 mx-auto cursor-pointer" src="./Img/icons/delete_icon.svg" alt="Remove Icon">
+                                <img class="w-7 mx-auto cursor-pointer" src="./Img/icons/info_icon.svg" alt="Info Icon"  type="button" data-modal-toggle="history">
                             </td>
                         </tr>
                     </tbody>                  
                 </table>
+            
             </div>
 
-            <a class="bg-cream text-white font-semibold justify-end text-center py-2 rounded-lg w-[170px] ml-auto" href="">Add Assignment</a>
+            <a class="bg-cream text-white font-semibold justify-end text-center py-2 rounded-lg w-[170px] ml-auto" href="">Upload Assignment</a>
 
         </div>
     </div>
     <!-- Main modal -->
     <div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow ">
                 <!-- Modal header -->
@@ -284,27 +292,16 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-6 space-y-6">
-                <form>
-                   <div class="mb-6">
-                        <label for="title" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Title</label>
-                        <input type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                    </div>
-                     <div class="mb-6">
-                        <label for="startDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Start Date</label>
-                        <input type="datetime-local" id="startDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                    </div>
-                     <div class="mb-6">
-                        <label for="dueDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Due Date</label>
-                        <input type="datetime-local" id="dueDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                    </div>
-                    <div class="mb-6">
-                       <label for="deksripsi" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Deksripsi</label>
-                       <textarea id="deksripsi" rows="4" class="block p-2.5 w-full text-sm text-dark-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-white-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
-                    </div>
-                     <div class="mb-6">
-                      <label for="input" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Due Date</label>
-                      <input type="file" id="input"  required>
-                    </div>
+                <form class="box" method="post" action="" enctype="multipart/form-data">
+                    <input type="file"
+                    id="multiFile" 
+                    class="filepond"
+                    name="filepond" 
+                    multiple 
+                    data-allow-reorder="true"
+                    data-max-file-size="3MB"
+                    data-max-files="4">
+                </form>
                 </div>
                 <!-- Modal footer -->
                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
@@ -315,14 +312,88 @@
             </div>
         </div>
     </div>    
+    <div id="history" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-4xl h-full md:h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow ">
+                <!-- Modal header -->
+                <div class="flex justify-center items-start p-5 rounded-t ">
+                    <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-dark">
+                        Assignment History
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <div class="py-6 px-[40px] space-y-6">
+                    <table class="shadow-lg bg-white px-4 rounded-lg border-1" style="width: 100%">
+                    <colgroup>
+                        <col span="1" style="width: 2%">
+                        <col span="1" style="width: 10%">
+                        <col span="1" style="width: 10%">
+                        <col span="1" style="width: 10%">
+                    </colgroup>
+                    <thead>
+                        <tr class="text-dark-green">
+                            <th class="border-b text-left px-4 py-2">No</th>
+                            <th class="border-b text-center px-4 py-2">Submission Time</th>
+                            <th class="border-b text-center px-4 py-2">Title</th>
+                            <th class="border-b text-center px-4 py-2">files</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="border-b px-4 py-2">1</td>
+                            <td class="border-b px-4 py-2 text-center">27 February 2022, 19:30</td>
+                            <td class="border-b px-4 py-2 text-center">Task1_Introduction_Atalya.pdf</td>
+                            <td class="border-b px-4 py-2 text-center"><img class="w-7 mx-auto cursor-pointer" src="./Img/icons/download_icon.svg" alt="Download Icon"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-b px-4 py-2">2</td>
+                            <td class="border-b px-4 py-2 text-center">27 February 2022, 20:30</td>
+                            <td class="border-b px-4 py-2 text-center">Task1_Introduction_Atalya.pdf</td>
+                            <td class="border-b px-4 py-2 text-center"><img class="w-7 mx-auto cursor-pointer" src="./Img/icons/download_icon.svg" alt="Download Icon"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-b px-4 py-2">3</td>
+                            <td class="border-b px-4 py-2 text-center">28 February 2022, 19:30</td>
+                            <td class="border-b px-4 py-2 text-center">Task1_Introduction_Atalya.pdf</td>
+                            <td class="border-b px-4 py-2 text-center"><img class="w-7 mx-auto cursor-pointer" src="./Img/icons/download_icon.svg" alt="Download Icon"></td>
+                        </tr>
+                       
+                    </tbody>                  
+                </table>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
+                    <button data-modal-toggle="history" type="button" class="text-gray bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:hover:bg-dark-700 dark:focus:ring-dark-800">Close</button>
+                    <button data-modal-toggle="history" type="button" class="text-dark-500 bg-[#DDB07F] hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-[#DDB07F] dark:text--300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <script>
+        FilePond.parse(document.body);
         let btnToggle = document.getElementById('btnToggle');
         let sidebar = document.querySelector('.sidebar');
         btnToggle.onclick = function(){
             sidebar.classList.toggle('in-active');
         }
-        
+       FilePond.registerPlugin(
+       FilePondPluginImagePreview,
+       FilePondPluginImageExifOrientation,
+       FilePondPluginFileValidateSize,
+       FilePondPluginImageEdit
+       );
+
+        FilePond.create(
+        document.querySelector('input')
+        );
     </script>
 </body>
 </html>
