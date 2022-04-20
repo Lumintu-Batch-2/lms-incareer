@@ -75,12 +75,13 @@ class Assignments
 
     public function saveAssignment()
     {
-        $stmt = $this->dbConn->prepare("INSERT INTO assignments VALUES(null, :name, :start_date, :end_date, :desc, :sid)");
+        $stmt = $this->dbConn->prepare("INSERT INTO assignments VALUES(null, :name, :start_date, :end_date, :desc, :assign_type, :sid)");
 
         $stmt->bindParam(":name", $this->assignmentName);
         $stmt->bindParam(":start_date", $this->assignmentStartDate);
         $stmt->bindParam(":end_date", $this->assignmentEndDate);
         $stmt->bindParam(":desc", $this->assignmentDesc);
+        $stmt->bindParam(":assign_type", $this->assignmentType);
         $stmt->bindParam(":sid", $this->subjectId);
 
         $id = "";
@@ -136,10 +137,16 @@ class Assignments
             goto out;
         }
 
+        if(empty($data['assign_type'])) {
+            $msg = "Tipe assignment tidak boleh kosong!";
+            goto out;
+        }
+
         $this->setAssignmentName($data['title']);
         $this->setAssignmentStartDate($data['start-date']);
         $this->setAssignmentEndDate($data['end-date']);
         $this->setAssignmentDesc($data['desc']);
+        $this->setAssignmentType($data['assign_type']);
         $this->setSubjectId($sid);
 
         require_once("AssignmentQuestion.php");
