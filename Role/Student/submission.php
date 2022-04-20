@@ -200,6 +200,8 @@ echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] 
                             processData: false,
                             success: function(data) {
                                 console.log(data);
+                                alert("Berhasil mengupload submission!");
+                                location.replace("index.php");
                             }
                         })
                     }

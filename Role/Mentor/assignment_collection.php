@@ -69,7 +69,7 @@
 
 
                     <td class="border-b px-4 py-2 text-center">
-                        <a href="download.php?path=./Upload/Assignment/Submission/Submission<?= $assignment['submission_filename']; ?>">
+                        <a href="download.php?file=<?= $assignment['submission_filename']; ?>">
                             <p class="text-dark-green"><?= $assignment['submission_filename']; ?></p>
                         </a>
                     </td>
