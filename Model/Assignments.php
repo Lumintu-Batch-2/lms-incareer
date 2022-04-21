@@ -8,6 +8,7 @@ class Assignments
     private $assignmentDesc;
     private $subjectId;
     private $assignmentType;
+    private $mentorId;
     private $dbConn;
 
     public function __construct()
@@ -72,10 +73,18 @@ class Assignments
     {
         return $this->assignmentType;
     }
+    public function setMentorId($id)
+    {
+        $this->mentorId = $id;
+    }
+    public function getMentorId()
+    {
+        return $this->mentorId;
+    }
 
     public function saveAssignment()
     {
-        $stmt = $this->dbConn->prepare("INSERT INTO assignments VALUES(null, :name, :start_date, :end_date, :desc, :assign_type, :sid)");
+        $stmt = $this->dbConn->prepare("INSERT INTO assignments VALUES(null, :name, :start_date, :end_date, :desc, :assign_type, :sid,:mid)");
 
         $stmt->bindParam(":name", $this->assignmentName);
         $stmt->bindParam(":start_date", $this->assignmentStartDate);
@@ -83,6 +92,7 @@ class Assignments
         $stmt->bindParam(":desc", $this->assignmentDesc);
         $stmt->bindParam(":assign_type", $this->assignmentType);
         $stmt->bindParam(":sid", $this->subjectId);
+        $stmt->bindParam(":mid", $this->mentorId);
 
         $id = "";
 
@@ -107,7 +117,7 @@ class Assignments
         }
     }
 
-    public function createAssignment($data, $file, $sid)
+    public function createAssignment($data, $file, $sid, $mid)
     {
         $is_ok = false;
         $msg = "";
@@ -137,7 +147,7 @@ class Assignments
             goto out;
         }
 
-        if(empty($data['assign_type'])) {
+        if (empty($data['assign_type'])) {
             $msg = "Tipe assignment tidak boleh kosong!";
             goto out;
         }
@@ -148,6 +158,7 @@ class Assignments
         $this->setAssignmentDesc($data['desc']);
         $this->setAssignmentType($data['assign_type']);
         $this->setSubjectId($sid);
+        $this->setMentorId($mid);
 
         require_once("AssignmentQuestion.php");
         $objQuest = new AssignmentQuestion;
@@ -212,7 +223,8 @@ class Assignments
             "UPDATE assignments SET assignment_name = :name, 
                                     assignment_start_date = :start_date,
                                     assignment_end_date = :end_date,
-                                    assignment_desc = :desc
+                                    assignment_desc = :desc,
+                                    assignment_type = :assign_type
                                     WHERE assignment_id = :id"
         );
 
@@ -221,6 +233,7 @@ class Assignments
         $stmt->bindParam(":end_date", $this->assignmentEndDate);
         $stmt->bindParam(":desc", $this->assignmentDesc);
         $stmt->bindParam(":id", $this->assignmentId);
+        $stmt->bindParam(':assign_type', $this->assignmentType);
 
         try {
             if ($stmt->execute()) {
@@ -263,14 +276,11 @@ class Assignments
         $this->setAssignmentEndDate($data['end-date']);
         $this->setAssignmentDesc($data['desc']);
         $this->setAssignmentId($data['id']);
-
-
+        $this->setAssignmentType($data['assign_type']);
 
         $validExtention = ['pdf', 'doc', 'docx', 'xlsx', 'txt', 'png', 'jpg', 'jpeg', 'ppt'];
         $fileExtention = explode(".", $file['filename']['name']);
         $fileExtention = strtolower(end($fileExtention));
-
-
 
         if ($file['filename']['size'] > 0) {
             if (!in_array($fileExtention, $validExtention)) {
