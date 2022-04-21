@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2022 at 09:36 AM
+-- Generation Time: Apr 21, 2022 at 07:57 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -34,17 +34,9 @@ CREATE TABLE `assignments` (
   `assignment_end_date` datetime NOT NULL,
   `assignment_desc` text NOT NULL,
   `assignment_type` enum('exam','task','','') NOT NULL,
-  `subject_id` int(10) UNSIGNED NOT NULL
+  `subject_id` int(10) UNSIGNED NOT NULL,
+  `mentor_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `assignments`
---
-
-INSERT INTO `assignments` (`assignment_id`, `assignment_name`, `assignment_start_date`, `assignment_end_date`, `assignment_desc`, `assignment_type`, `subject_id`) VALUES
-(2, 'Membuat List', '2022-04-07 09:27:18', '2022-04-15 14:27:18', 'nmgkjxu saiuiu dcgudgdiug ', 'exam', 3),
-(3, 'Membuat Linked List', '2022-04-07 09:27:18', '2022-04-15 14:27:18', 'sjkdh sdsoi osi oso', 'exam', 4),
-(4, 'Membuat tugas 1', '2022-04-11 11:52:00', '2022-04-13 11:52:00', 'bbbbbb', 'exam', 3);
 
 -- --------------------------------------------------------
 
@@ -78,28 +70,9 @@ CREATE TABLE `assignment_submissions` (
   `submission_filename` varchar(255) NOT NULL,
   `submitted_date` datetime NOT NULL,
   `assignment_token` varchar(255) NOT NULL,
-  `assignment_id` int(10) UNSIGNED DEFAULT NULL
+  `assignment_id` int(10) UNSIGNED DEFAULT NULL,
+  `student_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `assignment_submissions`
---
-
-INSERT INTO `assignment_submissions` (`assignment_submission_id`, `submission_filename`, `submitted_date`, `assignment_token`, `assignment_id`) VALUES
-(44, 'Submissionhalaman rumah (2).jpg', '2022-04-08 14:08:33', '', 2),
-(45, 'Submissionhalaman rumah (2).jpg', '2022-04-08 14:31:27', '', 3),
-(46, 'B_L200180194_Alfianto Andy P.pdf', '2022-04-08 14:40:12', '', 2),
-(47, 'SK_CPNS_196711221991122002.pdf', '2022-04-13 10:10:45', '', 2),
-(48, 'SK_CPNS_196711221991122002.pdf', '2022-04-13 10:10:46', '', 2),
-(49, 'SK_CPNS_196711221991122002.pdf', '2022-04-13 10:10:46', '', 2),
-(50, 'SK_CPNS_196711221991122002.pdf', '2022-04-13 10:10:47', '', 2),
-(51, 'SK_CPNS_196711221991122002.pdf', '2022-04-13 10:16:05', '', 2),
-(52, 'SK_CPNS_196711221991122002.pdf', '2022-04-13 10:16:06', '', 2),
-(53, 'B_L200180194_Alfianto Andy P.pdf', '2022-04-13 10:17:34', '', 2),
-(54, 'B_L200180194_Alfianto Andy P.pdf', '2022-04-13 10:20:27', '', 2),
-(55, 'B_L200180194_Alfianto Andy P.pdf', '2022-04-13 10:23:03', '', 2),
-(56, 'amar 1.jpg', '2022-04-13 10:23:20', '', 2),
-(57, 'B_L200180194_Alfianto Andy P.pdf', '2022-04-14 10:54:15', '', 2);
 
 -- --------------------------------------------------------
 
@@ -132,7 +105,8 @@ INSERT INTO `courses` (`course_id`, `course_name`, `course_desc`) VALUES
 CREATE TABLE `scores` (
   `score_id` int(10) UNSIGNED NOT NULL,
   `score_value` int(11) NOT NULL,
-  `assignment_upload_id` int(10) UNSIGNED NOT NULL
+  `assignment_upload_id` int(10) UNSIGNED NOT NULL,
+  `mentor_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -182,7 +156,10 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `username`, `password`, `role`) VALUES
 (5, 'Andy', '1234', 1),
 (6, 'Ilham', '1234', 2),
-(7, 'Alfianto', '1234', 1);
+(7, 'Alfianto', '1234', 1),
+(8, 'AAAAA', '1234', 1),
+(9, 'bbbb', '1234', 1),
+(10, 'cccc', '1234', 1);
 
 -- --------------------------------------------------------
 
@@ -218,7 +195,13 @@ INSERT INTO `user_courses` (`user_course_id`, `user_id`, `course_id`) VALUES
 (3, 6, 1),
 (4, 6, 2),
 (5, 7, 1),
-(6, 7, 2);
+(6, 7, 2),
+(7, 8, 1),
+(8, 8, 2),
+(11, 9, 1),
+(12, 9, 4),
+(13, 10, 2),
+(14, 10, 3);
 
 --
 -- Indexes for dumped tables
@@ -229,21 +212,31 @@ INSERT INTO `user_courses` (`user_course_id`, `user_id`, `course_id`) VALUES
 --
 ALTER TABLE `assignments`
   ADD PRIMARY KEY (`assignment_id`),
-  ADD KEY `fk_subjects` (`subject_id`);
+  ADD KEY `fk_subjects` (`subject_id`),
+  ADD KEY `fk_mentor` (`mentor_id`),
+  ADD KEY `index_name` (`assignment_name`),
+  ADD KEY `tgl` (`assignment_start_date`,`assignment_end_date`) USING BTREE,
+  ADD KEY `astype` (`assignment_type`);
 
 --
 -- Indexes for table `assignment_questions`
 --
 ALTER TABLE `assignment_questions`
   ADD PRIMARY KEY (`assignment_question_id`),
-  ADD KEY `fk_assign` (`assignment_id`);
+  ADD KEY `fk_assign` (`assignment_id`),
+  ADD KEY `index_filenime` (`question_filename`),
+  ADD KEY `index_upload` (`question_upload_date`);
 
 --
 -- Indexes for table `assignment_submissions`
 --
 ALTER TABLE `assignment_submissions`
   ADD PRIMARY KEY (`assignment_submission_id`),
-  ADD KEY `fk_assignment` (`assignment_id`);
+  ADD KEY `fk_assignment` (`assignment_id`),
+  ADD KEY `fk_student` (`student_id`),
+  ADD KEY `index_filename` (`submission_filename`),
+  ADD KEY `index_date` (`submitted_date`),
+  ADD KEY `index_token` (`assignment_token`);
 
 --
 -- Indexes for table `courses`
@@ -256,7 +249,9 @@ ALTER TABLE `courses`
 --
 ALTER TABLE `scores`
   ADD PRIMARY KEY (`score_id`),
-  ADD KEY `assingment_up_id` (`assignment_upload_id`);
+  ADD KEY `assingment_up_id` (`assignment_upload_id`),
+  ADD KEY `fk_mentorscore` (`mentor_id`),
+  ADD KEY `index_value` (`score_value`);
 
 --
 -- Indexes for table `subjects`
@@ -307,7 +302,7 @@ ALTER TABLE `assignment_questions`
 -- AUTO_INCREMENT for table `assignment_submissions`
 --
 ALTER TABLE `assignment_submissions`
-  MODIFY `assignment_submission_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `assignment_submission_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -331,7 +326,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `user_assignments`
@@ -343,7 +338,7 @@ ALTER TABLE `user_assignments`
 -- AUTO_INCREMENT for table `user_courses`
 --
 ALTER TABLE `user_courses`
-  MODIFY `user_course_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_course_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
@@ -353,7 +348,8 @@ ALTER TABLE `user_courses`
 -- Constraints for table `assignments`
 --
 ALTER TABLE `assignments`
-  ADD CONSTRAINT `fk_subjects` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_mentor` FOREIGN KEY (`mentor_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_subject` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `assignment_questions`
@@ -365,13 +361,15 @@ ALTER TABLE `assignment_questions`
 -- Constraints for table `assignment_submissions`
 --
 ALTER TABLE `assignment_submissions`
-  ADD CONSTRAINT `fk_assignment` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`assignment_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_assignment` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`assignment_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_student` FOREIGN KEY (`student_id`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `scores`
 --
 ALTER TABLE `scores`
-  ADD CONSTRAINT `assingment_up_id` FOREIGN KEY (`assignment_upload_id`) REFERENCES `assignment_submissions` (`assignment_submission_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `assingment_up_id` FOREIGN KEY (`assignment_upload_id`) REFERENCES `assignment_submissions` (`assignment_submission_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_mentorscore` FOREIGN KEY (`mentor_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `subjects`
