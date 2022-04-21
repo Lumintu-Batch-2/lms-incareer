@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2022 at 06:43 AM
+-- Generation Time: Apr 21, 2022 at 07:57 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -213,15 +213,19 @@ INSERT INTO `user_courses` (`user_course_id`, `user_id`, `course_id`) VALUES
 ALTER TABLE `assignments`
   ADD PRIMARY KEY (`assignment_id`),
   ADD KEY `fk_subjects` (`subject_id`),
-  ADD KEY `tgl` (`assignment_start_date`),
-  ADD KEY `fk_mentor` (`mentor_id`);
+  ADD KEY `fk_mentor` (`mentor_id`),
+  ADD KEY `index_name` (`assignment_name`),
+  ADD KEY `tgl` (`assignment_start_date`,`assignment_end_date`) USING BTREE,
+  ADD KEY `astype` (`assignment_type`);
 
 --
 -- Indexes for table `assignment_questions`
 --
 ALTER TABLE `assignment_questions`
   ADD PRIMARY KEY (`assignment_question_id`),
-  ADD KEY `fk_assign` (`assignment_id`);
+  ADD KEY `fk_assign` (`assignment_id`),
+  ADD KEY `index_filenime` (`question_filename`),
+  ADD KEY `index_upload` (`question_upload_date`);
 
 --
 -- Indexes for table `assignment_submissions`
@@ -229,7 +233,10 @@ ALTER TABLE `assignment_questions`
 ALTER TABLE `assignment_submissions`
   ADD PRIMARY KEY (`assignment_submission_id`),
   ADD KEY `fk_assignment` (`assignment_id`),
-  ADD KEY `fk_student` (`student_id`);
+  ADD KEY `fk_student` (`student_id`),
+  ADD KEY `index_filename` (`submission_filename`),
+  ADD KEY `index_date` (`submitted_date`),
+  ADD KEY `index_token` (`assignment_token`);
 
 --
 -- Indexes for table `courses`
@@ -243,7 +250,8 @@ ALTER TABLE `courses`
 ALTER TABLE `scores`
   ADD PRIMARY KEY (`score_id`),
   ADD KEY `assingment_up_id` (`assignment_upload_id`),
-  ADD KEY `fk_mentorscore` (`mentor_id`);
+  ADD KEY `fk_mentorscore` (`mentor_id`),
+  ADD KEY `index_value` (`score_value`);
 
 --
 -- Indexes for table `subjects`
