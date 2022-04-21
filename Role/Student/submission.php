@@ -199,8 +199,8 @@ echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] 
                             cache: false,
                             processData: false,
                             success: function(data) {
-                                console.log(data);
-                                alert("Berhasil mengupload submission!");
+                                let val = JSON.parse(data);
+                                alert(val.msg);
                                 location.replace("index.php");
                             }
                         })
