@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
     require "../../Model/AssignmentSubmission.php";
     $sub = new AssignmentSubmission;
     $create = $sub->createAssignmentSubmission($_FILES, $_GET['assignment_id']);
-    
+
     if ($create["is_ok"] == false) {
         $message = $create["msg"];
         $assignmentId = $_GET['assignment_id'];
@@ -48,6 +48,9 @@ echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] 
     <link rel="stylesheet" href="../../CSS/UploafField.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css" rel="stylesheet" />
     <title>Hello, world!</title>
 </head>
 
@@ -74,13 +77,14 @@ echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] 
                         </div>
                         <div class="dropzone-wrapper">
                             <div class="dropzone-desc">
-                                <!-- <i class="glyphicon glyphicon-download-alt"></i> -->
+                                <i class="glyphicon glyphicon-download-alt"></i>
                                 <i class="bi bi-arrow-down" style="font-size: 2rem; "></i>
                                 <p>
                                     <strong> Choose a file</strong> or drag it here.
                                 </p>
                             </div>
                             <input type="file" name="filename" id="fileInput" class="dropzone" multiple>
+
                         </div>
                     </div>
                 </div>
@@ -186,7 +190,7 @@ echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] 
                 success: function(data) {
                     let dataJson = JSON.parse(data);
                     // console.log(dataJson[0].submission_id);
-                    for(i = 0; i < fileData.files.length; i++) {
+                    for (i = 0; i < fileData.files.length; i++) {
                         let formData = new FormData();
                         formData.append("data", fileData.files[i]);
                         formData.append("submission_id", dataJson[i].submission_id);
@@ -209,7 +213,24 @@ echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] 
             })
         });
     </script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+    <script>
+        FilePond.parse(document.body);
+        FilePond.registerPlugin(
+            FilePondPluginImagePreview,
+            FilePondPluginImageExifOrientation,
+            FilePondPluginFileValidateSize,
+            FilePondPluginImageEdit
+        );
 
+        FilePond.create(
+            document.querySelector('input')
+        );
+    </script>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
