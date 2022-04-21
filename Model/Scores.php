@@ -4,6 +4,8 @@ class Scores
     private $scoreId;
     private $scoreValue;
     private $assignmentUploadId;
+    private $componentId;
+    private $mentorId;
     private $dbConn;
 
     public function __construct()
@@ -37,5 +39,21 @@ class Scores
     public function getAssignmentUploadId()
     {
         return $this->assignmentUploadId;
+    }
+    public function setComponentId($id)
+    {
+        $this->componentId = $id;
+    }
+    public function getComponentId()
+    {
+        return $this->componentId;
+    }
+    public function setMentorId($id)
+    {
+        $this->mentorId = $id;
+    }
+    public function getMentorId()
+    {
+        return $this->getMentorId();
     }
 }
