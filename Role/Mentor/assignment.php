@@ -168,7 +168,17 @@ if (isset($_GET['act'])) {
                                             <br>
                                             <label for="end-date">Tanggal akhir: </label>
                                             <input type="datetime-local" name="end-date" id="end-date" value="<?= date("Y-m-d\TH:i", strtotime($assigments['assignment_end_date'])); ?>">
+                                            <br>
+                                            <label for="type">Assignment Type :</label>
+                                            <select name="assign_type" id="assign_type">
 
+                                                <option value="1" <?php if ($assigments['assignment_type'] == 'exam') {
+                                                                        echo ('selected');
+                                                                    } ?>>Exam</option>
+                                                <option value="2" <?php if ($assigments['assignment_type'] == 'task') {
+                                                                        echo ('selected');
+                                                                    } ?>>Task</option>
+                                            </select>
                                             <?php
 
                                             $objSubmission = new AssignmentSubmission;

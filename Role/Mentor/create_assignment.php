@@ -3,12 +3,12 @@ session_start();
 
 $loginPath = "../../login.php";
 
-if(!isset($_SESSION['user'])) {
-    header("location: " . $loginPath );
+if (!isset($_SESSION['user'])) {
+    header("location: " . $loginPath);
     die;
 }
 
-switch($_SESSION['user']['role']) {
+switch ($_SESSION['user']['role']) {
     case 1:
         echo "
         <script>
@@ -32,20 +32,20 @@ switch($_SESSION['user']['role']) {
 if (isset($_POST['upload'])) {
     require "../../Model/Assignments.php";
     $objAsign = new Assignments;
-    $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id']);
+    $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id'], $_SESSION['user']['user_id']);
     $create_status = $create['is_ok'] ? "true" : "false";
 
-    if($create['is_ok']) {
+    if ($create['is_ok']) {
         echo "
         <script>
             alert('" . $create['msg'] . "');
-            location.replace('assignment.php?subject_id=". $_GET['subject_id'] ."')
+            location.replace('assignment.php?subject_id=" . $_GET['subject_id'] . "')
         </script>";
     } else {
         echo "
         <script>
             alert('" . $create['msg'] . "');
-            location.replace('create_assignment.php?subject_id=". $_GET['subject_id'] ."')
+            location.replace('create_assignment.php?subject_id=" . $_GET['subject_id'] . "')
         </script>";
     }
 }
