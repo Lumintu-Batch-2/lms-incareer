@@ -71,7 +71,7 @@ if (isset($_GET['act'])) {
                 if ($deleteStat) {
                     echo "
                     <script>
-                        alert('Berhasil berhasil dihapus!');
+                        alert('Data berhasil dihapus!');
                         location.replace('assignment.php?subject_id=" . $_GET['subject_id'] . "')
                     </script>";
                 } else {
@@ -115,6 +115,7 @@ if (isset($_GET['act'])) {
                 <th>Due Date</th>
                 <th>Due Time</th>
                 <th>Desciption</th>
+                <th>Type</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -136,6 +137,8 @@ if (isset($_GET['act'])) {
                     <td><?= $dueDate; ?></td>
                     <td><?= $dueTime; ?></td>
                     <td><?= $assignment['assignment_desc'] ?></td>
+                    <td><?= $assignment['assignment_type']; ?></td>
+
                     <td>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>">Edit</button>
                         <a class="btn btn-info" href="assignment_collection.php?assignment_id=<?= $assignment['assignment_id'] . "&subject_id=" . $_GET['subject_id']; ?>">Assignment Collection</a>
@@ -199,7 +202,7 @@ if (isset($_GET['act'])) {
                                 </div>
                             </div>
                         </div>
-                        <a class="btn btn-danger" href="assignment.php?subject_id=<?= $_GET['subject_id']; ?>&act=delete&assign_id=<?= $assignment['assignment_id']; ?>">Hapus</a>
+                        <a class="btn btn-danger" href="assignment.php?subject_id=<?= $_GET['subject_id']; ?>&act=delete&assign_id=<?= $assignment['assignment_id']; ?>" onclick="return confirm('Hapus assignment?');">Hapus</a>
                     </td>
                 </tr>
             <?php endforeach ?>

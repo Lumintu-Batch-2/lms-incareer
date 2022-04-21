@@ -78,6 +78,12 @@ if (isset($_POST['upload'])) {
         <input type="datetime-local" name="start-date" id="start-date">
         <label for="end-date">Tanggal akhir: </label>
         <input type="datetime-local" name="end-date" id="end-date">
+        <label for="assign_type">Assignment Type: </label>
+        <select name="assign_type" id="assign_type">
+            <option value="" default>---</option>
+            <option value="1">Exam</option>
+            <option value="2">Task</option>
+        </select>
         <div class="form-group">
             <label for="exampleFormControlFile1">Tambahkan file</label>
             <input type="file" class="form-control-file" id="exampleFormControlFile1" name="filename">
