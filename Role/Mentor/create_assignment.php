@@ -3,12 +3,12 @@ session_start();
 
 $loginPath = "../../login.php";
 
-if(!isset($_SESSION['user'])) {
-    header("location: " . $loginPath );
+if (!isset($_SESSION['user'])) {
+    header("location: " . $loginPath);
     die;
 }
 
-switch($_SESSION['user']['role']) {
+switch ($_SESSION['user']['role']) {
     case 1:
         echo "
         <script>
@@ -32,20 +32,20 @@ switch($_SESSION['user']['role']) {
 if (isset($_POST['upload'])) {
     require "../../Model/Assignments.php";
     $objAsign = new Assignments;
-    $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id']);
+    $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id'], $_SESSION['user']['user_id']);
     $create_status = $create['is_ok'] ? "true" : "false";
 
-    if($create['is_ok']) {
+    if ($create['is_ok']) {
         echo "
         <script>
             alert('" . $create['msg'] . "');
-            location.replace('assignment.php?subject_id=". $_GET['subject_id'] ."')
+            location.replace('assignment.php?subject_id=" . $_GET['subject_id'] . "')
         </script>";
     } else {
         echo "
         <script>
             alert('" . $create['msg'] . "');
-            location.replace('create_assignment.php?subject_id=". $_GET['subject_id'] ."')
+            location.replace('create_assignment.php?subject_id=" . $_GET['subject_id'] . "')
         </script>";
     }
 }
@@ -78,6 +78,12 @@ if (isset($_POST['upload'])) {
         <input type="datetime-local" name="start-date" id="start-date">
         <label for="end-date">Tanggal akhir: </label>
         <input type="datetime-local" name="end-date" id="end-date">
+        <label for="assign_type">Assignment Type: </label>
+        <select name="assign_type" id="assign_type">
+            <option value="" default>---</option>
+            <option value="1">Exam</option>
+            <option value="2">Task</option>
+        </select>
         <div class="form-group">
             <label for="exampleFormControlFile1">Tambahkan file</label>
             <input type="file" class="form-control-file" id="exampleFormControlFile1" name="filename">
