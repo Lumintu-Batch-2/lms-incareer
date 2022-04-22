@@ -18,19 +18,6 @@ switch ($_SESSION['user']['role']) {
     default:
         break;
 }
-if (isset($_POST['submit'])) {
-    require "../../Model/AssignmentSubmission.php";
-    $sub = new AssignmentSubmission;
-    $create = $sub->createAssignmentSubmission($_FILES, $_GET['assignment_id']);
-
-    if ($create["is_ok"] == false) {
-        $message = $create["msg"];
-        $assignmentId = $_GET['assignment_id'];
-        echo "<script>alert('$message');
-        location.replace('./submission.php?assignment_id='+ $assignmentId);
-        </script>";
-    }
-}
 
 echo "<input type='hidden' id='assign_id' value='" . $_GET['assignment_id'] . "'/>";
 echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']['user_id'] . "'/>";
@@ -60,7 +47,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']['user_id
     <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
-    
+
 
 </head>
 
@@ -110,14 +97,13 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']['user_id
     </form>
 
     <script>
-
         let assignmentId = document.querySelector("#assign_id");
         let studentId = document.getElementById("student_id");
-        
+
         let assignment_id = assignmentId.value;
         let student_id = studentId.value;
 
-        
+
 
         function readFile(input) {
             if (input.files && input.files[0]) {
@@ -245,7 +231,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']['user_id
             document.querySelector('input')
         );
     </script>
-    
+
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

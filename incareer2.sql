@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2022 at 07:57 AM
+-- Generation Time: Apr 22, 2022 at 08:56 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -38,6 +38,16 @@ CREATE TABLE `assignments` (
   `mentor_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `assignments`
+--
+
+INSERT INTO `assignments` (`assignment_id`, `assignment_name`, `assignment_start_date`, `assignment_end_date`, `assignment_desc`, `assignment_type`, `subject_id`, `mentor_id`) VALUES
+(5, 'Membuat List', '2022-04-21 13:47:00', '2022-04-29 13:47:00', 'abc', 'exam', 3, 6),
+(6, 'Membuat Linked List', '2022-04-21 13:50:00', '2022-04-28 13:50:00', 'asasasa', 'task', 4, 6),
+(7, 'Query Join', '2022-04-22 13:51:00', '2022-04-29 13:51:00', 'sds', 'task', 5, 6),
+(8, 'Tugas 1', '2022-04-22 14:26:00', '2022-04-30 14:26:00', '1234', 'task', 3, 6);
+
 -- --------------------------------------------------------
 
 --
@@ -56,8 +66,10 @@ CREATE TABLE `assignment_questions` (
 --
 
 INSERT INTO `assignment_questions` (`assignment_question_id`, `question_filename`, `question_upload_date`, `assignment_id`) VALUES
-(1, 'Jadwal Latihan FG.xlsx', '2022-04-06 13:06:44', NULL),
-(2, 'amar 2.jpg', '2022-04-11 11:52:33', NULL);
+(3, 'L200180194_Alfianto Andy P_UAS comvis.doc', '2022-04-21 13:49:41', 5),
+(4, 'L200180194_C_TUGAS 4.pdf', '2022-04-21 13:50:50', 6),
+(5, 'L200180194_Alfianto Andy P_comvis.pdf', '2022-04-21 13:51:56', 7),
+(6, 'Nama.docx', '2022-04-21 14:27:14', 8);
 
 -- --------------------------------------------------------
 
@@ -69,10 +81,19 @@ CREATE TABLE `assignment_submissions` (
   `assignment_submission_id` int(10) UNSIGNED NOT NULL,
   `submission_filename` varchar(255) NOT NULL,
   `submitted_date` datetime NOT NULL,
-  `assignment_token` varchar(255) NOT NULL,
+  `submission_token` varchar(255) NOT NULL,
   `assignment_id` int(10) UNSIGNED DEFAULT NULL,
   `student_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `assignment_submissions`
+--
+
+INSERT INTO `assignment_submissions` (`assignment_submission_id`, `submission_filename`, `submitted_date`, `submission_token`, `assignment_id`, `student_id`) VALUES
+(126, 'PEMERINTAH KABUPATEN BOYOLALI.docx', '2022-04-22 13:53:48', '65d514119902d3548dacd559dea17320', 5, 5),
+(127, '1.txt', '2022-04-22 13:53:48', '65d514119902d3548dacd559dea17320', 5, 5),
+(128, '2.txt', '2022-04-22 13:53:48', '65d514119902d3548dacd559dea17320', 5, 5);
 
 -- --------------------------------------------------------
 
@@ -236,7 +257,7 @@ ALTER TABLE `assignment_submissions`
   ADD KEY `fk_student` (`student_id`),
   ADD KEY `index_filename` (`submission_filename`),
   ADD KEY `index_date` (`submitted_date`),
-  ADD KEY `index_token` (`assignment_token`);
+  ADD KEY `index_token` (`submission_token`) USING BTREE;
 
 --
 -- Indexes for table `courses`
@@ -290,19 +311,19 @@ ALTER TABLE `user_courses`
 -- AUTO_INCREMENT for table `assignments`
 --
 ALTER TABLE `assignments`
-  MODIFY `assignment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `assignment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `assignment_questions`
 --
 ALTER TABLE `assignment_questions`
-  MODIFY `assignment_question_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `assignment_question_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `assignment_submissions`
 --
 ALTER TABLE `assignment_submissions`
-  MODIFY `assignment_submission_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `assignment_submission_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `courses`
