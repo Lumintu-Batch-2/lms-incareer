@@ -214,12 +214,13 @@ class AssignmentSubmission
 
     public function saveSubmission()
     {
-        $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES(null, :name, :date, :token, :aid)");
+        $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES(null, :name, :date, :token, :aid, :sid)");
 
         $stmt->bindParam(":name", $this->submissionFileName);
         $stmt->bindParam(":date", $this->submissionUploadDate);
         $stmt->bindParam(":aid", $this->assignmentId);
         $stmt->bindParam(":token", $this->submissionFileName);
+        $stmt->bindParam(":sid", $this->studentId);
 
         $id = "";
 
