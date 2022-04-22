@@ -32,7 +32,8 @@ if (isset($_POST['submit'])) {
     }
 }
 
-echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] . "'";
+echo "<input type='hidden' id='assign_id' value='" . $_GET['assignment_id'] . "'/>";
+echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']['user_id'] . "'/>";
 
 ?>
 <!doctype html>
@@ -52,6 +53,15 @@ echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] 
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
     <link href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css" rel="stylesheet" />
     <title>Hello, world!</title>
+
+    <!-- Dropzone -->
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+    
+
 </head>
 
 <body>
@@ -100,6 +110,15 @@ echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] 
     </form>
 
     <script>
+
+        let assignmentId = document.querySelector("#assign_id");
+        let studentId = document.getElementById("student_id");
+        
+        let assignment_id = assignmentId.value;
+        let student_id = studentId.value;
+
+        
+
         function readFile(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -175,13 +194,14 @@ echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] 
             e.preventDefault();
 
             let fileData = document.getElementById("fileInput");
-            let assignmentId = document.getElementById("assignment_id");
-            let assignment_id = assignmentId.value;
 
             let data = {
                 assigId: assignment_id,
+                studId: student_id,
                 count: fileData.files.length
             }
+
+            console.log(data);
 
             $.ajax({
                 url: "insert_submission.php",
@@ -212,13 +232,7 @@ echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] 
                 }
             })
         });
-    </script>
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
-    <script>
+
         FilePond.parse(document.body);
         FilePond.registerPlugin(
             FilePondPluginImagePreview,
@@ -231,6 +245,7 @@ echo "<input type='hidden' id='assignment_id' value='" . $_GET['assignment_id'] 
             document.querySelector('input')
         );
     </script>
+    
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

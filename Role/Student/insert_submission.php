@@ -1,7 +1,5 @@
 <?php 
 
-// print_r($_POST['count']);
-
 $arr = array();
 
 for($i = 0; $i < $_POST['count']; $i++) {
@@ -13,6 +11,7 @@ for($i = 0; $i < $_POST['count']; $i++) {
     $objAssg->setSubmissionFileName("");
     $objAssg->setSubmissionUploadDate($dateupload);
     $objAssg->setAssignmentId($_POST['assigId']);
+    $objAssg->setStudentId($_POST['studId']);
 
     $save = $objAssg->saveSubmission();
 
