@@ -1,27 +1,19 @@
 <?php
 
-
 session_start();
-// require('./login.php')
+
+$loginPath = "../../login.php";
+
 if (!isset($_SESSION['user'])) {
-    header("location: ../../login.php");
+    header("location: " . $loginPath);
 }
 
-// if ($_SESSION['user']['role'] == 2) {
-//     echo "<script>alert('Akses Ditolak');
-//     location.replace('../Mentor/index.php')</script>";
-// } elseif ($_SESSION['user']['role'] == 3) {
-//     echo "<script>alert('Akses Ditolak');
-//     location.replace('../../login.php')</script>";
-//     // header("location: ../../login.php");
-// }
-
-switch ($_SESSION['user']['role']) {
-    case 2:
+switch ($_SESSION['user']->{'role_id'}) {
+    case 1:
         echo "<script>alert('Akses Ditolak');
     location.replace('../Mentor/index.php')</script>";
         break;
-    case 3:
+    case 2:
         echo "<script>alert('Akses Ditolak');
     location.replace('../../login.php')</script>";
         break;
@@ -33,7 +25,7 @@ switch ($_SESSION['user']['role']) {
 
 require "../../Model/Courses.php";
 $objCourse = new Courses;
-$allCourses = $objCourse->gelAllCourseByUserId($_SESSION['user']['user_id']);
+$allCourses = $objCourse->gelAllCourseByUserId($_SESSION['user']->{'user_id'});
 
 ?>
 

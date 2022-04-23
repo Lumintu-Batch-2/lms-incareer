@@ -9,12 +9,12 @@ if(!isset($_SESSION['user'])) {
     die;
 }
 
-switch($_SESSION['user']['role']) {
+switch($_SESSION['user']->{'role'}) {
     case 1:
         echo "
         <script>
             alert('Akses ditolak!');
-            location.replace('../Student/');
+            location.replace('../Admin/');
         </script>
         ";
         break;
@@ -22,7 +22,7 @@ switch($_SESSION['user']['role']) {
         echo "
         <script>
             alert('Akses ditolak!');
-            location.replace('../Admin/');
+            location.replace('../Student/');
         </script>
         ";
         break;
@@ -31,11 +31,9 @@ switch($_SESSION['user']['role']) {
 }
 
 
-
-
 require "../../Model/Courses.php";
 $objCourse = new Courses;
-$allCourses = $objCourse->gelAllCourseByUserId($_SESSION['user']['user_id']);
+$allCourses = $objCourse->gelAllCourseByUserId($_SESSION['user']->{'user_id'});
 
 ?>
 
