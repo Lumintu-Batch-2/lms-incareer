@@ -6,26 +6,24 @@ $loginPath = "../../login.php";
 
 if (!isset($_SESSION['user'])) {
     header("location: " . $loginPath);
-    die;
 }
 
-switch ($_SESSION['user']['role']) {
+switch ($_SESSION['user']->{'role_id'}) {
     case 1:
         echo "
         <script>
-            alert('Akses ditolak!');
-            location.replace('../Student/');
-        </script>
-        ";
+            alert('Akses Ditolak');
+            location.replace('../Admin/index.php')
+        </script>";
         break;
     case 3:
         echo "
         <script>
-            alert('Akses ditolak!');
-            location.replace('../Admin/');
-        </script>
-        ";
+            alert('Akses Ditolak');
+            location.replace('../Student/login.php')
+        </script>";
         break;
+
     default:
         break;
 }

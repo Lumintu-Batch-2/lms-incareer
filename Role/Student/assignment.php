@@ -1,22 +1,33 @@
 <?php
+
 session_start();
-// require('./login.php')
+
+$loginPath = "../../login.php";
+
 if (!isset($_SESSION['user'])) {
-    header("location: ../../login.php");
+    header("location: " . $loginPath);
 }
 
-switch ($_SESSION['user']['role']) {
+switch ($_SESSION['user']->{'role_id'}) {
+    case 1:
+        echo "
+        <script>
+            alert('Akses Ditolak');
+            location.replace('../Admin/index.php')
+        </script>";
+        break;
     case 2:
-        echo "<script>alert('Akses Ditolak');
-    location.replace('../Mentor/index.php')</script>";
+        echo "
+        <script>
+            alert('Akses Ditolak');
+            location.replace('../Mentor/login.php')
+        </script>";
         break;
-    case 3:
-        echo "<script>alert('Akses Ditolak');
-    location.replace('../../login.php')</script>";
-        break;
+
     default:
         break;
 }
+
 require_once('../../Model/Assignments.php');
 $objAssign = new Assignments;
 

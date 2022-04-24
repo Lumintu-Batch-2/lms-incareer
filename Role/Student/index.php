@@ -10,12 +10,18 @@ if (!isset($_SESSION['user'])) {
 
 switch ($_SESSION['user']->{'role_id'}) {
     case 1:
-        echo "<script>alert('Akses Ditolak');
-    location.replace('../Mentor/index.php')</script>";
+        echo "
+        <script>
+            alert('Akses Ditolak');
+            location.replace('../Admin/index.php')
+        </script>";
         break;
     case 2:
-        echo "<script>alert('Akses Ditolak');
-    location.replace('../../login.php')</script>";
+        echo "
+        <script>
+            alert('Akses Ditolak');
+            location.replace('../Mentor/login.php')
+        </script>";
         break;
 
     default:
@@ -23,9 +29,34 @@ switch ($_SESSION['user']->{'role_id'}) {
 }
 
 
-require "../../Model/Courses.php";
-$objCourse = new Courses;
-$allCourses = $objCourse->gelAllCourseByUserId($_SESSION['user']->{'user_id'});
+require_once "../../api/get_api_data.php";
+
+$courseData = array();
+$batchData = array();
+$modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+$userBatchJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user_batch"));
+
+for($i = 0; $i < count($userBatchJSON->{'data'}); $i++) {
+    if($userBatchJSON->{'data'}[$i]->{'user_user_id'} == $_SESSION['user']->{'user_id'}) {
+        array_push($batchData, $userBatchJSON->{'data'}[$i]);
+    }
+}
+
+
+for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
+    if($modulJSON->{'data'}[$i]->{'parent_id'} == NULL) {
+        for($j = 0; $j < count($batchData); $j++){
+            if($modulJSON->{'data'}[$i]->{'batch_id'} == $batchData[$j]->{'batch_batch_id'}) {
+                array_push($courseData, $modulJSON->{'data'}[$i]);
+            }
+        }   
+    }
+}
+
+var_dump($batchData);
+var_dump($courseData);
+
+// var_dump($courseData);
 
 ?>
 
@@ -48,27 +79,21 @@ $allCourses = $objCourse->gelAllCourseByUserId($_SESSION['user']->{'user_id'});
 </head>
 
 <body>
-    <!-- <a class="btn btn-primary" href="./create_assignment.php">Buat tugas</a>
-    <a href="submission.php" class="btn btn-danger">Submission</a>
-    <a href="course.php" class="btn btn-danger">Course</a>
-    <a href="submissionlist.php" class="btn btn-danger">Submission List</a>
-    <a href="list_assignments.php" class="btn btn-primary">List Assignment</a>
-    <a href="question_list.php" class="btn btn-primary">Question List</a> -->
+    <h1>Halaman Mentor</h1>
 
     <table>
         <thead>
             <th>ID</th>
             <th>Name</th>
-            <th>Description</th>
+            <!-- <th>Description</th> -->
             <th>Link</th>
         </thead>
         <tbody>
-            <?php foreach ($allCourses as $key => $course) : ?>
+            <?php foreach ($courseData as $key => $course) : ?>
                 <tr>
-                    <td><?= $course['course_id']; ?></td>
-                    <td><?= $course['course_name']; ?></td>
-                    <td><?= $course['course_desc']; ?></td>
-                    <td><a href="./course.php?course_id=<?= $course['course_id']; ?>">Link</a></td>
+                    <td><?= $course->{'id'}; ?></td>
+                    <td><?= $course->{'modul_name'}; ?></td>
+                    <td><a href="./course.php?course_id=<?= $course->{'id'}; ?>">Link</a></td>
                 </tr>
             <?php endforeach ?>
         </tbody>
