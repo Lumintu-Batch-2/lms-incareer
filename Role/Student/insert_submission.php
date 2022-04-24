@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 $arr = array();
-
-for($i = 0; $i < $_POST['count']; $i++) {
+$token = md5(uniqid());
+for ($i = 0; $i < $_POST['count']; $i++) {
     require_once "../../Model/AssignmentSubmission.php";
     $objAssg = new AssignmentSubmission;
     date_default_timezone_set("Asia/Bangkok");
@@ -12,6 +12,7 @@ for($i = 0; $i < $_POST['count']; $i++) {
     $objAssg->setSubmissionUploadDate($dateupload);
     $objAssg->setAssignmentId($_POST['assigId']);
     $objAssg->setStudentId($_POST['studId']);
+    $objAssg->setSubmissionToken($token);
 
     $save = $objAssg->saveSubmission();
 
@@ -19,6 +20,3 @@ for($i = 0; $i < $_POST['count']; $i++) {
 }
 
 print_r(json_encode($arr));
-
-
-?>
