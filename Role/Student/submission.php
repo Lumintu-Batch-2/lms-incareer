@@ -5,14 +5,14 @@ if (!isset($_SESSION['user'])) {
     header("location: ../../login.php");
 }
 
-switch ($_SESSION['user']['role']) {
+switch ($_SESSION['user']->{'role_id'}) {
+    case 1:
+        echo "<script>alert('Akses Ditolak');
+    location.replace('../../Admin/')</script>";
+        break;
     case 2:
         echo "<script>alert('Akses Ditolak');
-    location.replace('../Mentor/index.php')</script>";
-        break;
-    case 3:
-        echo "<script>alert('Akses Ditolak');
-    location.replace('../../login.php')</script>";
+    location.replace('../../Mentor/')</script>";
         break;
 
     default:
@@ -20,7 +20,7 @@ switch ($_SESSION['user']['role']) {
 }
 
 echo "<input type='hidden' id='assign_id' value='" . $_GET['assignment_id'] . "'/>";
-echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']['user_id'] . "'/>";
+echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_id'} . "'/>";
 
 ?>
 <!doctype html>

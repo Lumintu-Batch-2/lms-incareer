@@ -9,7 +9,7 @@ if(!isset($_SESSION['user'])) {
     die;
 }
 
-switch($_SESSION['user']->{'role'}) {
+switch($_SESSION['user']->{'role_id'}) {
     case 1:
         echo "
         <script>

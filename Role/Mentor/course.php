@@ -78,7 +78,7 @@ var_dump($subjectData);
                 <tr>
                     <td><?= $subject->{'id'}; ?></td>
                     <td><?= $subject->{'modul_name'}; ?></td>
-                    <td><a href="assignment.php?subject_id=<?= $subject->{'id'}; ?>">assignment</a></td>
+                    <td><a href="assignment.php?course_id=<?=$_GET['course_id'] ?>&subject_id=<?= $subject->{'id'}; ?>">assignment</a></td>
                 </tr>
             <?php endforeach ?>
         </tbody>
