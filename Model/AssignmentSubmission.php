@@ -5,7 +5,7 @@ class AssignmentSubmission
     private $submissionFileName;
     private $submissionUploadDate;
     private $assignmentId;
-    private $assignmentToken;
+    private $submissionToken;
     private $dbConn;
     private $studentId;
 
@@ -49,14 +49,14 @@ class AssignmentSubmission
     {
         return $this->assignmentId;
     }
-    public function setAssignmentToken($token)
+    public function setSubmissionToken($token)
     {
-        $this->assignmentToken = $token;
+        $this->submissionToken = $token;
     }
 
-    public function getAssignmentToken()
+    public function getSubmissionToken()
     {
-        return $this->assignmentToken;
+        return $this->submissionToken;
     }
 
     public function setStudentId($id)
@@ -69,93 +69,6 @@ class AssignmentSubmission
         return $this->studentId;
     }
 
-
-
-    public function createAssignmentSubmission($file, $id)
-    {
-        date_default_timezone_set("Asia/Bangkok");
-        $is_ok = false;
-        $msg = "";
-        require_once('Assignments.php');
-        $objassign = new Assignments;
-        $assignment = $objassign->getAssignmentByAssignmentId($id);
-
-        $objQuest = new AssignmentSubmission;
-
-        $validExtention = ['pdf', 'doc', 'docx', 'xlsx', 'txt', 'png', 'jpg', 'jpeg', 'ppt', 'pdf', 'rar', 'zip'];
-        $fileExtention = explode(".", $file['filename']['name']);
-        $fileExtention = strtolower(end($fileExtention));
-        $filesize = $file['filename']['size'];
-        date_default_timezone_set("Asia/Bangkok");
-        $dateupload = date("Y-m-d H:i:s");
-        if (!in_array($fileExtention, $validExtention)) {
-            $msg = "Format file tidak didukung!";
-            goto out;
-        }
-
-        if ($dateupload < $assignment['assignment_start_date']) {
-            $msg = "Assignment Belum Dimulai";
-            goto out;
-        }
-        if ($dateupload > $assignment['assignment_end_date']) {
-            $msg = "Assignment sudah melebihi deadline";
-            goto out;
-        }
-
-        if ($filesize > 2000000) {
-            $msg = "Ukuran file tidak boleh lebih dari 2 Mb";
-            var_dump($filesize);
-            goto out;
-        }
-
-        $objQuest->setSubmissionFileName($file['filename']['name']);
-        date_default_timezone_set("Asia/Bangkok");
-        $date = date("Y-m-d H:i:s");
-        $objQuest->setSubmissionUploadDate($date);
-
-        // $path = "./Upload/Assignment/Submission";
-
-        $path = "../../Upload/Assignment/Submission/";
-        move_uploaded_file($file['filename']['tmp_name'], $path . $file['filename']['name']);
-
-        // $save = $this->saveSubmission();
-        $upload = $objQuest->uploadFile($id);
-
-        if ($upload) {
-            $msg = "Berhasil membuat tugas!";
-            $is_ok = true;
-            goto out;
-        } else {
-            $msg = "Gagal membuat tugas!";
-            goto out;
-        }
-
-        out: {
-            return [
-                "is_ok" => $is_ok,
-                "msg" => $msg,
-            ];
-        }
-    }
-    public function uploadFile($id)
-
-    {
-        date_default_timezone_set("Asia/Bangkok");
-        $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES (null, :filename, :upload_date, :asid)");
-        $stmt->bindParam(":filename", $this->submissionFileName);
-        $stmt->bindParam(":upload_date", $this->submissionUploadDate);
-        $stmt->bindParam(":asid", $id);
-
-        try {
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
-    }
     public function getAllAssignment()
     {
         $stmnt = $this->dbConn->prepare(
@@ -219,7 +132,7 @@ class AssignmentSubmission
         $stmt->bindParam(":name", $this->submissionFileName);
         $stmt->bindParam(":date", $this->submissionUploadDate);
         $stmt->bindParam(":aid", $this->assignmentId);
-        $stmt->bindParam(":token", $this->submissionFileName);
+        $stmt->bindParam(":token", $this->submissionToken);
         $stmt->bindParam(":sid", $this->studentId);
 
         $id = "";
