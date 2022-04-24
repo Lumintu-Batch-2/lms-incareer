@@ -3,7 +3,7 @@ class Scores
 {
     private $scoreId;
     private $scoreValue;
-    private $assignmentUploadId;
+    private $submissionId;
     private $componentId;
     private $mentorId;
     private $dbConn;
@@ -32,13 +32,13 @@ class Scores
     {
         return $this->scoreValue;
     }
-    public function setAssignmentUploadId($id)
+    public function setSubmissionId($id)
     {
-        $this->assignmentUploadId = $id;
+        $this->submissionId = $id;
     }
-    public function getAssignmentUploadId()
+    public function getSubmissionId()
     {
-        return $this->assignmentUploadId;
+        return $this->submissionId;
     }
     public function setComponentId($id)
     {
@@ -54,6 +54,40 @@ class Scores
     }
     public function getMentorId()
     {
-        return $this->getMentorId();
+        return $this->mentorId;
+    }
+    public function saveScore()
+    {
+        $stmt = $this->dbConn->prepare('INSERT INTO `scores` (`score_id`, `score_value`, `submission_id`, `mentor_id`, `component_id`) VALUES (NULL, :sv, :uid, :mid, :cid)');
+        $stmt->bindParam(':sv', $this->scoreValue);
+        $stmt->bindParam(':mid', $this->mentorId);
+        $stmt->bindParam(':cid', $this->componentId);
+        $stmt->bindParam(':uid', $this->submissionId);
+
+        try {
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function updateScore()
+    {
+        $stmt = $this->dbConn->prepare('UPDATE `scores` SET `score_value`= :sv, `mentor_id`= :mid WHERE score_id = :sid');
+        $stmt->bindParam(':sv', $this->scoreValue);
+        $stmt->bindParam(':sid', $this->scoreId);
+        $stmt->bindParam(':mid', $this->mentorId);
+        try {
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 }
