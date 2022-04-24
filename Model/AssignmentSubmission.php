@@ -106,7 +106,7 @@ class AssignmentSubmission
         return $allAssignment;
     }
 
-    public function getAllSubmissionByAssignmentId($id)
+    public function getAllSubmissionByAssignmentId()
     {
         $stmnt = $this->dbConn->prepare(
             "SELECT * FROM `assignment_submissions` WHERE `assignment_submissions`.`assignment_id` = :id"
@@ -176,5 +176,60 @@ class AssignmentSubmission
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    public function getAllStudetSubmittedFile()
+    {
+        $stmt = $this->dbConn->prepare('SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.submission_filename,users.user_id , users.username  , scores.score_id, scores.score_value FROM assignment_submissions, users,scores WHERE assignment_submissions.assignment_submission_id = scores.submission_id AND assignment_submissions.student_id = users.user_id AND assignment_submissions.assignment_id= :asid  GROUP BY assignment_submissions.submission_token');
+        $stmt->bindParam(":asid", $this->assignmentId);
+        try {
+            if ($stmt->execute()) {
+                $submission = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $submission;
+    }
+    public function getSubmissionByToken()
+    {
+        $stmt = $this->dbConn->prepare('SELECT * FROM assignment_submissions WHERE assignment_submissions.submission_token = :st LIMIT 2');
+        $stmt->bindParam(':st', $this->submissionToken);
+
+        try {
+            if ($stmt->execute()) {
+                $stoken = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $stoken;
+    }
+    public function getRowSubmissionByToken()
+    {
+        $stmt = $this->dbConn->prepare('SELECT assignment_submissions.assignment_submission_id jumlah FROM assignment_submissions WHERE assignment_submissions.submission_token = :st LIMIT 2');
+        $stmt->bindParam(':st', $this->submissionToken);
+
+        try {
+            if ($stmt->execute()) {
+                $stoken = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $stoken;
+    }
+    public function getStudentNotSubmit()
+    {
+        $stmt = $this->dbConn->prepare('SELECT * FROM users WHERE users.role = 1 AND users.user_id NOT IN(SELECT users.user_id FROM assignment_submissions, users,scores WHERE assignment_submissions.assignment_submission_id = scores.submission_id AND assignment_submissions.student_id = users.user_id AND assignment_submissions.assignment_id=:asid)');
+        $stmt->bindParam(':asid', $this->assignmentId);
+        try {
+            if ($stmt->execute()) {
+                $student = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $student;
     }
 }
