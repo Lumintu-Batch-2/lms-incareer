@@ -8,12 +8,12 @@ if (!isset($_SESSION['user'])) {
     die;
 }
 
-switch ($_SESSION['user']['role']) {
+switch ($_SESSION['user']->{'role_id'}) {
     case 1:
         echo "
         <script>
             alert('Akses ditolak!');
-            location.replace('../Student/');
+            location.replace('../../Admin/');
         </script>
         ";
         break;
@@ -21,7 +21,7 @@ switch ($_SESSION['user']['role']) {
         echo "
         <script>
             alert('Akses ditolak!');
-            location.replace('../Admin/');
+            location.replace('../../Student/');
         </script>
         ";
         break;
@@ -32,14 +32,16 @@ switch ($_SESSION['user']['role']) {
 if (isset($_POST['upload'])) {
     require "../../Model/Assignments.php";
     $objAsign = new Assignments;
-    $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id'], $_SESSION['user']['user_id']);
+    $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id'], $_SESSION['user']->{'user_id'});
+    // var_dump($create);
+    // die;
     $create_status = $create['is_ok'] ? "true" : "false";
 
     if ($create['is_ok']) {
         echo "
         <script>
             alert('" . $create['msg'] . "');
-            location.replace('assignment.php?subject_id=" . $_GET['subject_id'] . "')
+            location.replace('assignment.php?course_id=" . $_GET['course_id'] . "&subject_id=" . $_GET['subject_id'] . "')
         </script>";
     } else {
         echo "

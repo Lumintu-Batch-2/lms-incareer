@@ -163,11 +163,24 @@ class Assignments
         require_once("AssignmentQuestion.php");
         $objQuest = new AssignmentQuestion;
 
-        $validExtention = ['pdf', 'doc', 'docx', 'xlsx', 'txt', 'png', 'jpg', 'jpeg', 'ppt'];
-        $fileExtention = explode(".", $file['filename']['name']);
-        $fileExtention = strtolower(end($fileExtention));
+        $validTypeFile = [
+            "image/png", // png
+            "image/jpg", // jpg
+            "image/jpeg", // jpeg
+            "text/plain", // txt or html
+            "application/pdf", // pdf
+            "application/vnd.ms-powerpoint",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // docx
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // xlsx
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation", // pptx
+            "application/vnd.ms-excel", // xls
+            "application/msword", // doc
+            "application/zip", // zip
+            "application/x-rar" // rar
+        ];
 
-        if (!in_array($fileExtention, $validExtention)) {
+
+        if (!in_array($file['filename']['type'], $validTypeFile)) {
             $msg = "Format file tidak didukung!";
             goto out;
         }
@@ -278,12 +291,25 @@ class Assignments
         $this->setAssignmentId($data['id']);
         $this->setAssignmentType($data['assign_type']);
 
-        $validExtention = ['pdf', 'doc', 'docx', 'xlsx', 'txt', 'png', 'jpg', 'jpeg', 'ppt'];
-        $fileExtention = explode(".", $file['filename']['name']);
-        $fileExtention = strtolower(end($fileExtention));
+        $validTypeFile = [
+            "image/png", // png
+            "image/jpg", // jpg
+            "image/jpeg", // jpeg
+            "text/plain", // txt or html
+            "application/pdf", // pdf
+            "application/vnd.ms-powerpoint",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // docx
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // xlsx
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation", // pptx
+            "application/vnd.ms-excel", // xls
+            "application/msword", // doc
+            "application/zip", // zip
+            "application/x-rar" // rar
+        ];
+
 
         if ($file['filename']['size'] > 0) {
-            if (!in_array($fileExtention, $validExtention)) {
+            if (!in_array($file['filename']['type'], $validTypeFile)) {
                 $msg = "Format file tidak didukung!";
                 goto out;
             }

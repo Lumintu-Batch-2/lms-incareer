@@ -2,24 +2,54 @@
 
 session_start();
 
-if (isset($_POST['login'])) {
-    require dirname(__FILE__) . "/Model/Users.php";
-    $objUser = new Users;
-    $login = $objUser->loginUser($_POST);
+// if (isset($_POST['login'])) {
+//     require dirname(__FILE__) . "/Model/Users.php";
+//     $objUser = new Users;
+//     $login = $objUser->loginUser($_POST);
 
-    if ($login['is_ok']) {
-        $_SESSION['user'] = $login['data'];
-        switch ($login['data']['role']) {
+//     if ($login['is_ok']) {
+//         $_SESSION['user'] = $login['data'];
+//         switch ($login['data']['role']) {
+//             case 1:
+//                 header("location: ./Role/Student/index.php");
+//                 break;
+//             case 2:
+//                 header("location: ./Role/Mentor/index.php");
+//                 break;
+//             default:
+//                 # code...
+//                 break;
+//         }
+//     }
+// }
+
+if(isset($_POST['login'])) {
+    require_once "./api/get_api_data.php";
+
+    $userData = array();
+
+    $dataFromApi = json_decode(http_request("https://i0ifhnk0.directus.app/items/user"));
+
+    for($i = 0; $i < count($dataFromApi->{'data'}); $i++) {        
+        if($dataFromApi->{'data'}[$i]->{'user_username'} == $_POST['username']) {
+            array_push($userData, $dataFromApi->{'data'}[$i]);
+        }
+    }
+
+    if($userData[0]->{'user_password'} == $_POST['password']) {
+        $_SESSION['user'] = $userData[0];
+        switch($_SESSION['user']->{'role_id'}) {
             case 1:
-                header("location: ./Role/Student/index.php");
                 break;
             case 2:
                 header("location: ./Role/Mentor/index.php");
                 break;
-            default:
-                # code...
+            case 3:
+                header("location: ./Role/Student/index.php");
                 break;
-        }
+            default:
+                break;
+        };
     }
 }
 

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2022 at 07:57 AM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 8.0.8
+-- Generation Time: Apr 25, 2022 at 02:08 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,6 +38,19 @@ CREATE TABLE `assignments` (
   `mentor_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `assignments`
+--
+
+INSERT INTO `assignments` (`assignment_id`, `assignment_name`, `assignment_start_date`, `assignment_end_date`, `assignment_desc`, `assignment_type`, `subject_id`, `mentor_id`) VALUES
+(9, 'Membuat ASD', '2022-04-24 23:37:00', '2022-04-27 23:37:00', 'ASDASDASDASD', 'exam', 5, 6),
+(10, 'Mengenal Pemrograman PHP', '2022-04-25 04:40:00', '2022-04-27 04:40:00', 'Mari mengenal php', 'task', 2, 2),
+(11, 'Task 1', '2022-04-25 04:45:00', '2022-04-29 04:45:00', 'Task 1', 'exam', 15, 2),
+(12, 'Task 2', '2022-04-25 04:46:00', '2022-04-26 04:46:00', 'asdf', 'task', 15, 2),
+(13, 'Task 3', '2022-04-25 04:46:00', '2022-04-26 04:46:00', 'zxc', 'task', 15, 2),
+(14, 'Test Task', '2022-04-25 04:49:00', '2022-04-28 04:49:00', 'zxcv', 'task', 2, 2),
+(15, 'Test Task 2', '2022-04-25 04:49:00', '2022-04-28 04:49:00', 'zxcv', 'task', 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -56,8 +69,13 @@ CREATE TABLE `assignment_questions` (
 --
 
 INSERT INTO `assignment_questions` (`assignment_question_id`, `question_filename`, `question_upload_date`, `assignment_id`) VALUES
-(1, 'Jadwal Latihan FG.xlsx', '2022-04-06 13:06:44', NULL),
-(2, 'amar 2.jpg', '2022-04-11 11:52:33', NULL);
+(7, 'Command Git.txt', '2022-04-24 23:37:20', 9),
+(8, 'Command Git.txt', '2022-04-25 04:41:15', 10),
+(9, 'Jadwal Latihan FG.xlsx', '2022-04-25 04:45:19', 11),
+(10, 'Command Git.txt', '2022-04-25 04:46:42', 12),
+(11, 'Command Git.txt', '2022-04-25 04:48:14', 13),
+(12, 'Jadwal Latihan FG.xlsx', '2022-04-25 04:50:14', 14),
+(13, 'Jadwal Latihan FG.xlsx', '2022-04-25 04:50:43', 15);
 
 -- --------------------------------------------------------
 
@@ -69,10 +87,30 @@ CREATE TABLE `assignment_submissions` (
   `assignment_submission_id` int(10) UNSIGNED NOT NULL,
   `submission_filename` varchar(255) NOT NULL,
   `submitted_date` datetime NOT NULL,
-  `assignment_token` varchar(255) NOT NULL,
+  `submission_token` varchar(255) NOT NULL,
   `assignment_id` int(10) UNSIGNED DEFAULT NULL,
   `student_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `assignment_submissions`
+--
+
+INSERT INTO `assignment_submissions` (`assignment_submission_id`, `submission_filename`, `submitted_date`, `submission_token`, `assignment_id`, `student_id`) VALUES
+(168, '', '2022-04-24 23:46:14', '6e92a241f5b5b3e080f1a8e43784cbf9', 9, 5),
+(169, '', '2022-04-25 00:00:18', '8c9ffe6f9f2faf86570f90cd40106f6e', 9, 5),
+(170, '', '2022-04-25 00:03:38', '7da77c7d973e2c9c7dcedad4750f27ea', 9, 5),
+(171, '', '2022-04-25 00:07:12', '037526d37e3aa0b3e8ed470062cdc632', 9, 5),
+(172, '', '2022-04-25 00:07:12', '037526d37e3aa0b3e8ed470062cdc632', 9, 5),
+(173, '', '2022-04-25 00:09:09', '2c64f2ca87563d1388448d92160bb951', 9, 5),
+(174, '', '2022-04-25 00:11:12', '6ab9f01b7e80a971ea2fa6734003351f', 9, 5),
+(175, '', '2022-04-25 00:11:44', '105f61fce24d176c70d434df9136e0a2', 9, 5),
+(176, '', '2022-04-25 00:12:52', '7db86808e2b8d3171edb395e65e59b19', 9, 5),
+(177, 'Jadwal Latihan FG.xlsx', '2022-04-25 00:14:01', 'c0c4bf04f48bc9fe20160fb24ece03b3', 9, 5),
+(178, 'matkul sem 6.txt', '2022-04-25 00:15:33', '4a599eb7e4449868dda3f7a5f57fea7a', 9, 5),
+(186, 'Jadwal Latihan FG.xlsx', '2022-04-25 04:59:43', '468678b3b5dd0f298c9432b4bba7700d', 10, 4),
+(187, 'matkul sem 6.txt', '2022-04-25 05:00:24', '379565573ebb04eecd37cb96d11a9387', 10, 4),
+(188, 'Command Git.txt', '2022-04-25 05:00:24', '379565573ebb04eecd37cb96d11a9387', 10, 4);
 
 -- --------------------------------------------------------
 
@@ -105,9 +143,28 @@ INSERT INTO `courses` (`course_id`, `course_name`, `course_desc`) VALUES
 CREATE TABLE `scores` (
   `score_id` int(10) UNSIGNED NOT NULL,
   `score_value` int(11) NOT NULL,
-  `assignment_upload_id` int(10) UNSIGNED NOT NULL,
-  `mentor_id` int(10) UNSIGNED NOT NULL
+  `submission_id` int(10) UNSIGNED NOT NULL,
+  `mentor_id` int(10) UNSIGNED NOT NULL,
+  `component_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `scores`
+--
+
+INSERT INTO `scores` (`score_id`, `score_value`, `submission_id`, `mentor_id`, `component_id`) VALUES
+(18, 0, 177, 0, 1),
+(19, 0, 178, 0, 1),
+(20, 0, 0, 0, 1),
+(21, 0, 0, 0, 1),
+(22, 0, 0, 0, 1),
+(23, 0, 0, 0, 1),
+(24, 0, 0, 0, 1),
+(25, 0, 0, 0, 1),
+(26, 0, 0, 0, 1),
+(27, 60, 186, 2, 1),
+(28, 20, 187, 2, 1),
+(29, 0, 188, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -236,7 +293,7 @@ ALTER TABLE `assignment_submissions`
   ADD KEY `fk_student` (`student_id`),
   ADD KEY `index_filename` (`submission_filename`),
   ADD KEY `index_date` (`submitted_date`),
-  ADD KEY `index_token` (`assignment_token`);
+  ADD KEY `index_token` (`submission_token`) USING BTREE;
 
 --
 -- Indexes for table `courses`
@@ -249,9 +306,10 @@ ALTER TABLE `courses`
 --
 ALTER TABLE `scores`
   ADD PRIMARY KEY (`score_id`),
-  ADD KEY `assingment_up_id` (`assignment_upload_id`),
   ADD KEY `fk_mentorscore` (`mentor_id`),
-  ADD KEY `index_value` (`score_value`);
+  ADD KEY `index_value` (`score_value`),
+  ADD KEY `comp_index` (`component_id`) USING BTREE,
+  ADD KEY `sub_id` (`submission_id`);
 
 --
 -- Indexes for table `subjects`
@@ -290,19 +348,19 @@ ALTER TABLE `user_courses`
 -- AUTO_INCREMENT for table `assignments`
 --
 ALTER TABLE `assignments`
-  MODIFY `assignment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `assignment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `assignment_questions`
 --
 ALTER TABLE `assignment_questions`
-  MODIFY `assignment_question_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `assignment_question_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `assignment_submissions`
 --
 ALTER TABLE `assignment_submissions`
-  MODIFY `assignment_submission_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `assignment_submission_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -314,7 +372,7 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `score_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `score_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `subjects`
@@ -345,13 +403,6 @@ ALTER TABLE `user_courses`
 --
 
 --
--- Constraints for table `assignments`
---
-ALTER TABLE `assignments`
-  ADD CONSTRAINT `fk_mentor` FOREIGN KEY (`mentor_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_subject` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `assignment_questions`
 --
 ALTER TABLE `assignment_questions`
@@ -361,15 +412,7 @@ ALTER TABLE `assignment_questions`
 -- Constraints for table `assignment_submissions`
 --
 ALTER TABLE `assignment_submissions`
-  ADD CONSTRAINT `fk_assignment` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`assignment_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_student` FOREIGN KEY (`student_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `scores`
---
-ALTER TABLE `scores`
-  ADD CONSTRAINT `assingment_up_id` FOREIGN KEY (`assignment_upload_id`) REFERENCES `assignment_submissions` (`assignment_submission_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_mentorscore` FOREIGN KEY (`mentor_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_assignment` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`assignment_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `subjects`
