@@ -66,7 +66,8 @@ for($i = 0; $i < count($userData); $i++) {
     for($j = 0; $j < count($sub); $j++) {
         if($userData[$i]->{'user_id'} == $sub[$j]['student_id']) {
             array_push($studentSub, array(
-                "user_id" => $userData[$j]->{'user_id'},
+                "user_id" => $userData[$i]->{'user_id'},
+                "assignment_id" => $sub[$j]['assignment_id'],
                 "student_name" => $userData[$i]->{'user_username'},
                 "submitted_date" => $sub[$j]['submitted_date'],
                 "submission_token" => $sub[$j]['submission_token'],
@@ -79,14 +80,32 @@ for($i = 0; $i < count($userData); $i++) {
 }
 
 // var_dump($studentSub);
+// var_dump($userData);
+$data = array();
 
-$asid = $_GET['assignment_id'];
-$cid = $_GET['course_id'];
-$sid = $_GET['subject_id'];
+usort($studentSub, function($items1, $items2){
+    return $items1['user_id'] <=> $items2['user_id'];
+});
 
-var_dump($_GET['assignment_id']);
-var_dump($_GET['subject_id']);
-var_dump($_GET['course_id']);
+var_dump($studentSub);
+
+
+for($i = 0; $i < count($studentSub); $i++) {
+    // if($studentSub[$i]['user_id'] == $studentSub[$i+1]['user_id']) {
+    //     if(strtotime($studentSub[$i]['submitted_date']) < strtotime($studentSub[$i+1]['submitted_date'])) {
+    //         array_push($data, $studentSub[$i+1]);
+    //     }
+    // } else {
+    //     array_push($data, $studentSub[$i+1]);
+    // }
+    if($studentSub[$i]['user_id'] != $studentSub[$i+1]['user_id']) {
+        array_push($data, $studentSub[$i]);
+    }
+}
+
+// var_dump($studentSub);
+
+var_dump($data);
 
 $didntsub = $submitted->getStudentNotSubmit();
 if (isset($_POST['submit'])) {
@@ -329,7 +348,7 @@ if (isset($_POST['submit'])) {
                     <tbody>
                         <?php
                         $no = 1;
-                        foreach ($studentSub as $key => $item) {
+                        foreach ($data as $key => $item) {
 
                         ?>
                             <tr>
@@ -424,7 +443,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <!-- Modal body -->
                 <div class="px-6 space-y-6">
-                    <form class="flex flex-col gap-y-4" action="assignment_collection.php?assignment_id=<?= $_GET['assignment_id']; ?>" method="POST">
+                    <form class="flex flex-col gap-y-4" action="" method="POST">
                         <div class="mb-6">
                             <input type="hidden" id="sid" name="sid">
                             <input type="hidden" id="uid" name="uid">
@@ -433,7 +452,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="flex justify-end p-6 space-x-3 rounded-b ">
                             <button data-modal-toggle="defaultModal" class="w-24" type="button">Cancel</button>
-                            <button class="bg-yellow-200 text-white  font-semibold justify-end text-center py-2 rounded-lg w-24 ml-auto" type="submit" name="submit">Save</button>
+                            <button class="bg-yellow-600 text-white  font-semibold justify-end text-center py-2 rounded-lg w-24 ml-auto" type="submit" name="submit">Save</button>
                         </div>
                     </form>
                 </div>
