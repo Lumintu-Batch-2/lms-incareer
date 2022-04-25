@@ -1,28 +1,51 @@
 <?php
+
 session_start();
-// require('./login.php')
+
+$loginPath = "../../login.php";
+
 if (!isset($_SESSION['user'])) {
-    header("location: ../../login.php");
+    header("location: " . $loginPath);
 }
 
-switch ($_SESSION['user']['role']) {
-    case 2:
-        echo "<script>alert('Akses Ditolak');
-    location.replace('../Mentor/index.php')</script>";
+switch ($_SESSION['user']->{'role_id'}) {
+    case 1:
+        echo "
+        <script>
+            alert('Akses Ditolak');
+            location.replace('../Admin/index.php')
+        </script>";
         break;
-    case 3:
-        echo "<script>alert('Akses Ditolak');
-    location.replace('../../login.php')</script>";
+    case 2:
+        echo "
+        <script>
+            alert('Akses Ditolak');
+            location.replace('../Mentor/login.php')
+        </script>";
         break;
 
     default:
         break;
 }
 
-require_once('../../Model/Subjects.php');
+require_once "../../api/get_api_data.php";
 
-$objSub = new Subjects;
-$allSubjects = $objSub->getSubjectByCourseId($_GET['course_id']);
+$subjectData = array();
+
+$modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+
+for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
+    if($modulJSON->{'data'}[$i]->{'parent_id'} == $_GET['course_id']) {
+        array_push($subjectData, $modulJSON->{'data'}[$i]);
+    }
+}
+
+var_dump($subjectData);
+
+// require_once('../../Model/Subjects.php');
+
+// $objSub = new Subjects;
+// $allSubjects = $objSub->getSubjectByCourseId($_GET['course_id']);
 
 
 ?>
@@ -47,16 +70,15 @@ $allSubjects = $objSub->getSubjectByCourseId($_GET['course_id']);
         <thead>
             <th>ID</th>
             <th>Name</th>
-            <th>Desc</th>
+            <!-- <th>Desc</th> -->
             <th>Assignment</th>
         </thead>
         <tbody>
-            <?php foreach ($allSubjects as $row => $subject) : ?>
+            <?php foreach ($subjectData as $row => $subject) : ?>
                 <tr>
-                    <td><?= $subject['subject_id']; ?></td>
-                    <td><?= $subject['subject_name']; ?></td>
-                    <td><?= $subject['subject_desc']; ?></td>
-                    <td><a href="assignment.php?subject_id=<?= $subject['subject_id']; ?>">assignment</a></td>
+                    <td><?= $subject->{'id'}; ?></td>
+                    <td><?= $subject->{'modul_name'}; ?></td>
+                    <td><a href="assignment.php?subject_id=<?= $subject->{'id'}; ?>">assignment</a></td>
                 </tr>
             <?php endforeach ?>
         </tbody>

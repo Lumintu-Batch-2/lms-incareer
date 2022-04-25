@@ -232,4 +232,18 @@ class AssignmentSubmission
         }
         return $student;
     }
+
+    public function getSubmittedFile()
+    {
+        $stmt = $this->dbConn->prepare('SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submitted_date, assignment_submissions.assignment_id, assignment_submissions.submission_token, assignment_submissions.submission_filename, scores.score_id, scores.score_value, assignment_submissions.student_id FROM assignment_submissions, scores WHERE assignment_submissions.assignment_submission_id = scores.submission_id AND assignment_submissions.assignment_id = :asid GROUP BY assignment_submissions.submission_token;');
+        $stmt->bindParam(":asid", $this->assignmentId);
+        try {
+            if ($stmt->execute()) {
+                $submission = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $submission;
+    }
 }

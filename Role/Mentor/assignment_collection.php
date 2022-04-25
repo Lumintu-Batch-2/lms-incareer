@@ -7,14 +7,13 @@ if (!isset($_SESSION['user'])) {
     header("location: " . $loginPath);
     die;
 }
-$asid = $_GET['assignment_id'];
 
-switch ($_SESSION['user']['role']) {
+switch ($_SESSION['user']->{'role_id'}) {
     case 1:
         echo "
         <script>
             alert('Akses ditolak!');
-            location.replace('../Student/');
+            location.replace('../../Admin/');
         </script>
         ";
         break;
@@ -22,37 +21,111 @@ switch ($_SESSION['user']['role']) {
         echo "
         <script>
             alert('Akses ditolak!');
-            location.replace('../Admin/');
+            location.replace('../../Student/');
         </script>
         ";
         break;
     default:
         break;
 }
+
+
+require_once "../../api/get_api_data.php";
+
+$userData = array();
+$modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+$userBatchJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user_batch"));
+$userJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user"));
+
+
+for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
+    if($modulJSON->{'data'}[$i]->{'id'} == (int)$_GET['course_id']) {
+        for($j = 0; $j < count($userBatchJSON->{'data'}); $j++) {
+            if($modulJSON->{'data'}[$i]->{'batch_id'} == $userBatchJSON->{'data'}[$j]->{'batch_batch_id'}) {
+                for($k = 0; $k < count($userJSON->{'data'}); $k++) {
+                    if($userBatchJSON->{'data'}[$j]->{'user_user_id'} == $userJSON->{'data'}[$k]->{'user_id'} && $userJSON->{'data'}[$k]->{'role_id'} == 3) {
+                        array_push($userData, $userJSON->{'data'}[$k]);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// var_dump($courseData);
+// var_dump($userData);
+
 require_once('../../Model/AssignmentSubmission.php');
 $submitted = new AssignmentSubmission;
 $submitted->setAssignmentId($_GET['assignment_id']);
-$sub = $submitted->getAllStudetSubmittedFile();
+$sub = $submitted->getSubmittedFile();
+
+// var_dump($sub);
+$studentSub = array();
+for($i = 0; $i < count($userData); $i++) {
+    for($j = 0; $j < count($sub); $j++) {
+        if($userData[$i]->{'user_id'} == $sub[$j]['student_id']) {
+            array_push($studentSub, array(
+                "user_id" => $userData[$i]->{'user_id'},
+                "assignment_id" => $sub[$j]['assignment_id'],
+                "student_name" => $userData[$i]->{'user_username'},
+                "submitted_date" => $sub[$j]['submitted_date'],
+                "submission_token" => $sub[$j]['submission_token'],
+                "submission_filename" => $sub[$j]['submission_filename'],
+                "score_id" => $sub[$j]['score_id'],
+                "score_value" => $sub[$j]['score_value']
+            ));
+        }
+    }
+}
+
+// var_dump($studentSub);
+// var_dump($userData);
+$data = array();
+
+usort($studentSub, function($items1, $items2){
+    return $items1['user_id'] <=> $items2['user_id'];
+});
+
+var_dump($studentSub);
+
+
+for($i = 0; $i < count($studentSub); $i++) {
+    // if($studentSub[$i]['user_id'] == $studentSub[$i+1]['user_id']) {
+    //     if(strtotime($studentSub[$i]['submitted_date']) < strtotime($studentSub[$i+1]['submitted_date'])) {
+    //         array_push($data, $studentSub[$i+1]);
+    //     }
+    // } else {
+    //     array_push($data, $studentSub[$i+1]);
+    // }
+    if($studentSub[$i]['user_id'] != $studentSub[$i+1]['user_id']) {
+        array_push($data, $studentSub[$i]);
+    }
+}
+
+// var_dump($studentSub);
+
+var_dump($data);
+
 $didntsub = $submitted->getStudentNotSubmit();
 if (isset($_POST['submit'])) {
-
     require_once('../../Model/Scores.php');
     $score = new Scores;
     $score->setScoreId($_POST['sid']);
     $score->setScoreValue($_POST['score']);
-    $score->setMentorId($_SESSION['user']['user_id']);
+    $score->setMentorId($_SESSION['user']->{'user_id'});
     $update  = $score->updateScore();
     if ($update) {
         echo "
         <script>
             alert('Berhasil Menambahkan score');
-            location.replace('assignment_collection.php?assignment_id=" . $asid . "')
+            location.replace('assignment_collection.php?course_id=" . $_GET['course_id'] . "&assignment_id=" . $_GET['assignment_id'] . "&subject_id=" . $_GET['subject_id'] . "');
         </script>";
     } else {
         echo "
         <script>
             alert('Gagal');
-            location.replace('assignment_collection.php?assignment_id=" . $asid . "')
+            location.replace('assignment_collection.php?course_id=" . $_GET['course_id'] . "&assignment_id=" . $_GET['assignment_id'] . "&subject_id=" . $_GET['subject_id'] . "');
         </script>";
     }
 }
@@ -223,7 +296,7 @@ if (isset($_POST['submit'])) {
             <!-- Header / Profile -->
             <div class="flex items-center gap-x-4 justify-end">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold"><?= $_SESSION['user']['username']  ?></p>
+                <p class="text-dark-green font-semibold"><?= $_SESSION['user']->{'user_username'}  ?></p>
             </div>
 
 
@@ -275,12 +348,12 @@ if (isset($_POST['submit'])) {
                     <tbody>
                         <?php
                         $no = 1;
-                        foreach ($sub as $key => $item) {
+                        foreach ($data as $key => $item) {
 
                         ?>
                             <tr>
                                 <td class="border-b px-4 py-2"><?= $no ?></td>
-                                <td class="border-b px-4 py-2 text-center"><?= $item['username']  ?></td>
+                                <td class="border-b px-4 py-2 text-center"><?= $item['student_name']  ?></td>
                                 <td class="border-b px-4 py-2 text-center"><?= $item['submitted_date']  ?></td>
                                 <td class="border-b px-4 py-2  "><a href="download.php?file=<?= $item['submission_filename']; ?>">
                                         <?= $item['submission_filename']; ?> </a>
@@ -301,7 +374,7 @@ if (isset($_POST['submit'])) {
                                     } ?>
                                 </td>
                                 <td class="border-b px-4 py-2 text-center "><?= $item['score_value']  ?></td>
-                                <td class="border-b px-4 py-2 "><a href=""></a> <img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal" data-username="<?= $item['username']; ?>" data-scoreid="<?= $item['score_id'] ?>" data-userid="<?= $item['user_id'] ?>" data-scorevalue="<?= $item['score_value']  ?>" alt="Edit Icon" type="button" data-target="#defaultModal" id="editbtn"></td>
+                                <td class="border-b px-4 py-2 "><a href=""></a> <img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal" data-username="<?= $item['student_name']; ?>" data-scoreid="<?= $item['score_id'] ?>" data-userid="<?= $item['user_id'] ?>" data-scorevalue="<?= $item['score_value']  ?>" alt="Edit Icon" type="button" data-target="#defaultModal" id="editbtn"></td>
 
                             </tr>
 
@@ -370,7 +443,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <!-- Modal body -->
                 <div class="px-6 space-y-6">
-                    <form class="flex flex-col gap-y-4" action="assignment_collection.php?assignment_id=<?= $_GET['assignment_id']; ?>" method="POST">
+                    <form class="flex flex-col gap-y-4" action="" method="POST">
                         <div class="mb-6">
                             <input type="hidden" id="sid" name="sid">
                             <input type="hidden" id="uid" name="uid">
@@ -379,7 +452,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="flex justify-end p-6 space-x-3 rounded-b ">
                             <button data-modal-toggle="defaultModal" class="w-24" type="button">Cancel</button>
-                            <button class="bg-cream text-white  font-semibold justify-end text-center py-2 rounded-lg w-24 ml-auto" type="submit" name="submit">Save</button>
+                            <button class="bg-yellow-600 text-white  font-semibold justify-end text-center py-2 rounded-lg w-24 ml-auto" type="submit" name="submit">Save</button>
                         </div>
                     </form>
                 </div>
