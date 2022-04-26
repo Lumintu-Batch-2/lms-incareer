@@ -75,4 +75,20 @@ class AssignmentQuestion
 
         return $allQuestions;
     }
+
+    public function getQuestionsByAssignmentId() {
+        $stmt = $this->dbConn->prepare("SELECT * FROM assignment_questions WHERE assignment_id = :aid");
+
+        $stmt->bindParam(":aid", $this->assignmentId);
+
+        try {
+            if($stmt->execute()) {
+                $allQuestions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $allQuestions;
+    }
 }
