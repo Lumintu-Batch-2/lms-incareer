@@ -299,11 +299,55 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                 <td class="border-b px-4 py-2"><?= $dueDate; ?></td>
                                 <td class="border-b px-4 py-2"><?= $dueTime; ?></td>
                                 <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/download_icon.svg" alt="Download Icon" ></td>
-                                <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal" data-assign-id="<?= $assignment['assignment_id']; ?>"></td>
+                                <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>"></td>
                                 <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/history_icon.svg" alt="History Icon" ></td>
 
                             </tr>
 
+                            <!-- Main modal -->
+                            <div id="defaultModal<?= $assignment['assignment_id']; ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                                <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+                                    <!-- Modal content -->
+                                    <div class="relative bg-white rounded-lg shadow ">
+                                        <!-- Modal header -->
+                                        <div class="flex justify-center items-start p-5 rounded-t ">
+                                            <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-dark">
+                                                Upload Submission
+                                            </h3>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div class="px-6 space-y-6">
+                                            <form class="flex flex-col gap-y-4" action="" method="POST" enctype="multipart/form-data">
+                                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border rounded-md">
+                                                    <div class="space-y-2 text-center">
+                                                        <svg class="mx-auto h-20 w-20 text-gray-400" id="downloadIcon"  viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M118.75 56.25H93.75V18.75H56.25V56.25H31.25L75 106.25L118.75 56.25ZM25 118.75H125V131.25H25V118.75Z" fill="#DDB07F"/>
+                                                        </svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" id="prevDoc" class="mx-auto h-20 w-20 hidden" viewBox="0 0 20 20" fill="#DDB07F">
+                                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+                                                        </svg>
+                                                        <p class="text-gray-600" id="countFile"></p>
+                                                        <div class="flex text-lg text-gray-600">
+                                                            <label for="fileInput" class="relative cursor-pointer bg-white rounded-md font-medium font-semibold hover:text-gray-500">
+                                                                <span>Choose a file</span>
+                                                                <input id="fileInput" name="fileInput" type="file" class="sr-only dropzone" onchange="readFile(event)" multiple>
+                                                                <input type="hidden" name="assignId" id="assignId" value="<?= $assignment['assignment_id']; ?>">
+                                                            </label>
+                                                            <p class="pl-1">or drag it here</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
+                                                    <button data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center hover:ring-2 hover:ring-gray-400">Close</button>
+                                                    <button class="bg-dark-green text-[#F3D0AA] w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-800" type="submit" name="submit" id="uploadSubmission">Submit</button>
+                                                </div>
+                                            </form>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>  
 
                         <?php endforeach ?>
                     </tbody>                  
@@ -312,49 +356,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
         </div>
     </div>
 
-    <!-- Main modal -->
-    <div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow ">
-                <!-- Modal header -->
-                <div class="flex justify-center items-start p-5 rounded-t ">
-                    <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-dark">
-                        Upload Submission
-                    </h3>
-                </div>
-                <!-- Modal body -->
-                <div class="px-6 space-y-6">
-                    <form class="flex flex-col gap-y-4" action="" method="POST" enctype="multipart/form-data">
-                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border rounded-md">
-                            <div class="space-y-2 text-center">
-                                <svg class="mx-auto h-20 w-20 text-gray-400" id="downloadIcon"  viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M118.75 56.25H93.75V18.75H56.25V56.25H31.25L75 106.25L118.75 56.25ZM25 118.75H125V131.25H25V118.75Z" fill="#DDB07F"/>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" id="prevDoc" class="mx-auto h-20 w-20 hidden" viewBox="0 0 20 20" fill="#DDB07F">
-                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
-                                </svg>
-                                <p class="text-gray-600" id="countFile"></p>
-                                <div class="flex text-lg text-gray-600">
-                                    <label for="fileInput" class="relative cursor-pointer bg-white rounded-md font-medium font-semibold hover:text-gray-500">
-                                        <span>Choose a file</span>
-                                        <input id="fileInput" name="fileInput" type="file" class="sr-only dropzone" onchange="readFile(event)" multiple>
-                                    </label>
-                                    <p class="pl-1">or drag it here</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
-                            <button data-modal-toggle="defaultModal" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center hover:ring-2 hover:ring-gray-400">Close</button>
-                            <button class="bg-dark-green text-[#F3D0AA] w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-800" type="submit" name="submit" id="uploadSubmission">Submit</button>
-                        </div>
-                    </form>
-                    
-                </div>
-                
-            </div>
-        </div>
-    </div>  
+    
       
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <script>
@@ -381,12 +383,9 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                 evt.preventDefault();
 
                 let fileData = document.getElementById("fileInput");
-                let studentId = document.getElementById("student_id");
-                
-                let assignmentId = $(this).data('assign-id');
+                let studentId = document.getElementById("student_id");                
 
-
-                let assignment_id = assignmentId;
+                let assignment_id = $("#assignId").val();
                 let student_id = studentId.value;
 
                 let data = {
@@ -394,6 +393,8 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                     studId: student_id,
                     count: fileData.files.length
                 }
+
+                console.log(data);
 
                 $.ajax({
                     url: "insert_submission.php",
@@ -435,112 +436,6 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
 
             })
         })
-
-        function uploadSubmission(id) {
-            
-            let fileData = document.getElementById("fileInput");
-            let studentId = document.getElementById("student_id");
-
-            let assignment_id = id;
-            let student_id = studentId.value;
-
-            let data = {
-                assigId: assignment_id,
-                studId: student_id,
-                count: fileData.files.length
-            }
-
-            $.ajax({
-                url: "insert_submission.php",
-                type: "post",
-                data: data,
-                // xhr: function() {
-                //     let xhr = new window.XMLHttpRequest();
-
-                //     xhr.upload.addEventListener("progress", function(evt) {
-                //         loader.style.display = "block";
-                //     })
-                // },
-                success: function(data) {
-                    let dataJson = JSON.parse(data);
-                    // loader.style.display = "none";
-
-                    // console.log(dataJson[0].submission_id);
-                    for (i = 0; i < fileData.files.length; i++) {
-                        let formData = new FormData();
-                        formData.append("data", fileData.files[i]);
-                        formData.append("submission_id", dataJson[i].submission_id);
-
-                        $.ajax({
-                            url: "upload_submission.php",
-                            type: "post",
-                            data: formData,
-                            contentType: false,
-                            cache: false,
-                            processData: false,
-                            success: function(data) {
-                                let val = JSON.parse(data);
-                                alert(val.msg);
-                                location.replace("index.php");
-                            }
-                        })
-                    }
-                }
-            })
-
-        }
-
-        // $("#uploadSubmission").click(function(e) {
-        //     e.preventDefault();
-
-        //     let fileData = document.getElementById("fileInput");
-
-        //     let data = {
-        //         assigId: assignment_id,
-        //         studId: student_id,
-        //         count: fileData.files.length
-        //     }
-
-        //     console.log(data);
-
-        //     $.ajax({
-        //         url: "insert_submission.php",
-        //         type: "post",
-        //         data: data,
-        //         // xhr: function() {
-        //         //     let xhr = new window.XMLHttpRequest();
-
-        //         //     xhr.upload.addEventListener("progress", function(evt) {
-        //         //         loader.style.display = "block";
-        //         //     })
-        //         // },
-        //         success: function(data) {
-        //             let dataJson = JSON.parse(data);
-        //             // loader.style.display = "none";
-
-        //             // console.log(dataJson[0].submission_id);
-        //             for (i = 0; i < fileData.files.length; i++) {
-        //                 let formData = new FormData();
-        //                 formData.append("data", fileData.files[i]);
-        //                 formData.append("submission_id", dataJson[i].submission_id);
-
-        //                 $.ajax({
-        //                     url: "upload_submission.php",
-        //                     type: "post",
-        //                     data: formData,
-        //                     contentType: false,
-        //                     cache: false,
-        //                     processData: false,
-        //                     success: function(data) {
-        //                         let val = JSON.parse(data);
-        //                         alert(val.msg);
-        //                         location.replace("index.php");
-        //                     }
-        //                 })
-        //             }
-        //         }
-        //     })
-        // });
         
     </script>
 
