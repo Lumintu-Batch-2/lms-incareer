@@ -8,6 +8,7 @@ class AssignmentSubmission
     private $submissionToken;
     private $dbConn;
     private $studentId;
+    private $assignmentStatus;
 
     public function __construct()
     {
@@ -67,6 +68,15 @@ class AssignmentSubmission
     public function getStudentId()
     {
         return $this->studentId;
+    }
+
+    public function setAssignmentStatus($status)
+    {
+        return $this->assignmentStatus = $status;
+    }
+    public function getAssignmentStatus()
+    {
+        return $this->assignmentStatus;
     }
 
     public function getAllAssignment()
@@ -159,15 +169,15 @@ class AssignmentSubmission
 
     public function updateSubmission()
     {
-        $stmt = $this->dbConn->prepare(
-            "UPDATE assignment_submissions SET submission_filename = :name, submitted_date = :date WHERE assignment_submission_id = :id"
-        );
-
-        $stmt->bindParam(":name", $this->submissionFileName);
-        $stmt->bindParam(":date", $this->submissionUploadDate);
-        $stmt->bindParam(":id", $this->assignmentSubmissionId);
-
         try {
+            $stmt = $this->dbConn->prepare(
+                "UPDATE assignment_submissions SET submission_filename = :name, submitted_date = :date WHERE assignment_submission_id = :id"
+            );
+
+            $stmt->bindParam(":name", $this->submissionFileName);
+            $stmt->bindParam(":date", $this->submissionUploadDate);
+            $stmt->bindParam(":id", $this->assignmentSubmissionId);
+
             if ($stmt->execute()) {
                 return true;
             } else {

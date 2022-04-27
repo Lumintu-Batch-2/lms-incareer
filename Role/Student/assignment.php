@@ -39,6 +39,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -82,33 +83,37 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
         }
     </script>
     <style>
-        .in-active{
+        .in-active {
             width: 80px !important;
             padding: 20px 15px !important;
             transition: .5s ease-in-out;
         }
-        .in-active ul li p{
+
+        .in-active ul li p {
             display: none !important;
         }
 
-        .in-active ul li a{
+        .in-active ul li a {
             padding: 15px !important;
         }
 
         .in-active h2,
         .in-active h4,
-        .in-active .logo-incareer{
+        .in-active .logo-incareer {
             display: none !important;
         }
-        .hidden{
+
+        .hidden {
             display: none !important;
         }
-        .sidebar{
+
+        .sidebar {
             transition: .5s ease-in-out;
         }
     </style>
 
 </head>
+
 <body>
     <div class="flex items-center">
         <!-- Left side (Sidebar) -->
@@ -117,8 +122,8 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
             <div class="flex flex-col gap-y-6">
                 <!-- Header -->
                 <div class="flex items-center space-x-4 px-2">
-                   <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle">
-                     <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+                    <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle">
+                    <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
                 </div>
 
                 <hr class="border-[1px] border-opacity-50 border-[#93BFC1]">
@@ -178,7 +183,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                     <li>
                         <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                            <p class="font-semibold">Help</p>    
+                            <p class="font-semibold">Help</p>
                         </a>
                     </li>
                     <li>
@@ -197,7 +202,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
             <!-- Header / Profile -->
             <div class="flex items-center gap-x-4 justify-end">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold"><?=$_SESSION['user']->{'user_username'}?></p>
+                <p class="text-dark-green font-semibold"><?= $_SESSION['user']->{'user_username'} ?></p>
             </div>
 
             <!-- Breadcrumb -->
@@ -298,11 +303,47 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                 <td class="border-b px-4 py-2"><?= $startDate; ?></td>
                                 <td class="border-b px-4 py-2"><?= $dueDate; ?></td>
                                 <td class="border-b px-4 py-2"><?= $dueTime; ?></td>
-                                <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/download_icon.svg" alt="Download Icon" ></td>
+                                <td class="border-b px-4 py-2">
+                                    <?php
+                                    require_once('../../Model/AssignmentQuestion.php');
+                                    $asq = new AssignmentQuestion;
+                                    $asq->setAssignmentId($assignment['assignment_id']);
+                                    $question = $asq->getQuestionsByAssignmentId();
+                                    ?>
+                                    <a href="download.php?file=<?= $question['question_filename']; ?>""><img class=" w-7 mx-auto cursor-pointer" src="../../Img/icons/download_icon.svg" alt="Download Icon"></a>
+                                </td>
                                 <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>"></td>
-                                <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/history_icon.svg" alt="History Icon" ></td>
+                                <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/history_icon.svg" alt="History Icon" type="button" data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>">
+                                </td>
 
                             </tr>
+                            <!-- modal ASSIGNMENT HISTORY -->
+                            <div id="historymodal<?= $assignment['assignment_id']; ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                                <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+                                    <!-- Modal content -->
+                                    <div class="relative bg-white rounded-lg shadow ">
+                                        <!-- Modal header -->
+                                        <div class="flex justify-center items-start p-5 rounded-t ">
+                                            <h3 class="text-xl font-bold  lg:text-2xl text-dark-green">
+                                                ASSIGNMENT HISTORY
+                                            </h3>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div class="px-6 space-y-6">
+                                            <div class="mb-6">
+
+                                            </div>
+                                            <div class="flex justify-end p-6 space-x-3 rounded-b ">
+                                                <button data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>" class="w-24" type="button">Cancel</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END MODAL -->
+
 
                             <!-- Main modal -->
                             <div id="defaultModal<?= $assignment['assignment_id']; ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
@@ -320,8 +361,8 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                             <form class="flex flex-col gap-y-4" action="" method="POST" enctype="multipart/form-data">
                                                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border rounded-md">
                                                     <div class="space-y-2 text-center">
-                                                        <svg class="mx-auto h-20 w-20 text-gray-400" id="downloadIcon"  viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M118.75 56.25H93.75V18.75H56.25V56.25H31.25L75 106.25L118.75 56.25ZM25 118.75H125V131.25H25V118.75Z" fill="#DDB07F"/>
+                                                        <svg class="mx-auto h-20 w-20 text-gray-400" id="downloadIcon" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M118.75 56.25H93.75V18.75H56.25V56.25H31.25L75 106.25L118.75 56.25ZM25 118.75H125V131.25H25V118.75Z" fill="#DDB07F" />
                                                         </svg>
                                                         <svg xmlns="http://www.w3.org/2000/svg" id="prevDoc" class="mx-auto h-20 w-20 hidden" viewBox="0 0 20 20" fill="#DDB07F">
                                                             <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
@@ -342,27 +383,28 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                                     <button class="bg-dark-green text-[#F3D0AA] w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-800" type="submit" name="submit" id="uploadSubmission">Submit</button>
                                                 </div>
                                             </form>
-                                            
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
-                            </div>  
+                            </div>
 
                         <?php endforeach ?>
-                    </tbody>                  
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    
-      
+
+
+
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <script>
         let btnToggle = document.getElementById('btnToggle');
         let sidebar = document.querySelector('.sidebar');
-        btnToggle.onclick = function(){
+        btnToggle.onclick = function() {
             sidebar.classList.toggle('in-active');
         }
 
@@ -383,7 +425,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                 evt.preventDefault();
 
                 let fileData = document.getElementById("fileInput");
-                let studentId = document.getElementById("student_id");                
+                let studentId = document.getElementById("student_id");
 
                 let assignment_id = $("#assignId").val();
                 let student_id = studentId.value;
@@ -436,9 +478,9 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
 
             })
         })
-        
     </script>
 
-    
+
 </body>
+
 </html>

@@ -45,14 +45,15 @@ class AssignmentQuestion
         return $this->assignmentId;
     }
 
-    public function uploadFile($id) {
+    public function uploadFile($id)
+    {
         $stmt = $this->dbConn->prepare("INSERT INTO assignment_questions VALUES (null, :filename, :upload_date, :assignment_id)");
         $stmt->bindParam(":filename", $this->questionFileName);
         $stmt->bindParam(":upload_date", $this->questionUploadDate);
         $stmt->bindParam(":assignment_id", $id);
 
         try {
-            if($stmt->execute()) {
+            if ($stmt->execute()) {
                 return true;
             } else {
                 return false;
@@ -62,11 +63,12 @@ class AssignmentQuestion
         }
     }
 
-    public function getAllQuestions() {
+    public function getAllQuestions()
+    {
         $stmt = $this->dbConn->prepare("SELECT * FROM assignment_questions");
 
         try {
-            if($stmt->execute()) {
+            if ($stmt->execute()) {
                 $allQuestions = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
         } catch (Exception $e) {
@@ -76,14 +78,15 @@ class AssignmentQuestion
         return $allQuestions;
     }
 
-    public function getQuestionsByAssignmentId() {
+    public function getQuestionsByAssignmentId()
+    {
         $stmt = $this->dbConn->prepare("SELECT * FROM assignment_questions WHERE assignment_id = :aid");
 
         $stmt->bindParam(":aid", $this->assignmentId);
 
         try {
-            if($stmt->execute()) {
-                $allQuestions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($stmt->execute()) {
+                $allQuestions = $stmt->fetch(PDO::FETCH_ASSOC);
             }
         } catch (Exception $e) {
             return $e->getMessage();
