@@ -38,12 +38,12 @@ $userBatchJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/u
 $userJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user"));
 
 
-for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
-    if($modulJSON->{'data'}[$i]->{'id'} == (int)$_GET['course_id']) {
-        for($j = 0; $j < count($userBatchJSON->{'data'}); $j++) {
-            if($modulJSON->{'data'}[$i]->{'batch_id'} == $userBatchJSON->{'data'}[$j]->{'batch_batch_id'}) {
-                for($k = 0; $k < count($userJSON->{'data'}); $k++) {
-                    if($userBatchJSON->{'data'}[$j]->{'user_user_id'} == $userJSON->{'data'}[$k]->{'user_id'} && $userJSON->{'data'}[$k]->{'role_id'} == 3) {
+for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
+    if ($modulJSON->{'data'}[$i]->{'id'} == (int)$_GET['course_id']) {
+        for ($j = 0; $j < count($userBatchJSON->{'data'}); $j++) {
+            if ($modulJSON->{'data'}[$i]->{'batch_id'} == $userBatchJSON->{'data'}[$j]->{'batch_batch_id'}) {
+                for ($k = 0; $k < count($userJSON->{'data'}); $k++) {
+                    if ($userBatchJSON->{'data'}[$j]->{'user_user_id'} == $userJSON->{'data'}[$k]->{'user_id'} && $userJSON->{'data'}[$k]->{'role_id'} == 3) {
                         array_push($userData, $userJSON->{'data'}[$k]);
                     }
                 }
@@ -62,9 +62,9 @@ $sub = $submitted->getSubmittedFile();
 
 // var_dump($sub);
 $studentSub = array();
-for($i = 0; $i < count($userData); $i++) {
-    for($j = 0; $j < count($sub); $j++) {
-        if($userData[$i]->{'user_id'} == $sub[$j]['student_id']) {
+for ($i = 0; $i < count($userData); $i++) {
+    for ($j = 0; $j < count($sub); $j++) {
+        if ($userData[$i]->{'user_id'} == $sub[$j]['student_id']) {
             array_push($studentSub, array(
                 "user_id" => $userData[$i]->{'user_id'},
                 "assignment_id" => $sub[$j]['assignment_id'],
@@ -83,29 +83,29 @@ for($i = 0; $i < count($userData); $i++) {
 // var_dump($userData);
 $data = array();
 
-usort($studentSub, function($items1, $items2){
-    return $items1['user_id'] <=> $items2['user_id'];
-});
+// usort($studentSub, function ($items1, $items2) {
+//     return $items1['user_id'] <=> $items2['user_id'];
+// });
 
 var_dump($studentSub);
 
 
-for($i = 0; $i < count($studentSub); $i++) {
-    // if($studentSub[$i]['user_id'] == $studentSub[$i+1]['user_id']) {
-    //     if(strtotime($studentSub[$i]['submitted_date']) < strtotime($studentSub[$i+1]['submitted_date'])) {
-    //         array_push($data, $studentSub[$i+1]);
-    //     }
-    // } else {
-    //     array_push($data, $studentSub[$i+1]);
-    // }
-    if($studentSub[$i]['user_id'] != $studentSub[$i+1]['user_id']) {
-        array_push($data, $studentSub[$i]);
-    }
-}
+// for ($i = 0; $i < count($studentSub); $i++) {
+//     // if($studentSub[$i]['user_id'] == $studentSub[$i+1]['user_id']) {
+//     //     if(strtotime($studentSub[$i]['submitted_date']) < strtotime($studentSub[$i+1]['submitted_date'])) {
+//     //         array_push($data, $studentSub[$i+1]);
+//     //     }
+//     // } else {
+//     //     array_push($data, $studentSub[$i+1]);
+//     // }
+//     // if ($studentSub[$i]['user_id'] != $studentSub[$i + 1]['user_id']) {
+//     //     array_push($data, $studentSub[$i]);
+//     // }
+// }
 
 // var_dump($studentSub);
 
-var_dump($data);
+// var_dump($data);
 
 $didntsub = $submitted->getStudentNotSubmit();
 if (isset($_POST['submit'])) {
@@ -178,6 +178,25 @@ if (isset($_POST['submit'])) {
         }
     </script>
     <style>
+        p.note {
+            font-size: 1rem;
+            color: red;
+        }
+
+        label.error {
+            color: red;
+            font-size: 1rem;
+            display: block;
+            margin-top: 5px;
+        }
+
+        label.error.fail-alert {
+
+            line-height: 1;
+            padding: 2px 0 6px 6px;
+
+        }
+
         .in-active {
             width: 80px !important;
             padding: 20px 15px !important;
@@ -348,7 +367,7 @@ if (isset($_POST['submit'])) {
                     <tbody>
                         <?php
                         $no = 1;
-                        foreach ($data as $key => $item) {
+                        foreach ($studentSub as $key => $item) {
 
                         ?>
                             <tr>
@@ -443,7 +462,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <!-- Modal body -->
                 <div class="px-6 space-y-6">
-                    <form class="flex flex-col gap-y-4" action="" method="POST">
+                    <form class="flex flex-col gap-y-4" id="scoreform" action="" method="POST">
                         <div class="mb-6">
                             <input type="hidden" id="sid" name="sid">
                             <input type="hidden" id="uid" name="uid">
@@ -464,6 +483,7 @@ if (isset($_POST['submit'])) {
 
 
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
 
     <script>
         let btnToggle = document.getElementById('btnToggle');
@@ -483,10 +503,26 @@ if (isset($_POST['submit'])) {
                 console.log(userID);
 
                 $('#score').attr('placeholder', 'Input score for ' + username);
-
-
-
             })
+            $('#scoreform').validate({
+                errorClass: "error fail-alert",
+                validClass: "valid success-alert",
+                rules: {
+                    score: {
+                        number: true,
+                        min: 0,
+                        max: 100,
+                    }
+                },
+                messages: {
+                    score: {
+                        number: 'Score must be number',
+                        min: 'Min score is 0 ',
+                        max: 'max score is 100'
+                    }
+                }
+            })
+
 
 
 

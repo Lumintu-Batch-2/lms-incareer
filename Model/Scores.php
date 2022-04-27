@@ -3,9 +3,10 @@ class Scores
 {
     private $scoreId;
     private $scoreValue;
-    private $submissionId;
+    private $assignmentId;
     private $componentId;
     private $mentorId;
+    private $studentId;
     private $dbConn;
 
     public function __construct()
@@ -32,13 +33,13 @@ class Scores
     {
         return $this->scoreValue;
     }
-    public function setSubmissionId($id)
+    public function setAssignmentnId($id)
     {
-        $this->submissionId = $id;
+        $this->assignmentId = $id;
     }
-    public function getSubmissionId()
+    public function getAssignmentId()
     {
-        return $this->submissionId;
+        return $this->assignmentId;
     }
     public function setComponentId($id)
     {
@@ -55,6 +56,15 @@ class Scores
     public function getMentorId()
     {
         return $this->mentorId;
+    }
+    public function setStudentId($id)
+    {
+        $this->studentId = $id;
+    }
+
+    public function getStudentId()
+    {
+        return $this->studentId;
     }
     public function saveScore()
     {
