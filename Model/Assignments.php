@@ -117,7 +117,7 @@ class Assignments
         }
     }
 
-    public function createAssignment($data, $file, $sid, $mid)
+    public function createAssignment($data, $file, $sid, $mid, $userData)
     {
         $is_ok = false;
         $msg = "";
@@ -197,6 +197,19 @@ class Assignments
 
         $save = $this->saveAssignment();
         $upload = $objQuest->uploadFile($save['assignment_id']);
+
+        for($i = 0; $i < count($userData); $i++) {
+            require_once "Scores.php";
+
+            $objScore = new Scores;
+            $objScore->setScoreValue(0);
+            $objScore->setAssignmentId($save['assignment_id']);
+            $objScore->setMentorId($mid);
+            $objScore->setStudentId($userData[$i]->{'user_id'});
+
+            $objScore->insertScore();
+
+        }
 
         if ($save['is_ok'] && $upload) {
             $msg = "Berhasil membuat tugas!";
