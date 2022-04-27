@@ -60,24 +60,24 @@ $submitted = new AssignmentSubmission;
 $submitted->setAssignmentId($_GET['assignment_id']);
 $sub = $submitted->getSubmittedFile();
 
-// var_dump($sub);
-$studentSub = array();
-for ($i = 0; $i < count($userData); $i++) {
-    for ($j = 0; $j < count($sub); $j++) {
-        if ($userData[$i]->{'user_id'} == $sub[$j]['student_id']) {
-            array_push($studentSub, array(
-                "user_id" => $userData[$i]->{'user_id'},
-                "assignment_id" => $sub[$j]['assignment_id'],
-                "student_name" => $userData[$i]->{'user_username'},
-                "submitted_date" => $sub[$j]['submitted_date'],
-                "submission_token" => $sub[$j]['submission_token'],
-                "submission_filename" => $sub[$j]['submission_filename'],
-                "score_id" => $sub[$j]['score_id'],
-                "score_value" => $sub[$j]['score_value']
-            ));
-        }
-    }
-}
+// // var_dump($sub);
+// $studentSub = array();
+// for ($i = 0; $i < count($userData); $i++) {
+//     for ($j = 0; $j < count($sub); $j++) {
+//         if ($userData[$i]->{'user_id'} == $sub[$j]['student_id']) {
+//             array_push($studentSub, array(
+//                 "user_id" => $userData[$i]->{'user_id'},
+//                 "assignment_id" => $sub[$j]['assignment_id'],
+//                 "student_name" => $userData[$i]->{'user_username'},
+//                 "submitted_date" => $sub[$j]['submitted_date'],
+//                 "submission_token" => $sub[$j]['submission_token'],
+//                 "submission_filename" => $sub[$j]['submission_filename'],
+//                 "score_id" => $sub[$j]['score_id'],
+//                 "score_value" => $sub[$j]['score_value']
+//             ));
+//         }
+//     }
+// }
 
 // var_dump($studentSub);
 // var_dump($userData);
@@ -87,7 +87,7 @@ $data = array();
 //     return $items1['user_id'] <=> $items2['user_id'];
 // });
 
-var_dump($studentSub);
+// var_dump($studentSub);
 
 
 // for ($i = 0; $i < count($studentSub); $i++) {
@@ -367,7 +367,7 @@ if (isset($_POST['submit'])) {
                     <tbody>
                         <?php
                         $no = 1;
-                        foreach ($studentSub as $key => $item) {
+                        foreach ($sub as $key => $item) {
 
                         ?>
                             <tr>
