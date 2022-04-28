@@ -117,7 +117,7 @@ class Assignments
         }
     }
 
-    public function createAssignment($data, $file, $sid, $mid)
+    public function createAssignment($data, $file, $sid, $mid, $userData)
     {
         $is_ok = false;
         $msg = "";
@@ -197,6 +197,29 @@ class Assignments
 
         $save = $this->saveAssignment();
         $upload = $objQuest->uploadFile($save['assignment_id']);
+
+        for($i = 0; $i < count($userData); $i++) {
+            require_once "Scores.php";
+            require_once "AssignmentSubmission.php";
+
+            $objScore = new Scores;
+            $objScore->setScoreValue(0);
+            $objScore->setAssignmentId($save['assignment_id']);
+            $objScore->setMentorId($mid);
+            $objScore->setStudentId($userData[$i]->{'user_id'});
+            $objScore->insertScore();
+
+            $objSubm = new AssignmentSubmission;
+            $objSubm->setSubmissionFileName("N/A");
+            $objSubm->setSubmissionUploadDate(date("Y-m-d H:i:s"));
+            $objSubm->setSubmissionStatus(1);
+            $objSubm->setSubmissionToken("");
+            $objSubm->setIsFinished(0);
+            $objSubm->setAssignmentId($save['assignment_id']);
+            $objSubm->setStudentId($userData[$i]->{'user_id'});
+            $objSubm->creatAssignmentSubmission();
+
+        }
 
         if ($save['is_ok'] && $upload) {
             $msg = "Berhasil membuat tugas!";

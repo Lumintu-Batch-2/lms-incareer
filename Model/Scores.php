@@ -33,7 +33,7 @@ class Scores
     {
         return $this->scoreValue;
     }
-    public function setAssignmentnId($id)
+    public function setAssignmentId($id)
     {
         $this->assignmentId = $id;
     }
@@ -96,6 +96,29 @@ class Scores
             } else {
                 return false;
             }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function insertScore() {
+        try {
+            
+            $stmt = $this->dbConn->prepare(
+                "INSERT INTO `scores`(`score_id`, `score_value`, `assignment_id`, `mentor_id`, `student_id`) VALUES (NULL, :score_val, :assign_id, :mid, :sid)"
+            );
+
+            $stmt->bindParam(":score_val", $this->scoreValue);
+            $stmt->bindParam(":assign_id", $this->assignmentId);
+            $stmt->bindParam(":mid", $this->mentorId);
+            $stmt->bindParam(":sid", $this->studentId);
+
+            if($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+
         } catch (Exception $e) {
             return $e->getMessage();
         }
