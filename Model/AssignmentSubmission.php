@@ -269,21 +269,23 @@ class AssignmentSubmission
         return $submission;
     }
 
-    public function getSubmissionByAssignIdAndStudentId(){
+    public function getSubmissionByAssignIdAndStudentId()
+    {
         $stmt = $this->dbConn->prepare('SELECT * FROM `assignment_submissions` WHERE assignment_id = :asid AND student_id =:sid');
         $stmt->bindParam(":asid", $this->assignmentId);
         $stmt->bindParam(":sid", $this->studentId);
-        try{
-            if($stmt->execute()){
-                $sub = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            if ($stmt->execute()) {
+                $sub = $stmt->fetch(PDO::FETCH_ASSOC);
             }
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return $e->getMessage();
         }
         return $sub;
     }
 
-    public function creatAssignmentSubmission(){
+    public function creatAssignmentSubmission()
+    {
         try {
 
             $stmt = $this->dbConn->prepare(
@@ -305,9 +307,9 @@ class AssignmentSubmission
         } catch (Exception $e) {
             return $e->getMessage();
         }
-
     }
-    public function deleteNAassignmentSubmission(){
+    public function deleteNAassignmentSubmission()
+    {
         try {
             $stmt = $this->dbConn->prepare('DELETE FROM `assignment_submissions` WHERE student_id = :sid AND assignment_id =:asid AND submission_filename =:sf');
             $stmt->bindParam(":sf", $this->submissionFileName);
@@ -318,9 +320,64 @@ class AssignmentSubmission
             } else {
                 return false;
             }
-
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
+    public function updateStatusAssignmentSubmission()
+    {
+        try {
+            $stmt = $this->dbConn->prepare('UPDATE `assignment_submissions` SET `submission_status`= :subs ,`is_finish`=:if WHERE assignment_submissions.assignment_id = :asid AND assignment_submissions.student_id = :sid');
+            $stmt->bindParam(":subs", $this->submissionStatus);
+            $stmt->bindParam(":if", $this->isFinished);
+            $stmt->bindParam(":asid", $this->assignmentId);
+            $stmt->bindParam(":sid", $this->studentId);
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function getSubmissionAndScoreByAssignmentId()
+    {
+        try {
+
+            $stmt = $this->dbConn->prepare(
+                "SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.assignment_id, assignment_submissions.student_id, scores.score_id, scores.score_value FROM assignment_submissions, scores WHERE assignment_submissions.assignment_id = :aid AND scores.assignment_id = :aid AND assignment_submissions.submission_status = 1 AND assignment_submissions.is_finish = 1 GROUP BY assignment_submissions.assignment_submission_id"
+            );
+
+            $stmt->bindParam(":aid", $this->assignmentId);
+
+            if ($stmt->execute()) {
+                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $data;
+    }
+
+    public function getNotSubmitSubmission()
+    {
+        try {
+
+            $stmt = $this->dbConn->prepare(
+                "SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.assignment_id, assignment_submissions.student_id, scores.score_id, scores.score_value FROM assignment_submissions, scores WHERE assignment_submissions.assignment_id = :aid AND scores.assignment_id = :aid AND assignment_submissions.is_finish = 0 GROUP BY assignment_submissions.assignment_submission_id"
+            );
+
+            $stmt->bindParam(":aid", $this->assignmentId);
+
+            if ($stmt->execute()) {
+                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $data;
     }
 }
