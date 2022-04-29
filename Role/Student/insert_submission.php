@@ -16,7 +16,7 @@ $sub = $assign->getSubmissionByAssignIdAndStudentId();
 
 if (!empty($sub)) {
 
-    if ($sub['is_finish'] == 0) { //untuk pertama kali submit file
+    if ($sub[0]['is_finish'] == 0) { //untuk pertama kali submit file
         $assign->setSubmissionFileName('N/A');
         $del = $assign->deleteNAassignmentSubmission();
         // print_r('true');
@@ -41,9 +41,9 @@ if (!empty($sub)) {
 
             array_push($arr, $save);
         }
-    } else if ($sub['is_finish'] == 1) { //untuk update file
+    } else if ($sub[0]['is_finish'] == 1) { //untuk update file
         $assign->setSubmissionStatus('nonaktif');
-        $assign->setIsFinished(0);
+        $assign->setIsFinished(1);
         $assign->updateStatusAssignmentSubmission();
         for ($i = 0; $i < $_POST['count']; $i++) {
             $objAssg = new AssignmentSubmission;

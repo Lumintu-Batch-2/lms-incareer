@@ -215,7 +215,7 @@ class AssignmentSubmission
     }
     public function getSubmissionByToken()
     {
-        $stmt = $this->dbConn->prepare('SELECT * FROM assignment_submissions WHERE assignment_submissions.submission_token = :st LIMIT 2');
+        $stmt = $this->dbConn->prepare('SELECT * FROM assignment_submissions WHERE assignment_submissions.submission_token = :st');
         $stmt->bindParam(':st', $this->submissionToken);
 
         try {
@@ -276,7 +276,7 @@ class AssignmentSubmission
         $stmt->bindParam(":sid", $this->studentId);
         try {
             if ($stmt->execute()) {
-                $sub = $stmt->fetch(PDO::FETCH_ASSOC);
+                $sub = $stmt->fetchall(PDO::FETCH_ASSOC);
             }
         } catch (Exception $e) {
             return $e->getMessage();

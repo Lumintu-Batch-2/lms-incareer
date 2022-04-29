@@ -86,9 +86,9 @@ class Scores
     }
     public function updateScore()
     {
-        $stmt = $this->dbConn->prepare('UPDATE `scores` SET `score_value`= :sv, `mentor_id`= :mid WHERE score_id = :sid');
+        $stmt = $this->dbConn->prepare('UPDATE `scores` SET `score_value`= :sv, `mentor_id`= :mid WHERE student_id = :sid');
         $stmt->bindParam(':sv', $this->scoreValue);
-        $stmt->bindParam(':sid', $this->scoreId);
+        $stmt->bindParam(':sid', $this->studentId);
         $stmt->bindParam(':mid', $this->mentorId);
         try {
             if ($stmt->execute()) {
@@ -101,9 +101,10 @@ class Scores
         }
     }
 
-    public function insertScore() {
+    public function insertScore()
+    {
         try {
-            
+
             $stmt = $this->dbConn->prepare(
                 "INSERT INTO `scores`(`score_id`, `score_value`, `assignment_id`, `mentor_id`, `student_id`) VALUES (NULL, :score_val, :assign_id, :mid, :sid)"
             );
@@ -113,12 +114,11 @@ class Scores
             $stmt->bindParam(":mid", $this->mentorId);
             $stmt->bindParam(":sid", $this->studentId);
 
-            if($stmt->execute()) {
+            if ($stmt->execute()) {
                 return true;
             } else {
                 return false;
             }
-
         } catch (Exception $e) {
             return $e->getMessage();
         }
