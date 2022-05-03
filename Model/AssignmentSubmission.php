@@ -346,7 +346,7 @@ class AssignmentSubmission
         try {
 
             $stmt = $this->dbConn->prepare(
-                "SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.assignment_id, assignment_submissions.student_id, scores.score_id, scores.score_value FROM assignment_submissions, scores WHERE assignment_submissions.assignment_id = :aid AND scores.assignment_id = :aid AND assignment_submissions.submission_status = 1 AND assignment_submissions.is_finish = 1 GROUP BY assignment_submissions.assignment_submission_id"
+                "SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.assignment_id, assignment_submissions.student_id, scores.score_id, scores.score_value FROM assignment_submissions, scores WHERE assignment_submissions.assignment_id = :aid AND scores.assignment_id = :aid AND assignment_submissions.submission_status = 1 AND assignment_submissions.is_finish = 1 GROUP BY assignment_submissions.submission_token"
             );
 
             $stmt->bindParam(":aid", $this->assignmentId);
@@ -366,7 +366,7 @@ class AssignmentSubmission
         try {
 
             $stmt = $this->dbConn->prepare(
-                "SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.assignment_id, assignment_submissions.student_id, scores.score_id, scores.score_value FROM assignment_submissions, scores WHERE assignment_submissions.assignment_id = :aid AND scores.assignment_id = :aid AND assignment_submissions.is_finish = 0 GROUP BY assignment_submissions.assignment_submission_id"
+                "SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.assignment_id, assignment_submissions.student_id FROM assignment_submissions WHERE assignment_submissions.assignment_id = :aid AND assignment_submissions.is_finish = 0 GROUP BY assignment_submissions.assignment_submission_id"
             );
 
             $stmt->bindParam(":aid", $this->assignmentId);

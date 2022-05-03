@@ -86,10 +86,9 @@ class Scores
     }
     public function updateScore()
     {
-        $stmt = $this->dbConn->prepare('UPDATE `scores` SET `score_value`= :sv, `mentor_id`= :mid WHERE student_id = :sid');
+        $stmt = $this->dbConn->prepare('UPDATE `scores` SET `score_value`= :sv WHERE score_id = :score_id');
         $stmt->bindParam(':sv', $this->scoreValue);
-        $stmt->bindParam(':sid', $this->studentId);
-        $stmt->bindParam(':mid', $this->mentorId);
+        $stmt->bindParam(':score_id', $this->scoreId);
         try {
             if ($stmt->execute()) {
                 return true;
@@ -122,5 +121,25 @@ class Scores
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    public function getScoreByStudentIdAndAssignmentId()
+    {
+        try {
+            $stmt = $this->dbConn->prepare(
+                "SELECT score_value FROM scores WHERE student_id = :std_id AND assignment_id = :assg_id"
+            );
+
+            $stmt->bindParam(":std_id", $this->studentId);
+            $stmt->bindParam(":assg_id", $this->assignmentId);
+
+            if ($stmt->execute()) {
+                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $data;
     }
 }
