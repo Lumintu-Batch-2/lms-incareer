@@ -32,7 +32,7 @@ require_once('../../Model/Assignments.php');
 $objAssign = new Assignments;
 
 $allAssignments = $objAssign->getAssignmentBySubjectId($_GET['subject_id']);
-var_dump($allAssignments);
+// var_dump($allAssignments);
 
 echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_id'} . "'/>";
 
@@ -311,7 +311,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                     $asq->setAssignmentId($assignment['assignment_id']);
                                     $question = $asq->getQuestionsByAssignmentId();
                                     ?>
-                                    <a href="download.php?file=<?= $question['question_filename']; ?>"><img class=" w-7 mx-auto cursor-pointer" src="../../Img/icons/download_icon.svg" alt="Download Icon"></a>
+                                    <a href="download.php?file=<?= $question['question_filename'] . '&type=q'; ?>"><img class=" w-7 mx-auto cursor-pointer" src="../../Img/icons/download_icon.svg" alt="Download Icon"></a>
                                 </td>
                                 <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer modalUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" data-assignid="<?= $assignment['assignment_id']; ?>" id="uploadModal"></td>
                                 <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/history_icon.svg" alt="History Icon" type="button" data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>">
@@ -331,12 +331,41 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                         </div>
                                         <!-- Modal body -->
                                         <div class="px-6 space-y-6">
-                                            <div class="mb-6">
+                                            <div class="mb-6 relative overflow-x-auto sm:rounded-lg border border-gray-400 px-4 py-2">
+                                                <div class="relative w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                                    <ul class="grid grid-cols-12 border-b border-gray-400 py-2">
+                                                        <li><b>No</b></li>
+                                                        <li class="col-span-5"><b>Submission Time</b></li>
+                                                        <li class="col-span-5"><b>Title</b></li>
+                                                        <li><b>Files</b></li>
+                                                    </ul>
+                                                    <?php
+                                                        require_once "../../Model/AssignmentSubmission.php";
+                                                        $objSub = new AssignmentSubmission;
+                                                        $objSub->setStudentId($_SESSION['user']->{'user_id'});
+                                                        $objSub->setAssignmentId($assignment['assignment_id']);
+                                                        $submissions = $objSub->getSubmissionByAssignIdAndStudentId();
 
+                                                        $i = 1;
+
+                                                        foreach($submissions as $val => $submission) :
+                                                    ?>
+                                                    <ul class="grid grid-cols-12 border-b border-gray-400 py-2">
+                                                        <li><?= $i; ?></li>
+                                                        <li class="col-span-5"><?=$submission['submitted_date'];?></li>
+                                                        <li class="col-span-5 truncate"><?= $submission['submission_filename'];?></li>
+                                                        <li><a href="download.php?file=<?= $submission['submission_filename'] . '&type=s'; ?>"><img class=" w-7 mx-auto cursor-pointer" src="../../Img/icons/download_icon.svg" alt="Download Icon"></a></li>
+                                                    </ul>
+
+                                                    <?php 
+                                                        $i++;
+                                                        endforeach     
+                                                    ?>
+                                                    
+                                                </div>
                                             </div>
                                             <div class="flex justify-end p-6 space-x-3 rounded-b ">
-                                                <button data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>" class="w-24" type="button">Cancel</button>
-
+                                                <button data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>" class="w-32 bg-yellow-400 text-center py-1 text-white rounded-md hover:bg-yellow-600" type="button">Confirm</button>
                                             </div>
 
                                         </div>
@@ -344,6 +373,8 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                 </div>
                             </div>
                             <!-- END MODAL -->
+
+
                             <!-- Main modal -->
                             <div id="defaultModal<?= $assignment['assignment_id']; ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
                                 <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
@@ -390,9 +421,6 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                 </div>
                             </div>
                             <!-- END MODAL -->
-
-
-
                         <?php endforeach ?>
                     </tbody>
                 </table>
@@ -434,15 +462,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                 let student_id = studentId.value;
                 let fileData = document.getElementById("fileInput");
 
-                console.log(fileData);
-
-
-
-
-
-
-
-
+                
                 $(document).on("click", "#uploadSubmission", function(evt) {
                     evt.preventDefault();
                     let cf = document.getElementById("cf");
@@ -453,7 +473,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                         studId: student_id,
                         count: cfile
                     }
-                    console.log(data);
+                    // console.log(data);
 
                     $.ajax({
                         url: "insert_submission.php",
@@ -468,11 +488,11 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                         // },
                         // console.log(data);
                         success: function(data) {
-                            console.log(data);
+                            // console.log(data);
                             let dataJson = JSON.parse(data);
                             // loader.style.display = "none";
 
-                            console.log(dataJson[0].submission_id);
+                            // console.log(dataJson[0].submission_id);
                             for (i = 0; i < fileData.files.length; i++) {
                                 let formData = new FormData();
                                 formData.append("data", fileData.files[i]);

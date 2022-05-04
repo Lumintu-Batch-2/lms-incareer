@@ -5,7 +5,7 @@ class DbConnect
     private $host = "localhost";
     private $user = "root";
     private $pass = "";
-    private $dbName = "incareer2";
+    private $dbName = "assignment";
     private $conn;
 
     public function connect()
