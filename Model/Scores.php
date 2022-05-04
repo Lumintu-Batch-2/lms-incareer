@@ -127,7 +127,7 @@ class Scores
     {
         try {
             $stmt = $this->dbConn->prepare(
-                "SELECT score_value FROM scores WHERE student_id = :std_id AND assignment_id = :assg_id"
+                "SELECT score_id, score_value FROM scores WHERE student_id = :std_id AND assignment_id = :assg_id"
             );
 
             $stmt->bindParam(":std_id", $this->studentId);

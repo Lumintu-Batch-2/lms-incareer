@@ -72,9 +72,9 @@ for ($i = 0; $i < count($userData); $i++) {
                 "student_name" => $userData[$i]->{'user_username'},
                 "submitted_date" => $submissionData[$j]['submitted_date'],
                 "submission_token" => $submissionData[$j]['submission_token'],
-                "submission_filename" => $submissionData[$j]['submission_filename'],
-                "score_id" => $submissionData[$j]['score_id'],
-                "score_value" => $submissionData[$j]['score_value']
+                "submission_filename" => $submissionData[$j]['submission_filename']
+                // "score_id" => $submissionData[$j]['score_id'],
+                // "score_value" => $submissionData[$j]['score_value']
             ));
         }
     }
@@ -82,7 +82,7 @@ for ($i = 0; $i < count($userData); $i++) {
 
 $notSubmitted = array();
 $notSubmittedData = $objSubmission->getNotSubmitSubmission();
-var_dump($notSubmittedData);
+// var_dump($notSubmittedData);
 
 
 for ($i = 0; $i < count($userData); $i++) {
@@ -104,7 +104,7 @@ for ($i = 0; $i < count($userData); $i++) {
 }
 
 
-var_dump($notSubmitted);
+// var_dump($submissionStudent);
 // var_dump($userData);
 
 if (isset($_POST['submit'])) {
@@ -409,8 +409,16 @@ if (isset($_POST['submit1'])) {
                                     <?php
                                     } ?>
                                 </td>
-                                <td class="border-b px-4 py-2 text-center "><?= $item['score_value']  ?></td>
-                                <td class="border-b px-4 py-2 "><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal" data-username="<?= $item['student_name']; ?>" data-scoreid="<?= $item['score_id'] ?>" data-student-id="<?= $item['student_id'] ?>" data-scorevalue="<?= $item['score_value']  ?>" alt="Edit Icon" type="button" data-target="#defaultModal" id="editbtn"></td>
+
+                                <?php
+                                    require_once "../../Model/Scores.php";
+                                    $objScores = new Scores;
+                                    $objScores->setStudentId($item['student_id']);
+                                    $objScores->setAssignmentId($item['assignment_id']);
+                                    $score = $objScores->getScoreByStudentIdAndAssignmentId();
+                                ?>
+                                <td class="border-b px-4 py-2 text-center "><?= $score['score_value']  ?></td>
+                                <td class="border-b px-4 py-2 "><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal" data-username="<?= $item['student_name']; ?>" data-scoreid="<?= $score['score_id'] ?>" data-student-id="<?= $item['student_id'] ?>" data-scorevalue="<?= $score['score_value']  ?>" alt="Edit Icon" type="button" data-target="#defaultModal" id="editbtn"></td>
 
                             </tr>
 

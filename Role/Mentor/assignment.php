@@ -61,13 +61,13 @@ if (isset($_GET['act'])) {
                         echo "
                         <script>
                             alert('" . $edit['msg'] . "');
-                            location.replace('assignment.php?subject_id=" . $_GET['subject_id'] . "')
+                            location.replace('assignment.php?course_id=" . $_GET['course_id'] . "&subject_id=" . $_GET['subject_id'] . "')
                         </script>";
                     } else {
                         echo "
                         <script>
                             alert('" . $edit['msg'] . "');
-                            location.replace('assignment.php?subject_id=" . $_GET['subject_id'] . "')
+                            location.replace('assignment.php?course_id=" . $_GET['course_id'] . "&subject_id=" . $_GET['subject_id'] . "')
                         </script>";
                     }
                 }
@@ -82,11 +82,14 @@ if (isset($_GET['act'])) {
                     echo "
                     <script>
                         alert('Data berhasil dihapus!');
-                        location.replace('assignment.php?subject_id=" . $_GET['subject_id'] . "')
+                        location.replace('assignment.php?course_id=" . $_GET['course_id'] . "&subject_id=" . $_GET['subject_id'] . "')
                     </script>";
                 } else {
-                    echo "Data gagal dihapus!";
-                    header("location: assignment.php?subject_id=" . $_GET['subject_id']);
+                    echo "
+                    <script>
+                        alert('Data gagal dihapus!');
+                        location.replace('assignment.php?course_id=" . $_GET['course_id'] . "&subject_id=" . $_GET['subject_id'] . "')
+                    </script>";
                 }
             }
             break;
@@ -357,7 +360,7 @@ if (isset($_GET['act'])) {
                                 <td class="text-center"><?= $dueTime; ?> WIB</td>
                                 <td class=" px-4 py-2 text-center"><a href="#"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>"></a></td>
                                 <td>
-                                    <a href="assignment_collection.php?course_id=<?= (int)$_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . "&subject_id=" . $_GET['subject_id']; ?>"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/binoculars_icon.svg" alt="Collection Icon"></a>
+                                    <a href="assignment_collection.php?course_id=<?= $_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . '&subject_id=' . $_GET['subject_id']; ?>"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/binoculars_icon.svg" alt="Collection Icon"></a>
                                 </td>
                                 <td class="flex flex-row justify-center items-center mx-3 my-3">
                                     <a><img class="w-7 mx-auto cursor-pointer mx-2" src="../../Img/icons/edit_icon.svg" alt="Edit Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>"></a>
