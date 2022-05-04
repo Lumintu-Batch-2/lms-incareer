@@ -32,6 +32,16 @@ switch ($_SESSION['user']->{'role_id'}) {
 
 require "../../Model/Assignments.php";
 require "../../Model/AssignmentSubmission.php";
+require "../../api/get_api_data.php";
+
+$subModulData = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+$subModul = array();
+
+for($i = 0; $i < count($subModulData->{'data'}); $i++) {
+    if($subModulData->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
+        array_push($subModul, $subModulData->{'data'}[$i]);
+    }
+}
 
 
 $objAssignment = new Assignments;
@@ -290,7 +300,7 @@ if (isset($_GET['act'])) {
 
             <!-- Topic Title -->
             <div>
-                <p class="text-4xl text-dark-green font-semibold">Session#1 Sub Topic Title</p>
+                <p class="text-4xl text-dark-green font-semibold">Session#1 <?= $subModul[0]->{'modul_name'}; ?></p>
             </div>
 
             <!-- Mentor -->
