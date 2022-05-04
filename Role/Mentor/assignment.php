@@ -364,7 +364,7 @@ if (isset($_GET['act'])) {
                                 </td>
                                 <td class="flex flex-row justify-center items-center mx-3 my-3">
                                     <a><img class="w-7 mx-auto cursor-pointer mx-2" src="../../Img/icons/edit_icon.svg" alt="Edit Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>"></a>
-                                    <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/delete_icon.svg" alt="Remove Icon"></a>
+                                    <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?=$_GET['course_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/delete_icon.svg" alt="Remove Icon"></a>
                                 </td>
                             </tr>
 
