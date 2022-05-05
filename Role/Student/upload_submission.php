@@ -39,18 +39,11 @@ if ($move) {
     $objAssig->setSubmissionFileName($_FILES['data']['name']);
     $objAssig->setSubmissionUploadDate($dateupload);
     $objAssig->setAssignmentSubmissionId((int) $_POST['submission_id']);
+    $objAssig->setIsFinished(1);
 
     $update = $objAssig->updateSubmission();
-    require_once "../../Model/Scores.php";
-    $objscore = new Scores;
-    $objscore->setSubmissionId((int) $_POST['submission_id']);
-    $objscore->setMentorId(0);
-    $objscore->setScoreValue(0);
-    $objscore->setComponentId(1);
-    $score = $objscore->saveScore();
 
-
-    if ($update and $score) {
+    if ($update) {
         $msg = "Berhasil mengirim tugas!";
         $is_ok = true;
         goto out;

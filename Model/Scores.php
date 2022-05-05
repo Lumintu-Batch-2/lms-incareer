@@ -33,7 +33,7 @@ class Scores
     {
         return $this->scoreValue;
     }
-    public function setAssignmentnId($id)
+    public function setAssignmentId($id)
     {
         $this->assignmentId = $id;
     }
@@ -86,10 +86,9 @@ class Scores
     }
     public function updateScore()
     {
-        $stmt = $this->dbConn->prepare('UPDATE `scores` SET `score_value`= :sv, `mentor_id`= :mid WHERE score_id = :sid');
+        $stmt = $this->dbConn->prepare('UPDATE `scores` SET `score_value`= :sv WHERE score_id = :score_id');
         $stmt->bindParam(':sv', $this->scoreValue);
-        $stmt->bindParam(':sid', $this->scoreId);
-        $stmt->bindParam(':mid', $this->mentorId);
+        $stmt->bindParam(':score_id', $this->scoreId);
         try {
             if ($stmt->execute()) {
                 return true;
@@ -99,5 +98,48 @@ class Scores
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    public function insertScore()
+    {
+        try {
+
+            $stmt = $this->dbConn->prepare(
+                "INSERT INTO `scores`(`score_id`, `score_value`, `assignment_id`, `mentor_id`, `student_id`) VALUES (NULL, :score_val, :assign_id, :mid, :sid)"
+            );
+
+            $stmt->bindParam(":score_val", $this->scoreValue);
+            $stmt->bindParam(":assign_id", $this->assignmentId);
+            $stmt->bindParam(":mid", $this->mentorId);
+            $stmt->bindParam(":sid", $this->studentId);
+
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getScoreByStudentIdAndAssignmentId()
+    {
+        try {
+            $stmt = $this->dbConn->prepare(
+                "SELECT score_id, score_value FROM scores WHERE student_id = :std_id AND assignment_id = :assg_id"
+            );
+
+            $stmt->bindParam(":std_id", $this->studentId);
+            $stmt->bindParam(":assg_id", $this->assignmentId);
+
+            if ($stmt->execute()) {
+                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $data;
     }
 }

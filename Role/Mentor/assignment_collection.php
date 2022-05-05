@@ -52,68 +52,86 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     }
 }
 
-// var_dump($courseData);
-// var_dump($userData);
 
 require_once('../../Model/AssignmentSubmission.php');
-$submitted = new AssignmentSubmission;
-$submitted->setAssignmentId($_GET['assignment_id']);
-$sub = $submitted->getSubmittedFile();
+$objSubmission = new AssignmentSubmission;
+$objSubmission->setAssignmentId($_GET['assignment_id']);
+$submissionData = $objSubmission->getSubmissionAndScoreByAssignmentId();
+// var_dump($submissionData);
+// var_dump($_GET['assignment_id']);
 
-// var_dump($sub);
-$studentSub = array();
+
+$submissionStudent = array();
+
 for ($i = 0; $i < count($userData); $i++) {
-    for ($j = 0; $j < count($sub); $j++) {
-        if ($userData[$i]->{'user_id'} == $sub[$j]['student_id']) {
-            array_push($studentSub, array(
-                "user_id" => $userData[$i]->{'user_id'},
-                "assignment_id" => $sub[$j]['assignment_id'],
+    for ($j = 0; $j < count($submissionData); $j++) {
+        if ($userData[$i]->{'user_id'} == $submissionData[$j]['student_id']) {
+            array_push($submissionStudent, array(
+                "student_id" => $userData[$i]->{'user_id'},
+                "assignment_id" => $submissionData[$j]['assignment_id'],
                 "student_name" => $userData[$i]->{'user_username'},
-                "submitted_date" => $sub[$j]['submitted_date'],
-                "submission_token" => $sub[$j]['submission_token'],
-                "submission_filename" => $sub[$j]['submission_filename'],
-                "score_id" => $sub[$j]['score_id'],
-                "score_value" => $sub[$j]['score_value']
+                "submitted_date" => $submissionData[$j]['submitted_date'],
+                "submission_token" => $submissionData[$j]['submission_token'],
+                "submission_filename" => $submissionData[$j]['submission_filename']
+                // "score_id" => $submissionData[$j]['score_id'],
+                // "score_value" => $submissionData[$j]['score_value']
             ));
         }
     }
 }
 
-// var_dump($studentSub);
+$notSubmitted = array();
+$notSubmittedData = $objSubmission->getNotSubmitSubmission();
+// var_dump($notSubmittedData);
+
+
+for ($i = 0; $i < count($userData); $i++) {
+    for ($j = 0; $j < count($notSubmittedData); $j++) {
+        if ($userData[$i]->{'user_id'} == $notSubmittedData[$j]['student_id']) {
+
+            array_push($notSubmitted, array(
+                "student_id" => $userData[$i]->{'user_id'},
+                "assignment_id" => $notSubmittedData[$j]['assignment_id'],
+                "student_name" => $userData[$i]->{'user_username'},
+                "submitted_date" => $notSubmittedData[$j]['submitted_date'],
+                "submission_token" => $notSubmittedData[$j]['submission_token'],
+                "submission_filename" => $notSubmittedData[$j]['submission_filename']
+                // "score_id" => $notSubmittedData[$j]['score_id'],
+                // "score_value" => $notSubmittedData[$j]['score_value']
+            ));
+        }
+    }
+}
+
+
+// var_dump($submissionStudent);
 // var_dump($userData);
-$data = array();
 
-// usort($studentSub, function ($items1, $items2) {
-//     return $items1['user_id'] <=> $items2['user_id'];
-// });
-
-var_dump($studentSub);
-
-
-// for ($i = 0; $i < count($studentSub); $i++) {
-//     // if($studentSub[$i]['user_id'] == $studentSub[$i+1]['user_id']) {
-//     //     if(strtotime($studentSub[$i]['submitted_date']) < strtotime($studentSub[$i+1]['submitted_date'])) {
-//     //         array_push($data, $studentSub[$i+1]);
-//     //     }
-//     // } else {
-//     //     array_push($data, $studentSub[$i+1]);
-//     // }
-//     // if ($studentSub[$i]['user_id'] != $studentSub[$i + 1]['user_id']) {
-//     //     array_push($data, $studentSub[$i]);
-//     // }
-// }
-
-// var_dump($studentSub);
-
-// var_dump($data);
-
-$didntsub = $submitted->getStudentNotSubmit();
 if (isset($_POST['submit'])) {
     require_once('../../Model/Scores.php');
     $score = new Scores;
     $score->setScoreId($_POST['sid']);
     $score->setScoreValue($_POST['score']);
-    $score->setMentorId($_SESSION['user']->{'user_id'});
+    $update  = $score->updateScore();
+    if ($update) {
+        echo "
+        <script>
+            alert('Berhasil Menambahkan score');
+            location.replace('assignment_collection.php?course_id=" . $_GET['course_id'] . "&assignment_id=" . $_GET['assignment_id'] . "&subject_id=" . $_GET['subject_id'] . "');
+        </script>";
+    } else {
+        echo "
+        <script>
+            alert('Gagal');
+            location.replace('assignment_collection.php?course_id=" . $_GET['course_id'] . "&assignment_id=" . $_GET['assignment_id'] . "&subject_id=" . $_GET['subject_id'] . "');
+        </script>";
+    }
+}
+if (isset($_POST['submit1'])) {
+    require_once('../../Model/Scores.php');
+    $score = new Scores;
+    $score->setScoreId($_POST['sid1']);
+    $score->setScoreValue($_POST['score1']);
     $update  = $score->updateScore();
     if ($update) {
         echo "
@@ -367,33 +385,40 @@ if (isset($_POST['submit'])) {
                     <tbody>
                         <?php
                         $no = 1;
-                        foreach ($studentSub as $key => $item) {
+                        foreach ($submissionStudent as $key => $item) {
 
                         ?>
                             <tr>
                                 <td class="border-b px-4 py-2"><?= $no ?></td>
                                 <td class="border-b px-4 py-2 text-center"><?= $item['student_name']  ?></td>
                                 <td class="border-b px-4 py-2 text-center"><?= $item['submitted_date']  ?></td>
-                                <td class="border-b px-4 py-2  "><a href="download.php?file=<?= $item['submission_filename']; ?>">
-                                        <?= $item['submission_filename']; ?> </a>
+                                <td class="border-b px-4 py-2  ">
                                     <?php
                                     require_once('../../Model/AssignmentSubmission.php');
                                     $multipleup = new AssignmentSubmission;
                                     $multipleup->setSubmissionToken($item['submission_token']);
                                     $file = $multipleup->getSubmissionByToken();
-                                    $jumlahfile = $multipleup->getRowSubmissionByToken();
+                                    // $jumlahfile = $multipleup->getRowSubmissionByToken();
 
-                                    if (count($jumlahfile) > 1) {
-                                        foreach ($file as $key => $val) { ?>
-                                            <a href="download.php?file=<?= $val['submission_filename']; ?>">
-                                                <p class=" border-t"><?= $val['submission_filename']; ?></p>
-                                            </a>
 
-                                    <?php }
+                                    foreach ($file as $key => $val) { ?>
+                                        <a href="download.php?file=<?= $val['submission_filename']; ?>">
+                                            <p class=" border-t"><?= $val['submission_filename']; ?></p>
+                                        </a>
+
+                                    <?php
                                     } ?>
                                 </td>
-                                <td class="border-b px-4 py-2 text-center "><?= $item['score_value']  ?></td>
-                                <td class="border-b px-4 py-2 "><a href=""></a> <img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal" data-username="<?= $item['student_name']; ?>" data-scoreid="<?= $item['score_id'] ?>" data-userid="<?= $item['user_id'] ?>" data-scorevalue="<?= $item['score_value']  ?>" alt="Edit Icon" type="button" data-target="#defaultModal" id="editbtn"></td>
+
+                                <?php
+                                    require_once "../../Model/Scores.php";
+                                    $objScores = new Scores;
+                                    $objScores->setStudentId($item['student_id']);
+                                    $objScores->setAssignmentId($item['assignment_id']);
+                                    $score = $objScores->getScoreByStudentIdAndAssignmentId();
+                                ?>
+                                <td class="border-b px-4 py-2 text-center "><?= $score['score_value']  ?></td>
+                                <td class="border-b px-4 py-2 "><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal" data-username="<?= $item['student_name']; ?>" data-scoreid="<?= $score['score_id'] ?>" data-student-id="<?= $item['student_id'] ?>" data-scorevalue="<?= $score['score_value']  ?>" alt="Edit Icon" type="button" data-target="#defaultModal" id="editbtn"></td>
 
                             </tr>
 
@@ -424,23 +449,34 @@ if (isset($_POST['submit'])) {
                             <th class="border-b text-center px-4 py-2">Published Date</th>
                             <th class="border-b text-center px-4 py-2">File</th>
                             <th class="border-b text-center px-4 py-2">Score</th>
-
+                            <th class="border-b text-center px-4 py-2">Action</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $no = 1;
-                        foreach ($didntsub as $key => $item) {
+                        foreach ($notSubmitted as $key => $item) {
 
                         ?>
                             <tr>
                                 <td class="border-b px-4 py-2 text-red-600"><?= $no  ?></td>
-                                <td class="border-b px-4 py-2 text-center text-red-600"><?= $item['username']  ?></td>
+                                <td class="border-b px-4 py-2 text-center text-red-600"><?= $item['student_name']  ?></td>
                                 <td class="border-b px-4 py-2 text-center text-red-600">-</td>
-                                <td class="border-b px-4 py-2 text-center text-red-600">-</td>
-                                <td class="border-b px-4 py-2 text-center text-red-600">0</td>
+                                <td class="border-b px-4 py-2 text-center text-red-600"><?= $item['submission_filename']; ?></td>
 
+                                <?php
+                                require_once "../../Model/Scores.php";
+                                $objScores = new Scores;
+                                $objScores->setStudentId($item['student_id']);
+                                $objScores->setAssignmentId($item['assignment_id']);
+                                $score = $objScores->getScoreByStudentIdAndAssignmentId();
+                                ?>
+                                <td class="border-b px-4 py-2 text-center text-red-600"><?= $score['score_value'] ?></td>
+
+                                <td class="border-b px-4 py-2 ">
+                                    <img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal1" alt="Edit Icon" type="button" data-scoreid="<?= $score['score_id']; ?>" data-scorevalue="<?= $score['score_value']; ?>" data-target="#defaultModal1" id="editbtn1">
+                                </td>
                             </tr>
                         <?php $no++;
                         } ?>
@@ -465,7 +501,7 @@ if (isset($_POST['submit'])) {
                     <form class="flex flex-col gap-y-4" id="scoreform" action="" method="POST">
                         <div class="mb-6">
                             <input type="hidden" id="sid" name="sid">
-                            <input type="hidden" id="uid" name="uid">
+                            <input type="hidden" id="studentId" name="studentId">
                             <input type="number" id="score" name="score" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                             <li class="font-semibold text-dark-green text-xs mt-2">Input score between 0-100</li>
                         </div>
@@ -480,7 +516,36 @@ if (isset($_POST['submit'])) {
     </div>
     <!-- END MODAL -->
 
-
+    <!-- modal UNFINISHED ASSIGNMENT -->
+    <div id="defaultModal1" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow ">
+                <!-- Modal header -->
+                <div class="flex justify-center items-start p-5 rounded-t ">
+                    <h3 class="text-xl font-bold  lg:text-2xl text-dark-green">
+                        Edit Score
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <div class="px-6 space-y-6">
+                    <form class="flex flex-col gap-y-4" id="scoreform" action="" method="POST">
+                        <div class="mb-6">
+                            <input type="hidden" id="sid1" name="sid1">
+                            <input type="hidden" id="studentId1" name="studentId1">
+                            <input type="number" id="score1" name="score1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                            <li class="font-semibold text-dark-green text-xs mt-2">Input score between 0-100</li>
+                        </div>
+                        <div class="flex justify-end p-6 space-x-3 rounded-b ">
+                            <button data-modal-toggle="defaultModal1" class="w-24" type="button">Cancel</button>
+                            <button class="bg-yellow-600 text-white  font-semibold justify-end text-center py-2 rounded-lg w-24 ml-auto" type="submit" name="submit1">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL -->
 
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
@@ -496,13 +561,24 @@ if (isset($_POST['submit'])) {
             $(document).on('click', '#editbtn', function() {
                 let username = $(this).data('username');
                 let scoreID = $(this).data('scoreid');
-                let userID = $(this).data('userid');
+                // let studentId = $(this).data('student-id');
                 let scoreValue = $(this).data('scorevalue');
                 $('#sid').val(scoreID);
-                $('#uid').val(userID);
+                $('#studentId').val(studentId);
                 console.log(userID);
 
                 $('#score').attr('placeholder', 'Input score for ' + username);
+            })
+            $(document).on('click', '#editbtn1', function() {
+                // let username = $(this).data('username');
+                let scoreID = $(this).data('scoreid');
+                // let studentId = $(this).data('student-id');
+                let scoreValue = $(this).data('scorevalue');
+                $('#sid1').val(scoreID);
+                $('#studentId1').val(studentId);
+                console.log(userID);
+
+                $('#score1').attr('placeholder', 'Input score for ' + username);
             })
             $('#scoreform').validate({
                 errorClass: "error fail-alert",

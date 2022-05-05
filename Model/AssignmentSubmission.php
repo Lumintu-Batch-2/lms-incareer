@@ -8,7 +8,8 @@ class AssignmentSubmission
     private $submissionToken;
     private $dbConn;
     private $studentId;
-    private $assignmentStatus;
+    private $submissionStatus;
+    private $isFinished;
 
     public function __construct()
     {
@@ -70,13 +71,21 @@ class AssignmentSubmission
         return $this->studentId;
     }
 
-    public function setAssignmentStatus($status)
+    public function setSubmissionStatus($status)
     {
-        return $this->assignmentStatus = $status;
+        return $this->submissionStatus = $status;
     }
-    public function getAssignmentStatus()
+    public function getSubmissionStatus()
     {
-        return $this->assignmentStatus;
+        return $this->submissionStatus;
+    }
+    public function setIsFinished($finished)
+    {
+        return $this->isFinished = $finished;
+    }
+    public function getIsFInished()
+    {
+        return $this->isFinished;
     }
 
     public function getAllAssignment()
@@ -137,13 +146,15 @@ class AssignmentSubmission
 
     public function saveSubmission()
     {
-        $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES(null, :name, :date, :token, :aid, :sid)");
+        $stmt = $this->dbConn->prepare("INSERT INTO assignment_submissions VALUES(null, :name, :date, :token, :status, :is_finish, :aid, :sid)");
 
         $stmt->bindParam(":name", $this->submissionFileName);
         $stmt->bindParam(":date", $this->submissionUploadDate);
+        $stmt->bindParam(":status", $this->submissionStatus);
         $stmt->bindParam(":aid", $this->assignmentId);
         $stmt->bindParam(":token", $this->submissionToken);
         $stmt->bindParam(":sid", $this->studentId);
+        $stmt->bindParam(":is_finish", $this->isFinished);
 
         $id = "";
 
@@ -171,12 +182,13 @@ class AssignmentSubmission
     {
         try {
             $stmt = $this->dbConn->prepare(
-                "UPDATE assignment_submissions SET submission_filename = :name, submitted_date = :date WHERE assignment_submission_id = :id"
+                "UPDATE assignment_submissions SET submission_filename = :name, submitted_date = :date, is_finish = :if WHERE assignment_submission_id = :id"
             );
 
             $stmt->bindParam(":name", $this->submissionFileName);
             $stmt->bindParam(":date", $this->submissionUploadDate);
             $stmt->bindParam(":id", $this->assignmentSubmissionId);
+            $stmt->bindParam(":if", $this->isFinished);
 
             if ($stmt->execute()) {
                 return true;
@@ -203,7 +215,7 @@ class AssignmentSubmission
     }
     public function getSubmissionByToken()
     {
-        $stmt = $this->dbConn->prepare('SELECT * FROM assignment_submissions WHERE assignment_submissions.submission_token = :st LIMIT 2');
+        $stmt = $this->dbConn->prepare('SELECT * FROM assignment_submissions WHERE assignment_submissions.submission_token = :st');
         $stmt->bindParam(':st', $this->submissionToken);
 
         try {
@@ -255,5 +267,117 @@ class AssignmentSubmission
             return $e->getMessage();
         }
         return $submission;
+    }
+
+    public function getSubmissionByAssignIdAndStudentId()
+    {
+        $stmt = $this->dbConn->prepare('SELECT * FROM `assignment_submissions` WHERE assignment_id = :asid AND student_id =:sid');
+        $stmt->bindParam(":asid", $this->assignmentId);
+        $stmt->bindParam(":sid", $this->studentId);
+        try {
+            if ($stmt->execute()) {
+                $sub = $stmt->fetchall(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $sub;
+    }
+
+    public function creatAssignmentSubmission()
+    {
+        try {
+
+            $stmt = $this->dbConn->prepare(
+                "INSERT INTO `assignment_submissions`(`assignment_submission_id`, `submission_filename`, `submitted_date`, `submission_token`, `submission_status`, `is_finish`, `assignment_id`, `student_id`) VALUES(null, :sf,:sd,:st ,:ss,:if,:asid,:sid)"
+            );
+            $stmt->bindParam(":sf", $this->submissionFileName);
+            $stmt->bindParam(":sd", $this->submissionUploadDate);
+            $stmt->bindParam(":ss", $this->submissionStatus);
+            $stmt->bindParam(":if", $this->isFinished);
+            $stmt->bindParam(":asid", $this->assignmentId);
+            $stmt->bindParam(":sid", $this->studentId);
+            $stmt->bindParam(":st", $this->submissionToken);
+
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function deleteNAassignmentSubmission()
+    {
+        try {
+            $stmt = $this->dbConn->prepare('DELETE FROM `assignment_submissions` WHERE student_id = :sid AND assignment_id =:asid AND submission_filename =:sf');
+            $stmt->bindParam(":sf", $this->submissionFileName);
+            $stmt->bindParam(":asid", $this->assignmentId);
+            $stmt->bindParam(":sid", $this->studentId);
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function updateStatusAssignmentSubmission()
+    {
+        try {
+            $stmt = $this->dbConn->prepare('UPDATE `assignment_submissions` SET `submission_status`= :subs ,`is_finish`=:if WHERE assignment_submissions.assignment_id = :asid AND assignment_submissions.student_id = :sid');
+            $stmt->bindParam(":subs", $this->submissionStatus);
+            $stmt->bindParam(":if", $this->isFinished);
+            $stmt->bindParam(":asid", $this->assignmentId);
+            $stmt->bindParam(":sid", $this->studentId);
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function getSubmissionAndScoreByAssignmentId()
+    {
+        try {
+
+            $stmt = $this->dbConn->prepare(
+                "SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.assignment_id, assignment_submissions.student_id, scores.score_id, scores.score_value FROM assignment_submissions, scores WHERE assignment_submissions.assignment_id = :aid AND scores.assignment_id = :aid AND assignment_submissions.submission_status = 1 AND assignment_submissions.is_finish = 1 GROUP BY assignment_submissions.submission_token"
+            );
+
+            $stmt->bindParam(":aid", $this->assignmentId);
+
+            if ($stmt->execute()) {
+                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $data;
+    }
+
+    public function getNotSubmitSubmission()
+    {
+        try {
+
+            $stmt = $this->dbConn->prepare(
+                "SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.assignment_id, assignment_submissions.student_id FROM assignment_submissions WHERE assignment_submissions.assignment_id = :aid AND assignment_submissions.is_finish = 0 GROUP BY assignment_submissions.assignment_submission_id"
+            );
+
+            $stmt->bindParam(":aid", $this->assignmentId);
+
+            if ($stmt->execute()) {
+                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $data;
     }
 }
