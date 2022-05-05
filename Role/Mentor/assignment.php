@@ -32,6 +32,16 @@ switch ($_SESSION['user']->{'role_id'}) {
 
 require "../../Model/Assignments.php";
 require "../../Model/AssignmentSubmission.php";
+require "../../api/get_api_data.php";
+
+$subModulData = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+$subModul = array();
+
+for($i = 0; $i < count($subModulData->{'data'}); $i++) {
+    if($subModulData->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
+        array_push($subModul, $subModulData->{'data'}[$i]);
+    }
+}
 
 
 $objAssignment = new Assignments;
@@ -290,7 +300,7 @@ if (isset($_GET['act'])) {
 
             <!-- Topic Title -->
             <div>
-                <p class="text-4xl text-dark-green font-semibold">Session#1 Sub Topic Title</p>
+                <p class="text-4xl text-dark-green font-semibold">Session#1 <?= $subModul[0]->{'modul_name'}; ?></p>
             </div>
 
             <!-- Mentor -->
@@ -364,7 +374,7 @@ if (isset($_GET['act'])) {
                                 </td>
                                 <td class="flex flex-row justify-center items-center mx-3 my-3">
                                     <a><img class="w-7 mx-auto cursor-pointer mx-2" src="../../Img/icons/edit_icon.svg" alt="Edit Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>"></a>
-                                    <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/delete_icon.svg" alt="Remove Icon"></a>
+                                    <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?=$_GET['course_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/delete_icon.svg" alt="Remove Icon"></a>
                                 </td>
                             </tr>
 

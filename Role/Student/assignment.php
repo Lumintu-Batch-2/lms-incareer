@@ -34,6 +34,38 @@ $objAssign = new Assignments;
 $allAssignments = $objAssign->getAssignmentBySubjectId($_GET['subject_id']);
 // var_dump($allAssignments);
 
+require "../../api/get_api_data.php";
+
+
+$subModulData = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+$lectureData = array();
+$modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+$userBatchJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user_batch"));
+$userJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user"));
+
+
+for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
+    if ($modulJSON->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
+        for ($j = 0; $j < count($userBatchJSON->{'data'}); $j++) {
+            if ($modulJSON->{'data'}[$i]->{'batch_id'} == $userBatchJSON->{'data'}[$j]->{'batch_batch_id'}) {
+                for ($k = 0; $k < count($userJSON->{'data'}); $k++) {
+                    if ($userBatchJSON->{'data'}[$j]->{'user_user_id'} == $userJSON->{'data'}[$k]->{'user_id'} && $userJSON->{'data'}[$k]->{'role_id'} == 2) {
+                        array_push($lectureData, $userJSON->{'data'}[$k]);
+                    }
+                }
+            }
+        }
+    }
+}
+
+$subModul = array();
+
+for($i = 0; $i < count($subModulData->{'data'}); $i++) {
+    if($subModulData->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
+        array_push($subModul, $subModulData->{'data'}[$i]);
+    }
+}
+
 echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_id'} . "'/>";
 
 ?>
@@ -235,14 +267,14 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
 
             <!-- Topic Title -->
             <div>
-                <p class="text-4xl text-dark-green font-semibold">Session#1 Sub Topic Title</p>
+                <p class="text-4xl text-dark-green font-semibold">Session#1 <?= $subModul[0]->{'modul_name'}; ?></p>
             </div>
 
             <!-- Mentor -->
             <div class="flex items-center gap-x-4 w-full bg-white py-4 px-10 rounded-xl">
                 <img class="w-14" src="../../Img/icons/default_profile.svg" alt="Profile Image">
                 <div class="">
-                    <p class="text-dark-green text-base font-semibold">Mentor Name | Mentor Code</p>
+                    <p class="text-dark-green text-base font-semibold"><?= $lectureData[0]->{'user_first_name'} . " " . $lectureData[0]->{'user_last_name'}?> | Mentor Code</p>
                     <p class="text-light-green">Mentor Specialization</p>
                 </div>
             </div>
