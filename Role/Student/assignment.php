@@ -13,14 +13,14 @@ switch ($_SESSION['user']->{'role_id'}) {
         echo "
         <script>
             alert('Akses Ditolak');
-            location.replace('../Admin/index.php')
+            location.replace('../Admin/')
         </script>";
         break;
     case 2:
         echo "
         <script>
             alert('Akses Ditolak');
-            location.replace('../Mentor/login.php')
+            location.replace('../Mentor/')
         </script>";
         break;
 
@@ -248,13 +248,13 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                         <span class="text-light-green">/</span>
                     </li>
                     <li>
-                        <a class="text-light-green" href="#">Courses</a>
+                        <a class="text-light-green" href="index.php">Courses</a>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>
                     </li>
                     <li>
-                        <a class="text-light-green" href="#">Sub Topic</a>
+                        <a class="text-light-green" href="subject.php?course_id=<?= $_GET['course_id']; ?>">Sub Topic</a>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>

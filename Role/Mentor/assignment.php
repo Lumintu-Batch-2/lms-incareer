@@ -14,7 +14,7 @@ switch ($_SESSION['user']->{'role_id'}) {
         echo "
         <script>
             alert('Akses ditolak!');
-            location.replace('../../Admin/');
+            location.replace('../Admin/');
         </script>
         ";
         break;
@@ -22,7 +22,7 @@ switch ($_SESSION['user']->{'role_id'}) {
         echo "
         <script>
             alert('Akses ditolak!');
-            location.replace('../../Student/');
+            location.replace('../Student/');
         </script>
         ";
         break;
@@ -281,13 +281,13 @@ if (isset($_GET['act'])) {
                         <span class="text-light-green">/</span>
                     </li>
                     <li>
-                        <a class="text-light-green" href="#">Courses</a>
+                        <a class="text-light-green" href="index.php">Courses</a>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>
                     </li>
                     <li>
-                        <a class="text-light-green" href="#">Sub Topic</a>
+                        <a class="text-light-green" href="subject.php?course_id=<?= $_GET['course_id']; ?>">Sub Topic</a>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>
