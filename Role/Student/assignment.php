@@ -13,14 +13,14 @@ switch ($_SESSION['user']->{'role_id'}) {
         echo "
         <script>
             alert('Akses Ditolak');
-            location.replace('../Admin/index.php')
+            location.replace('../Admin/')
         </script>";
         break;
     case 2:
         echo "
         <script>
             alert('Akses Ditolak');
-            location.replace('../Mentor/login.php')
+            location.replace('../Mentor/')
         </script>";
         break;
 
