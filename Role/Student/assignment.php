@@ -32,6 +32,39 @@ require_once('../../Model/Assignments.php');
 $objAssign = new Assignments;
 
 $allAssignments = $objAssign->getAssignmentBySubjectId($_GET['subject_id']);
+// var_dump($allAssignments);
+
+require "../../api/get_api_data.php";
+
+
+$subModulData = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+$lectureData = array();
+$modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+$userBatchJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user_batch"));
+$userJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user"));
+
+
+for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
+    if ($modulJSON->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
+        for ($j = 0; $j < count($userBatchJSON->{'data'}); $j++) {
+            if ($modulJSON->{'data'}[$i]->{'batch_id'} == $userBatchJSON->{'data'}[$j]->{'batch_batch_id'}) {
+                for ($k = 0; $k < count($userJSON->{'data'}); $k++) {
+                    if ($userBatchJSON->{'data'}[$j]->{'user_user_id'} == $userJSON->{'data'}[$k]->{'user_id'} && $userJSON->{'data'}[$k]->{'role_id'} == 2) {
+                        array_push($lectureData, $userJSON->{'data'}[$k]);
+                    }
+                }
+            }
+        }
+    }
+}
+
+$subModul = array();
+
+for($i = 0; $i < count($subModulData->{'data'}); $i++) {
+    if($subModulData->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
+        array_push($subModul, $subModulData->{'data'}[$i]);
+    }
+}
 
 echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_id'} . "'/>";
 
@@ -234,14 +267,14 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
 
             <!-- Topic Title -->
             <div>
-                <p class="text-4xl text-dark-green font-semibold">Session#1 Sub Topic Title</p>
+                <p class="text-4xl text-dark-green font-semibold">Session#1 <?= $subModul[0]->{'modul_name'}; ?></p>
             </div>
 
             <!-- Mentor -->
             <div class="flex items-center gap-x-4 w-full bg-white py-4 px-10 rounded-xl">
                 <img class="w-14" src="../../Img/icons/default_profile.svg" alt="Profile Image">
                 <div class="">
-                    <p class="text-dark-green text-base font-semibold">Mentor Name | Mentor Code</p>
+                    <p class="text-dark-green text-base font-semibold"><?= $lectureData[0]->{'user_first_name'} . " " . $lectureData[0]->{'user_last_name'}?> | Mentor Code</p>
                     <p class="text-light-green">Mentor Specialization</p>
                 </div>
             </div>
@@ -310,9 +343,9 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                     $asq->setAssignmentId($assignment['assignment_id']);
                                     $question = $asq->getQuestionsByAssignmentId();
                                     ?>
-                                    <a href="download.php?file=<?= $question['question_filename']; ?>""><img class=" w-7 mx-auto cursor-pointer" src="../../Img/icons/download_icon.svg" alt="Download Icon"></a>
+                                    <a href="download.php?file=<?= $question['question_filename'] . '&type=q'; ?>"><img class=" w-7 mx-auto cursor-pointer" src="../../Img/icons/download_icon.svg" alt="Download Icon"></a>
                                 </td>
-                                <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>"></td>
+                                <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer modalUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" data-assignid="<?= $assignment['assignment_id']; ?>" id="uploadModal"></td>
                                 <td class="border-b px-4 py-2"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/history_icon.svg" alt="History Icon" type="button" data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>">
                                 </td>
 
@@ -330,12 +363,41 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                         </div>
                                         <!-- Modal body -->
                                         <div class="px-6 space-y-6">
-                                            <div class="mb-6">
+                                            <div class="mb-6 relative overflow-x-auto sm:rounded-lg border border-gray-400 px-4 py-2">
+                                                <div class="relative w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                                    <ul class="grid grid-cols-12 border-b border-gray-400 py-2">
+                                                        <li><b>No</b></li>
+                                                        <li class="col-span-5"><b>Submission Time</b></li>
+                                                        <li class="col-span-5"><b>Title</b></li>
+                                                        <li><b>Files</b></li>
+                                                    </ul>
+                                                    <?php
+                                                        require_once "../../Model/AssignmentSubmission.php";
+                                                        $objSub = new AssignmentSubmission;
+                                                        $objSub->setStudentId($_SESSION['user']->{'user_id'});
+                                                        $objSub->setAssignmentId($assignment['assignment_id']);
+                                                        $submissions = $objSub->getSubmissionByAssignIdAndStudentId();
 
+                                                        $i = 1;
+
+                                                        foreach($submissions as $val => $submission) :
+                                                    ?>
+                                                    <ul class="grid grid-cols-12 border-b border-gray-400 py-2">
+                                                        <li><?= $i; ?></li>
+                                                        <li class="col-span-5"><?=$submission['submitted_date'];?></li>
+                                                        <li class="col-span-5 truncate"><?= $submission['submission_filename'];?></li>
+                                                        <li><a href="download.php?file=<?= $submission['submission_filename'] . '&type=s'; ?>"><img class=" w-7 mx-auto cursor-pointer" src="../../Img/icons/download_icon.svg" alt="Download Icon"></a></li>
+                                                    </ul>
+
+                                                    <?php 
+                                                        $i++;
+                                                        endforeach     
+                                                    ?>
+                                                    
+                                                </div>
                                             </div>
                                             <div class="flex justify-end p-6 space-x-3 rounded-b ">
-                                                <button data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>" class="w-24" type="button">Cancel</button>
-
+                                                <button data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>" class="w-32 bg-yellow-400 text-center py-1 text-white rounded-md hover:bg-yellow-600" type="button">Confirm</button>
                                             </div>
 
                                         </div>
@@ -372,7 +434,8 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                                             <label for="fileInput" class="relative cursor-pointer bg-white rounded-md font-medium font-semibold hover:text-gray-500">
                                                                 <span>Choose a file</span>
                                                                 <input id="fileInput" name="fileInput" type="file" class="sr-only dropzone" onchange="readFile(event)" multiple>
-                                                                <input type="hidden" name="assignId" id="assignId" value="<?= $assignment['assignment_id']; ?>">
+                                                                <input type="hidden" name="assignId" id="assignId">
+                                                                <input type="hidden" name="cf" id="cf">
                                                             </label>
                                                             <p class="pl-1">or drag it here</p>
                                                         </div>
@@ -389,7 +452,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                     </div>
                                 </div>
                             </div>
-
+                            <!-- END MODAL -->
                         <?php endforeach ?>
                     </tbody>
                 </table>
@@ -413,68 +476,81 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
             let downloadIcon = document.getElementById("downloadIcon");
             let file = document.getElementById("fileInput");
             let countFile = document.getElementById("countFile");
+            let cf = document.getElementById("cf");
+            cf.value = file.files.length;
 
             downloadIcon.classList.add("hidden");
             documentPrev.classList.remove("hidden");
 
             countFile.innerHTML = "Selected " + file.files.length;
-        }
 
+        }
         $(document).ready(function() {
-            $(document).on("click", "#uploadSubmission", function(evt) {
+            $(document).on("click", "#uploadModal", function(evt) {
                 evt.preventDefault();
 
-                let fileData = document.getElementById("fileInput");
                 let studentId = document.getElementById("student_id");
-
-                let assignment_id = $("#assignId").val();
+                let assignment_id = $(this).data("assignid");
                 let student_id = studentId.value;
+                let fileData = document.getElementById("fileInput");
 
-                let data = {
-                    assigId: assignment_id,
-                    studId: student_id,
-                    count: fileData.files.length
-                }
+                
+                $(document).on("click", "#uploadSubmission", function(evt) {
+                    evt.preventDefault();
+                    let cf = document.getElementById("cf");
 
-                console.log(data);
-
-                $.ajax({
-                    url: "insert_submission.php",
-                    type: "post",
-                    data: data,
-                    // xhr: function() {
-                    //     let xhr = new window.XMLHttpRequest();
-
-                    //     xhr.upload.addEventListener("progress", function(evt) {
-                    //         loader.style.display = "block";
-                    //     })
-                    // },
-                    success: function(data) {
-                        let dataJson = JSON.parse(data);
-                        // loader.style.display = "none";
-
-                        // console.log(dataJson[0].submission_id);
-                        for (i = 0; i < fileData.files.length; i++) {
-                            let formData = new FormData();
-                            formData.append("data", fileData.files[i]);
-                            formData.append("submission_id", dataJson[i].submission_id);
-
-                            $.ajax({
-                                url: "upload_submission.php",
-                                type: "post",
-                                data: formData,
-                                contentType: false,
-                                cache: false,
-                                processData: false,
-                                success: function(data) {
-                                    let val = JSON.parse(data);
-                                    alert(val.msg);
-                                    location.replace("index.php");
-                                }
-                            })
-                        }
+                    let cfile = cf.value;
+                    let data = {
+                        assigId: assignment_id,
+                        studId: student_id,
+                        count: cfile
                     }
+                    // console.log(data);
+
+                    $.ajax({
+                        url: "insert_submission.php",
+                        type: "post",
+                        data: data,
+                        // xhr: function() {
+                        //     let xhr = new window.XMLHttpRequest();
+
+                        //     xhr.upload.addEventListener("progress", function(evt) {
+                        //         loader.style.display = "block";
+                        //     })
+                        // },
+                        // console.log(data);
+                        success: function(data) {
+                            // console.log(data);
+                            let dataJson = JSON.parse(data);
+                            // loader.style.display = "none";
+
+                            // console.log(dataJson[0].submission_id);
+                            for (i = 0; i < fileData.files.length; i++) {
+                                let formData = new FormData();
+                                formData.append("data", fileData.files[i]);
+                                formData.append("submission_id", dataJson[i].submission_id);
+
+                                $.ajax({
+                                    url: "upload_submission.php",
+                                    type: "post",
+                                    data: formData,
+                                    contentType: false,
+                                    cache: false,
+                                    processData: false,
+                                    success: function(data) {
+                                        // console.log(data);
+                                        let val = JSON.parse(data);
+                                        alert(val.msg);
+                                        location.replace("index.php");
+                                    }
+                                })
+                            }
+                        }
+                    })
+
                 })
+
+
 
             })
         })

@@ -30,9 +30,34 @@ switch ($_SESSION['user']->{'role_id'}) {
 }
 
 if (isset($_POST['upload'])) {
+
+    require_once "../../api/get_api_data.php";
+
+    $userData = array();
+    $modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+    $userBatchJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user_batch"));
+    $userJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user"));
+
+
+    for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
+        if ($modulJSON->{'data'}[$i]->{'id'} == (int)$_GET['course_id']) {
+            for ($j = 0; $j < count($userBatchJSON->{'data'}); $j++) {
+                if ($modulJSON->{'data'}[$i]->{'batch_id'} == $userBatchJSON->{'data'}[$j]->{'batch_batch_id'}) {
+                    for ($k = 0; $k < count($userJSON->{'data'}); $k++) {
+                        if ($userBatchJSON->{'data'}[$j]->{'user_user_id'} == $userJSON->{'data'}[$k]->{'user_id'} && $userJSON->{'data'}[$k]->{'role_id'} == 3) {
+                            array_push($userData, $userJSON->{'data'}[$k]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     require "../../Model/Assignments.php";
     $objAsign = new Assignments;
-    $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id'], $_SESSION['user']->{'user_id'});
+    $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id'], $_SESSION['user']->{'user_id'}, $userData);
+
+    
     // var_dump($create);
     // die;
     $create_status = $create['is_ok'] ? "true" : "false";
