@@ -395,4 +395,32 @@ class AssignmentSubmission
         }
         return $sub;
     }
+    public function getCurrentDate()
+    {
+        $stmt = $this->dbConn->prepare('SELECT now()');
+        
+        try {
+            if ($stmt->execute()) {
+                $now = $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $now;
+    }
+    public function getInitSubmit(){
+        $stmt = $this->dbConn->prepare('SELECT * FROM assignment_submissions WHERE assignment_submissions.assignment_id =:asid AND assignment_submissions.student_id=:sid AND assignment_submissions.is_finish =0 AND assignment_submissions.submission_status= 1');
+        $stmt->bindParam(":asid", $this->assignmentId);
+        $stmt->bindParam(":sid", $this->studentId);
+        
+        try {
+            if ($stmt->execute()) {
+                $init = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $init;
+
+    }
 }
