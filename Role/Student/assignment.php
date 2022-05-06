@@ -476,26 +476,26 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                             <form class="flex flex-col gap-y-4" action="" method="POST" enctype="multipart/form-data">
                                                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border rounded-md">
                                                     <div class="space-y-2 text-center">
-                                                        <svg class="mx-auto h-20 w-20 text-gray-400" id="downloadIcon" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <svg class="mx-auto h-20 w-20 text-gray-400" id="downloadIcon<?= $assignment['assignment_id']; ?>" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M118.75 56.25H93.75V18.75H56.25V56.25H31.25L75 106.25L118.75 56.25ZM25 118.75H125V131.25H25V118.75Z" fill="#DDB07F" />
                                                         </svg>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" id="prevDoc" class="mx-auto h-20 w-20 hidden" viewBox="0 0 20 20" fill="#DDB07F">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" id="prevDoc<?= $assignment['assignment_id']; ?>" class="mx-auto h-20 w-20 hidden" viewBox="0 0 20 20" fill="#DDB07F">
                                                             <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
                                                         </svg>
-                                                        <p class="text-gray-600" id="countFile"></p>
+                                                        <p class="text-gray-600" id="countFile<?= $assignment['assignment_id']; ?>"></p>
                                                         <div class="flex text-lg text-gray-600">
-                                                            <label for="fileInput" class="relative cursor-pointer bg-white rounded-md font-medium font-semibold hover:text-gray-500">
+                                                            <label for="fileInput<?= $assignment['assignment_id']; ?>" class="relative cursor-pointer bg-white rounded-md font-medium font-semibold hover:text-gray-500">
                                                                 <span>Choose a file</span>
-                                                                <input id="fileInput" name="fileInput" type="file" class="sr-only dropzone" onchange="readFile(event)" multiple>
+                                                                <input id="fileInput<?= $assignment['assignment_id']; ?>" name="fileInput" type="file" class="sr-only dropzone" data-assid="<?= $assignment['assignment_id']; ?>" onchange="readFile(event, <?= $assignment['assignment_id']; ?>)" multiple>
                                                                 <input type="hidden" name="assignId" id="assignId">
-                                                                <input type="hidden" name="cf" id="cf">
+                                                                <input type="hidden" name="cf" id="cf<?= $assignment['assignment_id']; ?>">
                                                             </label>
                                                             <p class="pl-1">or drag it here</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
-                                                    <button data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center hover:ring-2 hover:ring-gray-400">Close</button>
+                                                    <button data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center hover:ring-2 hover:ring-gray-400" id="closeModal<?= $assignment['assignment_id']; ?>">Close</button>
                                                     <button class="bg-dark-green text-[#F3D0AA] w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-800" type="submit" name="submit" id="uploadSubmission">Submit</button>
                                                 </div>
                                             </form>
@@ -554,14 +554,13 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
             sidebar.classList.toggle('in-active');
         }
 
-        function readFile(e) {
-            let documentPrev = document.getElementById("prevDoc");
-            let downloadIcon = document.getElementById("downloadIcon");
-            let file = document.getElementById("fileInput");
-            let countFile = document.getElementById("countFile");
-            let cf = document.getElementById("cf");
+        function readFile(e, data) {
+            let documentPrev = document.getElementById("prevDoc" + data);
+            let downloadIcon = document.getElementById("downloadIcon" + data);
+            let file = document.getElementById("fileInput" + data);
+            let countFile = document.getElementById("countFile" + data);
+            let cf = document.getElementById("cf" + data);
             cf.value = file.files.length;
-
             downloadIcon.classList.add("hidden");
             documentPrev.classList.remove("hidden");
 
@@ -575,12 +574,12 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                 let studentId = document.getElementById("student_id");
                 let assignment_id = $(this).data("assignid");
                 let student_id = studentId.value;
-                let fileData = document.getElementById("fileInput");
+                let fileData = document.getElementById("fileInput" + assignment_id);
 
                 
                 $(document).on("click", "#uploadSubmission", function(evt) {
                     evt.preventDefault();
-                    let cf = document.getElementById("cf");
+                    let cf = document.getElementById("cf" + assignment_id);
 
                     let cfile = cf.value;
                     let data = {
@@ -624,7 +623,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                         // console.log(data);
                                         let val = JSON.parse(data);
                                         alert(val.msg);
-                                        location.replace("index.php");
+                                        location.reload();
                                     }
                                 })
                             }
