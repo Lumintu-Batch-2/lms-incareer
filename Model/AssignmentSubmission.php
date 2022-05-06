@@ -380,4 +380,19 @@ class AssignmentSubmission
 
         return $data;
     }
+
+    public function getSubmissionByAssignIdAndStudentIdGroupBy()
+    {
+        $stmt = $this->dbConn->prepare('SELECT * FROM `assignment_submissions` WHERE assignment_id = :asid AND student_id =:sid GROUP BY assignment_submissions.submission_token');
+        $stmt->bindParam(":asid", $this->assignmentId);
+        $stmt->bindParam(":sid", $this->studentId);
+        try {
+            if ($stmt->execute()) {
+                $sub = $stmt->fetchall(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $sub;
+    }
 }
