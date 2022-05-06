@@ -147,7 +147,6 @@ if (isset($_GET['act'])) {
             }
         }
     </script>
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
 
     <style>
         .active {
@@ -300,7 +299,7 @@ if (isset($_GET['act'])) {
 
             <!-- Topic Title -->
             <div>
-                <p class="text-4xl text-dark-green font-semibold">Session#1 <?= $subModul[0]->{'modul_name'}; ?></p>
+                <p class="text-4xl text-dark-green font-semibold">Session# <?= $subModul[0]->{'modul_name'}; ?></p>
             </div>
 
             <!-- Mentor -->
@@ -421,7 +420,7 @@ if (isset($_GET['act'])) {
 
     <!-- Main Edit modal -->
     <div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+        <div class="relative p-4 w-full max-w-xl h-full">
             <!-- Modal Edit content -->
             <div class="relative bg-white rounded-lg shadow ">
                 <!-- Modal Edit header -->
@@ -464,20 +463,20 @@ if (isset($_GET['act'])) {
                 </div>
                 <!-- Modal Edit footer -->
                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
-                    <button data-modal-toggle="defaultModal" type="button" class="text-gray bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent hover:text-white hover:bg-gray-600 dark:focus:ring-dark-800">Close</button>
-                    <button type="submit" class="text-dark-500 bg-[#DDB07F] hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-[#DDB07F] dark:text--300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" name="edit_assignment">Upload</button>
+                    <button data-modal-toggle="defaultModal" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:focus:ring-dark-800">Close</button>
+                    <button type="submit" class="text-white bg-cream focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm font-medium px-5 py-2.5 hover:bg-gray-600 hover:text-white focus:z-10 dark:bg-[#DDB07F] dark:text--300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" name="edit_assignment">Upload</button>
                 </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- Main Add modal -->
-    <div id="addModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+    <div id="addModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-scroll overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-xl h-full">
             <!-- Modal Add content -->
             <div class="relative bg-white rounded-lg shadow ">
                 <!-- Modal Add header -->
-                <div class="flex justify-center items-start p-5 rounded-t ">
+                <div class="flex justify-center items-start p-5 rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-dark">
                         Add Assignment
                     </h3>
@@ -516,8 +515,8 @@ if (isset($_GET['act'])) {
                 </div>
                 <!-- Modal Add footer -->
                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
-                    <button data-modal-toggle="addModal" type="button" class="text-gray bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent hover:text-white hover:bg-gray-600 dark:focus:ring-dark-800">Close</button>
-                    <button type="submit" class="text-dark-500 bg-[#DDB07F] hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-[#DDB07F] dark:text--300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" name="upload">Upload</button>
+                    <button data-modal-toggle="addModal" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:focus:ring-dark-800">Close</button>
+                    <button type="submit" class="text-white bg-cream focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm font-medium px-5 py-2.5 hover:bg-gray-600 hover:text-white focus:z-10 dark:bg-[#DDB07F] dark:text--300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" name="upload">Upload</button>
                 </div>
                 </form>
             </div>
@@ -574,6 +573,8 @@ if (isset($_GET['act'])) {
 
         })
     </script>
+
+
 </body>
 
 </html>

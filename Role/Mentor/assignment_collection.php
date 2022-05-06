@@ -341,9 +341,11 @@ if (isset($_POST['submit1'])) {
             <!-- Topic Title -->
             <div class="flex justify-between">
                 <form action="">
-                    <div class="w-4"> <button type="button" class="text-dark-green inline-flex font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "><img class="w-5" src="../../Img/icons/back_icons.svg" alt="Back Image">
+                    <div class="w-4"> 
+                        <a href="assignment.php?course_id=<?= $_GET['course_id']; ?>&subject_id=<?= $_GET['subject_id']; ?>" class="text-dark-green inline-flex font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 ">
+                            <img class="w-5" src="../../Img/icons/back_icons.svg" alt="Back Image">
                             <p class="ml-2"> Back</p>
-                        </button>
+                        </a>
                     </div>
                 </form>
                 <div>
