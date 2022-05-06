@@ -484,8 +484,15 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                                     </div>
                                                 </div>
                                                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
-                                                    <button data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center hover:ring-2 hover:ring-gray-400">Close</button>
-                                                    <button class="bg-dark-green text-[#F3D0AA] w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-800" type="submit" name="submit" id="uploadSubmission">Submit</button>
+                                                    <button data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center hover:ring-2 hover:ring-gray-400" id="btncls">Close</button>
+                                                    <button class="bg-yellow-500 text-white w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-800" type="submit" name="submit" id="uploadSubmission">Submit</button>
+                                                    <button disabled type="button" class="bg-yellow-500 text-white w-[120px] py-2 rounded font-medium ml-auto " id="loading">
+                                                        <svg role="status" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                                                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2" />
+                                                        </svg>
+                                                        Uploading...
+                                                    </button>
                                                 </div>
                                             </form>
 
@@ -560,6 +567,8 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
         $(document).ready(function() {
             $(document).on("click", "#uploadModal", function(evt) {
                 evt.preventDefault();
+                $("#loading").hide();
+
 
                 let studentId = document.getElementById("student_id");
                 let assignment_id = $(this).data("assignid");
@@ -568,57 +577,84 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
 
 
                 $(document).on("click", "#uploadSubmission", function(evt) {
-                    evt.preventDefault();
-                    let cf = document.getElementById("cf");
+                    if ($('#fileInput').val()) {
+                        evt.preventDefault();
+                        let cf = document.getElementById("cf");
+                        $("#uploadSubmission").attr("disabled", true);
+                        $("#btncls").attr("disabled", true);
+                        $("#uploadSubmission").hide();
+                        $("#loading").show();
 
-                    let cfile = cf.value;
-                    let data = {
-                        assigId: assignment_id,
-                        studId: student_id,
-                        count: cfile
-                    }
-                    // console.log(data);
-
-                    $.ajax({
-                        url: "insert_submission.php",
-                        type: "post",
-                        data: data,
-                        // xhr: function() {
-                        //     let xhr = new window.XMLHttpRequest();
-
-                        //     xhr.upload.addEventListener("progress", function(evt) {
-                        //         loader.style.display = "block";
-                        //     })
-                        // },
-                        // console.log(data);
-                        success: function(data) {
-                            // console.log(data);
-                            let dataJson = JSON.parse(data);
-                            // loader.style.display = "none";
-
-                            // console.log(dataJson[0].submission_id);
-                            for (i = 0; i < fileData.files.length; i++) {
-                                let formData = new FormData();
-                                formData.append("data", fileData.files[i]);
-                                formData.append("submission_id", dataJson[i].submission_id);
-
-                                $.ajax({
-                                    url: "upload_submission.php",
-                                    type: "post",
-                                    data: formData,
-                                    contentType: false,
-                                    cache: false,
-                                    processData: false,
-                                    success: function(data) {
-                                        // console.log(data);
-                                        let val = JSON.parse(data);
-                                        alert(val.msg);
-                                        location.replace("index.php");
-                                    }
-                                })
-                            }
+                        let cfile = cf.value;
+                        let data = {
+                            assigId: assignment_id,
+                            studId: student_id,
+                            count: cfile
                         }
-                    })
+                        // console.log(data);
+
+                        $.ajax({
+                            url: "insert_submission.php",
+                            type: "post",
+                            timeout: 5000,
+                            data: data,
+                            // xhr: function() {
+                            //     let xhr = new window.XMLHttpRequest();
+
+                            //     xhr.upload.addEventListener("progress", function(evt) {
+                            //         loader.style.display = "block";
+                            //     })
+                            // },
+                            // console.log(data);
+                            success: function(data) {
+                                // console.log(data);
+
+                                let dataJson = JSON.parse(data);
+                                // loader.style.display = "none";
+
+                                // console.log(dataJson[0].submission_id);
+                                for (i = 0; i < fileData.files.length; i++) {
+                                    let formData = new FormData();
+                                    formData.append("data", fileData.files[i]);
+                                    formData.append("submission_id", dataJson[i].submission_id);
+
+                                    $.ajax({
+                                        url: "upload_submission.php",
+                                        type: "post",
+                                        data: formData,
+                                        contentType: false,
+                                        cache: false,
+                                        timeout: 5000,
+                                        processData: false,
+                                        success: function(data) {
+                                            // console.log(data);
+                                            let val = JSON.parse(data);
+                                            alert(val.msg);
+                                            // location.replace("index.php");
+                                            location.reload();
+                                        }
+
+                                    }).fail(function() {
+                                        $("#uploadSubmission").show();
+                                        $("#loading").hide();
+                                        alert("error");
+                                        location.reload();
+                                    })
+                                }
+                            }
+
+                        }).fail(function() {
+                            $("#uploadSubmission").show();
+                            $("#loading").hide();
+                            alert("error");
+                            location.reload();
+                        })
+                    } else {
+                        evt.preventDefault();
+                        alert('TIdak boleh kosong');
+
+                    }
+
 
                 })
 
