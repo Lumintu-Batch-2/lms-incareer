@@ -271,7 +271,7 @@ class AssignmentSubmission
 
     public function getSubmissionByAssignIdAndStudentId()
     {
-        $stmt = $this->dbConn->prepare('SELECT * FROM `assignment_submissions` WHERE assignment_id = :asid AND student_id =:sid ORDER BY submitted_date DESC');
+        $stmt = $this->dbConn->prepare('SELECT * FROM `assignment_submissions` WHERE assignment_id = :asid AND student_id =:sid AND submission_filename != "" ORDER BY submitted_date DESC');
         $stmt->bindParam(":asid", $this->assignmentId);
         $stmt->bindParam(":sid", $this->studentId);
         try {

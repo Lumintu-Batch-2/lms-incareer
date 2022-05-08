@@ -147,7 +147,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
 
 </head>
 
-<body>
+<body class="overflow-hidden">
     <div class="flex items-center">
         <!-- Left side (Sidebar) -->
         <div class="bg-white w-[350px] h-screen px-8 py-6 flex flex-col justify-between sidebar in-active">
@@ -294,7 +294,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
             <!-- Direction -->
             <div class="bg-white w-full p-6">
                 <p class="text-dark-green font-semibold">Directions :</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quo dolore atque eveniet iusto iste accusantium sint, obcaecati unde totam labore omnis sit laborum, architecto quia ea laboriosam libero soluta accusamus modi laudantium quod neque rerum quaerat. Quasi eaque officiis, commodi maiores, nisi asperiores distinctio magni quas, itaque facere consequuntur eos pariatur voluptatum illum tenetur esse. Provident excepturi velit maxime non officia voluptas nisi. Quod dolorum quisquam obcaecati ad laudantium maiores, aperiam eveniet voluptate ab. Asperiores ducimus, minus impedit enim reiciendis sit aperiam ut labore, facere rerum tempora. Molestias nesciunt beatae consequatur minus dolorum tempora culpa cum, tenetur corrupti facilis.</p>
+                <p><?= $subModul[0]->{'modul_description'}; ?></p>
             </div>
 
             <!-- Table Assignment -->
@@ -371,12 +371,12 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                         <?php
                                         } else {
                                         ?>
-                                            <img class="w-7 mx-auto cursor-pointer modalUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" data-assignid="<?= $assignment['assignment_id']; ?>" id="uploadModal">
+                                            <img class="w-7 mx-auto cursor-pointer modalUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" data-assignid="<?= $assignment['assignment_id']; ?>" onclick="uploadSubmission(<?= $assignment['assignment_id']; ?>)">
                                         <?php
                                         }
                                     } else {
                                         if (count($csub) < 3) { ?>
-                                            <img class="w-7 mx-auto cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" data-assignid="<?= $assignment['assignment_id']; ?>" id="uploadModal">
+                                            <img class="w-7 mx-auto cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" data-assignid="<?= $assignment['assignment_id']; ?>" onclick="uploadSubmission(<?= $assignment['assignment_id']; ?>)">
                                             <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
                                                 Already submit !!
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
@@ -573,112 +573,89 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
 
             countFile.innerHTML = "Selected " + file.files.length;
         }
-        $(document).ready(function() {
-            let asid = $(this).data("assignid");
-            let as = 0;
+
+        function uploadSubmission(assignment_id) {
+            let studentId = document.getElementById("student_id");
+            let student_id = studentId.value;
 
 
+            let fileData = document.getElementById("fileInput" + assignment_id);
 
-            $(document).on("click", "#uploadModal", function(evt) {
-                evt.preventDefault();
-
-                let studentId = document.getElementById("student_id");
-                let assignment_id = $(this).data("assignid");
-                // $('#modalbdy' + assignment_id).load(window.location.href + ' #modalbdy' + assignment_id);
-                let student_id = studentId.value;
-                let fileData = document.getElementById("fileInput" + assignment_id);
-
-                $(document).on("click", "#closeModal" + assignment_id, function(evt) {
-                    // $('#modalbdy' + assignment_id).load(window.location.href + ' #modalbdy' + assignment_id);
-                    // console.log($('#defaultModal' + assignment_id));
-                    // console.log(assignment_id);
-                    // let fl = $('#fileInput' + assignment_id);
-                    // console.log(fileData.value);
-                    fileData.value = '';
-                    // console.log(fl);
-                    // if ($('#fileInput' + assignment_id).val() == '') {
-                    //     console.log('empty');
-                    //     console.log(fileData.value);
-                    // }
-                })
-
-                $(document).on("click", "#uploadSubmission" + assignment_id, function(evt) {
-                    if ($('#fileInput' + assignment_id).val() != '') {
-                        console.log('terisi');
-                        $('#loading' + assignment_id).removeClass('hidden');
-                        $('#uploadSubmission' + assignment_id).hide();
-                        evt.preventDefault();
-                        $('#closeModal' + assignment_id).removeClass('hover:ring-2 hover:ring-gray-400');
-                        $('#closeModal' + assignment_id).attr("disabled", "disabled");
-                        let cf = document.getElementById("cf" + assignment_id);
-
-                        let cfile = cf.value;
-                        let data = {
-                            assigId: assignment_id,
-                            studId: student_id,
-                            count: cfile
-                        }
-                        // console.log(data);
-
-                        $.ajax({
-                            url: "insert_submission.php",
-                            type: "post",
-                            timeout: 5000,
-                            data: data,
-                            // xhr: function() {
-                            //     let xhr = new window.XMLHttpRequest();
-
-                            //     xhr.upload.addEventListener("progress", function(evt) {
-                            //         loader.style.display = "block";
-                            //     })
-                            // },
-                            // console.log(data);
-                            success: function(data) {
-                                // console.log(data);
-                                let dataJson = JSON.parse(data);
-                                // loader.style.display = "none";
-
-                                // console.log(dataJson[0].submission_id);
-                                for (i = 0; i < fileData.files.length; i++) {
-                                    let formData = new FormData();
-                                    formData.append("data", fileData.files[i]);
-                                    formData.append("submission_id", dataJson[i].submission_id);
-
-                                    $.ajax({
-                                        url: "upload_submission.php",
-                                        type: "post",
-                                        data: formData,
-                                        contentType: false,
-                                        cache: false,
-                                        timeout: 5000,
-                                        processData: false,
-                                        success: function(data) {
-                                            // console.log(data);
-                                            let val = JSON.parse(data);
-                                            alert(val.msg);
-                                            location.reload();
-                                        },
-                                        error: function() {
-                                            alert('error');
-                                            location.reload();
-
-                                        }
-                                    })
-                                }
-                            },
-                            error: function() {
-                                alert('error');
-                                location.reload();
-
-                            }
-                        })
-                    } else {
-                        evt.preventDefault();
-                        alert('tidak boleh kosong');
-                    }
-                })
+            $(document).on("click", "#closeModal" + assignment_id, function(evt) {
+                // fileData.value = '';
+                let inputFile = $("#fileInput" + assignment_id);
+                // var $el = $('#infileid');
+                inputFile.wrap('<form>').closest('form').get(0).reset();
+                inputFile.unwrap();
+                console.log(fileData);
             })
-        })
+
+            $(document).on("click", "#uploadSubmission" + assignment_id, function(evt) {
+                if ($('#fileInput' + assignment_id).val() != '') {
+                    console.log('terisi');
+                    $('#loading' + assignment_id).removeClass('hidden');
+                    $('#uploadSubmission' + assignment_id).hide();
+                    evt.preventDefault();
+                    $('#closeModal' + assignment_id).removeClass('hover:ring-2 hover:ring-gray-400');
+                    $('#closeModal' + assignment_id).attr("disabled", "disabled");
+                    let cf = document.getElementById("cf" + assignment_id);
+
+                    let cfile = cf.value;
+                    let data = {
+                        assigId: assignment_id,
+                        studId: student_id,
+                        count: cfile
+                    }
+                    // console.log(data);
+
+                    $.ajax({
+                        url: "insert_submission.php",
+                        type: "post",
+                        timeout: 5000,
+                        data: data,
+                        success: function(data) {
+                            let dataJson = JSON.parse(data);
+
+                            for (i = 0; i < fileData.files.length; i++) {
+                                let formData = new FormData();
+                                formData.append("data", fileData.files[i]);
+                                formData.append("submission_id", dataJson[i].submission_id);
+
+                                $.ajax({
+                                    url: "upload_submission.php",
+                                    type: "post",
+                                    data: formData,
+                                    contentType: false,
+                                    cache: false,
+                                    timeout: 5000,
+                                    processData: false,
+                                    success: function(data) {
+                                        // console.log(data);
+                                        let val = JSON.parse(data);
+                                        alert(val.msg);
+                                        location.reload();
+                                    },
+                                    error: function() {
+                                        alert('error');
+                                        location.reload();
+
+                                    }
+                                })
+                            }
+                        },
+                        error: function() {
+                            alert('error');
+                            location.reload();
+
+                        }
+                    })
+                } else {
+                    evt.preventDefault();
+                    alert('tidak boleh kosong');
+                }
+            })
+
+        }
     </script>
 
 
