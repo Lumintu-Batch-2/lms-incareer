@@ -19,7 +19,7 @@ if (!empty($sub)) {
     if ($sub[0]['is_finish'] == 0) { //untuk pertama kali submit file
         $assign->setSubmissionFileName('N/A');
         $del = $assign->deleteNAassignmentSubmission();
-        // print_r('true');
+        // print_r('is finish ==0');
         // die();
 
         for ($i = 0; $i < $_POST['count']; $i++) {
@@ -35,13 +35,15 @@ if (!empty($sub)) {
             $objAssg->setStudentId($_POST['studId']);
             $objAssg->setSubmissionToken($token);
             $objAssg->setSubmissionStatus(1);
-            $objAssg->setIsFinished(1);
+            $objAssg->setIsFinished(0);
 
             $save = $objAssg->saveSubmission();
 
             array_push($arr, $save);
         }
     } else if ($sub[0]['is_finish'] == 1) { //untuk update file
+        // print_r('is finish ==1');
+
         date_default_timezone_set('Asia/Jakarta');
         $now =  date("Y-m-d h:i:s");
         require_once "../../Model/AssignmentSubmission.php";
@@ -51,7 +53,7 @@ if (!empty($sub)) {
         $csub = $objsubmit->getSubmissionByAssignIdAndStudentIdGroupBy();
         if (count($csub) < 3) {
             $assign->setSubmissionStatus('nonaktif');
-            $assign->setIsFinished(1);
+            $assign->setIsFinished(0);
             $assign->updateStatusAssignmentSubmission();
             for ($i = 0; $i < $_POST['count']; $i++) {
                 $objAssg = new AssignmentSubmission;
@@ -64,7 +66,7 @@ if (!empty($sub)) {
                 $objAssg->setStudentId($_POST['studId']);
                 $objAssg->setSubmissionToken($token);
                 $objAssg->setSubmissionStatus(1);
-                $objAssg->setIsFinished(1);
+                $objAssg->setIsFinished(0);
 
 
                 $save = $objAssg->saveSubmission();

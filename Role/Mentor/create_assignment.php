@@ -55,9 +55,10 @@ if (isset($_POST['upload'])) {
 
     require "../../Model/Assignments.php";
     $objAsign = new Assignments;
-    $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id'], $_SESSION['user']->{'user_id'}, $userData);
+    // $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id'], $_SESSION['user']->{'user_id'}, $userData);
+    $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id'], 0, $userData);
 
-    
+
     // var_dump($create);
     // die;
     $create_status = $create['is_ok'] ? "true" : "false";
