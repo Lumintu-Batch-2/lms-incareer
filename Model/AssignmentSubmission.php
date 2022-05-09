@@ -271,7 +271,7 @@ class AssignmentSubmission
 
     public function getSubmissionByAssignIdAndStudentId()
     {
-        $stmt = $this->dbConn->prepare('SELECT * FROM `assignment_submissions` WHERE assignment_id = :asid AND student_id =:sid');
+        $stmt = $this->dbConn->prepare('SELECT * FROM `assignment_submissions` WHERE assignment_id = :asid AND student_id =:sid AND submission_filename != "" ORDER BY submitted_date DESC');
         $stmt->bindParam(":asid", $this->assignmentId);
         $stmt->bindParam(":sid", $this->studentId);
         try {
@@ -346,7 +346,7 @@ class AssignmentSubmission
         try {
 
             $stmt = $this->dbConn->prepare(
-                "SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.assignment_id, assignment_submissions.student_id, scores.score_id, scores.score_value FROM assignment_submissions, scores WHERE assignment_submissions.assignment_id = :aid AND scores.assignment_id = :aid AND assignment_submissions.submission_status = 1 AND assignment_submissions.is_finish = 1 GROUP BY assignment_submissions.submission_token"
+                "SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.assignment_id, assignment_submissions.student_id, scores.score_id FROM assignment_submissions, scores WHERE assignment_submissions.assignment_id = :aid AND scores.assignment_id = :aid AND assignment_submissions.submission_status = 1 AND assignment_submissions.is_finish = 1 AND assignment_submissions.submission_filename != '' GROUP BY assignment_submissions.submission_token"
             );
 
             $stmt->bindParam(":aid", $this->assignmentId);
@@ -366,7 +366,7 @@ class AssignmentSubmission
         try {
 
             $stmt = $this->dbConn->prepare(
-                "SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.assignment_id, assignment_submissions.student_id FROM assignment_submissions WHERE assignment_submissions.assignment_id = :aid AND assignment_submissions.is_finish = 0 GROUP BY assignment_submissions.assignment_submission_id"
+                "SELECT assignment_submissions.assignment_submission_id, assignment_submissions.submission_filename, assignment_submissions.submitted_date, assignment_submissions.submission_token, assignment_submissions.assignment_id, assignment_submissions.student_id FROM assignment_submissions WHERE assignment_submissions.assignment_id = :aid AND assignment_submissions.is_finish = 0 AND assignment_submissions.submission_filename = 'N/A' GROUP BY assignment_submissions.assignment_submission_id"
             );
 
             $stmt->bindParam(":aid", $this->assignmentId);
@@ -383,7 +383,7 @@ class AssignmentSubmission
 
     public function getSubmissionByAssignIdAndStudentIdGroupBy()
     {
-        $stmt = $this->dbConn->prepare('SELECT * FROM `assignment_submissions` WHERE assignment_id = :asid AND student_id =:sid GROUP BY assignment_submissions.submission_token');
+        $stmt = $this->dbConn->prepare('SELECT * FROM `assignment_submissions` WHERE assignment_id = :asid AND student_id =:sid AND submission_filename != "" GROUP BY assignment_submissions.submission_token');
         $stmt->bindParam(":asid", $this->assignmentId);
         $stmt->bindParam(":sid", $this->studentId);
         try {
@@ -398,7 +398,7 @@ class AssignmentSubmission
     public function getCurrentDate()
     {
         $stmt = $this->dbConn->prepare('SELECT now()');
-        
+
         try {
             if ($stmt->execute()) {
                 $now = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -408,11 +408,12 @@ class AssignmentSubmission
         }
         return $now;
     }
-    public function getInitSubmit(){
+    public function getInitSubmit()
+    {
         $stmt = $this->dbConn->prepare('SELECT * FROM assignment_submissions WHERE assignment_submissions.assignment_id =:asid AND assignment_submissions.student_id=:sid AND assignment_submissions.is_finish =0 AND assignment_submissions.submission_status= 1');
         $stmt->bindParam(":asid", $this->assignmentId);
         $stmt->bindParam(":sid", $this->studentId);
-        
+
         try {
             if ($stmt->execute()) {
                 $init = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -421,6 +422,5 @@ class AssignmentSubmission
             return $e->getMessage();
         }
         return $init;
-
     }
 }

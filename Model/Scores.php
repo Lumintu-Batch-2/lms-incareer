@@ -86,9 +86,10 @@ class Scores
     }
     public function updateScore()
     {
-        $stmt = $this->dbConn->prepare('UPDATE `scores` SET `score_value`= :sv WHERE score_id = :score_id');
+        $stmt = $this->dbConn->prepare('UPDATE `scores` SET `score_value`= :sv, `mentor_id`=:mid WHERE score_id = :score_id');
         $stmt->bindParam(':sv', $this->scoreValue);
         $stmt->bindParam(':score_id', $this->scoreId);
+        $stmt->bindParam(':mid', $this->mentorId);
         try {
             if ($stmt->execute()) {
                 return true;
@@ -127,7 +128,7 @@ class Scores
     {
         try {
             $stmt = $this->dbConn->prepare(
-                "SELECT score_id, score_value FROM scores WHERE student_id = :std_id AND assignment_id = :assg_id"
+                "SELECT score_id, score_value, mentor_id FROM scores WHERE student_id = :std_id AND assignment_id = :assg_id"
             );
 
             $stmt->bindParam(":std_id", $this->studentId);
