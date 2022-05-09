@@ -551,8 +551,6 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
     </div>
 
 
-
-
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <script>
         let btnToggle = document.getElementById('btnToggle');
@@ -606,55 +604,70 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                         studId: student_id,
                         count: cfile
                     }
-                    // console.log(data);
 
-                    $.ajax({
-                        url: "insert_submission.php",
-                        type: "post",
-                        timeout: 5000,
-                        data: data,
-                        success: function(data) {
-                            let dataJson = JSON.parse(data);
+                    insertSubmission(fileData, data);
 
-                            for (i = 0; i < fileData.files.length; i++) {
-                                let formData = new FormData();
-                                formData.append("data", fileData.files[i]);
-                                formData.append("submission_id", dataJson[i].submission_id);
-
-                                $.ajax({
-                                    url: "upload_submission.php",
-                                    type: "post",
-                                    data: formData,
-                                    contentType: false,
-                                    cache: false,
-                                    timeout: 5000,
-                                    processData: false,
-                                    success: function(data) {
-                                        // console.log(data);
-                                        let val = JSON.parse(data);
-                                        alert(val.msg);
-                                        location.reload();
-                                    },
-                                    error: function() {
-                                        alert('error');
-                                        location.reload();
-
-                                    }
-                                })
-                            }
-                        },
-                        error: function() {
-                            alert('error');
-                            location.reload();
-
-                        }
-                    })
                 } else {
                     evt.preventDefault();
                     alert('tidak boleh kosong');
                 }
             })
+        }
 
+        function insertSubmission(fileData, data) {
+            let countSuccess = 0;
+            $.ajax({
+                url: "insert_submission.php",
+                type: "post",
+                data: data,
+                success: function(data) {
+                    let dataJson = JSON.parse(data);
+
+                    for (i = 0; i < fileData.files.length; i++) {
+                        let formData = new FormData();
+                        formData.append("data", fileData.files[i]);
+                        formData.append("submission_id", dataJson[i].submission_id);
+
+                        let statUpdate = updateFileSubmission(formData);
+
+                        console.log(statUpdate);
+                    }
+                },
+                error: function(xhr) {
+                    alert('Error! Check your connection!');
+                }
+            })
+        }
+
+        function updateFileSubmission(formData) {
+            $.ajax({
+                url: "upload_submission.php",
+                type: "post",
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    let val = JSON.parse(data);
+                    success += 1;
+                    alert(val.msg);
+                    location.reload();
+                },
+                error: function(xhr) {
+                    alert('Error! Check your connection!');
+                }
+            })
+        }
+
+        function deleteSubmission(id) {
+            $.ajax({
+                url: "delete_submission.php",
+                data: id,
+                type: post,
+                success: function(data) {
+                    // success
+                }
+            })
         }
     </script>
 

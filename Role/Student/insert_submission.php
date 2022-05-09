@@ -15,7 +15,6 @@ $sub = $assign->getSubmissionByAssignIdAndStudentId();
 
 
 if (!empty($sub)) {
-
     if ($sub[0]['is_finish'] == 0) { //untuk pertama kali submit file
         $assign->setSubmissionFileName('N/A');
         $del = $assign->deleteNAassignmentSubmission();
@@ -74,6 +73,26 @@ if (!empty($sub)) {
                 array_push($arr, $save);
             }
         }
+    }
+} else if(empty($sub)) {
+    for ($i = 0; $i < $_POST['count']; $i++) {
+        // print_r('true');
+        // die();
+        $objAssg = new AssignmentSubmission;
+        date_default_timezone_set("Asia/Bangkok");
+        $dateupload = date("Y-m-d H:i:s");
+
+        $objAssg->setSubmissionFileName("");
+        $objAssg->setSubmissionUploadDate($dateupload);
+        $objAssg->setAssignmentId($_POST['assigId']);
+        $objAssg->setStudentId($_POST['studId']);
+        $objAssg->setSubmissionToken($token);
+        $objAssg->setSubmissionStatus(1);
+        $objAssg->setIsFinished(0);
+
+        $save = $objAssg->saveSubmission();
+
+        array_push($arr, $save);
     }
 }
 
