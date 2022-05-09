@@ -16,8 +16,16 @@ $validTypeFile = [
     "application/x-rar" // rar
 ];
 
+$is_ok = false;
+$msg = "";
+
 if (!in_array($_FILES['data']['type'], $validTypeFile)) {
     $msg = "Format file tidak didukung!";
+    goto out;
+}
+
+if($_FILES['data']['size'] > 2000000) {
+    $msg = "Batas maksimal upload file 2 MB!";
     goto out;
 }
 
@@ -30,11 +38,6 @@ if ($move) {
     $objAssig = new AssignmentSubmission;
     date_default_timezone_set("Asia/Jakarta");
     $dateupload = date("Y-m-d H:i:s");
-
-    $is_ok = false;
-    $msg = "";
-
-    $filesize = $_FILES['data']['size'];
 
     $objAssig->setSubmissionFileName($_FILES['data']['name']);
     $objAssig->setSubmissionUploadDate($dateupload);

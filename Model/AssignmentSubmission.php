@@ -423,4 +423,19 @@ class AssignmentSubmission
         }
         return $init;
     }
+
+    public function deleteSubmissionById() {
+        try {
+            $stmt = $this->dbConn->prepare('DELETE FROM assignment_submissions WHERE assignment_submissions.assignment_submission_id = submission_id');
+            $stmt->bindParam(":submission_id", $this->assignmentSubmissionId);
+
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }
