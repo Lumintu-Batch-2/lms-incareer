@@ -4,12 +4,12 @@ session_start();
 
 $loginPath = "../../login.php";
 
-if(!isset($_SESSION['user'])) {
+if(!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
     die;
 }
 
-switch($_SESSION['user']->{'role_id'}) {
+switch($_SESSION['user_data']->{'user'}->{'role_id'}) {
     case 1:
         echo "
         <script>
@@ -30,29 +30,33 @@ switch($_SESSION['user']->{'role_id'}) {
         break;
 }
 
-
-// require "../../Model/Courses.php";
-// $objCourse = new Courses;
-// $allCourses = $objCourse->gelAllCourseByUserId($_SESSION['user']->{'user_id'});
-
 require_once "../../api/get_api_data.php";
+require_once "../../api/get_request.php";
 
 $courseData = array();
 $batchData = array();
-$modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
-$userBatchJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user_batch"));
+$modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
 
-for($i = 0; $i < count($userBatchJSON->{'data'}); $i++) {
-    if($userBatchJSON->{'data'}[$i]->{'user_user_id'} == $_SESSION['user']->{'user_id'}) {
-        array_push($batchData, $userBatchJSON->{'data'}[$i]);
+var_dump($modulJSON);
+
+$token = $_COOKIE['X-LUMINTU-REFRESHTOKEN'];
+$usersData = json_decode(http_request_with_auth("http://192.168.18.136:8000/api/users.php", $token));
+
+// var_dump($usersData);
+
+for($i = 0; $i < count($usersData->{'user'}); $i++) {
+    if($usersData->{'user'}[$i]->{'user_id'} == $_SESSION['user_data']->{'user'}->{'user_id'}) {
+        array_push($batchData, $usersData->{'user'}[$i]);
     }
 }
+
+// var_dump($batchData);
 
 
 for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     if($modulJSON->{'data'}[$i]->{'parent_id'} == NULL) {
         for($j = 0; $j < count($batchData); $j++){
-            if($modulJSON->{'data'}[$i]->{'batch_id'} == $batchData[$j]->{'batch_batch_id'}) {
+            if($modulJSON->{'data'}[$i]->{'batch_id'} == $batchData[$j]->{'batch_id'}) {
                 array_push($courseData, $modulJSON->{'data'}[$i]);
             }
         }   
@@ -228,7 +232,7 @@ for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
             <!-- Header / Profile -->
             <div class="flex items-center gap-x-4 justify-end">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold"><?=$_SESSION['user']->{'user_username'}?></p>
+                <p class="text-dark-green font-semibold"><?=$_SESSION['user_data']->{'user'}->{'user_username'}?></p>
             </div>
 
             <!-- Breadcrumb -->
