@@ -244,32 +244,37 @@ for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                     </li>
                 </ul>
             </div>
+            
             <div class="container p-4 rounded">
                 <div class="container" style="display: table;">
-            <div class="section-period" style="display: table-row;">
-                <p class="font-bold" style="display: table-cell; width: 5%;">Period :</p>
-                    <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                        <option selected></option>
-                        <option value="US">Filter 1</option>
-                        <option value="US">Filter 2</option>
-                        <option value="US">Filter 3</option>
-                    </select>
-            </div>
-        </div>
+                    <div class="flex items-center space-x-2">
+                        <p class="font-bold">Period :</p>
+                        <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block flex-1  p-2.5">
+                            <option selected></option>
+                            <option value="US">Filter 1</option>
+                            <option value="US">Filter 2</option>
+                            <option value="US">Filter 3</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-              <div class="p-4">
+            <div class="p-4">
                 <p class="text-4xl text-dark-green font-semibold">My Courses</p>
             </div>
-             <div class="p-4 mt-10 grid grid-cols-4 gap-4">
-             <?php foreach ($courseData as $key => $course) : ?>
-                <a href="./subject.php?course_id=<?= $course->{'id'}; ?>" class="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 w-100">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"><?= $course->{'modul_name'}; ?></h5>
-                <p class="font-normal text-gray-700 flex flex-row items-center gap-4 mt-5"><img src="../../Img/icons/dokumen_icon.svg" alt="dokumen"><?= $course->{'id'}; ?></p>
-                </a>
-            <?php endforeach ?>
-             </div>
 
+            <div class="p-4 mt-10 grid grid-cols-4 gap-4">
+                <?php foreach ($courseData as $key => $course) : ?>
+                    <a href="./subject.php?course_id=<?= $course->{'id'}; ?>" class="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 w-100">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"><?= $course->{'modul_name'}; ?></h5>
+                        <p class="font-normal text-gray-700 flex flex-row items-center gap-4 mt-5">
+                            <img src="../../Img/icons/dokumen_icon.svg" alt="dokumen"><?= $course->{'id'}; ?>
+                        </p>
+                    </a>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </div>
             
      
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
