@@ -151,6 +151,8 @@ class Assignments
             $msg = "Tipe assignment tidak boleh kosong!";
             goto out;
         }
+        $tkn = uniqid();
+        $fn = $tkn . '_' . $file['filename']['name'];
 
         $this->setAssignmentName($data['title']);
         $this->setAssignmentStartDate($data['start-date']);
@@ -185,7 +187,7 @@ class Assignments
             goto out;
         }
 
-        $objQuest->setQuestionFileName($file['filename']['name']);
+        $objQuest->setQuestionFileName($fn);
         date_default_timezone_set('Asia/Jakarta');
         $objQuest->setQuestionUploadDate(date("Y-m-d H:i:s"));
 
@@ -193,12 +195,12 @@ class Assignments
         $path = dirname(__DIR__) . '/Upload/Assignment/Questions/';
 
 
-        move_uploaded_file($file['filename']['tmp_name'], $path . $file['filename']['name']);
+        move_uploaded_file($file['filename']['tmp_name'], $path . $fn);
 
         $save = $this->saveAssignment();
         $upload = $objQuest->uploadFile($save['assignment_id']);
 
-        for($i = 0; $i < count($userData); $i++) {
+        for ($i = 0; $i < count($userData); $i++) {
             require_once "Scores.php";
             require_once "AssignmentSubmission.php";
 
@@ -218,7 +220,6 @@ class Assignments
             $objSubm->setAssignmentId($save['assignment_id']);
             $objSubm->setStudentId($userData[$i]->{'user_id'});
             $objSubm->creatAssignmentSubmission();
-
         }
 
         if ($save['is_ok'] && $upload) {
