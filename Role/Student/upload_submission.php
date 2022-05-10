@@ -24,23 +24,26 @@ if (!in_array($_FILES['data']['type'], $validTypeFile)) {
     goto out;
 }
 
-if($_FILES['data']['size'] > 2000000) {
+if ($_FILES['data']['size'] > 2000000) {
     $msg = "Batas maksimal upload file 2 MB!";
     goto out;
 }
 
 $path = '../../Upload/Assignment/Submission/';
-$move = move_uploaded_file($_FILES['data']['tmp_name'], $path . $_FILES['data']['name']);
+$token = uniqid();
+$fn = $token . '_' . $_FILES['data']['name'];
+$move = move_uploaded_file($_FILES['data']['tmp_name'], $path . $fn);
 
 if ($move) {
 
     require_once "../../Model/AssignmentSubmission.php";
     $objAssig = new AssignmentSubmission;
+    $now = $objAssig->getCurrentDate();
     date_default_timezone_set("Asia/Jakarta");
     $dateupload = date("Y-m-d H:i:s");
 
-    $objAssig->setSubmissionFileName($_FILES['data']['name']);
-    $objAssig->setSubmissionUploadDate($dateupload);
+    $objAssig->setSubmissionFileName($fn);
+    $objAssig->setSubmissionUploadDate($now['now()']);
     $objAssig->setAssignmentSubmissionId((int) $_POST['submission_id']);
     $objAssig->setIsFinished(1);
 
