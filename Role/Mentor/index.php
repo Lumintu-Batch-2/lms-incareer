@@ -37,20 +37,18 @@ $courseData = array();
 $batchData = array();
 $modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
 
-var_dump($modulJSON);
+// var_dump($modulJSON);
 
 $token = $_COOKIE['X-LUMINTU-REFRESHTOKEN'];
-$usersData = json_decode(http_request_with_auth("http://192.168.18.136:8000/api/users.php", $token));
+$usersData = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/users.php", $token));
 
-// var_dump($usersData);
+var_dump($usersData);
 
 for($i = 0; $i < count($usersData->{'user'}); $i++) {
     if($usersData->{'user'}[$i]->{'user_id'} == $_SESSION['user_data']->{'user'}->{'user_id'}) {
         array_push($batchData, $usersData->{'user'}[$i]);
     }
 }
-
-// var_dump($batchData);
 
 
 for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
@@ -62,11 +60,6 @@ for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         }   
     }
 }
-
-// var_dump($batchData);
-// var_dump($courseData);
-
-// var_dump($courseData);
 
 ?>
 

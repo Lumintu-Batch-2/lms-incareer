@@ -4,36 +4,39 @@ session_start();
 
 $loginPath = "../../login.php";
 
-if (!isset($_SESSION['user'])) {
+if(!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
+    die;
 }
 
-switch ($_SESSION['user']->{'role_id'}) {
+switch($_SESSION['user_data']->{'user'}->{'role_id'}) {
     case 1:
         echo "
         <script>
-            alert('Akses Ditolak');
-            location.replace('../Admin/')
-        </script>";
+            alert('Akses ditolak!');
+            location.replace('../Admin/');
+        </script>
+        ";
         break;
     case 3:
         echo "
         <script>
-            alert('Akses Ditolak');
-            location.replace('../Student/')
-        </script>";
+            alert('Akses ditolak!');
+            location.replace('../Student/');
+        </script>
+        ";
         break;
-
     default:
         break;
 }
 
 require_once "../../api/get_api_data.php";
+require_once "../../api/get_request.php";
 
 $subjectData = array();
 $courseData = array();
 
-$modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+$modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
 
 for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     if($modulJSON->{'data'}[$i]->{'parent_id'} == $_GET['course_id']) {

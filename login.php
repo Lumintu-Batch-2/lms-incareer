@@ -11,11 +11,11 @@ if(isset($_POST['login'])) {
         "password" => $_POST['password']
     );
 
-    $login = json_decode(post_request("http://192.168.18.136:8000/api/login.php", json_encode($arr)));
+    $login = json_decode(post_request("https://account.lumintulogic.com/api/login.php", json_encode($arr)));
     $access_token = $login->{'data'}->{'accessToken'};
 
     if($login->{'success'}) {
-        $userData = json_decode(http_request_with_auth("http://192.168.18.136:8000/api/user.php", $access_token));
+        $userData = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/user.php", $access_token));
         $_SESSION['user_data'] = $userData;
         setcookie('X-LUMINTU-REFRESHTOKEN', $access_token, time() + (86400 * 30));
 

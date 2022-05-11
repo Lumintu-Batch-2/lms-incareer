@@ -4,26 +4,28 @@ session_start();
 
 $loginPath = "../../login.php";
 
-if (!isset($_SESSION['user'])) {
+if(!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
+    die;
 }
 
-switch ($_SESSION['user']->{'role_id'}) {
+switch($_SESSION['user_data']->{'user'}->{'role_id'}) {
     case 1:
         echo "
         <script>
-            alert('Akses Ditolak');
-            location.replace('../Admin/index.php')
-        </script>";
+            alert('Akses ditolak!');
+            location.replace('../Admin/');
+        </script>
+        ";
         break;
     case 2:
         echo "
         <script>
-            alert('Akses Ditolak');
-            location.replace('../Mentor/login.php')
-        </script>";
+            alert('Akses ditolak!');
+            location.replace('../Mentor/');
+        </script>
+        ";
         break;
-
     default:
         break;
 }
@@ -35,34 +37,35 @@ $allAssignments = $objAssign->getAssignmentBySubjectId($_GET['subject_id']);
 // var_dump($allAssignments);
 
 require "../../api/get_api_data.php";
+require_once "../../api/get_request.php";
 
 
-$subModulData = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+// $subModulData = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
 $lectureData = array();
-$modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
-$userBatchJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user_batch"));
-$userJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user"));
+$modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
+// $userBatchJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user_batch"));
+// $userJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user"));
+$token = $_COOKIE['X-LUMINTU-REFRESHTOKEN'];
+$usersData = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/users.php", $token));
 
 
 for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     if ($modulJSON->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
-        for ($j = 0; $j < count($userBatchJSON->{'data'}); $j++) {
-            if ($modulJSON->{'data'}[$i]->{'batch_id'} == $userBatchJSON->{'data'}[$j]->{'batch_batch_id'}) {
-                for ($k = 0; $k < count($userJSON->{'data'}); $k++) {
-                    if ($userBatchJSON->{'data'}[$j]->{'user_user_id'} == $userJSON->{'data'}[$k]->{'user_id'} && $userJSON->{'data'}[$k]->{'role_id'} == 2) {
-                        array_push($lectureData, $userJSON->{'data'}[$k]);
-                    }
-                }
+        for($j = 0; count($usersData->{'user'}); $j++) {
+            if($modulJSON->{'data'}[$i]->{'batch_id'} == $usersData->{'user'}[$j]->{'batch_id'} && $usersData->{'user'}[$j]->{'role_id'} == 2) {
+                array_push($lectureData, $usersData->{'user'}[$j]);
             }
         }
     }
 }
 
+var_dump($lectureData);
+
 $subModul = array();
 
-for ($i = 0; $i < count($subModulData->{'data'}); $i++) {
-    if ($subModulData->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
-        array_push($subModul, $subModulData->{'data'}[$i]);
+for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
+    if ($modulJSON->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
+        array_push($subModul, $modulJSON->{'data'}[$i]);
     }
 }
 
