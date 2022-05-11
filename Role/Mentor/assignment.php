@@ -1,6 +1,11 @@
 <?php
 
 session_start();
+$loginPath = "../../login.php";
+if (!isset($_COOKIE['X-LUMINTU-REFRESHTOKEN'])) {
+    unset($_SESSION['user_data']);
+    header("location: " . $loginPath);
+}
 
 if (!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
@@ -41,7 +46,6 @@ for ($i = 0; $i < count($subModulData->{'data'}); $i++) {
         array_push($subModul, $subModulData->{'data'}[$i]);
     }
 }
-
 
 $objAssignment = new Assignments;
 
@@ -323,7 +327,7 @@ if (isset($_GET['act'])) {
             <!-- Direction -->
             <div class="bg-white w-full p-6">
                 <p class="text-dark-green font-semibold">Description :</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quo dolore atque eveniet iusto iste accusantium sint, obcaecati unde totam labore omnis sit laborum, architecto quia ea laboriosam libero soluta accusamus modi laudantium quod neque rerum quaerat. Quasi eaque officiis, commodi maiores, nisi asperiores distinctio magni quas, itaque facere consequuntur eos pariatur voluptatum illum tenetur esse. Provident excepturi velit maxime non officia voluptas nisi. Quod dolorum quisquam obcaecati ad laudantium maiores, aperiam eveniet voluptate ab. Asperiores ducimus, minus impedit enim reiciendis sit aperiam ut labore, facere rerum tempora. Molestias nesciunt beatae consequatur minus dolorum tempora culpa cum, tenetur corrupti facilis.</p>
+                <p><?= $subModul[0]->{'modul_description'}; ?></p>
             </div>
 
             <!-- Table Assignment -->

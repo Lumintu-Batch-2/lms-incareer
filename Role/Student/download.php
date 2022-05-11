@@ -1,6 +1,19 @@
 <?php
+session_start();
 
-switch($_GET['type']) {
+$loginPath = "../../login.php";
+
+if (!isset($_SESSION['user_data'])) {
+    header("location: " . $loginPath);
+    die;
+}
+
+if (!isset($_COOKIE['X-LUMINTU-REFRESHTOKEN'])) {
+    unset($_SESSION['user_data']);
+    header("location: " . $loginPath);
+}
+
+switch ($_GET['type']) {
     case 'q':
         $path = "../../Upload/Assignment/Questions/";
         if (isset($_GET['file'])) {
@@ -8,7 +21,7 @@ switch($_GET['type']) {
             $filename = $path . $_GET['file'];
             //Check the file exists or not
             if (file_exists($filename)) {
-        
+
                 //Define header information
                 header('Content-Description: File Transfer');
                 header('Content-Type: application/octet-stream');
@@ -17,13 +30,13 @@ switch($_GET['type']) {
                 header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
                 header('Content-Length: ' . filesize($filename));
                 header('Pragma: public');
-        
+
                 //Clear system output buffer
                 flush();
-        
+
                 //Read the size of the file
                 readfile($filename);
-        
+
                 //Terminate from the script
                 die();
             } else {
@@ -42,7 +55,7 @@ switch($_GET['type']) {
             $filename = $path . $_GET['file'];
             //Check the file exists or not
             if (file_exists($filename)) {
-        
+
                 //Define header information
                 header('Content-Description: File Transfer');
                 header('Content-Type: application/octet-stream');
@@ -51,13 +64,13 @@ switch($_GET['type']) {
                 header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
                 header('Content-Length: ' . filesize($filename));
                 header('Pragma: public');
-        
+
                 //Clear system output buffer
                 flush();
-        
+
                 //Read the size of the file
                 readfile($filename);
-        
+
                 //Terminate from the script
                 die();
             } else {
@@ -71,5 +84,3 @@ switch($_GET['type']) {
     default:
         break;
 }
-
-

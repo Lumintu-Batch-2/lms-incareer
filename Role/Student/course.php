@@ -3,6 +3,10 @@
 session_start();
 
 $loginPath = "../../login.php";
+if (!isset($_COOKIE['X-LUMINTU-REFRESHTOKEN'])) {
+    unset($_SESSION['user_data']);
+    header("location: " . $loginPath);
+}
 
 if (!isset($_SESSION['user'])) {
     header("location: " . $loginPath);
@@ -34,8 +38,8 @@ $subjectData = array();
 
 $modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
 
-for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
-    if($modulJSON->{'data'}[$i]->{'parent_id'} == $_GET['course_id']) {
+for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
+    if ($modulJSON->{'data'}[$i]->{'parent_id'} == $_GET['course_id']) {
         array_push($subjectData, $modulJSON->{'data'}[$i]);
     }
 }

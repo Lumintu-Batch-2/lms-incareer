@@ -2,13 +2,17 @@
 session_start();
 
 $loginPath = "../../login.php";
+if (!isset($_COOKIE['X-LUMINTU-REFRESHTOKEN'])) {
+    unset($_SESSION['user_data']);
+    header("location: " . $loginPath);
+}
 
-if(!isset($_SESSION['user_data'])) {
+if (!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
     die;
 }
 
-switch($_SESSION['user_data']->{'user'}->{'role_id'}) {
+switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
     case 1:
         echo "
         <script>
@@ -42,7 +46,7 @@ $usersData = json_decode(http_request_with_auth("https://account.lumintulogic.co
 for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     if ($modulJSON->{'data'}[$i]->{'id'} == (int)$_GET['course_id']) {
         for ($j = 0; $j < count($usersData->{'user'}); $j++) {
-            if($modulJSON->{'data'}[$i]->{'batch_id'} == $usersData->{'user'}[$j]->{'batch_id'} && $usersData->{'user'}[$j]->{'role_id'} == 3) {
+            if ($modulJSON->{'data'}[$i]->{'batch_id'} == $usersData->{'user'}[$j]->{'batch_id'} && $usersData->{'user'}[$j]->{'role_id'} == 3) {
                 array_push($userData, $usersData->{'user'}[$j]);
             }
         }

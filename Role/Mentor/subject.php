@@ -8,6 +8,10 @@ if (!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
     die;
 }
+if (!isset($_COOKIE['X-LUMINTU-REFRESHTOKEN'])) {
+    unset($_SESSION['user_data']);
+    header("location: " . $loginPath);
+}
 
 switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
     case 1:
