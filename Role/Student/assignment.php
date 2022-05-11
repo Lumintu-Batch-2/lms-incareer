@@ -4,12 +4,12 @@ session_start();
 
 $loginPath = "../../login.php";
 
-if(!isset($_SESSION['user_data'])) {
+if (!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
     die;
 }
 
-switch($_SESSION['user_data']->{'user'}->{'role_id'}) {
+switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
     case 1:
         echo "
         <script>
@@ -48,18 +48,13 @@ $modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modu
 $token = $_COOKIE['X-LUMINTU-REFRESHTOKEN'];
 $usersData = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/users.php", $token));
 
+$batchId = $usersData->{'user'}[0]->{'batch_id'};
 
-for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
-    if ($modulJSON->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
-        for($j = 0; count($usersData->{'user'}); $j++) {
-            if($modulJSON->{'data'}[$i]->{'batch_id'} == $usersData->{'user'}[$j]->{'batch_id'} && $usersData->{'user'}[$j]->{'role_id'} == 2) {
-                array_push($lectureData, $usersData->{'user'}[$j]);
-            }
-        }
+for ($i = 0; $i < count($usersData->{'user'}); $i++) {
+    if ($usersData->{'user'}[$i]->{'role_id'} == 2) {
+        array_push($lectureData, $usersData->{'user'}[$i]);
     }
 }
-
-var_dump($lectureData);
 
 $subModul = array();
 
@@ -238,7 +233,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
             <!-- Header / Profile -->
             <div class="flex items-center gap-x-4 justify-end">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold"><?= $_SESSION['user']->{'user_username'} ?></p>
+                <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_username'} ?></p>
             </div>
 
             <!-- Breadcrumb -->
