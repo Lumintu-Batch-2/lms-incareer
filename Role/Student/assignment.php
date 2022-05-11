@@ -65,7 +65,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
 }
 
 echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_id'} . "'/>";
-
+// var_dump($_SESSION['user_data']->{'user'}->{'user_id'});
 ?>
 
 <!DOCTYPE html>
@@ -350,12 +350,14 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                     <?php
                                     require_once "../../Model/AssignmentSubmission.php";
                                     $objsubmit = new AssignmentSubmission;
-                                    $objsubmit->setStudentId($_SESSION['user']->{'user_id'});
+                                    $objsubmit->setStudentId($_SESSION['user_data']->{'user'}->{'user_id'});
                                     $objsubmit->setAssignmentId($assignment['assignment_id']);
                                     $initsubmit = $objsubmit->getInitSubmit();
                                     $now = $objsubmit->getCurrentDate();
                                     $msg = '';
                                     $csub = $objsubmit->getSubmissionByAssignIdAndStudentIdGroupBy();
+                                    // echo ($_SESSION['user']->{'user_id'});
+                                    // var_dump($initsubmit);
 
                                     if (count($initsubmit) == 1) {
 
@@ -373,7 +375,9 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_
                                         <?php
                                         }
                                     } else {
-                                        if (count($csub) < 3) { ?>
+                                        if (count($csub) < 3) {
+                                            echo (count($csub));
+                                        ?>
                                             <img class="w-7 mx-auto cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" data-assignid="<?= $assignment['assignment_id']; ?>" onclick="uploadSubmission(<?= $assignment['assignment_id']; ?>)">
                                             <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
                                                 Already submit !!
