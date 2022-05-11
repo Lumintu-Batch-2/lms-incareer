@@ -74,7 +74,7 @@ if (!empty($sub)) {
             }
         }
     }
-} else if(empty($sub)) {
+} else if (empty($sub)) {
     for ($i = 0; $i < $_POST['count']; $i++) {
         // print_r('true');
         // die();

@@ -5,7 +5,7 @@ require_once "./api/post_request.php";
 
 session_start();
 
-if(isset($_POST['login'])) {
+if (isset($_POST['login'])) {
     $arr = array(
         "email" => $_POST['email'],
         "password" => $_POST['password']
@@ -13,13 +13,14 @@ if(isset($_POST['login'])) {
 
     $login = json_decode(post_request("https://account.lumintulogic.com/api/login.php", json_encode($arr)));
     $access_token = $login->{'data'}->{'accessToken'};
+    $expiry = $login->{'data'}->{'expiry'};
 
-    if($login->{'success'}) {
+    if ($login->{'success'}) {
         $userData = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/user.php", $access_token));
         $_SESSION['user_data'] = $userData;
-        setcookie('X-LUMINTU-REFRESHTOKEN', $access_token, time() + (86400 * 30));
+        setcookie('X-LUMINTU-REFRESHTOKEN', $access_token, strtotime($expiry));
 
-        switch($userData->{'user'}->{'role_id'}) {
+        switch ($userData->{'user'}->{'role_id'}) {
             case 1:
                 // Admin
                 break;
@@ -46,6 +47,7 @@ if(isset($_POST['login'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,6 +57,7 @@ if(isset($_POST['login'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
 </head>
+
 <body>
     <form action="" method="POST">
         <label for="email">Email: </label>
@@ -67,4 +70,5 @@ if(isset($_POST['login'])) {
     </form>
 
 </body>
+
 </html>

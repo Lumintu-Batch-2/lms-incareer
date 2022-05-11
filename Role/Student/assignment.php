@@ -3,6 +3,10 @@
 session_start();
 
 $loginPath = "../../login.php";
+if (!isset($_COOKIE['X-LUMINTU-REFRESHTOKEN'])) {
+    unset($_SESSION['user_data']);
+    header("location: " . $loginPath);
+}
 
 if (!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
@@ -64,7 +68,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     }
 }
 
-echo "<input type='hidden' id='student_id' value='" . $_SESSION['user']->{'user_id'} . "'/>";
+echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'user'}->{'user_id'} . "'/>";
 // var_dump($_SESSION['user_data']->{'user'}->{'user_id'});
 ?>
 
