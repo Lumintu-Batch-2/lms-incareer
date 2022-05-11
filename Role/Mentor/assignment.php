@@ -2,14 +2,12 @@
 
 session_start();
 
-$loginPath = "../../login.php";
-
-if (!isset($_SESSION['user'])) {
+if(!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
     die;
 }
 
-switch ($_SESSION['user']->{'role_id'}) {
+switch($_SESSION['user_data']->{'user'}->{'role_id'}) {
     case 1:
         echo "
         <script>
@@ -34,7 +32,7 @@ require "../../Model/Assignments.php";
 require "../../Model/AssignmentSubmission.php";
 require "../../api/get_api_data.php";
 
-$subModulData = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
+$subModulData = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
 $subModul = array();
 
 for ($i = 0; $i < count($subModulData->{'data'}); $i++) {
@@ -267,7 +265,7 @@ if (isset($_GET['act'])) {
             <!-- Header / Profile -->
             <div class="flex items-center gap-x-4 justify-end">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold"><?= $_SESSION['user']->{'user_first_name'} . " " . $_SESSION['user']->{'user_last_name'} ?></p>
+                <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
             </div>
 
             <!-- Breadcrumb -->

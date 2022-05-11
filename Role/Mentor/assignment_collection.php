@@ -3,17 +3,17 @@ session_start();
 
 $loginPath = "../../login.php";
 
-if (!isset($_SESSION['user'])) {
+if(!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
     die;
 }
 
-switch ($_SESSION['user']->{'role_id'}) {
+switch($_SESSION['user_data']->{'user'}->{'role_id'}) {
     case 1:
         echo "
         <script>
             alert('Akses ditolak!');
-            location.replace('../../Admin/');
+            location.replace('../Admin/');
         </script>
         ";
         break;
@@ -21,7 +21,7 @@ switch ($_SESSION['user']->{'role_id'}) {
         echo "
         <script>
             alert('Akses ditolak!');
-            location.replace('../../Student/');
+            location.replace('../Student/');
         </script>
         ";
         break;
@@ -31,22 +31,19 @@ switch ($_SESSION['user']->{'role_id'}) {
 
 
 require_once "../../api/get_api_data.php";
+require_once "../../api/get_request.php";
 
 $userData = array();
-$modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
-$userBatchJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user_batch"));
-$userJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user"));
+$modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
+$token = $_COOKIE['X-LUMINTU-REFRESHTOKEN'];
+$usersData = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/users.php", $token));
 
 
 for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     if ($modulJSON->{'data'}[$i]->{'id'} == (int)$_GET['course_id']) {
-        for ($j = 0; $j < count($userBatchJSON->{'data'}); $j++) {
-            if ($modulJSON->{'data'}[$i]->{'batch_id'} == $userBatchJSON->{'data'}[$j]->{'batch_batch_id'}) {
-                for ($k = 0; $k < count($userJSON->{'data'}); $k++) {
-                    if ($userBatchJSON->{'data'}[$j]->{'user_user_id'} == $userJSON->{'data'}[$k]->{'user_id'} && $userJSON->{'data'}[$k]->{'role_id'} == 3) {
-                        array_push($userData, $userJSON->{'data'}[$k]);
-                    }
-                }
+        for ($j = 0; $j < count($usersData->{'user'}); $j++) {
+            if($modulJSON->{'data'}[$i]->{'batch_id'} == $usersData->{'user'}[$j]->{'batch_id'} && $usersData->{'user'}[$j]->{'role_id'} == 3) {
+                array_push($userData, $usersData->{'user'}[$j]);
             }
         }
     }
@@ -57,10 +54,6 @@ require_once('../../Model/AssignmentSubmission.php');
 $objSubmission = new AssignmentSubmission;
 $objSubmission->setAssignmentId($_GET['assignment_id']);
 $submissionData = $objSubmission->getSubmissionAndScoreByAssignmentId();
-// var_dump($submissionData);
-// var_dump($_GET['assignment_id']);
-// var_dump($submissionData);
-
 
 $submissionStudent = array();
 
