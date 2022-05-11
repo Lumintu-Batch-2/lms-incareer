@@ -486,7 +486,7 @@ if (isset($_GET['act'])) {
                 </div>
                 <!-- Modal Add body -->
                 <div class="p-6 space-y-6">
-                    <form method="POST" action="" enctype="multipart/form-data">
+                    <form method="POST" action="" id="modalupload" enctype="multipart/form-data">
                         <div class="mb-6">
                             <label for="title" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Title</label>
                             <input type="text" id="upload_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="title">
@@ -512,11 +512,17 @@ if (isset($_GET['act'])) {
 
                             </select>
                         </div>
-                        <div class="mb-6">
+                        <div class="mb-3">
                             <label for="input" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Dokumen</label>
                             <input type="file" id="upload_file" name="filename" required>
                         </div>
                 </div>
+                <div class="px-5">
+                    <div class="progress hidden w-full bg-gray-200 rounded-full dark:bg-gray-700 " id="progressup">
+                        <div id="progressbarup" class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full">0%</div>
+                    </div>
+                </div>
+
                 <!-- Modal Add footer -->
                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
                     <button data-modal-toggle="addModal" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:focus:ring-dark-800" id="btnClsUp">Close</button>
@@ -536,62 +542,106 @@ if (isset($_GET['act'])) {
             sidebar.classList.toggle('in-active');
         }
 
-        $('#btnUpload').click(function() {
-            $('#btnUpload').attr('disabled', 'true');
-            $('#btnClsUp').attr('disabled', 'true');
-            $('#btnUpload').removeClass('hover:bg-gray-600 hover:text-white focus:z-10');
-            $('#btnClsUp').removeClass('hover:ring-2 hover:ring-gray-400');
-
-            let title = $("#upload_title").val();
-            let dueData = $("#upload_dueDate").val();
-            let assgType = $("#upload_assign_type").val();
-            let startDate = $("#upload_startDate").val();
-            let description = $("#upload_deksripsi").val();
-            let file = document.getElementById("upload_file");
-
-            let data = {
-                "title": title,
-                "dueDate": dueData,
-                "assgType": assgType,
-                "startDate": startDate,
-                "description": description
-            }
-
-            console.log(data);
-            console.log(file.files);
-
-            let formData = new FormData();
-            formData.append("file", file.files[0]);
-            formData.append("data", JSON.stringify(data));
-            // if (condition) {
-
-            // }
-
-            $.ajax({
-                url: "create_assignment.php?course_id=<?= $_GET['course_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>",
-                type: "post",
-                data: formData,
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(data) {
-                    console.log(data);
-                    let val = JSON.parse(data);
-                    if (val.is_ok) {
-                        alert(val.msg);
-                        location.reload();
-                    } else {
-                        alert("Error!" + val.msg);
-                        location.reload();
-                    }
-                },
-                error: function() {
-                    alert('Error! Check your connection!');
-                }
-            })
-        })
-
         $(document).ready(function() {
+
+            $('#btnUpload').click(function(evt) {
+
+                let title = $("#upload_title").val();
+                let dueData = $("#upload_dueDate").val();
+                let assgType = $("#upload_assign_type").val();
+                let startDate = $("#upload_startDate").val();
+                let description = $("#upload_deksripsi").val();
+                let file = document.getElementById("upload_file");
+
+                // console.log(file.files);
+                // console.log(file.files[0].type);
+                let validTypeFile = [
+                    "image/png", // png
+                    "image/jpg", // jpg
+                    "image/jpeg", // jpeg
+                    "text/plain", // txt or html
+                    "application/pdf", // pdf
+                    "application/vnd.ms-powerpoint",
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // docx
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // xlsx
+                    "application/vnd.openxmlformats-officedocument.presentationml.presentation", // pptx
+                    "application/vnd.ms-excel", // xls
+                    "application/msword", // doc
+                    "application/zip", // zip
+                    "application/x-rar" // rar
+                ];
+                if (title == '' || dueDate == '' || assgType == '' || startDate == '' || description == '' || file == '') {
+                    alert('FIeld tidak boleh kosong');
+                    evt.preventDefault();
+                } else if (jQuery.inArray(file.files[0].type, validTypeFile) == -1) {
+                    alert('Ekstensi tidak sesuai !!');
+                    evt.preventDefault();
+                } else if (file.files[0].size > 2000000) {
+                    alert('file tidak boleh lebih dari 2mb');
+                    evt.preventDefault();
+                } else {
+                    $('#btnUpload').attr('disabled', 'true');
+                    $('#btnClsUp').attr('disabled', 'true');
+                    $('#btnUpload').removeClass('hover:bg-gray-600 hover:text-white focus:z-10');
+                    $('#btnClsUp').removeClass('hover:ring-2 hover:ring-gray-400');
+                    $('#progressup').removeClass('hidden');
+                    $('#progressbarup').width('0%');
+
+                    let data = {
+                        "title": title,
+                        "dueDate": dueData,
+                        "assgType": assgType,
+                        "startDate": startDate,
+                        "description": description
+                    }
+
+                    console.log(data);
+                    console.log(file.files);
+                    console.log(file.files[0].size);
+
+
+                    let formData = new FormData();
+                    formData.append("file", file.files[0]);
+                    formData.append("data", JSON.stringify(data));
+
+                    $.ajax({
+                        xhr: function() {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener('progress', function(evt) {
+                                if (evt.lengthComputable) {
+                                    var precentComplete = evt.loaded / evt.total;
+                                    precentComplete = parseInt(precentComplete * 100);
+                                    $('#progressbarup').html(precentComplete + '%');
+                                    $('#progressbarup').width(precentComplete + '%');
+                                    console.log(evt.lengthComputable);
+                                }
+                            }, false);
+                            return xhr;
+                        },
+                        url: "create_assignment.php?course_id=<?= $_GET['course_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>",
+                        type: "post",
+                        data: formData,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function(data) {
+                            console.log(data);
+                            let val = JSON.parse(data);
+                            if (val.is_ok) {
+                                alert(val.msg);
+                                location.reload();
+                            } else {
+                                alert("Error!" + val.msg);
+                                location.reload();
+                            }
+                        },
+                        error: function() {
+                            alert('Error! Check your connection!');
+                        }
+                    })
+                }
+
+            })
 
             $(document).on('click', '#editBtn', function() {
 
