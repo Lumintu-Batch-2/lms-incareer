@@ -2,12 +2,12 @@
 
 session_start();
 
-if(!isset($_SESSION['user_data'])) {
+if (!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
     die;
 }
 
-switch($_SESSION['user_data']->{'user'}->{'role_id'}) {
+switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
     case 1:
         echo "
         <script>
@@ -27,6 +27,7 @@ switch($_SESSION['user_data']->{'user'}->{'role_id'}) {
     default:
         break;
 }
+// var_dump($_SESSION['user_data']->{'user'});
 
 require "../../Model/Assignments.php";
 require "../../Model/AssignmentSubmission.php";
@@ -304,7 +305,7 @@ if (isset($_GET['act'])) {
             <div class="flex items-center gap-x-4 w-full bg-white py-4 px-10 rounded-xl">
                 <img class="w-14" src="../../Img/icons/default_profile.svg" alt="Profile Image">
                 <div class="">
-                    <p class="text-dark-green text-base font-semibold"><?= $_SESSION['user']->{'user_first_name'} . " " . $_SESSION['user']->{'user_last_name'} ?> | Mentor Code</p>
+                    <p class="text-dark-green text-base font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?> | Mentor Code</p>
                     <p class="text-light-green">Mentor Specialization</p>
                 </div>
             </div>
@@ -481,47 +482,49 @@ if (isset($_GET['act'])) {
                 </div>
                 <!-- Modal Add body -->
                 <div class="p-6 space-y-6">
-                    <form method="POST" action="./create_assignment.php?course_id=<?= $_GET['course_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>" enctype="multipart/form-data">
+                    <form method="POST" action="" enctype="multipart/form-data">
                         <div class="mb-6">
                             <label for="title" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Title</label>
-                            <input type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="title">
+                            <input type="text" id="upload_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="title">
                         </div>
                         <div class="mb-6">
                             <label for="startDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Start Date</label>
-                            <input type="datetime-local" id="startDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="start-date">
+                            <input type="datetime-local" id="upload_startDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="start-date">
                         </div>
                         <div class="mb-6">
                             <label for="dueDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Due Date</label>
-                            <input type="datetime-local" id="dueDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="end-date">
+                            <input type="datetime-local" id="upload_dueDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="end-date">
                         </div>
                         <div class="mb-6">
                             <label for="deksripsi" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Deksripsi</label>
-                            <textarea id="deksripsi" rows="4" class="block p-2.5 w-full text-sm text-dark-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-white-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" name="desc"></textarea>
+                            <textarea id="upload_deksripsi" rows="4" class="block p-2.5 w-full text-sm text-dark-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-white-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" name="desc"></textarea>
                         </div>
                         <div class="mb-6">
                             <label for="countries" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Assigment Type</label>
-                            <select id="assign_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name="assign_type">
-                                <option value="exam">Exam</option>
-                                <option value="task">Assigment</option>
+                            <select id="upload_assign_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name="assign_type">
+                                <option value="1">Exam</option>
+                                <option value="2">Assigment</option>
+                                <option value="3">Try Out</option>
 
                             </select>
                         </div>
                         <div class="mb-6">
                             <label for="input" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Dokumen</label>
-                            <input type="file" id="input" name="filename" required>
+                            <input type="file" id="upload_file" name="filename" required>
                         </div>
                 </div>
                 <!-- Modal Add footer -->
                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
-                    <button data-modal-toggle="addModal" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:focus:ring-dark-800">Close</button>
-                    <button type="submit" class="text-white bg-cream focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm font-medium px-5 py-2.5 hover:bg-gray-600 hover:text-white focus:z-10 dark:bg-[#DDB07F] dark:text--300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" name="upload">Upload</button>
+                    <button data-modal-toggle="addModal" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:focus:ring-dark-800" id="btnClsUp">Close</button>
+                    <button type="submit" class="text-white bg-cream focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm font-medium px-5 py-2.5 hover:bg-gray-600 hover:text-white focus:z-10 dark:bg-[#DDB07F] dark:text--300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" name="upload" id="btnUpload">Upload</button>
                 </div>
                 </form>
             </div>
         </div>
     </div>
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
     <script>
         let btnToggle = document.getElementById('btnToggle');
         let sidebar = document.querySelector('.sidebar');
@@ -529,7 +532,63 @@ if (isset($_GET['act'])) {
             sidebar.classList.toggle('in-active');
         }
 
+        $('#btnUpload').click(function() {
+            $('#btnUpload').attr('disabled', 'true');
+            $('#btnClsUp').attr('disabled', 'true');
+            $('#btnUpload').removeClass('hover:bg-gray-600 hover:text-white focus:z-10');
+            $('#btnClsUp').removeClass('hover:ring-2 hover:ring-gray-400');
+
+            let title = $("#upload_title").val();
+            let dueData = $("#upload_dueDate").val();
+            let assgType = $("#upload_assign_type").val();
+            let startDate = $("#upload_startDate").val();
+            let description = $("#upload_deksripsi").val();
+            let file = document.getElementById("upload_file");
+
+            let data = {
+                "title": title,
+                "dueDate": dueData,
+                "assgType": assgType,
+                "startDate": startDate,
+                "description": description
+            }
+
+            console.log(data);
+            console.log(file.files);
+
+            let formData = new FormData();
+            formData.append("file", file.files[0]);
+            formData.append("data", JSON.stringify(data));
+            // if (condition) {
+
+            // }
+
+            $.ajax({
+                url: "create_assignment.php?course_id=<?= $_GET['course_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>",
+                type: "post",
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    console.log(data);
+                    let val = JSON.parse(data);
+                    if (val.is_ok) {
+                        alert(val.msg);
+                        location.reload();
+                    } else {
+                        alert("Error!" + val.msg);
+                        location.reload();
+                    }
+                },
+                error: function() {
+                    alert('Error! Check your connection!');
+                }
+            })
+        })
+
         $(document).ready(function() {
+
             $(document).on('click', '#editBtn', function() {
 
                 let title2 = document.getElementById('title');
@@ -541,7 +600,7 @@ if (isset($_GET['act'])) {
                 let startDate = $(this).data('date-start');
                 console.log(new Date(startDate).toJSON().slice(0, 19))
                 console.log();
-                // 
+                //
                 let dueDate = $(this).data('date-end');
                 console.log(dueDate)
                 let desc = $(this).data('desc');
@@ -553,13 +612,13 @@ if (isset($_GET['act'])) {
                 if (type == "task") {
                     $("option[value='task']").remove();
                     $(type2).append(`<option value="${type}" selected>
-                                           Assignment
-                                      </option>`);
+            Assignment
+        </option>`);
                 } else {
                     $("option[value='exam']").remove();
                     $(type2).append(`<option value="${type}" selected>
-                                           Exam
-                                      </option>`);
+            Exam
+        </option>`);
                 }
                 $('#modalEditAssignment').attr('action', 'assignment.php?act=edit&assign_id=' + assigmentId + '&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>')
             })

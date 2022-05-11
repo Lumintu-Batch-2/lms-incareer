@@ -4,12 +4,12 @@ session_start();
 
 $loginPath = "../../login.php";
 
-if(!isset($_SESSION['user_data'])) {
+if (!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
     die;
 }
 
-switch($_SESSION['user_data']->{'user'}->{'role_id'}) {
+switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
     case 1:
         echo "
         <script>
@@ -29,7 +29,7 @@ switch($_SESSION['user_data']->{'user'}->{'role_id'}) {
     default:
         break;
 }
-
+// var_dump($_SESSION['user_data']->{'user'}->{'user_username'});
 require_once "../../api/get_api_data.php";
 require_once "../../api/get_request.php";
 
@@ -38,14 +38,14 @@ $courseData = array();
 
 $modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
 
-for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
-    if($modulJSON->{'data'}[$i]->{'parent_id'} == $_GET['course_id']) {
+for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
+    if ($modulJSON->{'data'}[$i]->{'parent_id'} == $_GET['course_id']) {
         array_push($subjectData, $modulJSON->{'data'}[$i]);
     }
 }
 
-for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
-    if($modulJSON->{'data'}[$i]->{'id'} == $_GET['course_id']) {
+for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
+    if ($modulJSON->{'data'}[$i]->{'id'} == $_GET['course_id']) {
         array_push($courseData, $modulJSON->{'data'}[$i]);
     }
 }
@@ -54,6 +54,7 @@ for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -97,33 +98,37 @@ for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         }
     </script>
     <style>
-        .in-active{
+        .in-active {
             width: 80px !important;
             padding: 20px 15px !important;
             transition: .5s ease-in-out;
         }
-        .in-active ul li p{
+
+        .in-active ul li p {
             display: none !important;
         }
 
-        .in-active ul li a{
+        .in-active ul li a {
             padding: 15px !important;
         }
 
         .in-active h2,
         .in-active h4,
-        .in-active .logo-incareer{
+        .in-active .logo-incareer {
             display: none !important;
         }
-        .hidden{
+
+        .hidden {
             display: none !important;
         }
-        .sidebar{
+
+        .sidebar {
             transition: .5s ease-in-out;
         }
     </style>
 
 </head>
+
 <body>
     <div class="flex items-center">
         <!-- Left side (Sidebar) -->
@@ -132,8 +137,8 @@ for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
             <div class="flex flex-col gap-y-6">
                 <!-- Header -->
                 <div class="flex items-center space-x-4 px-2">
-                   <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle">
-                     <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+                    <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle">
+                    <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
                 </div>
 
                 <hr class="border-[1px] border-opacity-50 border-[#93BFC1]">
@@ -193,7 +198,7 @@ for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                     <li>
                         <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                            <p class="font-semibold">Help</p>    
+                            <p class="font-semibold">Help</p>
                         </a>
                     </li>
                     <li>
@@ -206,14 +211,14 @@ for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
             </div>
         </div>
 
-       
+
 
         <!-- Right side -->
         <div class="bg-cgray w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
             <!-- Header / Profile -->
             <div class="flex items-center gap-x-4 justify-end">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold"><?=$_SESSION['user']->{'user_username'}?></p>
+                <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_username'} ?></p>
             </div>
 
             <!-- Breadcrumb -->
@@ -236,14 +241,14 @@ for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                     </li>
                 </ul>
             </div>
-            
+
             <div class="p-4">
                 <p class="text-4xl text-dark-green font-semibold">List Sub Topic of <?= $courseData[0]->{'modul_name'}; ?></p>
             </div>
 
             <div class="p-4 mt-10 grid grid-cols-4 gap-4">
                 <?php foreach ($subjectData as $row => $subject) : ?>
-                    <a href="assignment.php?subject_id=<?= $subject->{'id'};?>&course_id=<?=$_GET['course_id']?>" class="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 w-100">
+                    <a href="assignment.php?subject_id=<?= $subject->{'id'}; ?>&course_id=<?= $_GET['course_id'] ?>" class="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 w-100">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"><?= $subject->{'modul_name'}; ?></h5>
                         <p class="font-normal text-gray-700 flex flex-row items-center gap-4 mt-5">
                             <img src="../../Img/icons/dokumen_icon.svg" alt="dokumen"><?= $subject->{'id'}; ?>
@@ -253,17 +258,17 @@ for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
             </div>
         </div>
     </div>
-     
+
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <script>
         let btnToggle = document.getElementById('btnToggle');
         let sidebar = document.querySelector('.sidebar');
-        btnToggle.onclick = function(){
+        btnToggle.onclick = function() {
             sidebar.classList.toggle('in-active');
         }
-        
     </script>
 
-    
+
 </body>
+
 </html>

@@ -152,7 +152,7 @@ class Assignments
             goto out;
         }
         $tkn = uniqid();
-        $fn = $tkn . '_' . $file['filename']['name'];
+        $fn = $tkn . '_' . $file['file']['name'];
 
         $this->setAssignmentName($data['title']);
         $this->setAssignmentStartDate($data['start-date']);
@@ -182,7 +182,7 @@ class Assignments
         ];
 
 
-        if (!in_array($file['filename']['type'], $validTypeFile)) {
+        if (!in_array($file['file']['type'], $validTypeFile)) {
             $msg = "Format file tidak didukung!";
             goto out;
         }
@@ -195,7 +195,7 @@ class Assignments
         $path = dirname(__DIR__) . '/Upload/Assignment/Questions/';
 
 
-        move_uploaded_file($file['filename']['tmp_name'], $path . $fn);
+        move_uploaded_file($file['file']['tmp_name'], $path . $fn);
 
         $save = $this->saveAssignment();
         $upload = $objQuest->uploadFile($save['assignment_id']);
@@ -207,7 +207,7 @@ class Assignments
             $objScore = new Scores;
             $objScore->setScoreValue(0);
             $objScore->setAssignmentId($save['assignment_id']);
-            $objScore->setMentorId($mid);
+            $objScore->setMentorId(0);
             $objScore->setStudentId($userData[$i]->{'user_id'});
             $objScore->insertScore();
 
