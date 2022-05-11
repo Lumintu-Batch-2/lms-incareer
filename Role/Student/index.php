@@ -4,64 +4,46 @@ session_start();
 
 $loginPath = "../../login.php";
 
-if(!isset($_SESSION['user'])) {
+if(!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
     die;
 }
 
-switch ($_SESSION['user']->{'role_id'}) {
+switch($_SESSION['user_data']->{'user'}->{'role_id'}) {
     case 1:
         echo "
         <script>
-            alert('Akses Ditolak');
-            location.replace('../Admin/')
-        </script>";
+            alert('Akses ditolak!');
+            location.replace('../Admin/');
+        </script>
+        ";
         break;
     case 2:
         echo "
         <script>
-            alert('Akses Ditolak');
-            location.replace('../Mentor/')
-        </script>";
+            alert('Akses ditolak!');
+            location.replace('../Mentor/');
+        </script>
+        ";
         break;
-
     default:
         break;
 }
 
-
-// require "../../Model/Courses.php";
-// $objCourse = new Courses;
-// $allCourses = $objCourse->gelAllCourseByUserId($_SESSION['user']->{'user_id'});
-
 require_once "../../api/get_api_data.php";
+require_once "../../api/get_request.php";
 
 $courseData = array();
-$batchData = array();
-$modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
-$userBatchJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user_batch"));
-
-for($i = 0; $i < count($userBatchJSON->{'data'}); $i++) {
-    if($userBatchJSON->{'data'}[$i]->{'user_user_id'} == $_SESSION['user']->{'user_id'}) {
-        array_push($batchData, $userBatchJSON->{'data'}[$i]);
-    }
-}
+$modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
 
 
 for($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     if($modulJSON->{'data'}[$i]->{'parent_id'} == NULL) {
-        for($j = 0; $j < count($batchData); $j++){
-            if($modulJSON->{'data'}[$i]->{'batch_id'} == $batchData[$j]->{'batch_batch_id'}) {
-                array_push($courseData, $modulJSON->{'data'}[$i]);
-            }
-        }   
+        if($modulJSON->{'data'}[$i]->{'batch_id'} == $_SESSION['user_data']->{'user'}->{'batch_id'}) {
+            array_push($courseData, $modulJSON->{'data'}[$i]);
+        }
     }
 }
-
-// var_dump($batchData);
-// var_dump($courseData);
-
-// var_dump($courseData);
 
 ?>
 
