@@ -433,7 +433,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                                     <?php
                                                     require_once "../../Model/AssignmentSubmission.php";
                                                     $objSub = new AssignmentSubmission;
-                                                    $objSub->setStudentId($_SESSION['user']->{'user_id'});
+                                                    $objSub->setStudentId($_SESSION['user_data']->{'user'}->{'user_id'});
                                                     $objSub->setAssignmentId($assignment['assignment_id']);
                                                     $submissions = $objSub->getSubmissionByAssignIdAndStudentId();
 
