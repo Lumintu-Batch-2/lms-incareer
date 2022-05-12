@@ -54,6 +54,7 @@ if (isset($_POST['data'])) {
 
 
     $userData = array();
+    $modulData = array();
     $modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
     $token = $_COOKIE['X-LUMINTU-REFRESHTOKEN'];
     $usersData = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/users.php", $token));
@@ -69,6 +70,12 @@ if (isset($_POST['data'])) {
         }
     }
 
+    for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
+        if ($modulJSON->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
+            array_push($modulData, $modulJSON->{'data'}[$i]);
+        }
+    }
+
     require "../../Model/Assignments.php";
     $objAsign = new Assignments;
     // $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id'], $_SESSION['user']->{'user_id'}, $userData);
@@ -78,6 +85,50 @@ if (isset($_POST['data'])) {
     $create_status = $create['is_ok'] ? "true" : "false";
 
     if ($create['is_ok']) {
+
+        $arr = [
+
+            "event_type_id" => 2,
+            "created_by" => $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'},
+            "event_start_time" => $arrayData['start-date'],
+            "event_name" => $arrayData['title'],
+            "event_end_time" => $arrayData['end-date'],
+            "event_description" => $arrayData['desc'],
+            "batch_id" => $_SESSION['user_data']->{'user'}->{'batch_id'},
+            "modul_id" => $modulData[0]->{'id'}
+        ];
+
+        $payload = json_encode($arr);
+
+        require_once "../../api/post_request.php";
+
+        $api_schedule = 'https://q4optgct.directus.app/items/events';
+
+        $postToSchedule = json_decode(post_request($api_schedule, $payload));
+
+        // $ch = curl_init('https://q4optgct.directus.app/items/events');
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+        // curl_setopt($ch, CURLOPT_POST, true);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+
+        // // Set HTTP Header for POST request 
+        // curl_setopt(
+        //     $ch,
+        //     CURLOPT_HTTPHEADER,
+        //     array(
+        //         'Content-Type: application/json',
+        //         'Content-Length: ' . strlen($payload)
+        //     )
+        // );
+
+        // // Submit the POST request
+        // $result = curl_exec($ch);
+        // // var_dump($result);
+
+        // // Close cURL session handle
+        // curl_close($ch);
+
         $is_ok = true;
         $msg = $create['msg'];
     } else {

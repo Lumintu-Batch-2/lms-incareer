@@ -595,11 +595,6 @@ if (isset($_GET['act'])) {
                         "description": description
                     }
 
-                    console.log(data);
-                    console.log(file.files);
-                    console.log(file.files[0].size);
-
-
                     let formData = new FormData();
                     formData.append("file", file.files[0]);
                     formData.append("data", JSON.stringify(data));
