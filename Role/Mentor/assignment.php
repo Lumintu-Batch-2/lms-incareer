@@ -553,7 +553,7 @@ if (isset($_GET['act'])) {
                 let description = $("#upload_deksripsi").val();
                 let file = document.getElementById("upload_file");
 
-                // console.log(file.files);
+                console.log(startDate);
                 // console.log(file.files[0].type);
                 let validTypeFile = [
                     "image/png", // png
@@ -594,11 +594,6 @@ if (isset($_GET['act'])) {
                         "startDate": startDate,
                         "description": description
                     }
-
-                    console.log(data);
-                    console.log(file.files);
-                    console.log(file.files[0].size);
-
 
                     let formData = new FormData();
                     formData.append("file", file.files[0]);

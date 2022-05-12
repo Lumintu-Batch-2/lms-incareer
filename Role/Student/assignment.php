@@ -433,7 +433,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                                     <?php
                                                     require_once "../../Model/AssignmentSubmission.php";
                                                     $objSub = new AssignmentSubmission;
-                                                    $objSub->setStudentId($_SESSION['user']->{'user_id'});
+                                                    $objSub->setStudentId($_SESSION['user_data']->{'user'}->{'user_id'});
                                                     $objSub->setAssignmentId($assignment['assignment_id']);
                                                     $submissions = $objSub->getSubmissionByAssignIdAndStudentId();
 
@@ -628,16 +628,16 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                 data: data,
                 success: function(data) {
                     let dataJson = JSON.parse(data);
+                    let formData = new FormData();
+                    let arrFile = [];
 
-                    for (i = 0; i < fileData.files.length; i++) {
-                        let formData = new FormData();
-                        formData.append("data", fileData.files[i]);
-                        formData.append("submission_id", dataJson[i].submission_id);
-
-                        let statUpdate = updateFileSubmission(formData);
-
-                        console.log(statUpdate);
+                    for (let i = 0; i < fileData.files.length; i++) {
+                        arrFile.push(fileData.files[i]);
+                        formData.append("files[]", fileData.files[i]);
                     }
+
+                    formData.append("data", JSON.stringify(dataJson));
+                    let statUpdate = updateFileSubmission(formData);
                 },
                 error: function(xhr) {
                     alert('Error! Check your connection!');
@@ -654,10 +654,15 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                 cache: false,
                 processData: false,
                 success: function(data) {
+                    // console.log(data);
                     let val = JSON.parse(data);
-                    success += 1;
-                    alert(val.msg);
-                    location.reload();
+                    if (val.is_ok) {
+                        alert(val.msg);
+                        location.reload();
+                    } else {
+                        alert("Error! " + val.msg);
+                        location.reload();
+                    }
                 },
                 error: function(xhr) {
                     alert('Error! Check your connection!');
