@@ -86,13 +86,19 @@ if (isset($_POST['data'])) {
 
     if ($create['is_ok']) {
 
+        $date_start = explode(" ", date("Y-m-d H:i:s", strtotime($arrayData['start-date'])));
+        $date_end = explode(" ", date("Y-m-d H:i:s", strtotime($arrayData['end-date'])));
+
+        $start_date = $date_start[0] . "T" . $date_start[1];
+        $end_date = $date_end[0] . "T" . $date_end[1];
+
         $arr = [
 
             "event_type_id" => 2,
             "created_by" => $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'},
-            "event_start_time" => $arrayData['start-date'],
+            "event_start_time" => $start_date,
             "event_name" => $arrayData['title'],
-            "event_end_time" => $arrayData['end-date'],
+            "event_end_time" => $end_date,
             "event_description" => $arrayData['desc'],
             "batch_id" => $_SESSION['user_data']->{'user'}->{'batch_id'},
             "modul_id" => $modulData[0]->{'id'}
@@ -100,34 +106,30 @@ if (isset($_POST['data'])) {
 
         $payload = json_encode($arr);
 
-        require_once "../../api/post_request.php";
-
         $api_schedule = 'https://q4optgct.directus.app/items/events';
 
-        $postToSchedule = json_decode(post_request($api_schedule, $payload));
+        $ch = curl_init($api_schedule);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 
-        // $ch = curl_init('https://q4optgct.directus.app/items/events');
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-        // curl_setopt($ch, CURLOPT_POST, true);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        // Set HTTP Header for POST request 
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($payload)
+            )
+        );
 
-        // // Set HTTP Header for POST request 
-        // curl_setopt(
-        //     $ch,
-        //     CURLOPT_HTTPHEADER,
-        //     array(
-        //         'Content-Type: application/json',
-        //         'Content-Length: ' . strlen($payload)
-        //     )
-        // );
+        // Submit the POST request
+        $result = curl_exec($ch);
+        // var_dump($result);
 
-        // // Submit the POST request
-        // $result = curl_exec($ch);
-        // // var_dump($result);
-
-        // // Close cURL session handle
-        // curl_close($ch);
+        // Close cURL session handle
+        curl_close($ch);
 
         $is_ok = true;
         $msg = $create['msg'];
