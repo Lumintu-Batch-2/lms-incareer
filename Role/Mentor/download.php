@@ -1,4 +1,17 @@
 <?php
+session_start();
+
+$loginPath = "../../login.php";
+
+if (!isset($_SESSION['user_data'])) {
+    header("location: " . $loginPath);
+    die;
+}
+
+if (!isset($_COOKIE['X-LUMINTU-REFRESHTOKEN'])) {
+    unset($_SESSION['user_data']);
+    header("location: " . $loginPath);
+}
 
 $path = "../../Upload/Assignment/Submission/";
 

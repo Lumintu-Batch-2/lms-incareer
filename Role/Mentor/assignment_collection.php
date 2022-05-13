@@ -2,18 +2,22 @@
 session_start();
 
 $loginPath = "../../login.php";
+if (!isset($_COOKIE['X-LUMINTU-REFRESHTOKEN'])) {
+    unset($_SESSION['user_data']);
+    header("location: " . $loginPath);
+}
 
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
     die;
 }
 
-switch ($_SESSION['user']->{'role_id'}) {
+switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
     case 1:
         echo "
         <script>
             alert('Akses ditolak!');
-            location.replace('../../Admin/');
+            location.replace('../Admin/');
         </script>
         ";
         break;
@@ -21,7 +25,7 @@ switch ($_SESSION['user']->{'role_id'}) {
         echo "
         <script>
             alert('Akses ditolak!');
-            location.replace('../../Student/');
+            location.replace('../Student/');
         </script>
         ";
         break;
@@ -31,22 +35,19 @@ switch ($_SESSION['user']->{'role_id'}) {
 
 
 require_once "../../api/get_api_data.php";
+require_once "../../api/get_request.php";
 
 $userData = array();
-$modulJSON = json_decode(http_request("https://ppww2sdy.directus.app/items/modul_name"));
-$userBatchJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user_batch"));
-$userJSON = json_decode(http_request("https://i0ifhnk0.directus.app/items/user"));
+$modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
+$token = $_COOKIE['X-LUMINTU-REFRESHTOKEN'];
+$usersData = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/users.php", $token));
 
 
 for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     if ($modulJSON->{'data'}[$i]->{'id'} == (int)$_GET['course_id']) {
-        for ($j = 0; $j < count($userBatchJSON->{'data'}); $j++) {
-            if ($modulJSON->{'data'}[$i]->{'batch_id'} == $userBatchJSON->{'data'}[$j]->{'batch_batch_id'}) {
-                for ($k = 0; $k < count($userJSON->{'data'}); $k++) {
-                    if ($userBatchJSON->{'data'}[$j]->{'user_user_id'} == $userJSON->{'data'}[$k]->{'user_id'} && $userJSON->{'data'}[$k]->{'role_id'} == 3) {
-                        array_push($userData, $userJSON->{'data'}[$k]);
-                    }
-                }
+        for ($j = 0; $j < count($usersData->{'user'}); $j++) {
+            if ($modulJSON->{'data'}[$i]->{'batch_id'} == $usersData->{'user'}[$j]->{'batch_id'} && $usersData->{'user'}[$j]->{'role_id'} == 3) {
+                array_push($userData, $usersData->{'user'}[$j]);
             }
         }
     }
@@ -57,9 +58,6 @@ require_once('../../Model/AssignmentSubmission.php');
 $objSubmission = new AssignmentSubmission;
 $objSubmission->setAssignmentId($_GET['assignment_id']);
 $submissionData = $objSubmission->getSubmissionAndScoreByAssignmentId();
-// var_dump($submissionData);
-// var_dump($_GET['assignment_id']);
-
 
 $submissionStudent = array();
 
@@ -72,13 +70,15 @@ for ($i = 0; $i < count($userData); $i++) {
                 "student_name" => $userData[$i]->{'user_username'},
                 "submitted_date" => $submissionData[$j]['submitted_date'],
                 "submission_token" => $submissionData[$j]['submission_token'],
-                "submission_filename" => $submissionData[$j]['submission_filename']
-                // "score_id" => $submissionData[$j]['score_id'],
+                "submission_filename" => $submissionData[$j]['submission_filename'],
+                // "mentor_id" => $submissionData[$j]['mentor_id'],
                 // "score_value" => $submissionData[$j]['score_value']
             ));
         }
     }
 }
+
+// var_dump($submissionStudent);
 
 $notSubmitted = array();
 $notSubmittedData = $objSubmission->getNotSubmitSubmission();
@@ -112,6 +112,7 @@ if (isset($_POST['submit'])) {
     $score = new Scores;
     $score->setScoreId($_POST['sid']);
     $score->setScoreValue($_POST['score']);
+    $score->setMentorId($_SESSION['user']->{'user_id'});
     $update  = $score->updateScore();
     if ($update) {
         echo "
@@ -341,9 +342,11 @@ if (isset($_POST['submit1'])) {
             <!-- Topic Title -->
             <div class="flex justify-between">
                 <form action="">
-                    <div class="w-4"> <button type="button" class="text-dark-green inline-flex font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "><img class="w-5" src="../../Img/icons/back_icons.svg" alt="Back Image">
+                    <div class="w-4">
+                        <a href="assignment.php?course_id=<?= $_GET['course_id']; ?>&subject_id=<?= $_GET['subject_id']; ?>" class="text-dark-green inline-flex font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 ">
+                            <img class="w-5" src="../../Img/icons/back_icons.svg" alt="Back Image">
                             <p class="ml-2"> Back</p>
-                        </button>
+                        </a>
                     </div>
                 </form>
                 <div>
@@ -411,15 +414,31 @@ if (isset($_POST['submit1'])) {
                                 </td>
 
                                 <?php
-                                    require_once "../../Model/Scores.php";
-                                    $objScores = new Scores;
-                                    $objScores->setStudentId($item['student_id']);
-                                    $objScores->setAssignmentId($item['assignment_id']);
-                                    $score = $objScores->getScoreByStudentIdAndAssignmentId();
+                                require_once "../../Model/Scores.php";
+                                $objScores = new Scores;
+                                $objScores->setStudentId($item['student_id']);
+                                $objScores->setAssignmentId($item['assignment_id']);
+                                $score = $objScores->getScoreByStudentIdAndAssignmentId();
                                 ?>
                                 <td class="border-b px-4 py-2 text-center "><?= $score['score_value']  ?></td>
-                                <td class="border-b px-4 py-2 "><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal" data-username="<?= $item['student_name']; ?>" data-scoreid="<?= $score['score_id'] ?>" data-student-id="<?= $item['student_id'] ?>" data-scorevalue="<?= $score['score_value']  ?>" alt="Edit Icon" type="button" data-target="#defaultModal" id="editbtn"></td>
 
+                                <td class="border-b px-4 py-2 "><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal" data-username="<?= $item['student_name']; ?>" data-tooltip-target="tooltip-default<?= $item['student_name']; ?>" data-scoreid="<?= $score['score_id'] ?>" data-student-id="<?= $item['student_id'] ?>" data-scorevalue="<?= $score['score_value']  ?>" alt="Edit Icon" type="button" data-target="#defaultModal" id="editbtn"></td>
+                                <?php if ($score['mentor_id'] == 0) {
+                                ?>
+                                    <div id="tooltip-default<?= $item['student_name']; ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
+                                        Belum mengubah score
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
+                                <?php
+                                } elseif ($score['score_value'] != 0) {
+                                ?>
+                                    <div id="tooltip-default<?= $item['student_name']; ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
+                                        Sudah mengubah score
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                             </tr>
 
                         <?php $no++;
@@ -533,6 +552,8 @@ if (isset($_POST['submit1'])) {
                         <div class="mb-6">
                             <input type="hidden" id="sid1" name="sid1">
                             <input type="hidden" id="studentId1" name="studentId1">
+                            <input type="hidden" id="studentId1" name="studentId1">
+                            <input type="hidden" id="mentorid" name="mentorid" value="<?= $_SESSION['user']->{'user_id'} ?>">
                             <input type="number" id="score1" name="score1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                             <li class="font-semibold text-dark-green text-xs mt-2">Input score between 0-100</li>
                         </div>

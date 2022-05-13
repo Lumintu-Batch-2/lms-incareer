@@ -1,59 +1,49 @@
 <?php
 
+require_once "./api/get_request.php";
+require_once "./api/post_request.php";
+
 session_start();
 
-// if (isset($_POST['login'])) {
-//     require dirname(__FILE__) . "/Model/Users.php";
-//     $objUser = new Users;
-//     $login = $objUser->loginUser($_POST);
+if (isset($_POST['login'])) {
+    $arr = array(
+        "email" => $_POST['email'],
+        "password" => $_POST['password']
+    );
 
-//     if ($login['is_ok']) {
-//         $_SESSION['user'] = $login['data'];
-//         switch ($login['data']['role']) {
-//             case 1:
-//                 header("location: ./Role/Student/index.php");
-//                 break;
-//             case 2:
-//                 header("location: ./Role/Mentor/index.php");
-//                 break;
-//             default:
-//                 # code...
-//                 break;
-//         }
-//     }
-// }
+    $login = json_decode(post_request("https://account.lumintulogic.com/api/login.php", json_encode($arr)));
+    $access_token = $login->{'data'}->{'accessToken'};
+    $expiry = $login->{'data'}->{'expiry'};
 
-if(isset($_POST['login'])) {
-    require_once "./api/get_api_data.php";
+    if ($login->{'success'}) {
+        $userData = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/user.php", $access_token));
+        $_SESSION['user_data'] = $userData;
+        setcookie('X-LUMINTU-REFRESHTOKEN', $access_token, strtotime($expiry));
 
-    $userData = array();
-
-    $dataFromApi = json_decode(http_request("https://i0ifhnk0.directus.app/items/user"));
-
-    for($i = 0; $i < count($dataFromApi->{'data'}); $i++) {        
-        if($dataFromApi->{'data'}[$i]->{'user_username'} == $_POST['username']) {
-            array_push($userData, $dataFromApi->{'data'}[$i]);
-        }
-    }
-
-    if($userData[0]->{'user_password'} == $_POST['password']) {
-        $_SESSION['user'] = $userData[0];
-        switch($_SESSION['user']->{'role_id'}) {
+        switch ($userData->{'user'}->{'role_id'}) {
             case 1:
+                // Admin
                 break;
             case 2:
-                header("location: ./Role/Mentor/index.php");
+                // Mentor
+                // var_dump($_SESSION['user_data']->{'user'}->{'role_id'});
+                header("location: ./Role/Mentor/");
                 break;
             case 3:
-                header("location: ./Role/Student/index.php");
+                // Student
+                header("location: ./Role/Student/");
                 break;
             default:
                 break;
-        };
+        }
+
+        // var_dump($_SESSION['user_data']);
+        // var_dump($_COOKIE['X-LUMINTU-REFRESHTOKEN']);
     }
 }
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,17 +52,23 @@ if(isset($_POST['login'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
     <form action="" method="POST">
-        <label for="username">Username: </label>
-        <input type="text" name="username" id="username" name="username">
+        <label for="email">Email: </label>
+        <input type="text" name="email" id="email">
+        <br>
         <label for="password">Password: </label>
-        <input type="password" name="password" id="password" name="password">
-        <button name="login">Login</button>
+        <input type="text" name="password" id="password">
+        <br>
+        <button type="submit" id="login" name="login">Login</button>
     </form>
+
 </body>
 
 </html>
