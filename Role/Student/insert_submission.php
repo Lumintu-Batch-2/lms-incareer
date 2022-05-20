@@ -4,26 +4,25 @@ $arr = array();
 $token = md5(uniqid());
 
 require_once "../../Model/AssignmentSubmission.php";
+require_once "../../Model/Assignments.php";
+
+$assignment = new Assignments;
+$deadline = $assignment->getAssignmentById($_POST['assigId']);
+
 
 $assign = new AssignmentSubmission;
 $assign->setAssignmentId($_POST['assigId']);
 $assign->setStudentId($_POST['studId']);
+$now = $assign->getCurrentDate();
 $sub = $assign->getSubmissionByAssignIdAndStudentId();
-// print_r($_POST['count']);
-// // print_r(!empty($sub));
-// die();
 
 
-if (!empty($sub)) {
+if (!empty($sub) and (strtotime($now['now()']) < strtotime($deadline['assignment_end_date']))) {
     if ($sub[0]['is_finish'] == 0) { //untuk pertama kali submit file
         $assign->setSubmissionFileName('N/A');
         $del = $assign->deleteNAassignmentSubmission();
-        // print_r('is finish ==0');
-        // die();
 
         for ($i = 0; $i < $_POST['count']; $i++) {
-            // print_r('true');
-            // die();
             $objAssg = new AssignmentSubmission;
             date_default_timezone_set("Asia/Bangkok");
             $dateupload = date("Y-m-d H:i:s");
@@ -40,8 +39,7 @@ if (!empty($sub)) {
 
             array_push($arr, $save);
         }
-    } else if ($sub[0]['is_finish'] == 1) { //untuk update file
-        // print_r('is finish ==1');
+    } else if ($sub[0]['is_finish'] == 1 and (strtotime($now['now()']) < strtotime($deadline['assignment_end_date']))) { //untuk update file
 
         date_default_timezone_set('Asia/Jakarta');
         $now =  date("Y-m-d h:i:s");
@@ -74,10 +72,9 @@ if (!empty($sub)) {
             }
         }
     }
-} else if (empty($sub)) {
+} else if (empty($sub) and (strtotime($now['now()']) < strtotime($deadline['assignment_end_date']))) {
     for ($i = 0; $i < $_POST['count']; $i++) {
-        // print_r('true');
-        // die();
+        print_r('else');
         $objAssg = new AssignmentSubmission;
         date_default_timezone_set("Asia/Bangkok");
         $dateupload = date("Y-m-d H:i:s");
@@ -94,6 +91,7 @@ if (!empty($sub)) {
 
         array_push($arr, $save);
     }
+} else if ((strtotime($now['now()']) > strtotime($deadline['assignment_end_date']))) {
 }
 
 print_r(json_encode($arr));
