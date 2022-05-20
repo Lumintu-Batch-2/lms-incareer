@@ -143,4 +143,24 @@ class Scores
 
         return $data;
     }
+
+    public function getScoreByModulIdAndAssignmentId($sbid)
+    {
+        try {
+            $stmt = $this->dbConn->prepare(
+                "SELECT scores.score_value, assignments.subject_id FROM scores, assignments WHERE scores.assignment_id=assignments.assignment_id AND scores.student_id =:sid AND assignments.subject_id =:sbid"
+            );
+
+            $stmt->bindParam(":sid", $this->studentId);
+            $stmt->bindParam(":sbid", $sbid);
+
+            if ($stmt->execute()) {
+                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $data;
+    }
 }
