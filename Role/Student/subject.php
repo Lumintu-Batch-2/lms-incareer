@@ -182,7 +182,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                             </a>
                         </li>
                         <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
                                 <p class="font-semibold">Score</p>
                             </a>

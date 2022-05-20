@@ -45,8 +45,8 @@ $modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modu
 $batchJson = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/batch.php", $token));
 
 $allBatch = array();
-for($i = 0; $i < count($batchJson->{'batch'}); $i++) {
-    if($batchJson->{'batch'}[$i]->{'batch_id'} == $_SESSION['user_data']->{'user'}->{'batch_id'}) {
+for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
+    if ($batchJson->{'batch'}[$i]->{'batch_id'} == $_SESSION['user_data']->{'user'}->{'batch_id'}) {
         array_push($allBatch, $batchJson->{'batch'}[$i]);
     }
 }
@@ -187,7 +187,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                             </a>
                         </li>
                         <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
                                 <p class="font-semibold">Score</p>
                             </a>
@@ -252,7 +252,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                         <p class="font-bold">Period :</p>
                         <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block flex-1  p-2.5">
                             <option selected></option>
-                            <?php for($i = 0; $i < count($allBatch); $i++) : ?>
+                            <?php for ($i = 0; $i < count($allBatch); $i++) : ?>
                                 <option value="<?= $allBatch[$i]->{'batch_id'}; ?>"><?= $allBatch[$i]->{'batch_name'}; ?></option>
                             <?php endfor ?>
                         </select>
