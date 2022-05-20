@@ -38,9 +38,18 @@ switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
 require_once "../../api/get_api_data.php";
 require_once "../../api/get_request.php";
 
+$token = $_COOKIE['X-LUMINTU-REFRESHTOKEN'];
+
 $courseData = array();
 $modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
+$batchJson = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/batch.php", $token));
 
+$allBatch = array();
+for($i = 0; $i < count($batchJson->{'batch'}); $i++) {
+    if($batchJson->{'batch'}[$i]->{'batch_id'} == $_SESSION['user_data']->{'user'}->{'batch_id'}) {
+        array_push($allBatch, $batchJson->{'batch'}[$i]);
+    }
+}
 
 for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     if ($modulJSON->{'data'}[$i]->{'parent_id'} == NULL) {
@@ -60,7 +69,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment Page</title>
+    <title>My Course</title>
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -243,9 +252,9 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                         <p class="font-bold">Period :</p>
                         <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block flex-1  p-2.5">
                             <option selected></option>
-                            <option value="US">Filter 1</option>
-                            <option value="US">Filter 2</option>
-                            <option value="US">Filter 3</option>
+                            <?php for($i = 0; $i < count($allBatch); $i++) : ?>
+                                <option value="<?= $allBatch[$i]->{'batch_id'}; ?>"><?= $allBatch[$i]->{'batch_name'}; ?></option>
+                            <?php endfor ?>
                         </select>
                     </div>
                 </div>

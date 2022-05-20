@@ -1,7 +1,9 @@
 <?php
+// MEMULAI SESSION
 
 session_start();
-
+// KEAMANAN HALAMAN BACK-END IDENTIFIKASI USER [START]
+// PENGECEKAN USER APAKAH SUDAH LOGIN DENGAN AKUN YANG SESUAI ATAU BELUM SEBELUM MEMASUKI HALAMAN INI
 $loginPath = "../../login.php";
 
 if (!isset($_SESSION['user_data'])) {
@@ -14,6 +16,8 @@ if (!isset($_COOKIE['X-LUMINTU-REFRESHTOKEN'])) {
 }
 
 switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
+    // KONDISI KETIKA USER MEMASUKI HALAMAN NAMUN LOGIN SEBAGAI ADMIN
+
     case 1:
         echo "
         <script>
@@ -22,6 +26,8 @@ switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
         </script>
         ";
         break;
+    // KONDISI KETIKA USER MEMASUKI HALAMAN NAMUN LOGIN SEBAGAI STUDENT
+
     case 3:
         echo "
         <script>
@@ -33,9 +39,13 @@ switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
     default:
         break;
 }
-// var_dump($_SESSION['user_data']->{'user'}->{'user_username'});
+// KEAMANAN HALAMAN BACK-END IDENTIFIKASI USER [FINISH]
+
+// MEMANGGIL FUNGSI DAN API
 require_once "../../api/get_api_data.php";
 require_once "../../api/get_request.php";
+
+// MENYIMPAN DATA KEDALAM ARRAY 
 
 $subjectData = array();
 $courseData = array();
@@ -83,7 +93,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
 
     <!-- Tailwindcss -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
+    <!-- <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" /> -->
     <script>
         tailwind.config = {
             theme: {
@@ -101,6 +111,8 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
             }
         }
     </script>
+    <!-- CUSTOM STYLE CSS -->
+
     <style>
         .in-active {
             width: 80px !important;
@@ -122,21 +134,39 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
             display: none !important;
         }
 
-        .hidden {
+        /* .hidden {
             display: none !important;
-        }
+        } */
 
         .sidebar {
             transition: .5s ease-in-out;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
         }
     </style>
 
 </head>
 
 <body>
+    <div class="responsive-top p-5 sm:hidden">
+        <div class="flex justify-center bg-gray-300 p-2 rounded-lg">
+            lms in-career
+        </div>
+        <div class="container flex flex-column justify-between mt-4 mb-4">
+            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+            <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle2">
+        </div>
+    </div>
     <div class="flex items-center">
-        <!-- Left side (Sidebar) -->
-        <div class="bg-white w-[350px] h-screen px-8 py-6 flex flex-col justify-between sidebar in-active">
+        <!-- LIST MENU SIDEBAR [START]-->
+        <div class="bg-white w-[350px] h-screen px-8 py-6 sm:flex flex-col justify-between sidebar in-active hidden">
             <!-- Top nav -->
             <div class="flex flex-col gap-y-6">
                 <!-- Header -->
@@ -145,47 +175,48 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                     <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]">
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]"/>
 
                 <!-- List Menus -->
                 <div>
                     <ul class="flex flex-col gap-y-1">
+                        <!-- ICON DAN TEXT DASHBOARD -->    
+
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
                                 <p class="font-semibold">Dashboard</p>
                             </a>
                         </li>
+                        <!-- ICON DAN TEXT FORUM COURSES -->
                         <li>
                             <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
                                 <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
                                 <p class="text-white font-semibold">Courses</p>
                             </a>
                         </li>
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
-                                <p class="font-semibold">Forum Dicussion</p>
-                            </a>
-                        </li>
+                        <!-- ICON DAN TEXT SCHEDULE -->
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
                                 <p class="font-semibold">Schedule</p>
                             </a>
                         </li>
+                        <!-- ICON DAN TEXT ATTENDANCE -->
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
                                 <p class="font-semibold">Attendance</p>
                             </a>
                         </li>
-                        <li>
+                        <!-- ICON DAN TEXT SCORE -->
+                        <!-- <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
                                 <p class="font-semibold">Score</p>
                             </a>
-                        </li>
+                        </li> -->
+                        <!-- ICON DAN TEXT CONSULT -->
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
@@ -199,14 +230,16 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
             <!-- Bottom nav -->
             <div>
                 <ul class="flex flex-col ">
+                    <!-- ICON DAN TEXT HELP -->
                     <li>
                         <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
                             <p class="font-semibold">Help</p>
                         </a>
                     </li>
+                    <!-- ICON DAN TEXT LOG OUT -->
                     <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
                             <p class="font-semibold">Log out</p>
                         </a>
@@ -215,45 +248,139 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
             </div>
         </div>
 
+        <!-- Mobile navbar -->
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 absolute inset-x-0 hidden z-10 transition-all ease-in-out duration-500">
+
+            <div class="bg-white w-[250px] h-screen px-8 py-6 ">
+                <!-- Top nav -->
+                <div class="flex flex-col gap-y-6">
+
+                    <!-- List Menus -->
+                    <div>
+                        <ul class="flex flex-col gap-y-1">
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] px-4" id="profil_image">
+                                    <img class="w-5" src="../../Img/icons/default_profile.svg" alt="Profile Image">
+                                    <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
+                                    <!-- <p class="font-semibold"></p> -->
+                                </a>
+                            <!-- ICON DAN TEXT DASHBOARD -->    
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
+                                    <p class="font-semibold">Dashboard</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT FORUM COURSES -->
+                            <li>
+                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                    <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
+                                    <p class="text-white font-semibold">Courses</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT SCHEDULE -->
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
+                                    <p class="font-semibold">Schedule</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT ATTENDANCE -->
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
+                                    <p class="font-semibold">Attendance</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT SCORE -->
+                            <!-- <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
+                                    <p class="font-semibold">Score</p>
+                                </a>
+                            </li> -->
+                            <!-- ICON DAN TEXT CONSULT -->
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                    <p class="font-semibold">Consult</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Bottom nav -->
+                <div>
+                    <ul class="flex flex-col ">
+                        <!-- ICON DAN TEXT HELP -->
+                        <li>
+                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
+                                <p class="font-semibold">Help</p>
+                            </a>
+                        </li>
+                        <!-- ICON DAN TEXT LOG OUT -->
+                        <li>
+                            <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
+                                <p class="font-semibold">Log out</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
 
 
         <!-- Right side -->
         <div class="bg-cgray w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
             <!-- Header / Profile -->
-            <div class="flex items-center gap-x-4 justify-end">
+            <div class="items-center gap-x-4 justify-end hidden sm:flex">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
                 <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_username'} ?></p>
             </div>
 
             <!-- Breadcrumb -->
-            <div>
-                <ul class="flex items-center gap-x-4">
+            <div class="p-2 lg:p-4">
+                <ul class="flex items-center gap-x-4 text-xs lg:text-base">
+                    <!-- NAVIGATOR HALAMAN HOME -->
+
                     <li>
+
                         <a class="text-light-green hover:text-dark-green hover:font-semibold" href="#">Home</a>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>
                     </li>
+                    <!-- NAVIGATOR HALAMAN COURSES -->
+
                     <li>
                         <a class="text-light-green hover:text-dark-green hover:font-semibold" href="index.php">Courses</a>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>
                     </li>
+                    <!-- NAVIGATOR HALAMAN SUB TOPIC -->
+
                     <li>
                         <a class="text-dark-green font-semibold" href="#">Sub Topic</a>
                     </li>
                 </ul>
             </div>
+            <!-- TITTLE -->
 
-            <div class="p-4">
-                <p class="text-4xl text-dark-green font-semibold">List Sub Topic of <?= $courseData[0]->{'modul_name'}; ?></p>
+            <div class="p-2 lg:p-4">
+                <p class="text-lg md:text-xl lg:text-2xl xl:text-4xl text-dark-green font-semibold">List Sub Topic of <?= $courseData[0]->{'modul_name'}; ?></p>
             </div>
 
-            <div class="p-4 mt-10 grid grid-cols-4 gap-4">
+            <div class="p-2 lg:p-4 mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                <!-- MEMANGGIL DAN MENAMPILKAN SELURUH SUB TOPIC YANG ADA ATAU SUDAH DIBUAT PADA COURSE YANG SEDANG DIBUKA-->
+
                 <?php foreach ($subjectData as $row => $subject) : ?>
                     <a href="assignment.php?subject_id=<?= $subject->{'id'}; ?>&course_id=<?= $_GET['course_id'] ?>" class="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 w-100">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"><?= $subject->{'modul_name'}; ?></h5>
+                        <h5 class="mb-2 text-lg lg:text-2xl font-bold tracking-tight text-gray-900"><?= $subject->{'modul_name'}; ?></h5>
                         <p class="font-normal text-gray-700 flex flex-row items-center gap-4 mt-5">
                             <img src="../../Img/icons/dokumen_icon.svg" alt="dokumen"><?= $subject->{'id'}; ?>
                         </p>
@@ -262,13 +389,22 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
             </div>
         </div>
     </div>
+    <!-- CDN FLOWBITE -->
 
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+    <!-- FUNGSI TOMBOL BUTTON TOGGLE SIDEBAR -->
+
     <script>
         let btnToggle = document.getElementById('btnToggle');
+        let btnToggle2 = document.getElementById('btnToggle2');
         let sidebar = document.querySelector('.sidebar');
+        let leftNav = document.getElementById("left-nav");
         btnToggle.onclick = function() {
             sidebar.classList.toggle('in-active');
+        }
+
+        btnToggle2.onclick = function() {
+            leftNav.classList.toggle('hidden');
         }
     </script>
 

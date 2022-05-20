@@ -112,7 +112,7 @@ if (isset($_POST['submit'])) {
     $score = new Scores;
     $score->setScoreId($_POST['sid']);
     $score->setScoreValue($_POST['score']);
-    $score->setMentorId($_SESSION['user']->{'user_id'});
+    $score->setMentorId($_SESSION['user_data']->{'user'}->{'user_id'});
     $update  = $score->updateScore();
     if ($update) {
         echo "
@@ -334,7 +334,7 @@ if (isset($_POST['submit1'])) {
             <!-- Header / Profile -->
             <div class="flex items-center gap-x-4 justify-end">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold"><?= $_SESSION['user']->{'user_username'}  ?></p>
+                <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_username'}  ?></p>
             </div>
 
 
@@ -553,7 +553,7 @@ if (isset($_POST['submit1'])) {
                             <input type="hidden" id="sid1" name="sid1">
                             <input type="hidden" id="studentId1" name="studentId1">
                             <input type="hidden" id="studentId1" name="studentId1">
-                            <input type="hidden" id="mentorid" name="mentorid" value="<?= $_SESSION['user']->{'user_id'} ?>">
+                            <input type="hidden" id="mentorid" name="mentorid" value="<?= $_SESSION['user_data']->{'user'}->{'user_id'} ?>">
                             <input type="number" id="score1" name="score1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                             <li class="font-semibold text-dark-green text-xs mt-2">Input score between 0-100</li>
                         </div>

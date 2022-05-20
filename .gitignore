@@ -1,3 +1,4 @@
 /Upload/Assignment/Questions/*
 /Upload/Assignment/Submission/*
 /node_modules/
+/Model/DbConnect.php
