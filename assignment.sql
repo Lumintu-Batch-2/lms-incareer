@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 04, 2022 at 07:04 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Host: db
+-- Generation Time: May 19, 2022 at 04:30 AM
+-- Server version: 8.0.29
+-- PHP Version: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,15 +28,15 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `assignments` (
-  `assignment_id` int(10) UNSIGNED NOT NULL,
+  `assignment_id` int UNSIGNED NOT NULL,
   `assignment_name` varchar(100) NOT NULL,
   `assignment_start_date` datetime NOT NULL,
   `assignment_end_date` datetime NOT NULL,
   `assignment_desc` text NOT NULL,
   `assignment_type` enum('exam','task','personality') NOT NULL,
-  `subject_id` int(10) UNSIGNED NOT NULL,
-  `mentor_id` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `subject_id` int UNSIGNED NOT NULL,
+  `mentor_id` int UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -45,11 +45,11 @@ CREATE TABLE `assignments` (
 --
 
 CREATE TABLE `assignment_questions` (
-  `assignment_question_id` int(10) UNSIGNED NOT NULL,
+  `assignment_question_id` int UNSIGNED NOT NULL,
   `question_filename` varchar(255) NOT NULL,
   `question_upload_date` datetime NOT NULL,
-  `assignment_id` int(10) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `assignment_id` int UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -58,15 +58,15 @@ CREATE TABLE `assignment_questions` (
 --
 
 CREATE TABLE `assignment_submissions` (
-  `assignment_submission_id` int(10) UNSIGNED NOT NULL,
+  `assignment_submission_id` int UNSIGNED NOT NULL,
   `submission_filename` varchar(255) NOT NULL,
   `submitted_date` datetime NOT NULL,
   `submission_token` varchar(255) NOT NULL,
   `submission_status` enum('aktif','nonaktif') NOT NULL,
-  `is_finish` tinyint(3) UNSIGNED NOT NULL,
-  `assignment_id` int(10) UNSIGNED DEFAULT NULL,
-  `student_id` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `is_finish` tinyint UNSIGNED NOT NULL,
+  `assignment_id` int UNSIGNED DEFAULT NULL,
+  `student_id` int UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -75,13 +75,13 @@ CREATE TABLE `assignment_submissions` (
 --
 
 CREATE TABLE `scores` (
-  `score_id` int(10) UNSIGNED NOT NULL,
-  `score_value` int(11) NOT NULL,
-  `assignment_id` int(10) UNSIGNED NOT NULL,
-  `mentor_id` int(10) UNSIGNED DEFAULT NULL,
-  `student_id` int(10) UNSIGNED NOT NULL,
-  `component_id` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `score_id` int UNSIGNED NOT NULL,
+  `score_value` int NOT NULL,
+  `assignment_id` int UNSIGNED NOT NULL,
+  `mentor_id` int UNSIGNED DEFAULT NULL,
+  `student_id` int UNSIGNED NOT NULL,
+  `component_id` int UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indexes for dumped tables
@@ -138,25 +138,25 @@ ALTER TABLE `scores`
 -- AUTO_INCREMENT for table `assignments`
 --
 ALTER TABLE `assignments`
-  MODIFY `assignment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `assignment_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `assignment_questions`
 --
 ALTER TABLE `assignment_questions`
-  MODIFY `assignment_question_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `assignment_question_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `assignment_submissions`
 --
 ALTER TABLE `assignment_submissions`
-  MODIFY `assignment_submission_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=238;
+  MODIFY `assignment_submission_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=252;
 
 --
 -- AUTO_INCREMENT for table `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `score_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `score_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- Constraints for dumped tables

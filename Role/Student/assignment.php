@@ -380,7 +380,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         }
                                     } else {
                                         if (count($csub) < 3) {
-                                            echo (count($csub));
+                                            // echo (count($csub));
                                         ?>
                                             <img class="w-7 mx-auto cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" data-assignid="<?= $assignment['assignment_id']; ?>" onclick="uploadSubmission(<?= $assignment['assignment_id']; ?>)">
                                             <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
