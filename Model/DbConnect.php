@@ -2,9 +2,9 @@
 
 class DbConnect
 {
-    private $host = "172.19.0.1";
+    private $host = "localhost";
     private $user = "root";
-    private $pass = "root";
+    private $pass = "";
     private $dbName = "assignment";
     private $conn;
 
