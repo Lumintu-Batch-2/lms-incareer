@@ -375,14 +375,14 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         <?php
                                         } else {
                                         ?>
-                                            <img class="w-7 mx-auto cursor-pointer modalUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" data-assignid="<?= $assignment['assignment_id']; ?>" onclick="uploadSubmission(<?= $assignment['assignment_id']; ?>)">
+                                            <img class="w-7 mx-auto cursor-pointer modalUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
                                         <?php
                                         }
                                     } else {
                                         if (count($csub) < 3) {
                                             // echo (count($csub));
                                         ?>
-                                            <img class="w-7 mx-auto cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" data-assignid="<?= $assignment['assignment_id']; ?>" onclick="uploadSubmission(<?= $assignment['assignment_id']; ?>)">
+                                            <img class=" w-7 mx-auto cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
                                             <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
                                                 Already submit !!
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
@@ -464,60 +464,6 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                 </div>
                             </div>
                             <!-- END MODAL -->
-
-
-                            <!-- Main modal -->
-                            <div id="defaultModal<?= $assignment['assignment_id']; ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                                <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
-                                    <!-- Modal content -->
-                                    <div class="relative bg-white rounded-lg shadow ">
-                                        <!-- Modal header -->
-                                        <div class="flex justify-center items-start p-5 rounded-t ">
-                                            <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-dark">
-                                                Upload Submission
-                                            </h3>
-                                        </div>
-                                        <!-- Modal body -->
-                                        <div class="px-6 space-y-6" id="modalbdy<?= $assignment['assignment_id']; ?>">
-                                            <form class="flex flex-col gap-y-4" action="" method="POST" enctype="multipart/form-data">
-                                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 rounded-md">
-                                                    <div class="space-y-2 text-center">
-                                                        <svg class="mx-auto h-20 w-20 text-gray-400" id="downloadIcon<?= $assignment['assignment_id']; ?>" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M118.75 56.25H93.75V18.75H56.25V56.25H31.25L75 106.25L118.75 56.25ZM25 118.75H125V131.25H25V118.75Z" fill="#DDB07F" />
-                                                        </svg>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" id="prevDoc<?= $assignment['assignment_id']; ?>" class="mx-auto h-20 w-20 hidden" viewBox="0 0 20 20" fill="#DDB07F">
-                                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        <p class="text-gray-600" id="countFile<?= $assignment['assignment_id']; ?>"></p>
-                                                        <div class="flex text-lg text-gray-600">
-                                                            <label for="fileInput<?= $assignment['assignment_id']; ?>" class="relative cursor-pointer bg-white rounded-md font-medium hover:text-gray-500">
-                                                                <span>Choose a file</span>
-                                                                <input id="fileInput<?= $assignment['assignment_id']; ?>" name="fileInput" type="file" class="sr-only dropzone" data-assid="<?= $assignment['assignment_id']; ?>" onchange="readFile(event, <?= $assignment['assignment_id']; ?>)" multiple>
-                                                                <input type="hidden" name="assignId" id="assignId">
-                                                                <input type="hidden" name="cf" id="cf<?= $assignment['assignment_id']; ?>">
-                                                            </label>
-                                                            <p class="pl-1">or drag it here</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
-                                                    <button data-modal-toggle="defaultModal<?= $assignment['assignment_id']; ?>" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center hover:ring-2 hover:ring-gray-400" id="closeModal<?= $assignment['assignment_id']; ?>">Close</button>
-                                                    <button class=" bg-yellow-500 text-white w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-800" type="submit" name="submit" id="uploadSubmission<?= $assignment['assignment_id']; ?>">Submit</button>
-                                                    <button disabled type="button" id="loading<?= $assignment['assignment_id']; ?>" class="hidden text-white bg-yellow-500 rounded font-medium ml-auto py-2 px-2 items-center">
-                                                        <svg role="status" class="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
-                                                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor" />
-                                                        </svg>
-                                                        Uploading...
-                                                    </button>
-                                                </div>
-                                            </form>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
                             <!-- Description Modal -->
                             <div id="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
                                 <div class="relative p-4 w-full max-w-lg h-full md:h-auto">
@@ -553,6 +499,58 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                     </tbody>
                 </table>
             </div>
+            <!-- Main modal -->
+            <div id="modalAdd" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow ">
+                        <!-- Modal header -->
+                        <div class="flex justify-center items-start p-5 rounded-t ">
+                            <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-dark">
+                                Upload Submission
+                            </h3>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="px-6 space-y-6" id="modalbdy">
+                            <form class="flex flex-col gap-y-4" action="" method="POST" enctype="multipart/form-data">
+                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 rounded-md">
+                                    <div class="space-y-2 text-center">
+                                        <svg class="mx-auto h-20 w-20 text-gray-400" id="downloadIcon" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M118.75 56.25H93.75V18.75H56.25V56.25H31.25L75 106.25L118.75 56.25ZM25 118.75H125V131.25H25V118.75Z" fill="#DDB07F" />
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" id="prevDoc" class="mx-auto h-20 w-20 hidden" viewBox="0 0 20 20" fill="#DDB07F">
+                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+                                        </svg>
+                                        <p class="text-gray-600" id="countFile"></p>
+                                        <div class="flex text-lg text-gray-600">
+                                            <label for="fileInput" class="relative cursor-pointer bg-white rounded-md font-medium hover:text-gray-500">
+                                                <span>Choose a file</span>
+                                                <input id="fileInput" name="fileInput" type="file" class="sr-only dropzone" data-assid="" onchange="readFile(event)" multiple>
+                                                <input type="hidden" name="assignId" id="inputasignid">
+                                                <input type="hidden" name="cf" id="cf">
+                                            </label>
+                                            <p class="pl-1">or drag it here</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
+                                    <button data-modal-toggle="modalAdd" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center hover:ring-2 hover:ring-gray-400" id="closeModal">Close</button>
+                                    <button class=" bg-yellow-500 text-white w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-800" type="submit" name="submit" id="uploadSubmission">Submit</button>
+                                    <button disabled type="button" id="loading" class="hidden text-white bg-yellow-500 rounded font-medium ml-auto py-2 px-2 items-center">
+                                        <svg role="status" class="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
+                                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor" />
+                                        </svg>
+                                        Uploading...
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN MODAL -->
         </div>
     </div>
 
@@ -564,45 +562,71 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
         btnToggle.onclick = function() {
             sidebar.classList.toggle('in-active');
         }
+        let assignment_id;
 
-        function readFile(e, data) {
-            let documentPrev = document.getElementById("prevDoc" + data);
-            let downloadIcon = document.getElementById("downloadIcon" + data);
-            let file = document.getElementById("fileInput" + data);
-            let countFile = document.getElementById("countFile" + data);
-            let cf = document.getElementById("cf" + data);
+        function readFile(e) {
+            let documentPrev = document.getElementById("prevDoc");
+            let downloadIcon = document.getElementById("downloadIcon");
+            let file = document.getElementById("fileInput");
+            let countFile = document.getElementById("countFile");
+            let cf = document.getElementById("cf");
             cf.value = file.files.length;
             downloadIcon.classList.add("hidden");
             documentPrev.classList.remove("hidden");
 
             countFile.innerHTML = "Selected " + file.files.length;
         }
+        $(document).ready(function() {
 
-        function uploadSubmission(assignment_id) {
+            $(document).on('click', '#openModal', function() {
+                let asid = document.getElementById('inputasignid');
+                let assigmentId = $(this).data('assignid');
+                assignid = $(this).data('assignid');
+                let inp = $(asid).val(assignid);
+                console.log(assignid);
+            })
+
+
+
             let studentId = document.getElementById("student_id");
             let student_id = studentId.value;
 
 
-            let fileData = document.getElementById("fileInput" + assignment_id);
+            let fileData = document.getElementById("fileInput");
 
-            $(document).on("click", "#closeModal" + assignment_id, function(evt) {
+            $(document).on("click", "#closeModal", function(evt) {
+                evt.preventDefault();
                 // fileData.value = '';
-                let inputFile = $("#fileInput" + assignment_id);
+                let inputFile = $("#fileInput");
                 // var $el = $('#infileid');
                 inputFile.wrap('<form>').closest('form').get(0).reset();
                 inputFile.unwrap();
                 console.log(fileData);
+                let documentPrev = document.getElementById("prevDoc");
+                let downloadIcon = document.getElementById("downloadIcon");
+                let file = document.getElementById("fileInput");
+                let countFile = document.getElementById("countFile");
+                let cf = document.getElementById("cf");
+                cf.value = file.files.length;
+                downloadIcon.classList.remove("hidden");
+                documentPrev.classList.add("hidden");
+
+                countFile.innerHTML = "";
             })
 
-            $(document).on("click", "#uploadSubmission" + assignment_id, function(evt) {
-                if ($('#fileInput' + assignment_id).val() != '') {
+            $(document).on("click", "#uploadSubmission", function(evt) {
+                // evt.preventDefault();
+                // console.log('aaaa');
+                if ($('#fileInput').val() != '') {
                     console.log('terisi');
-                    $('#loading' + assignment_id).removeClass('hidden');
-                    $('#uploadSubmission' + assignment_id).hide();
+                    let asid = document.getElementById('inputasignid');
+                    let assignment_id = $(asid).val();
+                    $('#loading').removeClass('hidden');
+                    $('#uploadSubmission').hide();
                     evt.preventDefault();
-                    $('#closeModal' + assignment_id).removeClass('hover:ring-2 hover:ring-gray-400');
-                    $('#closeModal' + assignment_id).attr("disabled", "disabled");
-                    let cf = document.getElementById("cf" + assignment_id);
+                    $('#closeModal').removeClass('hover:ring-2 hover:ring-gray-400');
+                    $('#closeModal').attr("disabled", "disabled");
+                    let cf = document.getElementById("cf");
 
                     let cfile = cf.value;
                     let data = {
@@ -610,6 +634,8 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                         studId: student_id,
                         count: cfile
                     }
+                    console.log(data);
+                    console.log(fileData.files);
 
                     insertSubmission(fileData, data);
 
@@ -618,68 +644,69 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                     alert('tidak boleh kosong');
                 }
             })
-        }
 
-        function insertSubmission(fileData, data) {
-            let countSuccess = 0;
-            $.ajax({
-                url: "insert_submission.php",
-                type: "post",
-                data: data,
-                success: function(data) {
-                    let dataJson = JSON.parse(data);
-                    let formData = new FormData();
-                    let arrFile = [];
 
-                    for (let i = 0; i < fileData.files.length; i++) {
-                        arrFile.push(fileData.files[i]);
-                        formData.append("files[]", fileData.files[i]);
+            function insertSubmission(fileData, data) {
+                let countSuccess = 0;
+                $.ajax({
+                    url: "insert_submission.php",
+                    type: "post",
+                    data: data,
+                    success: function(data) {
+                        let dataJson = JSON.parse(data);
+                        let formData = new FormData();
+                        let arrFile = [];
+
+                        for (let i = 0; i < fileData.files.length; i++) {
+                            arrFile.push(fileData.files[i]);
+                            formData.append("files[]", fileData.files[i]);
+                        }
+
+                        formData.append("data", JSON.stringify(dataJson));
+                        let statUpdate = updateFileSubmission(formData);
+                    },
+                    error: function(xhr) {
+                        alert('Error! Check your connection!');
                     }
+                })
+            }
 
-                    formData.append("data", JSON.stringify(dataJson));
-                    let statUpdate = updateFileSubmission(formData);
-                },
-                error: function(xhr) {
-                    alert('Error! Check your connection!');
-                }
-            })
-        }
-
-        function updateFileSubmission(formData) {
-            $.ajax({
-                url: "upload_submission.php",
-                type: "post",
-                data: formData,
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(data) {
-                    // console.log(data);
-                    let val = JSON.parse(data);
-                    if (val.is_ok) {
-                        alert(val.msg);
-                        location.reload();
-                    } else {
-                        alert("Error! " + val.msg);
-                        location.reload();
+            function updateFileSubmission(formData) {
+                $.ajax({
+                    url: "upload_submission.php",
+                    type: "post",
+                    data: formData,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data) {
+                        // console.log(data);
+                        let val = JSON.parse(data);
+                        if (val.is_ok) {
+                            alert(val.msg);
+                            location.reload();
+                        } else {
+                            alert("Error! " + val.msg);
+                            location.reload();
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('Error! Check your connection!');
                     }
-                },
-                error: function(xhr) {
-                    alert('Error! Check your connection!');
-                }
-            })
-        }
+                })
+            }
 
-        function deleteSubmission(id) {
-            $.ajax({
-                url: "delete_submission.php",
-                data: id,
-                type: post,
-                success: function(data) {
-                    // success
-                }
-            })
-        }
+            function deleteSubmission(id) {
+                $.ajax({
+                    url: "delete_submission.php",
+                    data: id,
+                    type: post,
+                    success: function(data) {
+                        // success
+                    }
+                })
+            }
+        });
     </script>
 
 
