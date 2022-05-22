@@ -306,7 +306,7 @@ if (isset($_GET['act'])) {
         </div>
 
         <!-- Mobile navbar -->
-        <div id="left-nav" class="bg-opacity-50 bg-gray-500 absolute inset-x-0 hidden z-10 transition-all ease-in-out duration-500">
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 absolute inset-x-0 hidden z-10 transition-all ease-in-out duration-500 sm:hidden">
 
             <div class="bg-white w-[250px] h-screen px-8 py-6 ">
                 <!-- Top nav -->
@@ -399,7 +399,7 @@ if (isset($_GET['act'])) {
             </div>
 
             <!-- Breadcrumb -->
-            <div class="p-2 lg:p-4">
+            <div class="">
                 <ul class="flex items-center gap-x-4 text-xs lg:text-base">
                     <!-- NAVIGATOR HALAMAN HOME -->
                     <li class="flex items-center space-x-2">
@@ -510,18 +510,18 @@ if (isset($_GET['act'])) {
 
                                 ?>
                                 <!-- MENAMPILKAN SELURUH INFORMASI ASSIGNMENT YANG TELAH DIBUAT -->
-                                <tr>
+                                <tr class="text-sm lg:text-base">
                                     <td class="p-5"><?= $assignment['assignment_name'] ?></td>
                                     <td class="text-center"><?= $startDate; ?></td>
                                     <td class="text-center"><?= $dueDate; ?></td>
                                     <td class="text-center"><?= $dueTime; ?> WIB</td>
-                                    <td class=" px-4 py-2 text-center"><a href="#"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>"></a></td>
+                                    <td class=" px-4 py-2 text-center"><a href="#"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>"></a></td>
                                     <td>
-                                        <a href="assignment_collection.php?course_id=<?= $_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . '&subject_id=' . $_GET['subject_id']; ?>"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/binoculars_icon.svg" alt="Collection Icon"></a>
+                                        <a href="assignment_collection.php?course_id=<?= $_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . '&subject_id=' . $_GET['subject_id']; ?>"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/binoculars_icon.svg" alt="Collection Icon"></a>
                                     </td>
                                     <td class="flex flex-row justify-center items-center mx-3 my-3">
-                                        <a><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" alt="Edit Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>"></a>
-                                        <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/delete_icon.svg" alt="Remove Icon"></a>
+                                        <a><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" alt="Edit Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>"></a>
+                                        <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/delete_icon.svg" alt="Remove Icon"></a>
                                     </td>
                                 </tr>
 
@@ -532,7 +532,7 @@ if (isset($_GET['act'])) {
                                         <div class="relative bg-white rounded-lg shadow ">
                                             <!-- Modal header -->
                                             <div class="flex justify-between items-center p-5 rounded-t border-b dark:border-gray-600">
-                                                <h3 class="text-xl font-medium text-center">
+                                                <h3 class="text-base sm:text-lg lg:text-xl font-medium text-center">
                                                     Description
                                                 </h3>
                                                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>">
@@ -549,7 +549,7 @@ if (isset($_GET['act'])) {
                                             </div>
                                             <!-- Modal footer -->
                                             <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
-                                                <button data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" type="button" class="text-gray bg-cream focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent hover:text-white hover:bg-gray-600 dark:focus:ring-dark-800">Close</button>
+                                                <button data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-transparent dark:focus:ring-dark-800 border border-gray-400">Close</button>
                                                 <!-- <button data-modal-toggle="medium-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button> -->
                                             </div>
                                         </div>
@@ -722,6 +722,11 @@ if (isset($_GET['act'])) {
         btnToggle2.onclick = function() {
             leftNav.classList.toggle('hidden');
         }
+        
+        // Bug on click mobile navbar
+        // leftNav.onclick = function() {
+        //     leftNav.classList.toggle('hidden');
+        // }
 
         $(document).ready(function() {
             // FUNGSI UPLOAD ASSIGNMENT
