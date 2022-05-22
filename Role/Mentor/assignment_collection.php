@@ -55,9 +55,16 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
 
 
 require_once('../../Model/AssignmentSubmission.php');
+require_once('../../Model/Assignments.php');
+
 $objSubmission = new AssignmentSubmission;
 $objSubmission->setAssignmentId($_GET['assignment_id']);
 $submissionData = $objSubmission->getSubmissionAndScoreByAssignmentId();
+
+$objAssignment = new Assignments;
+$objAssignment->setAssignmentId($_GET['assignment_id']);
+$assignData = $objAssignment->getAssignmentByAssignmentId($_GET['assignment_id']);
+
 
 $submissionStudent = array();
 
@@ -102,7 +109,6 @@ for ($i = 0; $i < count($userData); $i++) {
         }
     }
 }
-
 
 // var_dump($submissionStudent);
 // var_dump($userData);
@@ -236,9 +242,9 @@ if (isset($_POST['submit1'])) {
             display: none !important;
         }
 
-        .hidden {
+        /* .hidden {
             display: none !important;
-        }
+        } */
 
         .sidebar {
             transition: .5s ease-in-out;
@@ -248,9 +254,18 @@ if (isset($_POST['submit1'])) {
 </head>
 
 <body>
+    <div class="responsive-top p-5 sm:hidden">
+        <div class="flex justify-center bg-gray-300 p-2 rounded-lg">
+            lms in-career
+        </div>
+        <div class="container flex flex-column justify-between mt-4 mb-4">
+            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+            <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle2">
+        </div>
+    </div>
     <div class="flex items-center">
         <!-- Left side (Sidebar) -->
-        <div class="bg-white w-[350px] h-screen px-8 py-6 flex flex-col justify-between sidebar in-active">
+        <div class="bg-white w-[350px] h-screen px-8 py-6 sm:flex flex-col justify-between sidebar in-active hidden">
             <!-- Top nav -->
             <div class="flex flex-col gap-y-6">
                 <!-- Header -->
@@ -259,47 +274,48 @@ if (isset($_POST['submit1'])) {
                     <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]">
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]"/>
 
                 <!-- List Menus -->
                 <div>
                     <ul class="flex flex-col gap-y-1">
+                        <!-- ICON DAN TEXT DASHBOARD -->    
+
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
                                 <p class="font-semibold">Dashboard</p>
                             </a>
                         </li>
+                        <!-- ICON DAN TEXT FORUM COURSES -->
                         <li>
                             <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
                                 <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
                                 <p class="text-white font-semibold">Courses</p>
                             </a>
                         </li>
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
-                                <p class="font-semibold">Forum Dicussion</p>
-                            </a>
-                        </li>
+                        <!-- ICON DAN TEXT SCHEDULE -->
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
                                 <p class="font-semibold">Schedule</p>
                             </a>
                         </li>
+                        <!-- ICON DAN TEXT ATTENDANCE -->
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
                                 <p class="font-semibold">Attendance</p>
                             </a>
                         </li>
-                        <li>
+                        <!-- ICON DAN TEXT SCORE -->
+                        <!-- <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
                                 <p class="font-semibold">Score</p>
                             </a>
-                        </li>
+                        </li> -->
+                        <!-- ICON DAN TEXT CONSULT -->
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
@@ -309,17 +325,20 @@ if (isset($_POST['submit1'])) {
                     </ul>
                 </div>
             </div>
+
             <!-- Bottom nav -->
             <div>
                 <ul class="flex flex-col ">
+                    <!-- ICON DAN TEXT HELP -->
                     <li>
                         <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
                             <p class="font-semibold">Help</p>
                         </a>
                     </li>
+                    <!-- ICON DAN TEXT LOG OUT -->
                     <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
                             <p class="font-semibold">Log out</p>
                         </a>
@@ -328,11 +347,89 @@ if (isset($_POST['submit1'])) {
             </div>
         </div>
 
+        <!-- Mobile navbar -->
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 absolute inset-x-0 hidden z-10 transition-all ease-in-out duration-500 sm:hidden">
+
+            <div class="bg-white w-[250px] relative h-screen px-8 py-6 z-50">
+                <!-- Top nav -->
+                <div class="flex flex-col gap-y-6">
+
+                    <!-- List Menus -->
+                    
+                    <ul class="flex flex-col gap-y-1">
+                        <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] px-4" id="profil_image">
+                                <img class="w-5" src="../../Img/icons/default_profile.svg" alt="Profile Image">
+                                <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
+                                <!-- <p class="font-semibold"></p> -->
+                            </a>
+                        <!-- ICON DAN TEXT DASHBOARD -->    
+                        </li>
+                        <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
+                                <p class="font-semibold">Dashboard</p>
+                            </a>
+                        </li>
+                        <!-- ICON DAN TEXT FORUM COURSES -->
+                        <li>
+                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
+                                <p class="text-white font-semibold">Courses</p>
+                            </a>
+                        </li>
+                        <!-- ICON DAN TEXT SCHEDULE -->
+                        <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
+                                <p class="font-semibold">Schedule</p>
+                            </a>
+                        </li>
+                        <!-- ICON DAN TEXT ATTENDANCE -->
+                        <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
+                                <p class="font-semibold">Attendance</p>
+                            </a>
+                        </li>
+                        <!-- ICON DAN TEXT SCORE -->
+                        <!-- <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
+                                <p class="font-semibold">Score</p>
+                            </a>
+                        </li> -->
+                        <!-- ICON DAN TEXT CONSULT -->
+                        <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                <p class="font-semibold">Consult</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
+                                <p class="font-semibold">Help</p>
+                            </a>
+                        </li>
+                        <!-- ICON DAN TEXT LOG OUT -->
+                        <li>
+                            <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
+                                <p class="font-semibold">Log out</p>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+
 
         <!-- Right side -->
-        <div class="bg-cgray w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
+        <div class="bg-cgray w-full h-screen px-8 lg:px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
             <!-- Header / Profile -->
-            <div class="flex items-center gap-x-4 justify-end">
+            <div class="items-center gap-x-4 justify-end hidden sm:flex">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
                 <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_username'}  ?></p>
             </div>
@@ -340,167 +437,164 @@ if (isset($_POST['submit1'])) {
 
 
             <!-- Topic Title -->
-            <div class="flex justify-between">
-                <form action="">
-                    <div class="w-4">
-                        <a href="assignment.php?course_id=<?= $_GET['course_id']; ?>&subject_id=<?= $_GET['subject_id']; ?>" class="text-dark-green inline-flex font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 ">
-                            <img class="w-5" src="../../Img/icons/back_icons.svg" alt="Back Image">
-                            <p class="ml-2"> Back</p>
-                        </a>
-                    </div>
-                </form>
-                <div>
-                    <p class="text-4xl text-dark-green font-semibold">Assignment Collection</p>
-                </div>
-                <div class="w-4">
+            
+            <div class="flex flex-col gap-y-2">
+                <p class="text-xl text-center sm:text-2xl xl:text-4xl text-dark-green font-semibold">Assignment Collection</p>
+                <p class="text-base sm:text-lg lg:text-xl xl:text-2xl text-center text-dark-green">Task# <?= $assignData['assignment_name'];?></p>
+            </div>  
 
-                </div>
-
-            </div>
+            <a href="assignment.php?course_id=<?= $_GET['course_id']; ?>&subject_id=<?= $_GET['subject_id']; ?>" class="text-dark-green flex items-center font-medium text-sm space-x-2 mb-8">
+                <img class="w-4 lg:w-5" src="../../Img/icons/back_icons.svg" alt="Back Image">
+                <p class="ml-2"> Back</p>
+            </a>
 
             <div>
-                <p class="text-4xl text-dark-green font-semibold">Completed Assignment</p>
+                <p class="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-dark-green font-semibold">Completed Assignment</p>
             </div>
 
             <!-- Table Assignment -->
-            <div>
-                <table class="shadow-lg bg-white rounded-xl" style="width: 100%">
-                    <colgroup>
-                        <col span="1" style="width: 5%">
-                        <col span="1" style="width: 20%">
-                        <col span="1" style="width: 15%">
-                        <col span="1" style="width: 20%">
-                        <col span="1" style="width: 10%">
-                        <col span="1" style="width: 10%">
+            <div class="container-lg">
+                <div class="relative overflow-x-auto">
+                    <table class="shadow-lg bg-white rounded-xl" style="width: 100%">
+                        <colgroup>
+                            <col span="1" style="width: 5%">
+                            <col span="1" style="width: 20%">
+                            <col span="1" style="width: 15%">
+                            <col span="1" style="width: 20%">
+                            <col span="1" style="width: 10%">
+                            <col span="1" style="width: 10%">
 
-                    </colgroup>
-                    <thead>
-                        <tr class="text-dark-green">
-                            <th class="border-b text-left px-4 py-2">No</th>
-                            <th class="border-b text-center px-4 py-2">Name</th>
-                            <th class="border-b text-center px-4 py-2">Published Date</th>
-                            <th class="border-b text-center px-4 py-2">File</th>
-                            <th class="border-b text-center px-4 py-2">Score</th>
-                            <th class="border-b text-center px-4 py-2">Action</th>
+                        </colgroup>
+                        <thead>
+                            <tr class="text-dark-green text-sm lg:text-base">
+                                <th class="border-b text-left px-4 py-2">No</th>
+                                <th class="border-b text-center px-4 py-2">Name</th>
+                                <th class="border-b text-center px-4 py-2">Published Date</th>
+                                <th class="border-b text-center px-4 py-2">File</th>
+                                <th class="border-b text-center px-4 py-2">Score</th>
+                                <th class="border-b text-center px-4 py-2">Action</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $no = 1;
-                        foreach ($submissionStudent as $key => $item) {
-
-                        ?>
-                            <tr>
-                                <td class="border-b px-4 py-2"><?= $no ?></td>
-                                <td class="border-b px-4 py-2 text-center"><?= $item['student_name']  ?></td>
-                                <td class="border-b px-4 py-2 text-center"><?= $item['submitted_date']  ?></td>
-                                <td class="border-b px-4 py-2  ">
-                                    <?php
-                                    require_once('../../Model/AssignmentSubmission.php');
-                                    $multipleup = new AssignmentSubmission;
-                                    $multipleup->setSubmissionToken($item['submission_token']);
-                                    $file = $multipleup->getSubmissionByToken();
-                                    // $jumlahfile = $multipleup->getRowSubmissionByToken();
-
-
-                                    foreach ($file as $key => $val) { ?>
-                                        <a href="download.php?file=<?= $val['submission_filename']; ?>">
-                                            <p class=" border-t"><?= $val['submission_filename']; ?></p>
-                                        </a>
-
-                                    <?php
-                                    } ?>
-                                </td>
-
-                                <?php
-                                require_once "../../Model/Scores.php";
-                                $objScores = new Scores;
-                                $objScores->setStudentId($item['student_id']);
-                                $objScores->setAssignmentId($item['assignment_id']);
-                                $score = $objScores->getScoreByStudentIdAndAssignmentId();
-                                ?>
-                                <td class="border-b px-4 py-2 text-center "><?= $score['score_value']  ?></td>
-
-                                <td class="border-b px-4 py-2 "><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal" data-username="<?= $item['student_name']; ?>" data-tooltip-target="tooltip-default<?= $item['student_name']; ?>" data-scoreid="<?= $score['score_id'] ?>" data-student-id="<?= $item['student_id'] ?>" data-scorevalue="<?= $score['score_value']  ?>" alt="Edit Icon" type="button" data-target="#defaultModal" id="editbtn"></td>
-                                <?php if ($score['mentor_id'] == 0) {
-                                ?>
-                                    <div id="tooltip-default<?= $item['student_name']; ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
-                                        Belum mengubah score
-                                        <div class="tooltip-arrow" data-popper-arrow></div>
-                                    </div>
-                                <?php
-                                } elseif ($score['score_value'] != 0) {
-                                ?>
-                                    <div id="tooltip-default<?= $item['student_name']; ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
-                                        Sudah mengubah score
-                                        <div class="tooltip-arrow" data-popper-arrow></div>
-                                    </div>
-                                <?php
-                                }
-                                ?>
                             </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            foreach ($submissionStudent as $key => $item) {
 
-                        <?php $no++;
-                        } ?>
-                    </tbody>
-                </table>
+                            ?>
+                                <tr class="text-sm lg:text-base">
+                                    <td class="border-b px-4 py-2"><?= $no ?></td>
+                                    <td class="border-b px-4 py-2 text-center"><?= $item['student_name']  ?></td>
+                                    <td class="border-b px-4 py-2 text-center"><?= $item['submitted_date']  ?></td>
+                                    <td class="border-b px-4 py-2  ">
+                                        <?php
+                                        require_once('../../Model/AssignmentSubmission.php');
+                                        $multipleup = new AssignmentSubmission;
+                                        $multipleup->setSubmissionToken($item['submission_token']);
+                                        $file = $multipleup->getSubmissionByToken();
+                                        // $jumlahfile = $multipleup->getRowSubmissionByToken();
+
+
+                                        foreach ($file as $key => $val) { ?>
+                                            <a href="download.php?file=<?= $val['submission_filename']; ?>">
+                                                <p class=" border-t"><?= $val['submission_filename']; ?></p>
+                                            </a>
+
+                                        <?php
+                                        } ?>
+                                    </td>
+
+                                    <?php
+                                    require_once "../../Model/Scores.php";
+                                    $objScores = new Scores;
+                                    $objScores->setStudentId($item['student_id']);
+                                    $objScores->setAssignmentId($item['assignment_id']);
+                                    $score = $objScores->getScoreByStudentIdAndAssignmentId();
+                                    ?>
+                                    <td class="border-b px-4 py-2 text-center "><?= $score['score_value']  ?></td>
+
+                                    <td class="border-b px-4 py-2 "><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal" data-username="<?= $item['student_name']; ?>" data-tooltip-target="tooltip-default<?= $item['student_name']; ?>" data-scoreid="<?= $score['score_id'] ?>" data-student-id="<?= $item['student_id'] ?>" data-scorevalue="<?= $score['score_value']  ?>" alt="Edit Icon" type="button" data-target="#defaultModal" id="editbtn"></td>
+                                    <?php if ($score['mentor_id'] == 0) {
+                                    ?>
+                                        <div id="tooltip-default<?= $item['student_name']; ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
+                                            Belum mengubah score
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                    <?php
+                                    } elseif ($score['score_value'] != 0) {
+                                    ?>
+                                        <div id="tooltip-default<?= $item['student_name']; ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
+                                            Sudah mengubah score
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </tr>
+
+                            <?php $no++;
+                            } ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <div class="mt-12">
-                <p class="text-4xl text-dark-green font-semibold">Unfinished Assignment</p>
+            <div class="mt-8">
+                <p class="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-dark-green font-semibold">Unfinished Assignment</p>
             </div>
 
-            <!-- Table Assignment -->
-            <div>
-                <table class="shadow-lg bg-white rounded-xl" style="width: 100%">
-                    <colgroup>
-                        <col span="1" style="width: 10%">
-                        <col span="1" style="width: 25%">
-                        <col span="1" style="width: 10%">
-                        <col span="1" style="width: 20%">
-                        <col span="1" style="width: 15%">
-                    </colgroup>
-                    <thead>
-                        <tr class="text-dark-green">
-                            <th class="border-b text-left px-4 py-2">No</th>
-                            <th class="border-b text-center px-4 py-2">Name</th>
-                            <th class="border-b text-center px-4 py-2">Published Date</th>
-                            <th class="border-b text-center px-4 py-2">File</th>
-                            <th class="border-b text-center px-4 py-2">Score</th>
-                            <th class="border-b text-center px-4 py-2">Action</th>
+            <!-- Table unfinished assignment -->
+            <div class="container-lg">
+                <div class="relative overflow-x-auto">
+                    <table class="shadow-lg bg-white rounded-xl" style="width: 100%">
+                        <colgroup>
+                            <col span="1" style="width: 10%">
+                            <col span="1" style="width: 25%">
+                            <col span="1" style="width: 10%">
+                            <col span="1" style="width: 20%">
+                            <col span="1" style="width: 15%">
+                        </colgroup>
+                        <thead>
+                            <tr class="text-dark-green text-sm lg:text-base">
+                                <th class="border-b text-left px-4 py-2">No</th>
+                                <th class="border-b text-center px-4 py-2">Name</th>
+                                <th class="border-b text-center px-4 py-2">Published Date</th>
+                                <th class="border-b text-center px-4 py-2">File</th>
+                                <th class="border-b text-center px-4 py-2">Score</th>
+                                <th class="border-b text-center px-4 py-2">Action</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $no = 1;
-                        foreach ($notSubmitted as $key => $item) {
-
-                        ?>
-                            <tr>
-                                <td class="border-b px-4 py-2 text-red-600"><?= $no  ?></td>
-                                <td class="border-b px-4 py-2 text-center text-red-600"><?= $item['student_name']  ?></td>
-                                <td class="border-b px-4 py-2 text-center text-red-600">-</td>
-                                <td class="border-b px-4 py-2 text-center text-red-600"><?= $item['submission_filename']; ?></td>
-
-                                <?php
-                                require_once "../../Model/Scores.php";
-                                $objScores = new Scores;
-                                $objScores->setStudentId($item['student_id']);
-                                $objScores->setAssignmentId($item['assignment_id']);
-                                $score = $objScores->getScoreByStudentIdAndAssignmentId();
-                                ?>
-                                <td class="border-b px-4 py-2 text-center text-red-600"><?= $score['score_value'] ?></td>
-
-                                <td class="border-b px-4 py-2 ">
-                                    <img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal1" alt="Edit Icon" type="button" data-scoreid="<?= $score['score_id']; ?>" data-scorevalue="<?= $score['score_value']; ?>" data-target="#defaultModal1" id="editbtn1">
-                                </td>
                             </tr>
-                        <?php $no++;
-                        } ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            foreach ($notSubmitted as $key => $item) {
+
+                            ?>
+                                <tr class="text-sm lg:text-base">
+                                    <td class="border-b px-4 py-2 text-red-600"><?= $no  ?></td>
+                                    <td class="border-b px-4 py-2 text-center text-red-600"><?= $item['student_name']  ?></td>
+                                    <td class="border-b px-4 py-2 text-center text-red-600">-</td>
+                                    <td class="border-b px-4 py-2 text-center text-red-600"><?= $item['submission_filename']; ?></td>
+
+                                    <?php
+                                    require_once "../../Model/Scores.php";
+                                    $objScores = new Scores;
+                                    $objScores->setStudentId($item['student_id']);
+                                    $objScores->setAssignmentId($item['assignment_id']);
+                                    $score = $objScores->getScoreByStudentIdAndAssignmentId();
+                                    ?>
+                                    <td class="border-b px-4 py-2 text-center text-red-600"><?= $score['score_value'] ?></td>
+
+                                    <td class="border-b px-4 py-2 ">
+                                        <img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal1" alt="Edit Icon" type="button" data-scoreid="<?= $score['score_id']; ?>" data-scorevalue="<?= $score['score_value']; ?>" data-target="#defaultModal1" id="editbtn1">
+                                    </td>
+                                </tr>
+                            <?php $no++;
+                            } ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -573,10 +667,21 @@ if (isset($_POST['submit1'])) {
 
     <script>
         let btnToggle = document.getElementById('btnToggle');
+        let btnToggle2 = document.getElementById('btnToggle2');
         let sidebar = document.querySelector('.sidebar');
+        let leftNav = document.getElementById("left-nav");
         btnToggle.onclick = function() {
             sidebar.classList.toggle('in-active');
         }
+
+        btnToggle2.onclick = function() {
+            leftNav.classList.toggle('hidden');
+        }
+
+        // Bug on click mobile navbar
+        // leftNav.onclick = function() {
+        //     leftNav.classList.toggle('hidden');
+        // }
 
         $(document).ready(function() {
             $(document).on('click', '#editbtn', function() {

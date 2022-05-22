@@ -92,7 +92,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
 
 
     <!-- Tailwindcss -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=line-clamp"></script>
     <!-- <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" /> -->
     <script>
         tailwind.config = {
@@ -249,7 +249,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         </div>
 
         <!-- Mobile navbar -->
-        <div id="left-nav" class="bg-opacity-50 bg-gray-500 absolute inset-x-0 hidden z-10 transition-all ease-in-out duration-500">
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 absolute inset-x-0 hidden z-10 transition-all ease-in-out duration-500 sm:hidden">
 
             <div class="bg-white w-[250px] h-screen px-8 py-6 ">
                 <!-- Top nav -->
@@ -375,16 +375,20 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                 <p class="text-lg md:text-xl lg:text-2xl xl:text-4xl text-dark-green font-semibold">List Sub Topic of <?= $courseData[0]->{'modul_name'}; ?></p>
             </div>
 
-            <div class="p-2 lg:p-4 mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div class="p-2 lg:p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 <!-- MEMANGGIL DAN MENAMPILKAN SELURUH SUB TOPIC YANG ADA ATAU SUDAH DIBUAT PADA COURSE YANG SEDANG DIBUKA-->
 
                 <?php foreach ($subjectData as $row => $subject) : ?>
-                    <a href="assignment.php?subject_id=<?= $subject->{'id'}; ?>&course_id=<?= $_GET['course_id'] ?>" class="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 w-100">
-                        <h5 class="mb-2 text-lg lg:text-2xl font-bold tracking-tight text-gray-900"><?= $subject->{'modul_name'}; ?></h5>
+                    <a href="assignment.php?subject_id=<?= $subject->{'id'}; ?>&course_id=<?= $_GET['course_id'] ?>" class="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100" data-tooltip-target="tooltip-default<?= $subject->{'id'}; ?>">
+                        <h5 class="mb-2 text-lg lg:text-2xl font-bold tracking-tight text-gray-900 line-clamp-1 sm:line-clamp-2 truncate..."><?= $subject->{'modul_name'}; ?></h5>
                         <p class="font-normal text-gray-700 flex flex-row items-center gap-4 mt-5">
                             <img src="../../Img/icons/dokumen_icon.svg" alt="dokumen"><?= $subject->{'id'}; ?>
                         </p>
                     </a>
+                    <div id="tooltip-default<?= $subject->{'id'}; ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg opacity-0 transition-opacity duration-300 tooltip max-w-[150px] shadow-lg shadow-gray-400">
+                        <?= $subject->{'modul_name'}; ?>
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
                 <?php endforeach ?>
             </div>
         </div>
@@ -406,6 +410,11 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         btnToggle2.onclick = function() {
             leftNav.classList.toggle('hidden');
         }
+
+        // Bug on click mobile navbar
+        // leftNav.onclick = function() {
+        //     leftNav.classList.toggle('hidden');
+        // }
     </script>
 
 
