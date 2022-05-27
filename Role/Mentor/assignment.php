@@ -15,7 +15,7 @@ if (!isset($_SESSION['user_data'])) {
 }
 
 switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
-        // KONDISI KETIKA USER MEMASUKI HALAMAN NAMUN LOGIN SEBAGAI ADMIN
+    // KONDISI KETIKA USER MEMASUKI HALAMAN NAMUN LOGIN SEBAGAI ADMIN
     case 1:
         echo "
         <script>
@@ -41,11 +41,7 @@ switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
 // MEMANGGIL FUNGSI DAN API
 require "../../Model/Assignments.php";
 require "../../Model/AssignmentSubmission.php";
-require "../../Model/AssignmentQuestion.php";
 require "../../api/get_api_data.php";
-
-// Initial model assignment Question
-$objAssignmentQuestion = new AssignmentQuestion;
 
 // MENYIMPAN DATA KEDALAM ARRAY
 $subModulData = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
@@ -63,7 +59,7 @@ $allAssignments = $objAssignment->getAssignmentBySubjectId($_GET['subject_id']);
 
 if (isset($_GET['act'])) {
     switch ($_GET['act']) {
-            // FUNGSI EDIT ASSIGNMENT
+        // FUNGSI EDIT ASSIGNMENT
         case "edit":
             if ($_GET['assign_id']) {
 
@@ -97,7 +93,7 @@ if (isset($_GET['act'])) {
                 }
             }
             break;
-            // FUNGSI DELETE ASSIGNMENT
+        // FUNGSI DELETE ASSIGNMENT
         case "delete":
             if ($_GET['assign_id']) {
                 $objAssignment->setAssignmentId((int)$_GET['assign_id']);
@@ -118,7 +114,7 @@ if (isset($_GET['act'])) {
                 }
             }
             break;
-            // FUNGSI LOGOUT 
+        // FUNGSI LOGOUT 
         case "logout":
             if (isset($_GET['act'])) {
                 require $_SERVER['DOCUMENT_ROOT'] . "\Model\Users.php";
@@ -146,11 +142,6 @@ if (isset($_GET['act'])) {
 
     <!-- Tailwindcss -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Intro Js -->
-    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
-    <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
-
     <script>
         tailwind.config = {
             theme: {
@@ -171,7 +162,7 @@ if (isset($_GET['act'])) {
 
     <!-- CUSTOM STYLE CSS -->
     <style>
-        .sidebar #username_logo {
+       .sidebar #username_logo {
             display: none;
         }
 
@@ -215,6 +206,7 @@ if (isset($_GET['act'])) {
         .sidebar {
             transition: .5s ease-in-out;
         }
+
     </style>
 </head>
 
@@ -245,7 +237,7 @@ if (isset($_GET['act'])) {
                 <!-- List Menus -->
                 <div>
                     <ul class="flex flex-col gap-y-1">
-                        <!-- ICON DAN TEXT DASHBOARD -->
+                        <!-- ICON DAN TEXT DASHBOARD -->    
 
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -296,7 +288,6 @@ if (isset($_GET['act'])) {
             <div>
                 <ul class="flex flex-col ">
                     <!-- ICON DAN TEXT HELP -->
-
                     <li>
                         <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
@@ -330,7 +321,7 @@ if (isset($_GET['act'])) {
                                     <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
                                     <!-- <p class="font-semibold"></p> -->
                                 </a>
-                                <!-- ICON DAN TEXT DASHBOARD -->
+                            <!-- ICON DAN TEXT DASHBOARD -->    
                             </li>
                             <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -380,7 +371,6 @@ if (isset($_GET['act'])) {
                 <div>
                     <ul class="flex flex-col ">
                         <!-- ICON DAN TEXT HELP -->
-
                         <li>
                             <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
@@ -404,7 +394,7 @@ if (isset($_GET['act'])) {
         <div class="bg-cgray w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll rightbar">
             <!-- Header / Profile -->
             <div class="items-center gap-x-4 justify-end hidden sm:flex" id="profil_image2">
-                <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
+                <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image" >
                 <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
             </div>
 
@@ -421,7 +411,7 @@ if (isset($_GET['act'])) {
                         </div>
                     </li>
 
-
+                    
                     <!-- NAVIGATOR HALAMAN COURSES -->
 
                     <div class="flex items-center space-x-2">
@@ -463,7 +453,7 @@ if (isset($_GET['act'])) {
             </div>
 
             <!-- Tab -->
-            <div class="bg-white w-full h-[50px] flex content-center px-10 tab-menu" id="sessionTabs">
+            <div class="bg-white w-full h-[50px] flex content-center px-10 tab-menu">
                 <ul class="flex items-center gap-x-8 text-sm lg:text-base">
                     <li class="text-dark-green hover:text-cream hover:border-b-4 hover:border-cream h-[50px] flex items-center font-semibold  cursor-pointer">
                         <p>Session</p>
@@ -480,29 +470,26 @@ if (isset($_GET['act'])) {
                 <p class="text-sm lg:text-base"><?= $subModul[0]->{'modul_description'}; ?></p>
             </div>
 
+            <!-- TOMBOL TAMBAH ASSIGNMENT BARU -->
+            <a class="text-xs lg:text-base bg-cream text-white font-semibold justify-start text-center py-2 rounded-lg w-[120px] md:w-[170px] cursor-pointer" type="button" data-modal-toggle="addModal">Add Assignment</a>
+
             <!-- CONTENT TABEL ASSIGNMENT -->
             <div class="container-lg">
-                <div class="assignment-table relative overflow-x-auto">
+                <div class="assignment-table  overflow-x-auto ">
                     <table class="shadow-lg bg-white" style="width: 100%">
                         <!-- MENGATUR PANJANG JARAK ANTARA FIELD SATU DENGAN YANG LAIN -->
                         <colgroup>
-                            <col span="1" style="width: 20%">
+                            <col span="1" style="width: 30%">
                             <col span="1" style="width: 10%">
                             <col span="1" style="width: 10%">
-                            <col span="1" style="width: 10%">
-                            <col span="1" style="width: 5%">
-                            <col span="1" style="width: 20%">
-                            <col span="1" style="width: 10%">
+                            <col span="1" style="width: 15%">
                         </colgroup>
                         <thead id="tableThead">
                             <!-- CONTENT TABEL [JUDUL FIELD] -->
                             <tr class="text-dark-green text-sm lg:text-base">
                                 <th class="border-b text-left px-4 py-2">Title</th>
-                                <th class="border-b text-center px-4 py-2">Start Date</th>
                                 <th class="border-b text-center px-4 py-2">Due Date</th>
                                 <th class="border-b text-center px-4 py-2">Due Time</th>
-                                <th class="border-b text-center px-4 py-2">Description</th>
-                                <th class="border-b text-center px-4 py-2">Assignment Collection</th>
                                 <th class="border-b text-center px-4 py-2">Actions</th>
                             </tr>
                         </thead>
@@ -516,34 +503,43 @@ if (isset($_GET['act'])) {
                                 // var_dump($arrEndDate);
                                 $startDate = date("d/m/Y", strtotime($arrStartDate[0]));
                                 $dueDate = date("d/m/Y", strtotime($arrEndDate[0]));
-                                $dueTime = $arrEndDate[1];
+                                $dueTime = date("H:i", strtotime($arrEndDate[1]));
 
                                 ?>
-
-                                <?php
-                                // Mengambil data question berdasarkan assignment_id
-                                $objAssignmentQuestion->setAssignmentId($assignment['assignment_id']);
-                                $dataAssigmentQuestion = $objAssignmentQuestion->getQuestionsByAssignmentId();
-                                // Cek apakah assignment tertentu sudah upload dokumen atau belum
-                                $cekQuestionFile = $dataAssigmentQuestion['question_filename'];
-
-                                ?>
-
                                 <!-- MENAMPILKAN SELURUH INFORMASI ASSIGNMENT YANG TELAH DIBUAT -->
                                 <tr class="text-sm lg:text-base">
                                     <td class="p-5"><?= $assignment['assignment_name'] ?></td>
-                                    <td class="text-center"><?= $startDate; ?></td>
                                     <td class="text-center"><?= $dueDate; ?></td>
                                     <td class="text-center"><?= $dueTime; ?> WIB</td>
-                                    <td class=" px-4 py-2 text-center"><a href="#"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>"></a></td>
-                                    <td>
-                                        <a href="assignment_collection.php?course_id=<?= $_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . '&subject_id=' . $_GET['subject_id']; ?>"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/binoculars_icon.svg" alt="Collection Icon"></a>
-                                    </td>
+                                    
                                     <td class="flex flex-row justify-center items-center mx-3 my-3">
+<<<<<<< HEAD
                                         <button id="btnQuestion" data-question="<?= $cekQuestionFile ?>"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" alt="Edit Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id']; ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>"></button>
                                         <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')" id="removeBtn"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/delete_icon.svg" alt="Remove Icon"></a>
+=======
+
+                                    <button id="dropdownRightStartButton" data-dropdown-toggle="dropdownRightStart" data-dropdown-placement="right-start" class="" type="button"><img class="w-7" src="../../Img/icons/detail_icon.svg" alt="Action Button"></button>
+>>>>>>> 0dc9b5659daee67d50997c1665ca2a3ecc4b777c
                                     </td>
                                 </tr>
+
+                                <div id="dropdownRightStart" class="z-50 hidden bg-white absolute rounded drop-shadow-lg w-44 border-cream">
+                                    <ul id="dropdownMenu" class="py-1 text-sm text-dark-green" aria-labelledby="dropdownRightStartButton">
+                                        <li>
+                                            <a href="#" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">Description</a>
+                                        </li>
+                                        <li>
+                                            <a href="assignment_collection.php?course_id=<?= $_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . '&subject_id=' . $_GET['subject_id']; ?>" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button">Assignment Collection</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>">Edit Assignment</a>
+                                        </li>
+                                        <li>
+                                            <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button">Delete Assignment</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                                          
 
                                 <!-- Description Modal -->
                                 <div id="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
@@ -580,16 +576,21 @@ if (isset($_GET['act'])) {
                     </table>
                 </div>
             </div>
+<<<<<<< HEAD
             <!-- TOMBOL TAMBAH ASSIGNMENT BARU -->
             <a class="text-xs lg:text-base bg-cream text-white font-semibold justify-end text-center py-2 rounded-lg w-[120px] md:w-[170px] ml-auto cursor-pointer" type="button" data-modal-toggle="addModal" id="btnAddAssignment">Add Assignment</a>
 
+=======
+>>>>>>> 0dc9b5659daee67d50997c1665ca2a3ecc4b777c
         </div>
     </div>
 
+    
+
 
     <!-- Main Edit modal -->
-    <div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+    <div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-screen md:h-full">
+        <div class="relative p-4 w-full max-w-xl h-full">
             <!-- Modal Edit content -->
             <div class="relative bg-white rounded-lg shadow ">
                 <!-- Modal Edit header -->
@@ -643,15 +644,16 @@ if (isset($_GET['act'])) {
                     <!-- TOMBOL CLOSE -->
                     <button data-modal-toggle="defaultModal" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:focus:ring-dark-800">Close</button>
                     <!-- TOMBOL UPLOAD -->
-                    <button type="submit" class="text-white bg-cream focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm font-medium px-5 py-2.5 hover:bg-gray-600 hover:text-white focus:z-10 dark:bg-[#DDB07F] dark:text--300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" name="edit_assignment">Upload</button>
+                    <button type="submit" class="text-white bg-cream focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm font-medium px-5 py-2.5 hover:bg-gray-600 hover:text-white focus:z-10 dark:bg-[#DDB07F] dark:text--300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" name="edit_assignment" id="editAssign">Upload</button>
                 </div>
                 </form>
             </div>
         </div>
     </div>
+
     <!-- Main Add modal -->
     <div id="addModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-screen md:h-full">
-        <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+        <div class="relative p-4 w-full max-w-xl h-full">
             <!-- Modal Add content -->
             <div class="relative bg-white rounded-lg shadow ">
                 <!-- Modal Add header -->
@@ -665,27 +667,27 @@ if (isset($_GET['act'])) {
                     <!-- CONTENT FORM TAMBAH ASSIGNMENT BARU -->
                     <form method="POST" action="" id="modalupload" enctype="multipart/form-data">
                         <div class="mb-6">
-                            <label for="title" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Title</label>
+                            <label for="upload_title" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Title</label>
                             <input type="text" id="upload_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="title">
                         </div>
                         <!-- LABEL START DATE -->
                         <div class="mb-6">
-                            <label for="startDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Start Date</label>
+                            <label for="upload_startDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Start Date</label>
                             <input type="datetime-local" id="upload_startDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="start-date">
                         </div>
                         <!-- LABEL DUE DATE -->
                         <div class="mb-6">
-                            <label for="dueDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Due Date</label>
+                            <label for="upload_dueDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Due Date</label>
                             <input type="datetime-local" id="upload_dueDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="end-date">
                         </div>
                         <!-- LABEL DESKRIPSI -->
                         <div class="mb-6">
-                            <label for="deksripsi" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Deksripsi</label>
+                            <label for="upload_deksripsi" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Deksripsi</label>
                             <textarea id="upload_deksripsi" rows="4" class="block p-2.5 w-full text-sm text-dark-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-white-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" name="desc"></textarea>
                         </div>
                         <!-- LABEL DROPDOWN TIPE ASSIGNMENT -->
                         <div class="mb-6">
-                            <label for="countries" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Assigment Type</label>
+                            <label for="upload_assign_type" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Assigment Type</label>
                             <select id="upload_assign_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name="assign_type">
                                 <!-- CONTENT DROPDOWN -->
                                 <option value="1">Exam</option>
@@ -696,7 +698,7 @@ if (isset($_GET['act'])) {
                         </div>
                         <!-- TOMBOL UPLOAD FILE -->
                         <div class="mb-3">
-                            <label for="input" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Dokumen</label>
+                            <label class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Dokumen</label>
                             <input type="file" id="upload_file" name="filename" required>
                         </div>
                 </div>
@@ -735,6 +737,10 @@ if (isset($_GET['act'])) {
         let btnToggle2 = document.getElementById('btnToggle2');
         let sidebar = document.querySelector('.sidebar');
         let leftNav = document.getElementById("left-nav");
+        let listMenu = document.getElementById("dropdownMenu");
+        let listContainer = document.getElementById("dropdownRightStart");
+
+        let btnDropdown = document.get
         btnToggle.onclick = function() {
             sidebar.classList.toggle('in-active');
         }
@@ -743,6 +749,10 @@ if (isset($_GET['act'])) {
             leftNav.classList.toggle('hidden');
         }
 
+        listMenu.onclick = function() {
+            listContainer.classList.toggle("hidden");
+        }
+        
         // Bug on click mobile navbar
         // leftNav.onclick = function() {
         //     leftNav.classList.toggle('hidden');
@@ -823,6 +833,14 @@ if (isset($_GET['act'])) {
                     $('#loading').removeClass('hidden');
                     $('#btnUpload').hide();
 
+                    // Disable form input
+                    $("#upload_title").attr('disabled', 'true');
+                    $("#upload_dueDate").attr('disabled', 'true');
+                    $("#upload_startDate").attr('disabled', 'true');
+                    $("#upload_assign_type").attr('disabled', 'true');
+                    $("#upload_deksripsi").attr('disabled', 'true');
+                    $("#upload_file").attr('disabled', 'true');
+
                     let data = {
                         "title": title,
                         "dueDate": dueData,
@@ -883,11 +901,13 @@ if (isset($_GET['act'])) {
                 let assigmentId = $(this).data('assigment-id');
                 let title = $(this).data('title');
                 let startDate = $(this).data('date-start');
-                console.log(new Date(startDate).toJSON().slice(0, 19))
-                console.log();
+                // console.log(new Date(startDate).toJSON().slice(0, 19))
+                // console.log();
                 //
+
+
                 let dueDate = $(this).data('date-end');
-                console.log(dueDate)
+                // console.log(dueDate)
                 let desc = $(this).data('desc');
                 let type = $(this).data('type');
                 $(title2).val(title)
@@ -901,24 +921,22 @@ if (isset($_GET['act'])) {
                     $("option[value='exam']").remove();
                     $(type2).append(`<option value="${type}" selected>Exam</option>`);
                 }
+
+                // $("#editAssign").click(() => {
+                //     // Disable form input
+                //     $("#title").attr('disabled', 'true');
+                //     $("#startDate").attr('disabled', 'true');
+                //     $("#dueDate").attr('disabled', 'true');
+                //     $("#tipe").attr('disabled', 'true');
+                //     $("#deksripsi").attr('disabled', 'true');
+                //     $("#input").attr('disabled', 'true');
+                // })
+
                 $('#modalEditAssignment').attr('action', 'assignment.php?act=edit&assign_id=' + assigmentId + '&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>')
             })
 
             $(document).on('click', '#showDesc', function() {
                 let desc = $(this).data('desc');
-            })
-
-            $(document).on('click', '#btnQuestion', function() {
-                let questionFileName = $(this).data('question');
-                let inputDokumen = document.getElementById('input');
-
-                if (questionFileName) {
-                    inputDokumen.setAttribute('disabled', 'true');
-                    inputDokumen.removeAttribute('required')
-
-                }
-
-
             })
 
 
