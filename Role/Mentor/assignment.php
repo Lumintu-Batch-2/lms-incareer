@@ -142,6 +142,10 @@ if (isset($_GET['act'])) {
 
     <!-- Tailwindcss -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Intro Js -->
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
+    <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -470,7 +474,7 @@ if (isset($_GET['act'])) {
             </div>
 
             <!-- TOMBOL TAMBAH ASSIGNMENT BARU -->
-            <a class="text-xs lg:text-base bg-cream text-white font-semibold justify-start text-center py-2 rounded-lg w-[120px] md:w-[170px] cursor-pointer" type="button" data-modal-toggle="addModal">Add Assignment</a>
+            <a class="text-xs lg:text-base bg-cream text-white font-semibold justify-start text-center py-2 rounded-lg w-[120px] md:w-[170px] cursor-pointer" type="button" data-modal-toggle="addModal" id="btnAddAssignment">Add Assignment</a>
 
             <!-- CONTENT TABEL ASSIGNMENT -->
             <div class="container-lg">
@@ -572,8 +576,6 @@ if (isset($_GET['act'])) {
                     </table>
                 </div>
             </div>
-            <!-- TOMBOL TAMBAH ASSIGNMENT BARU -->
-            <a class="text-xs lg:text-base bg-cream text-white font-semibold justify-end text-center py-2 rounded-lg w-[120px] md:w-[170px] ml-auto cursor-pointer" type="button" data-modal-toggle="addModal" id="btnAddAssignment">Add Assignment</a>
 
         </div>
     </div>
@@ -770,7 +772,7 @@ if (isset($_GET['act'])) {
                         title: 'Modal Add Assignment',
                         intro: '<img src="../../Img/assets/modal_assignments.png" onerror="this.onerror=null;this.src=\'https://i.giphy.com/ujUdrdpX7Ok5W.gif\';" alt="" data-position="top">'
                     }, {
-                        element: document.querySelector('#editBtn'),
+                        element: document.querySelector('#btnQuestion'),
                         intro: "Ini adalah tombol untuk mengedit Assignment"
                     }, {
                         element: document.querySelector('#removeBtn'),
@@ -930,6 +932,18 @@ if (isset($_GET['act'])) {
 
             $(document).on('click', '#showDesc', function() {
                 let desc = $(this).data('desc');
+            })
+
+            $(document).on('click', '#btnQuestion', function() {
+                let questionFileName = $(this).data('question');
+                let inputDokumen = document.getElementById('input');
+
+                if (questionFileName) {
+                    inputDokumen.setAttribute('disabled', 'true');
+                    inputDokumen.removeAttribute('required')
+
+                }
+
             })
 
 
