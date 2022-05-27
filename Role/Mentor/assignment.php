@@ -15,7 +15,7 @@ if (!isset($_SESSION['user_data'])) {
 }
 
 switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
-    // KONDISI KETIKA USER MEMASUKI HALAMAN NAMUN LOGIN SEBAGAI ADMIN
+        // KONDISI KETIKA USER MEMASUKI HALAMAN NAMUN LOGIN SEBAGAI ADMIN
     case 1:
         echo "
         <script>
@@ -59,7 +59,7 @@ $allAssignments = $objAssignment->getAssignmentBySubjectId($_GET['subject_id']);
 
 if (isset($_GET['act'])) {
     switch ($_GET['act']) {
-        // FUNGSI EDIT ASSIGNMENT
+            // FUNGSI EDIT ASSIGNMENT
         case "edit":
             if ($_GET['assign_id']) {
 
@@ -93,7 +93,7 @@ if (isset($_GET['act'])) {
                 }
             }
             break;
-        // FUNGSI DELETE ASSIGNMENT
+            // FUNGSI DELETE ASSIGNMENT
         case "delete":
             if ($_GET['assign_id']) {
                 $objAssignment->setAssignmentId((int)$_GET['assign_id']);
@@ -114,7 +114,7 @@ if (isset($_GET['act'])) {
                 }
             }
             break;
-        // FUNGSI LOGOUT 
+            // FUNGSI LOGOUT 
         case "logout":
             if (isset($_GET['act'])) {
                 require $_SERVER['DOCUMENT_ROOT'] . "\Model\Users.php";
@@ -162,7 +162,7 @@ if (isset($_GET['act'])) {
 
     <!-- CUSTOM STYLE CSS -->
     <style>
-       .sidebar #username_logo {
+        .sidebar #username_logo {
             display: none;
         }
 
@@ -206,7 +206,6 @@ if (isset($_GET['act'])) {
         .sidebar {
             transition: .5s ease-in-out;
         }
-
     </style>
 </head>
 
@@ -237,7 +236,7 @@ if (isset($_GET['act'])) {
                 <!-- List Menus -->
                 <div>
                     <ul class="flex flex-col gap-y-1">
-                        <!-- ICON DAN TEXT DASHBOARD -->    
+                        <!-- ICON DAN TEXT DASHBOARD -->
 
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -321,7 +320,7 @@ if (isset($_GET['act'])) {
                                     <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
                                     <!-- <p class="font-semibold"></p> -->
                                 </a>
-                            <!-- ICON DAN TEXT DASHBOARD -->    
+                                <!-- ICON DAN TEXT DASHBOARD -->
                             </li>
                             <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -394,7 +393,7 @@ if (isset($_GET['act'])) {
         <div class="bg-cgray w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll rightbar">
             <!-- Header / Profile -->
             <div class="items-center gap-x-4 justify-end hidden sm:flex" id="profil_image2">
-                <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image" >
+                <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
                 <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
             </div>
 
@@ -411,7 +410,7 @@ if (isset($_GET['act'])) {
                         </div>
                     </li>
 
-                    
+
                     <!-- NAVIGATOR HALAMAN COURSES -->
 
                     <div class="flex items-center space-x-2">
@@ -484,7 +483,7 @@ if (isset($_GET['act'])) {
                             <col span="1" style="width: 10%">
                             <col span="1" style="width: 15%">
                         </colgroup>
-                        <thead>
+                        <thead id="tableThead">
                             <!-- CONTENT TABEL [JUDUL FIELD] -->
                             <tr class="text-dark-green text-sm lg:text-base">
                                 <th class="border-b text-left px-4 py-2">Title</th>
@@ -511,10 +510,12 @@ if (isset($_GET['act'])) {
                                     <td class="p-5"><?= $assignment['assignment_name'] ?></td>
                                     <td class="text-center"><?= $dueDate; ?></td>
                                     <td class="text-center"><?= $dueTime; ?> WIB</td>
-                                    
-                                    <td class="flex flex-row justify-center items-center mx-3 my-3">
 
-                                    <button id="dropdownRightStartButton" data-dropdown-toggle="dropdownRightStart" data-dropdown-placement="right-start" class="" type="button"><img class="w-7" src="../../Img/icons/detail_icon.svg" alt="Action Button"></button>
+                                    <td class="flex flex-row justify-center items-center mx-3 my-3">
+                                        <button id="btnQuestion" data-question="<?= $cekQuestionFile ?>"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" alt="Edit Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id']; ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>"></button>
+                                        <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')" id="removeBtn"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/delete_icon.svg" alt="Remove Icon"></a>
+
+                                        <button id="dropdownRightStartButton" data-dropdown-toggle="dropdownRightStart" data-dropdown-placement="right-start" class="" type="button"><img class="w-7" src="../../Img/icons/detail_icon.svg" alt="Action Button"></button>
                                     </td>
                                 </tr>
 
@@ -534,7 +535,7 @@ if (isset($_GET['act'])) {
                                         </li>
                                     </ul>
                                 </div>
-                                                          
+
 
                                 <!-- Description Modal -->
                                 <div id="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
@@ -571,10 +572,13 @@ if (isset($_GET['act'])) {
                     </table>
                 </div>
             </div>
+            <!-- TOMBOL TAMBAH ASSIGNMENT BARU -->
+            <a class="text-xs lg:text-base bg-cream text-white font-semibold justify-end text-center py-2 rounded-lg w-[120px] md:w-[170px] ml-auto cursor-pointer" type="button" data-modal-toggle="addModal" id="btnAddAssignment">Add Assignment</a>
+
         </div>
     </div>
 
-    
+
 
 
     <!-- Main Edit modal -->
@@ -741,13 +745,40 @@ if (isset($_GET['act'])) {
         listMenu.onclick = function() {
             listContainer.classList.toggle("hidden");
         }
-        
+
         // Bug on click mobile navbar
         // leftNav.onclick = function() {
         //     leftNav.classList.toggle('hidden');
         // }
 
         $(document).ready(function() {
+
+            introJs().setOptions({
+                steps: [{
+                        intro: "Hello Selamat Datang Di Halaman Assignment Mentor"
+                    }, {
+                        element: document.querySelector('.topic-title'),
+                        intro: "Ini merupakan halaman assignment dimana mentor akan melihat, membuat, mengedit, dan menghapus assignment"
+                    }, {
+                        element: document.querySelector('#tableThead'),
+                        intro: "Ini merupakan tabel dimana data assignment yang sudah di buat akan di tampilkan"
+                    },
+                    {
+                        element: document.querySelector('#btnAddAssignment'),
+                        intro: "Ini adalah tombol untuk menambahkan Assignment"
+                    }, {
+                        title: 'Modal Add Assignment',
+                        intro: '<img src="../../Img/assets/modal_assignments.png" onerror="this.onerror=null;this.src=\'https://i.giphy.com/ujUdrdpX7Ok5W.gif\';" alt="" data-position="top">'
+                    }, {
+                        element: document.querySelector('#editBtn'),
+                        intro: "Ini adalah tombol untuk mengedit Assignment"
+                    }, {
+                        element: document.querySelector('#removeBtn'),
+                        intro: "Ini adalah tombol untuk menghapus Assignment"
+                    }
+
+                ]
+            }).start();
             // FUNGSI UPLOAD ASSIGNMENT
             $('#btnUpload').click(function(evt) {
 
