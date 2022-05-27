@@ -494,7 +494,7 @@ if (isset($_GET['act'])) {
                             <col span="1" style="width: 20%">
                             <col span="1" style="width: 10%">
                         </colgroup>
-                        <thead>
+                        <thead id="tableThead">
                             <!-- CONTENT TABEL [JUDUL FIELD] -->
                             <tr class="text-dark-green text-sm lg:text-base">
                                 <th class="border-b text-left px-4 py-2">Title</th>
@@ -541,7 +541,7 @@ if (isset($_GET['act'])) {
                                     </td>
                                     <td class="flex flex-row justify-center items-center mx-3 my-3">
                                         <button id="btnQuestion" data-question="<?= $cekQuestionFile ?>"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" alt="Edit Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id']; ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>"></button>
-                                        <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/delete_icon.svg" alt="Remove Icon"></a>
+                                        <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')" id="removeBtn"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/delete_icon.svg" alt="Remove Icon"></a>
                                     </td>
                                 </tr>
 
@@ -581,7 +581,7 @@ if (isset($_GET['act'])) {
                 </div>
             </div>
             <!-- TOMBOL TAMBAH ASSIGNMENT BARU -->
-            <a class="text-xs lg:text-base bg-cream text-white font-semibold justify-end text-center py-2 rounded-lg w-[120px] md:w-[170px] ml-auto cursor-pointer" type="button" data-modal-toggle="addModal">Add Assignment</a>
+            <a class="text-xs lg:text-base bg-cream text-white font-semibold justify-end text-center py-2 rounded-lg w-[120px] md:w-[170px] ml-auto cursor-pointer" type="button" data-modal-toggle="addModal" id="btnAddAssignment">Add Assignment</a>
 
         </div>
     </div>
@@ -749,6 +749,33 @@ if (isset($_GET['act'])) {
         // }
 
         $(document).ready(function() {
+
+            introJs().setOptions({
+                steps: [{
+                        intro: "Hello Selamat Datang Di Halaman Assignment Mentor"
+                    }, {
+                        element: document.querySelector('.topic-title'),
+                        intro: "Ini merupakan halaman assignment dimana mentor akan melihat, membuat, mengedit, dan menghapus assignment"
+                    }, {
+                        element: document.querySelector('#tableThead'),
+                        intro: "Ini merupakan tabel dimana data assignment yang sudah di buat akan di tampilkan"
+                    },
+                    {
+                        element: document.querySelector('#btnAddAssignment'),
+                        intro: "Ini adalah tombol untuk menambahkan Assignment"
+                    }, {
+                        title: 'Modal Add Assignment',
+                        intro: '<img src="../../Img/assets/modal_assignments.png" onerror="this.onerror=null;this.src=\'https://i.giphy.com/ujUdrdpX7Ok5W.gif\';" alt="" data-position="top">'
+                    }, {
+                        element: document.querySelector('#editBtn'),
+                        intro: "Ini adalah tombol untuk mengedit Assignment"
+                    }, {
+                        element: document.querySelector('#removeBtn'),
+                        intro: "Ini adalah tombol untuk menghapus Assignment"
+                    }
+
+                ]
+            }).start();
             // FUNGSI UPLOAD ASSIGNMENT
             $('#btnUpload').click(function(evt) {
 
