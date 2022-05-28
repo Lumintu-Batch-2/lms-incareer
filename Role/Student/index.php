@@ -128,9 +128,9 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
             display: none !important;
         }
 
-        .hidden {
+        /* .hidden {
             display: none !important;
-        }
+        } */
 
         .sidebar {
             transition: .5s ease-in-out;
@@ -140,9 +140,19 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
 </head>
 
 <body>
-    <div class="flex items-center">
+    <div class="responsive-top sticky top-0 z-30 bg-white p-5 sm:hidden">
+        <div class="flex justify-center bg-gray-300 p-2 rounded-lg">
+            lms in-career
+        </div>
+        <div class="container flex flex-column justify-between mt-4 mb-4">
+            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+            <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle2">
+        </div>
+    </div>
+
+    <div class="flex items-center">        
         <!-- Left side (Sidebar) -->
-        <div class="bg-white w-[350px] h-screen px-8 py-6 flex flex-col justify-between sidebar in-active">
+        <div class="bg-white w-[350px] h-screen px-8 py-6 sm:flex flex-col justify-between sidebar in-active hidden">
             <!-- Top nav -->
             <div class="flex flex-col gap-y-6">
                 <!-- Header -->
@@ -151,11 +161,95 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                     <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]">
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]"/>
 
-                <!-- List Menus -->
-                <div>
+                    <!-- List Menus -->
+                    <div>
+                        <ul class="flex flex-col gap-y-1">
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
+                                    <p class="font-semibold">Dashboard</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                    <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
+                                    <p class="text-white font-semibold">Courses</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
+                                    <p class="font-semibold">Forum Dicussion</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
+                                    <p class="font-semibold">Schedule</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
+                                    <p class="font-semibold">Attendance</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
+                                    <p class="font-semibold">Score</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                    <p class="font-semibold">Consult</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+
+            <!-- Bottom nav -->
+            <div>
+                <ul class="flex flex-col ">
+                    <!-- ICON DAN TEXT HELP -->
+                    <li>
+                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
+                            <p class="font-semibold">Help</p>
+                        </a>
+                    </li>
+                    <!-- ICON DAN TEXT LOG OUT -->
+                    <li>
+                        <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
+                            <p class="font-semibold">Log out</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Mobile navbar -->
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 fixed top-[130px] bottom-0 overflow-y-scroll inset-x-0 hidden z-10 transition-all ease-in-out duration-500 sm:hidden">
+
+            <div class="bg-white w-[250px] h-screen px-6 py-6 ">
+                <!-- Top nav -->
+                <div class="flex flex-col gap-y-6">
+
+                    <!-- List Menus -->
                     <ul class="flex flex-col gap-y-1">
+                        <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white" id="profil_image">
+                                <img class="w-5" src="../../Img/icons/default_profile.svg" alt="Profile Image">
+                                <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
+                                <!-- <p class="font-semibold"></p> -->
+                            </a>
+                        <!-- ICON DAN TEXT DASHBOARD -->    
+                        </li>
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
@@ -198,26 +292,22 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                                 <p class="font-semibold">Consult</p>
                             </a>
                         </li>
+                        <!-- ICON DAN TEXT HELP -->
+                        <li>
+                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
+                                <p class="font-semibold">Help</p>
+                            </a>
+                        </li>
+                        <!-- ICON DAN TEXT LOG OUT -->
+                        <li>
+                            <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
+                                <p class="font-semibold">Log out</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
-            </div>
-
-            <!-- Bottom nav -->
-            <div>
-                <ul class="flex flex-col ">
-                    <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                            <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                            <p class="font-semibold">Help</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                            <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                            <p class="font-semibold">Log out</p>
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
 
@@ -226,48 +316,59 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         <!-- Right side -->
         <div class="bg-cgray w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
             <!-- Header / Profile -->
-            <div class="flex items-center gap-x-4 justify-end">
+            <div class="items-center gap-x-4 justify-end hidden sm:flex">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
                 <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_username'} ?></p>
             </div>
 
             <!-- Breadcrumb -->
-            <div>
-                <ul class="flex items-center gap-x-4">
+            <div class="p-2 lg:p-4">
+                <ul class="flex items-center gap-x-4 text-xs lg:text-base">
+                    <!-- NAVIGATOR HALAMAN HOME -->
+
                     <li>
-                        <a class="text-light-green" href="#">Home</a>
+                        <a class="text-light-green hover:text-dark-green hover:font-semibold" href="#">Home</a>
                     </li>
+
                     <li>
                         <span class="text-light-green">/</span>
                     </li>
+                    <!-- NAVIGATOR HALAMAN COURSES -->
+
                     <li>
                         <a class="text-dark-green font-semibold" href="#">Course</a>
                     </li>
                 </ul>
             </div>
+            <!-- FUNGSI DROPDOWN UNTUK MENYELEKSI PERIODE COURSES -->
 
-            <div class="container p-4 rounded">
+            <div class="container p-2 lg:p-4 rounded">
                 <div class="container" style="display: table;">
-                    <div class="flex items-center space-x-2">
+                    <div class="flex flex-col md:flex-row md:items-center md:space-x-2 gap-y-2">
                         <p class="font-bold">Period :</p>
+                        <!-- CONTENT DROPDOWN -->
+
                         <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block flex-1  p-2.5">
                             <option selected></option>
-                            <?php for ($i = 0; $i < count($allBatch); $i++) : ?>
+                            <?php for($i = 0; $i < count($allBatch); $i++) : ?>
                                 <option value="<?= $allBatch[$i]->{'batch_id'}; ?>"><?= $allBatch[$i]->{'batch_name'}; ?></option>
                             <?php endfor ?>
+                            <!-- <option value="US">Filter 2</option>
+                            <option value="US">Filter 3</option> -->
                         </select>
                     </div>
                 </div>
             </div>
+            <!-- TITLE -->
 
-            <div class="p-4">
-                <p class="text-4xl text-dark-green font-semibold">My Courses</p>
+            <div class="p-2 lg:p-4">
+                <p class="text-lg md:text-xl lg:text-2xl xl:text-4xl text-dark-green font-semibold">Course List</p>
             </div>
 
-            <div class="p-4 mt-10 grid grid-cols-4 gap-4">
+            <div class="p-2 lg:p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 <?php foreach ($courseData as $key => $course) : ?>
                     <a href="./subject.php?course_id=<?= $course->{'id'}; ?>" class="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 w-100">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"><?= $course->{'modul_name'}; ?></h5>
+                        <h5 class="mb-2 text-lg lg:text-2xl font-bold tracking-tight text-gray-900 line-clamp-1 sm:line-clamp-2 truncate..."><?= $course->{'modul_name'}; ?></h5>
                         <p class="font-normal text-gray-700 flex flex-row items-center gap-4 mt-5">
                             <img src="../../Img/icons/dokumen_icon.svg" alt="dokumen"><?= $course->{'id'}; ?>
                         </p>
@@ -277,14 +378,29 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         </div>
     </div>
 
+    <!-- CDN FLOWBITE -->
 
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+    
+    <!-- FUNGSI TOMBOL BUTTON TOGGLE SIDEBAR -->
+    
     <script>
         let btnToggle = document.getElementById('btnToggle');
+        let btnToggle2 = document.getElementById('btnToggle2');
         let sidebar = document.querySelector('.sidebar');
+        let leftNav = document.getElementById("left-nav");
         btnToggle.onclick = function() {
             sidebar.classList.toggle('in-active');
         }
+
+        btnToggle2.onclick = function() {
+            leftNav.classList.toggle('hidden');
+        }
+
+        // Bug on click mobile navbar
+        // leftNav.onclick = function() {
+        //     leftNav.classList.toggle('hidden');
+        // }
     </script>
 
 

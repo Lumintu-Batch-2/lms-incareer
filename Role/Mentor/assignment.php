@@ -214,7 +214,7 @@ if (isset($_GET['act'])) {
 </head>
 
 <body>
-    <div class="responsive-top p-5 sm:hidden">
+    <div class="responsive-top sticky top-0 z-30 bg-white p-5 sm:hidden">
         <div class="flex justify-center bg-gray-300 p-2 rounded-lg">
             lms in-career
         </div>
@@ -309,9 +309,9 @@ if (isset($_GET['act'])) {
         </div>
 
         <!-- Mobile navbar -->
-        <div id="left-nav" class="bg-opacity-50 bg-gray-500 absolute inset-x-0 hidden z-10 transition-all ease-in-out duration-500 sm:hidden">
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 fixed top-[130px] bottom-0 overflow-y-scroll inset-x-0 hidden z-40 transition-all ease-in-out duration-500 sm:hidden">
 
-            <div class="bg-white w-[250px] h-screen px-8 py-6 ">
+            <div class="bg-white w-[250px] h-screen px-6 py-6 ">
                 <!-- Top nav -->
                 <div class="flex flex-col gap-y-6">
 
@@ -367,27 +367,22 @@ if (isset($_GET['act'])) {
                                     <p class="font-semibold">Consult</p>
                                 </a>
                             </li>
+                            <!-- ICON DAN TEXT HELP -->
+                            <li>
+                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
+                                    <p class="font-semibold">Help</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT LOG OUT -->
+                            <li>
+                                <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
+                                    <p class="font-semibold">Log out</p>
+                                </a>
+                            </li>
                         </ul>
                     </div>
-                </div>
-                <!-- Bottom nav -->
-                <div>
-                    <ul class="flex flex-col ">
-                        <!-- ICON DAN TEXT HELP -->
-                        <li>
-                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                                <p class="font-semibold">Help</p>
-                            </a>
-                        </li>
-                        <!-- ICON DAN TEXT LOG OUT -->
-                        <li>
-                            <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                                <p class="font-semibold">Log out</p>
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -477,7 +472,7 @@ if (isset($_GET['act'])) {
             <a class="text-xs lg:text-base bg-cream text-white font-semibold justify-start text-center py-2 rounded-lg w-[120px] md:w-[170px] cursor-pointer" type="button" data-modal-toggle="addModal" id="btnAddAssignment">Add Assignment</a>
 
             <!-- CONTENT TABEL ASSIGNMENT -->
-            <div class="container-lg">
+            <div class="relative">
                 <div class="assignment-table  overflow-x-auto ">
                     <table class="shadow-lg bg-white" style="width: 100%">
                         <!-- MENGATUR PANJANG JARAK ANTARA FIELD SATU DENGAN YANG LAIN -->
@@ -516,15 +511,12 @@ if (isset($_GET['act'])) {
                                     <td class="text-center"><?= $dueTime; ?> WIB</td>
 
                                     <td class="flex flex-row justify-center items-center mx-3 my-3">
-                                        <button id="btnQuestion" data-question="<?= $cekQuestionFile ?>"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" alt="Edit Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id']; ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>"></button>
-                                        <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')" id="removeBtn"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/delete_icon.svg" alt="Remove Icon"></a>
-
-                                        <button id="dropdownRightStartButton" data-dropdown-toggle="dropdownRightStart" data-dropdown-placement="right-start" class="" type="button"><img class="w-7" src="../../Img/icons/detail_icon.svg" alt="Action Button"></button>
+                                        <button id="dropdownRightStartButton<?=$assignment['assignment_id']?>" data-dropdown-toggle="dropdownRightStart<?=$assignment['assignment_id']?>" data-dropdown-placement="right-start" class="" type="button"><img class="w-5 sm:w-7" src="../../Img/icons/detail_icon.svg" alt="Action Button" onclick="openMenu(<?=$assignment['assignment_id']?>)"></button>
                                     </td>
                                 </tr>
 
-                                <div id="dropdownRightStart" class="z-50 hidden bg-white absolute rounded drop-shadow-lg w-44 border-cream">
-                                    <ul id="dropdownMenu" class="py-1 text-sm text-dark-green" aria-labelledby="dropdownRightStartButton">
+                                <div id="dropdownRightStart<?=$assignment['assignment_id']?>" class="z-50 hidden bg-white absolute rounded drop-shadow-lg w-44 border-cream">
+                                    <ul id="dropdownMenu<?=$assignment['assignment_id']?>" class="py-1 text-sm text-dark-green" aria-labelledby="dropdownRightStartButton<?=$assignment['assignment_id']?>">
                                         <li>
                                             <a href="#" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">Description</a>
                                         </li>
@@ -732,8 +724,6 @@ if (isset($_GET['act'])) {
         let btnToggle2 = document.getElementById('btnToggle2');
         let sidebar = document.querySelector('.sidebar');
         let leftNav = document.getElementById("left-nav");
-        let listMenu = document.getElementById("dropdownMenu");
-        let listContainer = document.getElementById("dropdownRightStart");
 
         let btnDropdown = document.get
         btnToggle.onclick = function() {
@@ -744,14 +734,22 @@ if (isset($_GET['act'])) {
             leftNav.classList.toggle('hidden');
         }
 
-        listMenu.onclick = function() {
-            listContainer.classList.toggle("hidden");
+        function openMenu(id) {
+            let listContainer = document.getElementById("dropdownRightStart" + id);
+            let listMenu = document.getElementById("dropdownMenu" + id);
+
+
+            listMenu.onclick = function() {
+                listContainer.classList.toggle("hidden");
+            }
         }
 
         // Bug on click mobile navbar
         // leftNav.onclick = function() {
         //     leftNav.classList.toggle('hidden');
         // }
+
+        
 
         $(document).ready(function() {
 
