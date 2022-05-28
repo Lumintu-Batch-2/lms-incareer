@@ -155,7 +155,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
 </head>
 
 <body>
-    <div class="responsive-top p-5 sm:hidden">
+    <div class="responsive-top sticky top-0 z-50 bg-white p-5 sm:hidden">
         <div class="flex justify-center bg-gray-300 p-2 rounded-lg">
             lms in-career
         </div>
@@ -249,9 +249,9 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         </div>
 
         <!-- Mobile navbar -->
-        <div id="left-nav" class="bg-opacity-50 bg-gray-500 absolute inset-x-0 hidden z-10 transition-all ease-in-out duration-500 sm:hidden">
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 fixed top-[130px] bottom-0 overflow-y-scroll inset-x-0 hidden z-40 transition-all ease-in-out duration-500 sm:hidden">
 
-            <div class="bg-white w-[250px] h-screen px-8 py-6 ">
+            <div class="bg-white w-[250px] h-screen px-6 py-6 ">
                 <!-- Top nav -->
                 <div class="flex flex-col gap-y-6">
 
@@ -307,27 +307,22 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                                     <p class="font-semibold">Consult</p>
                                 </a>
                             </li>
+                            <!-- ICON DAN TEXT HELP -->
+                            <li>
+                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
+                                    <p class="font-semibold">Help</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT LOG OUT -->
+                            <li>
+                                <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
+                                    <p class="font-semibold">Log out</p>
+                                </a>
+                            </li>
                         </ul>
                     </div>
-                </div>
-                <!-- Bottom nav -->
-                <div>
-                    <ul class="flex flex-col ">
-                        <!-- ICON DAN TEXT HELP -->
-                        <li>
-                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                                <p class="font-semibold">Help</p>
-                            </a>
-                        </li>
-                        <!-- ICON DAN TEXT LOG OUT -->
-                        <li>
-                            <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                                <p class="font-semibold">Log out</p>
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -335,7 +330,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
 
 
         <!-- Right side -->
-        <div class="bg-cgray w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
+        <div id="main-content" class="bg-cgray w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
             <!-- Header / Profile -->
             <div class="items-center gap-x-4 justify-end hidden sm:flex">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">

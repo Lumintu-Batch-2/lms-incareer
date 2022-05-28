@@ -254,7 +254,7 @@ if (isset($_POST['submit1'])) {
 </head>
 
 <body>
-    <div class="responsive-top p-5 sm:hidden">
+    <div class="responsive-top sticky top-0 z-30 bg-white p-5 sm:hidden">
         <div class="flex justify-center bg-gray-300 p-2 rounded-lg">
             lms in-career
         </div>
@@ -274,12 +274,12 @@ if (isset($_POST['submit1'])) {
                     <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]"/>
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]">
 
                 <!-- List Menus -->
                 <div>
                     <ul class="flex flex-col gap-y-1">
-                        <!-- ICON DAN TEXT DASHBOARD -->    
+                        <!-- ICON DAN TEXT DASHBOARD -->
 
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -348,79 +348,80 @@ if (isset($_POST['submit1'])) {
         </div>
 
         <!-- Mobile navbar -->
-        <div id="left-nav" class="bg-opacity-50 bg-gray-500 absolute inset-x-0 hidden z-10 transition-all ease-in-out duration-500 sm:hidden">
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 fixed top-[130px] bottom-0 overflow-y-scroll inset-x-0 hidden z-40 transition-all ease-in-out duration-500 sm:hidden">
 
-            <div class="bg-white w-[250px] relative h-screen px-8 py-6 z-50">
+            <div class="bg-white w-[250px] h-screen px-6 py-6 ">
                 <!-- Top nav -->
                 <div class="flex flex-col gap-y-6">
 
                     <!-- List Menus -->
-                    
-                    <ul class="flex flex-col gap-y-1">
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] px-4" id="profil_image">
-                                <img class="w-5" src="../../Img/icons/default_profile.svg" alt="Profile Image">
-                                <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
-                                <!-- <p class="font-semibold"></p> -->
-                            </a>
-                        <!-- ICON DAN TEXT DASHBOARD -->    
-                        </li>
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
-                                <p class="font-semibold">Dashboard</p>
-                            </a>
-                        </li>
-                        <!-- ICON DAN TEXT FORUM COURSES -->
-                        <li>
-                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
-                                <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
-                                <p class="text-white font-semibold">Courses</p>
-                            </a>
-                        </li>
-                        <!-- ICON DAN TEXT SCHEDULE -->
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
-                                <p class="font-semibold">Schedule</p>
-                            </a>
-                        </li>
-                        <!-- ICON DAN TEXT ATTENDANCE -->
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
-                                <p class="font-semibold">Attendance</p>
-                            </a>
-                        </li>
-                        <!-- ICON DAN TEXT SCORE -->
-                        <!-- <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
-                                <p class="font-semibold">Score</p>
-                            </a>
-                        </li> -->
-                        <!-- ICON DAN TEXT CONSULT -->
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
-                                <p class="font-semibold">Consult</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                                <p class="font-semibold">Help</p>
-                            </a>
-                        </li>
-                        <!-- ICON DAN TEXT LOG OUT -->
-                        <li>
-                            <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                                <p class="font-semibold">Log out</p>
-                            </a>
-                        </li>
-                    </ul>
-                    
+                    <div>
+                        <ul class="flex flex-col gap-y-1">
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] px-4" id="profil_image">
+                                    <img class="w-5" src="../../Img/icons/default_profile.svg" alt="Profile Image">
+                                    <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
+                                    <!-- <p class="font-semibold"></p> -->
+                                </a>
+                                <!-- ICON DAN TEXT DASHBOARD -->
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
+                                    <p class="font-semibold">Dashboard</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT FORUM COURSES -->
+                            <li>
+                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                    <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
+                                    <p class="text-white font-semibold">Courses</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT SCHEDULE -->
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
+                                    <p class="font-semibold">Schedule</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT ATTENDANCE -->
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
+                                    <p class="font-semibold">Attendance</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT SCORE -->
+                            <!-- <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
+                                    <p class="font-semibold">Score</p>
+                                </a>
+                            </li> -->
+                            <!-- ICON DAN TEXT CONSULT -->
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                    <p class="font-semibold">Consult</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT HELP -->
+                            <li>
+                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
+                                    <p class="font-semibold">Help</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT LOG OUT -->
+                            <li>
+                                <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
+                                    <p class="font-semibold">Log out</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

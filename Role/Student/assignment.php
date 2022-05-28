@@ -1,6 +1,9 @@
 <?php
+// MEMULAI SESSION
 
 session_start();
+// KEAMANAN HALAMAN BACK-END IDENTIFIKASI USER [START]
+// PENGECEKAN USER APAKAH SUDAH LOGIN DENGAN AKUN YANG SESUAI ATAU BELUM SEBELUM MEMASUKI HALAMAN INI
 
 $loginPath = "../../login.php";
 if (!isset($_COOKIE['X-LUMINTU-REFRESHTOKEN'])) {
@@ -14,6 +17,8 @@ if (!isset($_SESSION['user_data'])) {
 }
 
 switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
+    // KONDISI KETIKA USER MEMASUKI HALAMAN NAMUN LOGIN SEBAGAI ADMIN
+    
     case 1:
         echo "
         <script>
@@ -22,6 +27,8 @@ switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
         </script>
         ";
         break;
+        // KONDISI KETIKA USER MEMASUKI HALAMAN NAMUN LOGIN SEBAGAI MENTOR
+
     case 2:
         echo "
         <script>
@@ -33,8 +40,12 @@ switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
     default:
         break;
 }
+// KEAMANAN HALAMAN BACK-END IDENTIFIKASI USER [FINISH]
 
+// MEMANGGIL FUNGSI DAN API
 require_once('../../Model/Assignments.php');
+// MENGAMBIL ASSIGNMENT SESUAI DENGAN TOPIK DAN SUB-TOPIK TERTENTU
+
 $objAssign = new Assignments;
 
 $allAssignments = $objAssign->getAssignmentBySubjectId($_GET['subject_id']);
@@ -43,6 +54,7 @@ $allAssignments = $objAssign->getAssignmentBySubjectId($_GET['subject_id']);
 require "../../api/get_api_data.php";
 require_once "../../api/get_request.php";
 
+// MENYIMPAN DATA KEDALAM ARRAY
 
 // $subModulData = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
 $lectureData = array();
@@ -99,7 +111,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
 
     <!-- Tailwindcss -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
+    <!-- <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" /> -->
     <script>
         tailwind.config = {
             theme: {
@@ -118,6 +130,22 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
         }
     </script>
     <style>
+        .sidebar #username_logo {
+            display: none;
+        }
+
+        /* #profil_image {
+            display: none !important;
+        } */
+
+        /* .responsive-top {
+            display: none;
+        } */
+
+        .active {
+            color: #DDB07F !important;
+            border-bottom: solid 4px #DDB07F;
+        }
         .in-active {
             width: 80px !important;
             padding: 20px 15px !important;
@@ -138,9 +166,9 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
             display: none !important;
         }
 
-        .hidden {
+        /* .hidden {
             display: none !important;
-        }
+        } */
 
         .sidebar {
             transition: .5s ease-in-out;
@@ -149,10 +177,20 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
 
 </head>
 
-<body class="overflow-hidden">
+<body>
+    <div class="responsive-top sticky top-0 z-30 bg-white p-5 sm:hidden">
+        <div class="flex justify-center bg-gray-300 p-2 rounded-lg">
+            lms in-career
+        </div>
+        <div class="container flex flex-column justify-between mt-4 mb-4">
+            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+            <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle2">
+        </div>
+    </div>
+    <!-- LIST MENU SIDEBAR [START]-->
     <div class="flex items-center">
         <!-- Left side (Sidebar) -->
-        <div class="bg-white w-[350px] h-screen px-8 py-6 flex flex-col justify-between sidebar in-active">
+        <div class="bg-white w-[350px] h-screen px-8 py-6 sm:flex flex-col justify-between sidebar in-active hidden">
             <!-- Top nav -->
             <div class="flex flex-col gap-y-6">
                 <!-- Header -->
@@ -161,11 +199,95 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                     <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]">
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]"/>
 
-                <!-- List Menus -->
-                <div>
+                    <!-- List Menus -->
+                    <div>
+                        <ul class="flex flex-col gap-y-1">
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
+                                    <p class="font-semibold">Dashboard</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                    <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
+                                    <p class="text-white font-semibold">Courses</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
+                                    <p class="font-semibold">Forum Dicussion</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
+                                    <p class="font-semibold">Schedule</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
+                                    <p class="font-semibold">Attendance</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
+                                    <p class="font-semibold">Score</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                    <p class="font-semibold">Consult</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+
+            <!-- Bottom nav -->
+            <div>
+                <ul class="flex flex-col ">
+                    <!-- ICON DAN TEXT HELP -->
+                    <li>
+                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
+                            <p class="font-semibold">Help</p>
+                        </a>
+                    </li>
+                    <!-- ICON DAN TEXT LOG OUT -->
+                    <li>
+                        <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
+                            <p class="font-semibold">Log out</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Mobile navbar -->
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 fixed top-[130px] bottom-0 overflow-y-scroll inset-x-0 hidden z-10 transition-all ease-in-out duration-500 sm:hidden">
+
+            <div class="bg-white w-[250px] h-screen px-6 py-6 ">
+                <!-- Top nav -->
+                <div class="flex flex-col gap-y-6">
+
+                    <!-- List Menus -->
                     <ul class="flex flex-col gap-y-1">
+                        <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white" id="profil_image">
+                                <img class="w-5" src="../../Img/icons/default_profile.svg" alt="Profile Image">
+                                <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
+                                <!-- <p class="font-semibold"></p> -->
+                            </a>
+                        <!-- ICON DAN TEXT DASHBOARD -->    
+                        </li>
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
@@ -208,99 +330,108 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                 <p class="font-semibold">Consult</p>
                             </a>
                         </li>
+                        <!-- ICON DAN TEXT HELP -->
+                        <li>
+                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
+                                <p class="font-semibold">Help</p>
+                            </a>
+                        </li>
+                        <!-- ICON DAN TEXT LOG OUT -->
+                        <li>
+                            <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
+                                <p class="font-semibold">Log out</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
-            </div>
-
-            <!-- Bottom nav -->
-            <div>
-                <ul class="flex flex-col ">
-                    <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                            <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                            <p class="font-semibold">Help</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                            <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                            <p class="font-semibold">Log out</p>
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
 
 
         <!-- Right side -->
-        <div class="bg-cgray w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
+        <div class="bg-cgray w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll rightbar">
             <!-- Header / Profile -->
-            <div class="flex items-center gap-x-4 justify-end">
+            <div class="items-center gap-x-4 justify-end hidden sm:flex" id="profil_image2">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
                 <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_username'} ?></p>
             </div>
 
             <!-- Breadcrumb -->
-            <div>
+            <div class="text-xs lg:text-base">
                 <ul class="flex items-center gap-x-4">
-                    <li>
-                        <a class="text-light-green" href="#">Home</a>
+                    <!-- NAVIGATOR HALAMAN HOME -->
+
+                    <li class="flex items-center space-x-2">
+                        <div>
+                            <a class="text-light-green hover:text-dark-green hover:font-semibold" href="#">Home</a>
+                        </div>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>
                     </li>
-                    <li>
-                        <a class="text-light-green" href="index.php">Courses</a>
-                    </li>
-                    <li>
-                        <span class="text-light-green">/</span>
-                    </li>
-                    <li>
-                        <a class="text-light-green" href="subject.php?course_id=<?= $_GET['course_id']; ?>">Sub Topic</a>
-                    </li>
-                    <li>
-                        <span class="text-light-green">/</span>
-                    </li>
-                    <li>
-                        <a class="text-dark-green font-semibold" href="#">Assignment</a>
-                    </li>
+                    <!-- NAVIGATOR HALAMAN COURSES -->
+
+                    <div class="flex items-center space-x-2">
+                        <li>
+                            <a class="text-light-green hover:text-dark-green hover:font-semibold" href="index.php">Courses</a>
+                        </li>
+                        <li>
+                            <span class="text-light-green">/</span>
+                        </li>
+                    </div>
+                    <!-- NAVIGATOR HALAMAN SUB TOPIC -->
+
+                    <div class="flex items-center space-x-2">
+                        <li>
+                            <a class="text-light-green" href="subject.php?course_id=<?= $_GET['course_id']; ?>">Sub Topic</a>
+                        </li>
+                        <li>
+                            <span class="text-light-green">/</span>
+                        </li>
+                    </div>
+                    <!-- NAVIGATOR HALAMAN ASSIGNMENT -->
+
+                    <div>
+                        <li>
+                            <a class="text-dark-green font-semibold" href="#">Assignment</a>
+                        </li>
+                    </div>
                 </ul>
             </div>
 
             <!-- Topic Title -->
-            <div>
-                <p class="text-4xl text-dark-green font-semibold">Session#1 <?= $subModul[0]->{'modul_name'}; ?></p>
+            <div class="topic-title">
+                <p class="text-sm sm:text-lg lg:text-2xl xl:text-4xl text-dark-green font-semibold">Session#1 <?= $subModul[0]->{'modul_name'}; ?></p>
             </div>
 
             <!-- Mentor -->
-            <div class="flex items-center gap-x-4 w-full bg-white py-4 px-10 rounded-xl">
-                <img class="w-14" src="../../Img/icons/default_profile.svg" alt="Profile Image">
+            <div class="flex items-center gap-x-4 w-full bg-white py-4 px-5 lg:px-10 rounded-xl mentor-profile">
+                <img class="w-8 lg:w-14" src="../../Img/icons/default_profile.svg" alt="Profile Image">
                 <div class="">
-                    <p class="text-dark-green text-base font-semibold"><?= $lectureData[0]->{'user_first_name'} . " " . $lectureData[0]->{'user_last_name'} ?> | Mentor Code</p>
-                    <p class="text-light-green">Mentor Specialization</p>
+                    <p class="text-dark-green text-sm lg:text-base font-semibold"><?= $lectureData[0]->{'user_first_name'} . " " . $lectureData[0]->{'user_last_name'} ?></p>
+                    <!-- <p class="text-light-green">Mentor Specialization</p> -->
                 </div>
             </div>
 
             <!-- Tab -->
-            <div class="bg-white w-full h-[50px] flex content-center px-10">
-                <ul class="flex items-center gap-x-8">
-                    <li class="text-dark-green hover:text-cream hover:border-b-4 hover:border-cream h-[50px] flex items-center font-semibold  cursor-pointer">
-                        <p>Session</p>
-                    </li>
-                    <li class="text-dark-green hover:text-cream hover:border-b-4 hover:border-cream h-[50px] flex items-center font-semibold  cursor-pointer">
+            <div class="bg-white w-full h-[50px] flex content-center px-10 tab-menu">
+                <ul class="flex items-center gap-x-8 text-sm lg:text-base">
+                    <li class="text-dark-green hover:text-cream hover:border-b-4 hover:border-cream h-[50px] flex items-center font-semibold  cursor-pointer active">
                         <p>Assignment</p>
                     </li>
                 </ul>
             </div>
 
             <!-- Direction -->
-            <div class="bg-white w-full p-6">
-                <p class="text-dark-green font-semibold">Directions :</p>
-                <p><?= $subModul[0]->{'modul_description'}; ?></p>
+            <div class="bg-white w-full p-6 direction">
+                <p class="text-dark-green font-semibold text-sm lg:text-base">Directions :</p>
+                <p class="text-sm lg:text-base"><?= $subModul[0]->{'modul_description'}; ?></p>
             </div>
 
             <!-- Table Assignment -->
-            <div>
+            <div class="relative overflow-x-auto">
                 <table class="shadow-lg bg-white" style="width: 100%">
                     <colgroup>
                         <col span="1" style="width: 15%">
@@ -313,7 +444,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                         <col span="1" style="width: 10%">
                     </colgroup>
                     <thead>
-                        <tr class="text-dark-green">
+                        <tr class="text-dark-green text-sm lg:text-base">
                             <th class="border-b text-left px-4 py-2">Title</th>
                             <th class="border-b text-center px-4 py-2">Start Date</th>
                             <th class="border-b text-center px-4 py-2">Due Date</th>
@@ -335,12 +466,12 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                             $dueDate = $arrEndDate[0];
                             $dueTime = $arrEndDate[1];
                             ?>
-                            <tr>
+                            <tr class="text-sm lg:text-base">
                                 <td class="border-b px-4 py-2"><?= $assignment['assignment_name']; ?></td>
                                 <td class="border-b px-4 py-2 text-center"><?= $startDate; ?></td>
                                 <td class="border-b px-4 py-2 text-center"><?= $dueDate; ?></td>
                                 <td class="border-b px-4 py-2 text-center"><?= $dueTime; ?></td>
-                                <td class="border-b px-4 py-2 text-center"><a href="#"><img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>"></a></td>
+                                <td class="border-b px-4 py-2 text-center"><a href="#"><img class="w-5 sm:w-7 mx-auto cursor-pointer" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>"></a></td>
                                 <td class="border-b px-4 py-2">
                                     <?php
                                     require_once('../../Model/AssignmentQuestion.php');
@@ -348,7 +479,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                     $asq->setAssignmentId($assignment['assignment_id']);
                                     $question = $asq->getQuestionsByAssignmentId();
                                     ?>
-                                    <a href="download.php?file=<?= $question['question_filename'] . '&type=q'; ?>"><img class=" w-7 mx-auto cursor-pointer" src="../../Img/icons/download_icon.svg" alt="Download Icon"></a>
+                                    <a href="download.php?file=<?= $question['question_filename'] . '&type=q'; ?>"><img class="w-5 sm:w-7 mx-auto cursor-pointer" src="../../Img/icons/download_icon.svg" alt="Download Icon"></a>
                                 </td>
                                 <td class="border-b px-4 py-2">
                                     <?php
@@ -367,7 +498,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
 
                                         if ((strtotime($now['now()']) >= strtotime($assignment['assignment_end_date']))) {
                                     ?>
-                                            <img class="w-7 mx-auto " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
+                                            <img class="w-5 sm:w-7 mx-auto " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
                                             <div id="tooltip-default1" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-red-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-red-700">
                                                 You can't submit your work
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
@@ -375,14 +506,14 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         <?php
                                         } else {
                                         ?>
-                                            <img class="w-7 mx-auto cursor-pointer modalUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
+                                            <img class="w-5 sm:w-7 mx-auto cursor-pointer modalUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
                                         <?php
                                         }
                                     } else {
                                         if (count($csub) < 3) {
                                             // echo (count($csub));
                                         ?>
-                                            <img class=" w-7 mx-auto cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
+                                            <img class=" w-5 sm:w-7 mx-auto cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
                                             <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
                                                 Already submit !!
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
@@ -391,7 +522,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
 
                                         } else if (count($csub) >= 3 || (strtotime($now['now()']) >= strtotime($assignment['assignment_end_date']))) {
                                         ?>
-                                            <img class="w-7 mx-auto " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
+                                            <img class="w-5 sm:w-7 mx-auto " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
                                             <div id="tooltip-default1" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-red-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-red-700">
                                                 You can't submit your work
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
@@ -405,7 +536,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
 
                                 </td>
                                 <td class="border-b px-4 py-2">
-                                    <img class="w-7 mx-auto cursor-pointer" src="../../Img/icons/history_icon.svg" alt="History Icon" type="button" data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>">
+                                    <img class="w-5 sm:w-7 mx-auto cursor-pointer" src="../../Img/icons/history_icon.svg" alt="History Icon" type="button" data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>">
                                 </td>
 
                             </tr>
@@ -535,7 +666,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                 </div>
                                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
                                     <button data-modal-toggle="modalAdd" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center hover:ring-2 hover:ring-gray-400" id="closeModal">Close</button>
-                                    <button class=" bg-yellow-500 text-white w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-800" type="submit" name="submit" id="uploadSubmission">Submit</button>
+                                    <button class=" bg-cream text-white w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-600" type="submit" name="submit" id="uploadSubmission">Submit</button>
                                     <button disabled type="button" id="loading" class="hidden text-white bg-yellow-500 rounded font-medium ml-auto py-2 px-2 items-center">
                                         <svg role="status" class="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
@@ -556,13 +687,26 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
 
 
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
         let btnToggle = document.getElementById('btnToggle');
+        let btnToggle2 = document.getElementById('btnToggle2');
         let sidebar = document.querySelector('.sidebar');
+        let leftNav = document.getElementById('left-nav');
+        // let listMenu = document.getElementById('dropdownMenu');
+        // let listContainer = document.getElementById('dropdownRightStart');
+        
         btnToggle.onclick = function() {
             sidebar.classList.toggle('in-active');
         }
-        let assignment_id;
+
+        btnToggle2.onclick = function() {
+            leftNav.classList.toggle('hidden');
+        }
+
+        // listMenu.onclick = () => {
+        //     listContainer.classList.toggle("hidden");
+        // }
 
         function readFile(e) {
             let documentPrev = document.getElementById("prevDoc");
