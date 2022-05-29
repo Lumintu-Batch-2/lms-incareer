@@ -73,6 +73,44 @@ if (isset($_GET['act'])) {
                         "id" => $_GET['assign_id'],
                         "assign_type" => $_POST['assign_type']
                     ];
+                    $date_start = explode(" ", date("Y-m-d H:i:s", strtotime($_POST['startDate'])));
+                    $date_end = explode(" ", date("Y-m-d H:i:s", strtotime($_POST['dueDate'])));
+
+                    $start_date = $date_start[0] . "T" . $date_start[1];
+                    $end_date = $date_end[0] . "T" . $date_end[1];
+
+                    $curlData = [
+                        "created_by" => $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'},
+                        "event_start_time" => $start_date,
+                        "event_name" => $_POST['title'],
+                        "event_end_time" => $end_date,
+                        "event_description" => $_POST['desc'],
+                    ];
+                    $api_schedule = 'https://q4optgct.directus.app/items/events/' . $_POST['event_id'];
+                    $payload = json_encode($curlData);
+                    $ch = curl_init($api_schedule);
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+                    // curl_setopt($ch, CURLOPT_POST, true);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+
+                    // Set HTTP Header for POST request 
+                    curl_setopt(
+                        $ch,
+                        CURLOPT_HTTPHEADER,
+                        array(
+                            'Content-Type: application/json',
+                            'Content-Length: ' . strlen($payload)
+                        )
+                    );
+
+                    // Submit the POST request
+                    $result = curl_exec($ch);
+                    $res = json_decode($result);
+
+                    // Close cURL session handle
+                    curl_close($ch);
                     //    var_dump($dataArray);
                     //     die;
                     $edit = $objAssignment->editAssignment($dataArray, $_FILES, $_GET['subject_id']);
@@ -96,6 +134,19 @@ if (isset($_GET['act'])) {
             // FUNGSI DELETE ASSIGNMENT
         case "delete":
             if ($_GET['assign_id']) {
+                $api_schedule = 'https://q4optgct.directus.app/items/events/' . $_GET['event_id'];
+                // $payload = json_encode($curlData);
+                $ch = curl_init($api_schedule);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+
+                // Submit the POST request
+                $result = curl_exec($ch);
+                $res = json_decode($result);
+
+                // Close cURL session handle
+                curl_close($ch);
                 $objAssignment->setAssignmentId((int)$_GET['assign_id']);
                 $deleteStat = $objAssignment->deleteAssignment();
 
@@ -511,12 +562,12 @@ if (isset($_GET['act'])) {
                                     <td class="text-center"><?= $dueTime; ?> WIB</td>
 
                                     <td class="flex flex-row justify-center items-center mx-3 my-3">
-                                        <button id="dropdownRightStartButton<?=$assignment['assignment_id']?>" data-dropdown-toggle="dropdownRightStart<?=$assignment['assignment_id']?>" data-dropdown-placement="right-start" class="" type="button"><img class="w-5 sm:w-7" src="../../Img/icons/detail_icon.svg" alt="Action Button" onclick="openMenu(<?=$assignment['assignment_id']?>)"></button>
+                                        <button id="dropdownRightStartButton<?= $assignment['assignment_id'] ?>" data-dropdown-toggle="dropdownRightStart<?= $assignment['assignment_id'] ?>" data-dropdown-placement="right-start" class="" type="button"><img class="w-5 sm:w-7" src="../../Img/icons/detail_icon.svg" alt="Action Button" onclick="openMenu(<?= $assignment['assignment_id'] ?>)"></button>
                                     </td>
                                 </tr>
 
-                                <div id="dropdownRightStart<?=$assignment['assignment_id']?>" class="z-50 hidden bg-white absolute rounded drop-shadow-lg w-44 border-cream">
-                                    <ul id="dropdownMenu<?=$assignment['assignment_id']?>" class="py-1 text-sm text-dark-green" aria-labelledby="dropdownRightStartButton<?=$assignment['assignment_id']?>">
+                                <div id="dropdownRightStart<?= $assignment['assignment_id'] ?>" class="z-50 hidden bg-white absolute rounded drop-shadow-lg w-44 border-cream">
+                                    <ul id="dropdownMenu<?= $assignment['assignment_id'] ?>" class="py-1 text-sm text-dark-green" aria-labelledby="dropdownRightStartButton<?= $assignment['assignment_id'] ?>">
                                         <li>
                                             <a href="#" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">Description</a>
                                         </li>
@@ -524,10 +575,10 @@ if (isset($_GET['act'])) {
                                             <a href="assignment_collection.php?course_id=<?= $_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . '&subject_id=' . $_GET['subject_id']; ?>" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button">Assignment Collection</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>">Edit Assignment</a>
+                                            <a href="#" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>" data-eventid="<?= $assignment['event_id'] ?>">Edit Assignment </a>
                                         </li>
                                         <li>
-                                            <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button">Delete Assignment</a>
+                                            <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>&event_id=<?= $assignment['event_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button">Delete Assignment</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -610,6 +661,8 @@ if (isset($_GET['act'])) {
                             <label for="deksripsi" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Deskripsi</label>
                             <textarea id="deksripsi" rows="4" class="block p-2.5 w-full text-sm text-dark-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-white-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" name="desc"></textarea>
                         </div>
+                        <input type="hidden" id="eventId" name="event_id">
+
                         <!-- LABEL DROPDOWN TIPE ASSIGNMENT -->
                         <div class="mb-6">
                             <label for="tipe" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Assigment Type</label>
@@ -623,7 +676,7 @@ if (isset($_GET['act'])) {
                         <!-- LABEL TOMBOL UPLOAD FILE -->
                         <div class="mb-6">
                             <label for="input" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Dokumen</label>
-                            <input type="file" id="input" name="filename" required>
+                            <input type="file" id="input" name="filename">
                         </div>
                 </div>
                 <!-- Modal Edit footer -->
@@ -749,7 +802,7 @@ if (isset($_GET['act'])) {
         //     leftNav.classList.toggle('hidden');
         // }
 
-        
+
 
         $(document).ready(function() {
 
@@ -900,11 +953,14 @@ if (isset($_GET['act'])) {
 
 
                 let dueDate = $(this).data('date-end');
+                let eventId = $(this).data('eventid');
                 // console.log(dueDate)
                 let desc = $(this).data('desc');
                 let type = $(this).data('type');
+                // console.log(eventId);
                 $(title2).val(title)
                 $(desc2).val(desc)
+                $('#eventId').val(eventId)
                 $('#startDate').val(startDate.slice(0, 10) + "T" + startDate.slice(11, 16))
                 $('#dueDate').val(dueDate.slice(0, 10) + "T" + dueDate.slice(11, 16))
                 if (type == "task") {

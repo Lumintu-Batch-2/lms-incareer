@@ -9,6 +9,7 @@ class Assignments
     private $subjectId;
     private $assignmentType;
     private $mentorId;
+    private $eventId;
     private $dbConn;
 
     public function __construct()
@@ -81,10 +82,18 @@ class Assignments
     {
         return $this->mentorId;
     }
+    public function setEventId($id)
+    {
+        $this->eventId = $id;
+    }
+    public function getEventId()
+    {
+        return $this->eventId;
+    }
 
     public function saveAssignment()
     {
-        $stmt = $this->dbConn->prepare("INSERT INTO assignments VALUES(null, :name, :start_date, :end_date, :desc, :assign_type, :sid,:mid)");
+        $stmt = $this->dbConn->prepare("INSERT INTO assignments VALUES(null, :name, :start_date, :end_date, :desc, :assign_type, :sid,:mid,:eid)");
 
         $stmt->bindParam(":name", $this->assignmentName);
         $stmt->bindParam(":start_date", $this->assignmentStartDate);
@@ -93,6 +102,7 @@ class Assignments
         $stmt->bindParam(":assign_type", $this->assignmentType);
         $stmt->bindParam(":sid", $this->subjectId);
         $stmt->bindParam(":mid", $this->mentorId);
+        $stmt->bindParam(":eid", $this->eventId);
 
         $id = "";
 
@@ -159,6 +169,7 @@ class Assignments
         $this->setAssignmentEndDate($data['end-date']);
         $this->setAssignmentDesc($data['desc']);
         $this->setAssignmentType($data['assign_type']);
+        $this->setEventId($data['event_id']);
         $this->setSubjectId($sid);
         $this->setMentorId($mid);
 
