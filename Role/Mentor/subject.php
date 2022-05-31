@@ -195,6 +195,13 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                                 <p class="text-white font-semibold">Courses</p>
                             </a>
                         </li>
+                        <!-- Icon Assignment -->
+                        <li>
+                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
+                                <p class="font-semibold">Assignment</p>
+                            </a>
+                        </li>
                         <!-- ICON DAN TEXT SCHEDULE -->
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -277,6 +284,13 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                                 <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
                                     <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
                                     <p class="text-white font-semibold">Courses</p>
+                                </a>
+                            </li>
+                            <!-- Icon Assignment -->
+                            <li>
+                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
+                                    <p class="font-semibold">Assignment</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT SCHEDULE -->
@@ -370,7 +384,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                 <p class="text-lg md:text-xl lg:text-2xl xl:text-4xl text-dark-green font-semibold">List Sub Topic of <?= $courseData[0]->{'modul_name'}; ?></p>
             </div>
 
-            <div class="p-2 lg:p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div class="p-2 lg:p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <!-- MEMANGGIL DAN MENAMPILKAN SELURUH SUB TOPIC YANG ADA ATAU SUDAH DIBUAT PADA COURSE YANG SEDANG DIBUKA-->
 
                 <?php foreach ($subjectData as $row => $subject) : ?>

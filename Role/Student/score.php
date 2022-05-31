@@ -127,9 +127,9 @@ for ($i = 0; $i < count($data->{'data'}); $i++) {
             display: none !important;
         }
 
-        .hidden {
+        /* .hidden {
             display: none !important;
-        }
+        } */
 
         .sidebar {
             transition: .5s ease-in-out;
@@ -139,9 +139,18 @@ for ($i = 0; $i < count($data->{'data'}); $i++) {
 </head>
 
 <body>
+    <div class="responsive-top sticky top-0 z-30 bg-white p-5 sm:hidden">
+        <div class="flex justify-center bg-gray-300 p-2 rounded-lg">
+            lms in-career
+        </div>
+        <div class="container flex flex-column justify-between mt-4 mb-4">
+            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+            <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle2">
+        </div>
+    </div>
     <div class="flex items-center">
         <!-- Left side (Sidebar) -->
-        <div class="bg-white w-[350px] h-screen px-8 py-6 flex flex-col justify-between sidebar in-active">
+        <div class="bg-white w-[350px] h-screen px-8 py-6 sm:flex flex-col justify-between sidebar in-active hidden">
             <!-- Top nav -->
             <div class="flex flex-col gap-y-6">
                 <!-- Header -->
@@ -150,13 +159,101 @@ for ($i = 0; $i < count($data->{'data'}); $i++) {
                     <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]">
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]"/>
 
-                <!-- List Menus -->
-                <div>
+                    <!-- List Menus -->
+                    <div>
+                        <ul class="flex flex-col gap-y-1">
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
+                                    <p class="font-semibold">Dashboard</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                    <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
+                                    <p class="text-white font-semibold">Courses</p>
+                                </a>
+                            </li>
+                            <!-- Icon Assignment -->
+                            <li>
+                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
+                                    <p class="font-semibold">Assignment</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
+                                    <p class="font-semibold">Forum Dicussion</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
+                                    <p class="font-semibold">Schedule</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
+                                    <p class="font-semibold">Attendance</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
+                                    <p class="font-semibold">Score</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                    <p class="font-semibold">Consult</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+
+            <!-- Bottom nav -->
+            <div>
+                <ul class="flex flex-col ">
+                    <!-- ICON DAN TEXT HELP -->
+                    <li>
+                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
+                            <p class="font-semibold">Help</p>
+                        </a>
+                    </li>
+                    <!-- ICON DAN TEXT LOG OUT -->
+                    <li>
+                        <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
+                            <p class="font-semibold">Log out</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Mobile navbar -->
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 fixed top-[130px] bottom-0 overflow-y-scroll inset-x-0 hidden z-10 transition-all ease-in-out duration-500 sm:hidden">
+
+            <div class="bg-white w-[250px] h-screen px-6 py-6 ">
+                <!-- Top nav -->
+                <div class="flex flex-col gap-y-6">
+
+                    <!-- List Menus -->
                     <ul class="flex flex-col gap-y-1">
                         <li>
-
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white" id="profil_image">
+                                <img class="w-5" src="../../Img/icons/default_profile.svg" alt="Profile Image">
+                                <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
+                                <!-- <p class="font-semibold"></p> -->
+                            </a>
+                        <!-- ICON DAN TEXT DASHBOARD -->    
                         </li>
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -170,10 +267,17 @@ for ($i = 0; $i < count($data->{'data'}); $i++) {
                                 <p class="text-white font-semibold">Courses</p>
                             </a>
                         </li>
+                        <!-- Icon Assignment -->
+                        <li>
+                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
+                                <p class="font-semibold">Assignment</p>
+                            </a>
+                        </li>
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
-                                <p class="font-semibold">Score</p>
+                                <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
+                                <p class="font-semibold">Forum Dicussion</p>
                             </a>
                         </li>
                         <li>
@@ -189,31 +293,33 @@ for ($i = 0; $i < count($data->{'data'}); $i++) {
                             </a>
                         </li>
                         <li>
+                            <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
+                                <p class="font-semibold">Score</p>
+                            </a>
+                        </li>
+                        <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
                                 <p class="font-semibold">Consult</p>
                             </a>
                         </li>
+                        <!-- ICON DAN TEXT HELP -->
+                        <li>
+                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
+                                <p class="font-semibold">Help</p>
+                            </a>
+                        </li>
+                        <!-- ICON DAN TEXT LOG OUT -->
+                        <li>
+                            <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
+                                <p class="font-semibold">Log out</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
-            </div>
-
-            <!-- Bottom nav -->
-            <div>
-                <ul class="flex flex-col ">
-                    <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                            <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                            <p class="font-semibold">Help</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                            <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                            <p class="font-semibold">Log out</p>
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
 
@@ -478,9 +584,18 @@ for ($i = 0; $i < count($data->{'data'}); $i++) {
             <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
             <script>
                 let btnToggle = document.getElementById('btnToggle');
+                let btnToggle2 = document.getElementById('btnToggle2');
                 let sidebar = document.querySelector('.sidebar');
+                let leftNav = document.getElementById('left-nav');
+                // let listMenu = document.getElementById('dropdownMenu');
+                // let listContainer = document.getElementById('dropdownRightStart');
+                
                 btnToggle.onclick = function() {
                     sidebar.classList.toggle('in-active');
+                }
+
+                btnToggle2.onclick = function() {
+                    leftNav.classList.toggle('hidden');
                 }
             </script>
 
