@@ -306,6 +306,13 @@ if (isset($_GET['act'])) {
                                 <p class="text-white font-semibold">Courses</p>
                             </a>
                         </li>
+                        <!-- Icon Assignment -->
+                        <li>
+                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
+                                <p class="font-semibold">Assignment</p>
+                            </a>
+                        </li>
                         <!-- ICON DAN TEXT SCHEDULE -->
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -388,6 +395,13 @@ if (isset($_GET['act'])) {
                                 <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
                                     <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
                                     <p class="text-white font-semibold">Courses</p>
+                                </a>
+                            </li>
+                            <!-- Icon Assignment -->
+                            <li>
+                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
+                                    <p class="font-semibold">Assignment</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT SCHEDULE -->
@@ -557,33 +571,47 @@ if (isset($_GET['act'])) {
                                 ?>
                                 <!-- MENAMPILKAN SELURUH INFORMASI ASSIGNMENT YANG TELAH DIBUAT -->
                                 <tr class="text-sm lg:text-base">
-                                    <td class="p-5"><?= $assignment['assignment_name'] ?></td>
+                                    <td class="border-b px-4 py-2 flex items-center gap-x-2">
+                                        <p class="truncate max-w-[300px]"><?= $assignment['assignment_name'] ?></p>
+
+                                        <a href="#">
+                                        <img class="w-3 sm:w-5 cursor-pointer" data-tooltip-target="tooltipDesc" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">
+                                        </a>
+                                        <div id="tooltipDesc" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                            Show Description
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                    </td>
+
                                     <td class="text-center"><?= $dueDate; ?></td>
                                     <td class="text-center"><?= $dueTime; ?> WIB</td>
 
-                                    <td class="flex flex-row justify-center items-center mx-3 my-3">
-                                        <button id="dropdownRightStartButton<?= $assignment['assignment_id'] ?>" data-dropdown-toggle="dropdownRightStart<?= $assignment['assignment_id'] ?>" data-dropdown-placement="right-start" class="" type="button"><img class="w-5 sm:w-7" src="../../Img/icons/detail_icon.svg" alt="Action Button" onclick="openMenu(<?= $assignment['assignment_id'] ?>)"></button>
+                                    <td class="border-b px-4 py-2 flex items-center justify-center gap-x-2">
+                                        <!-- COLLECTION -->
+                                        <a href="assignment_collection.php?course_id=<?= $_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . '&subject_id=' . $_GET['subject_id']; ?>"><img class="w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipCollect" src="../../Img/icons/binoculars_icon.svg" alt="Assignment Collection Icon" type="button">
+                                        </a>
+                                        <div id="tooltipCollect" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                            Assignment Collection
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                        <!-- EDIT -->
+                                        <a href="#"><img class="w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipEdit" src="../../Img/icons/edit_icon.svg" alt="Assignment Collection Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>" data-eventid="<?= $assignment['event_id'] ?>">
+                                        </a>
+                                        <div id="tooltipEdit" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                            Edit Button
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                        <!-- DELETE -->
+                                        <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>&event_id=<?= $assignment['event_id']; ?>"><img class="w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipDelete" src="../../Img/icons/delete_icon.svg" alt="Delete Icon" onclick="return confirm('Apakah anda yakin menghapus data ini?')" type="button">
+                                        </a>
+                                        <div id="tooltipDelete" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                            Delete Button
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+
                                     </td>
                                 </tr>
-
-                                <div id="dropdownRightStart<?= $assignment['assignment_id'] ?>" class="z-50 hidden bg-white absolute rounded drop-shadow-lg w-44 border-cream">
-                                    <ul id="dropdownMenu<?= $assignment['assignment_id'] ?>" class="py-1 text-sm text-dark-green" aria-labelledby="dropdownRightStartButton<?= $assignment['assignment_id'] ?>">
-                                        <li>
-                                            <a href="#" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">Description</a>
-                                        </li>
-                                        <li>
-                                            <a href="assignment_collection.php?course_id=<?= $_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . '&subject_id=' . $_GET['subject_id']; ?>" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button">Assignment Collection</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>" data-eventid="<?= $assignment['event_id'] ?>">Edit Assignment </a>
-                                        </li>
-                                        <li>
-                                            <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>&event_id=<?= $assignment['event_id']; ?>" onclick="return confirm('Apakah anda yakin menghapus data ini?')" class="block px-4 py-2 hover:bg-cream hover:text-white" type="button">Delete Assignment</a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-
+                               
                                 <!-- Description Modal -->
                                 <div id="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
                                     <div class="relative p-4 w-full max-w-lg h-full md:h-auto">

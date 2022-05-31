@@ -216,6 +216,13 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                     <p class="text-white font-semibold">Courses</p>
                                 </a>
                             </li>
+                            <!-- Icon Assignment -->
+                            <li>
+                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
+                                    <p class="font-semibold">Assignment</p>
+                                </a>
+                            </li>
                             <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
@@ -300,6 +307,13 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                 <p class="text-white font-semibold">Courses</p>
                             </a>
                         </li>
+                        <!-- Icon Assignment -->
+                        <li>
+                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
+                                <p class="font-semibold">Assignment</p>
+                            </a>
+                        </li>
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
@@ -355,7 +369,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
             <!-- Header / Profile -->
             <div class="items-center gap-x-4 justify-end hidden sm:flex" id="profil_image2">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_username'} ?></p>
+                <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
             </div>
 
             <!-- Breadcrumb -->
@@ -434,25 +448,18 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
             <div class="relative overflow-x-auto">
                 <table class="shadow-lg bg-white" style="width: 100%">
                     <colgroup>
-                        <col span="1" style="width: 15%">
-                        <col span="1" style="width: 10%">
-                        <col span="1" style="width: 10%">
-                        <col span="1" style="width: 10%">
+                        <col span="1" style="width: 30%">
                         <col span="1" style="width: 10%">
                         <col span="1" style="width: 10%">
                         <col span="1" style="width: 15%">
-                        <col span="1" style="width: 10%">
+                        
                     </colgroup>
                     <thead>
                         <tr class="text-dark-green text-sm lg:text-base">
                             <th class="border-b text-left px-4 py-2">Title</th>
-                            <th class="border-b text-center px-4 py-2">Start Date</th>
                             <th class="border-b text-center px-4 py-2">Due Date</th>
                             <th class="border-b text-center px-4 py-2">Due Time</th>
-                            <th class="border-b text-center px-4 py-2">Description</th>
-                            <th class="border-b text-center px-4 py-2">Questions</th>
-                            <th class="border-b text-center px-4 py-2">Upload</th>
-                            <th class="border-b text-center px-4 py-2">Assignment History</th>
+                            <th class="border-b text-center px-4 py-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -464,25 +471,37 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                             // var_dump($arrEndDate);
                             $startDate = $arrStartDate[0];
                             $dueDate = $arrEndDate[0];
-                            $dueTime = $arrEndDate[1];
+                            $dueTime = date("H:i", strtotime($arrEndDate[1]));
                             ?>
                             <tr class="text-sm lg:text-base">
-                                <td class="border-b px-4 py-2"><?= $assignment['assignment_name']; ?></td>
-                                <td class="border-b px-4 py-2 text-center"><?= $startDate; ?></td>
+                                <td class="border-b px-4 py-2 flex items-center gap-x-2">
+                                    <p class="truncate max-w-[300px]"><?= $assignment['assignment_name']; ?></p>
+                                    <a href="#">
+                                        <img class="w-3 sm:w-5 cursor-pointer" data-tooltip-target="tooltipDesc" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">
+                                    </a>
+                                    <div id="tooltipDesc" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                        Show Description
+                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
+                                </td>
                                 <td class="border-b px-4 py-2 text-center"><?= $dueDate; ?></td>
-                                <td class="border-b px-4 py-2 text-center"><?= $dueTime; ?></td>
-                                <td class="border-b px-4 py-2 text-center"><a href="#"><img class="w-5 sm:w-7 mx-auto cursor-pointer" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>"></a></td>
-                                <td class="border-b px-4 py-2">
-                                    <?php
+                                <td class="border-b px-4 py-2 text-center"><?= $dueTime . " WIB"; ?></td>
+                                <td class="border-b px-4 py-2 flex items-center justify-center gap-x-2">
+                                                                
+                                <?php
                                     require_once('../../Model/AssignmentQuestion.php');
                                     $asq = new AssignmentQuestion;
                                     $asq->setAssignmentId($assignment['assignment_id']);
                                     $question = $asq->getQuestionsByAssignmentId();
-                                    ?>
-                                    <a href="download.php?file=<?= $question['question_filename'] . '&type=q'; ?>"><img class="w-5 sm:w-7 mx-auto cursor-pointer" src="../../Img/icons/download_icon.svg" alt="Download Icon"></a>
-                                </td>
-                                <td class="border-b px-4 py-2">
-                                    <?php
+                                ?>
+                                <a href="download.php?file=<?= $question['question_filename'] . '&type=q'; ?>">
+                                    <img class="w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipDownload" src="../../Img/icons/download_icon.svg" alt="Download Icon">
+                                </a>
+                                <div id="tooltipDownload" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                    Download Question
+                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                </div>
+                                <?php
                                     require_once "../../Model/AssignmentSubmission.php";
                                     $objsubmit = new AssignmentSubmission;
                                     $objsubmit->setStudentId($_SESSION['user_data']->{'user'}->{'user_id'});
@@ -498,7 +517,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
 
                                         if ((strtotime($now['now()']) >= strtotime($assignment['assignment_end_date']))) {
                                     ?>
-                                            <img class="w-5 sm:w-7 mx-auto " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
+                                            <img class="w-5 sm:w-7 " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
                                             <div id="tooltip-default1" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-red-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-red-700">
                                                 You can't submit your work
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
@@ -506,14 +525,18 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         <?php
                                         } else {
                                         ?>
-                                            <img class="w-5 sm:w-7 mx-auto cursor-pointer modalUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
+                                            <img class="w-5 sm:w-7 cursor-pointer modalUpload" data-tooltip-target="tooltipUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
+                                            <div id="tooltipUpload" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                                Upload Submission
+                                                <div class="tooltip-arrow" data-popper-arrow></div>
+                                            </div>
                                         <?php
                                         }
                                     } else {
                                         if (count($csub) < 3) {
                                             // echo (count($csub));
                                         ?>
-                                            <img class=" w-5 sm:w-7 mx-auto cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
+                                            <img class=" w-5 sm:w-7 cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
                                             <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
                                                 Already submit !!
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
@@ -522,7 +545,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
 
                                         } else if (count($csub) >= 3 || (strtotime($now['now()']) >= strtotime($assignment['assignment_end_date']))) {
                                         ?>
-                                            <img class="w-5 sm:w-7 mx-auto " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
+                                            <img class="w-5 sm:w-7 " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
                                             <div id="tooltip-default1" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-red-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-red-700">
                                                 You can't submit your work
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
@@ -534,11 +557,12 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
 
                                     <?php } ?>
 
+                                    <img class="w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipHistory" src="../../Img/icons/history_icon.svg" alt="History Icon" type="button" data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>">
+                                    <div id="tooltipHistory" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream "> 
+                                    Show Uploads History
+                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                </div>
                                 </td>
-                                <td class="border-b px-4 py-2">
-                                    <img class="w-5 sm:w-7 mx-auto cursor-pointer" src="../../Img/icons/history_icon.svg" alt="History Icon" type="button" data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>">
-                                </td>
-
                             </tr>
                             <!-- modal ASSIGNMENT HISTORY -->
                             <div id="historymodal<?= $assignment['assignment_id']; ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
@@ -695,9 +719,11 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
         let leftNav = document.getElementById('left-nav');
         // let listMenu = document.getElementById('dropdownMenu');
         // let listContainer = document.getElementById('dropdownRightStart');
+        console.log("asd");
         
         btnToggle.onclick = function() {
             sidebar.classList.toggle('in-active');
+            console.log("asd");
         }
 
         btnToggle2.onclick = function() {

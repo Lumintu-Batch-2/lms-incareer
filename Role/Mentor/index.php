@@ -210,6 +210,13 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                                 <p class="text-white font-semibold">Courses</p>
                             </a>
                         </li>
+                        <!-- Icon Assignment -->
+                        <li>
+                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
+                                <p class="font-semibold">Assignment</p>
+                            </a>
+                        </li>
                         <!-- ICON DAN TEXT SCHEDULE -->
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -292,6 +299,13 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                                 <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
                                     <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
                                     <p class="text-white font-semibold">Courses</p>
+                                </a>
+                            </li>
+                            <!-- Icon Assignment -->
+                            <li>
+                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
+                                    <p class="font-semibold">Assignment</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT SCHEDULE -->
