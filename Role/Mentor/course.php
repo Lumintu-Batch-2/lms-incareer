@@ -73,9 +73,9 @@ var_dump($subjectData);
     <table>
         <thead>
             <th>ID</th>
-            <th>Name</th>
+            <th>Nama</th>
             <!-- <th>Desc</th> -->
-            <th>Assignment</th>
+            <th>Penugasan</th>
         </thead>
         <tbody>
             <?php foreach ($subjectData as $row => $subject) : ?>

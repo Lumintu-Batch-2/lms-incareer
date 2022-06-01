@@ -160,62 +160,69 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
             lms in-career
         </div>
         <div class="container flex flex-column justify-between mt-4 mb-4">
-            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_lumintu.png" alt="Logo Lumintu Logic">
             <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle2">
         </div>
     </div>
     <div class="flex items-center">
-        <!-- LIST MENU SIDEBAR [START]-->
+        <!-- Left side (Sidebar) -->
         <div class="bg-white w-[350px] h-screen px-8 py-6 sm:flex flex-col justify-between sidebar in-active hidden">
             <!-- Top nav -->
             <div class="flex flex-col gap-y-6">
                 <!-- Header -->
                 <div class="flex items-center space-x-4 px-2">
                     <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle">
-                    <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+                    <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_lumintu.png" alt="Logo Lumintu Logic">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]"/>
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]" />
 
                 <!-- List Menus -->
                 <div>
                     <ul class="flex flex-col gap-y-1">
-                        <!-- ICON DAN TEXT DASHBOARD -->    
+                        <!-- ICON DAN TEXT DASHBOARD -->
 
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
-                                <p class="font-semibold">Dashboard</p>
+                                <p class="font-semibold">Beranda</p>
                             </a>
                         </li>
-                        <!-- ICON DAN TEXT FORUM COURSES -->
-                        <li>
-                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
-                                <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
-                                <p class="text-white font-semibold">Courses</p>
+                         <!-- ICON DAN TEXT FORUM COURSES -->
+                         <li>
+                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/course_dark_icon.svg" alt="Course Icon">
+                                <p class="font-semibold">Materi</p>
                             </a>
                         </li>
                         <!-- Icon Assignment -->
                         <li>
-                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
-                                <p class="font-semibold">Assignment</p>
+                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
+                                <p class="text-white font-semibold">Penugasan</p>
+                            </a>
+                        </li>
+                        <!-- ICON DAN TEXT CONSULT -->
+                        <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                <p class="font-semibold">Konsultasi</p>
                             </a>
                         </li>
                         <!-- ICON DAN TEXT SCHEDULE -->
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
-                                <p class="font-semibold">Schedule</p>
+                                <p class="font-semibold">Jadwal</p>
                             </a>
                         </li>
                         <!-- ICON DAN TEXT ATTENDANCE -->
-                        <li>
+                        <!-- <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
                                 <p class="font-semibold">Attendance</p>
                             </a>
-                        </li>
+                        </li> -->
                         <!-- ICON DAN TEXT SCORE -->
                         <!-- <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -223,13 +230,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                                 <p class="font-semibold">Score</p>
                             </a>
                         </li> -->
-                        <!-- ICON DAN TEXT CONSULT -->
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
-                                <p class="font-semibold">Consult</p>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -241,14 +242,14 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                     <li>
                         <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                            <p class="font-semibold">Help</p>
+                            <p class="font-semibold">Bantuan</p>
                         </a>
                     </li>
                     <!-- ICON DAN TEXT LOG OUT -->
                     <li>
                         <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                            <p class="font-semibold">Log out</p>
+                            <p class="font-semibold">Keluar</p>
                         </a>
                     </li>
                 </ul>
@@ -256,7 +257,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         </div>
 
         <!-- Mobile navbar -->
-        <div id="left-nav" class="bg-opacity-50 bg-gray-500 fixed top-[130px] bottom-0 overflow-y-scroll inset-x-0 hidden z-40 transition-all ease-in-out duration-500 sm:hidden">
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 fixed top-[130px] bottom-0 overflow-y-scroll inset-x-0 hidden z-10 transition-all ease-in-out duration-500 sm:hidden">
 
             <div class="bg-white w-[250px] h-screen px-6 py-6 ">
                 <!-- Top nav -->
@@ -271,42 +272,49 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                                     <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
                                     <!-- <p class="font-semibold"></p> -->
                                 </a>
-                            <!-- ICON DAN TEXT DASHBOARD -->    
+                                <!-- ICON DAN TEXT DASHBOARD -->
                             </li>
                             <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
-                                    <p class="font-semibold">Dashboard</p>
+                                    <p class="font-semibold">Beranda</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT FORUM COURSES -->
                             <li>
-                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
-                                    <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
-                                    <p class="text-white font-semibold">Courses</p>
+                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/course_dark_icon.svg" alt="Course Icon">
+                                    <p class="font-semibold">Materi</p>
                                 </a>
                             </li>
                             <!-- Icon Assignment -->
                             <li>
-                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
-                                    <p class="font-semibold">Assignment</p>
+                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                    <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
+                                    <p class="text-white font-semibold">Penugasan</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT CONSULT -->
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                    <p class="font-semibold">Konsultasi</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT SCHEDULE -->
                             <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
-                                    <p class="font-semibold">Schedule</p>
+                                    <p class="font-semibold">Jadwal</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT ATTENDANCE -->
-                            <li>
+                            <!-- <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
                                     <p class="font-semibold">Attendance</p>
                                 </a>
-                            </li>
+                            </li> -->
                             <!-- ICON DAN TEXT SCORE -->
                             <!-- <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -314,25 +322,19 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                                     <p class="font-semibold">Score</p>
                                 </a>
                             </li> -->
-                            <!-- ICON DAN TEXT CONSULT -->
-                            <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
-                                    <p class="font-semibold">Consult</p>
-                                </a>
-                            </li>
+                            
                             <!-- ICON DAN TEXT HELP -->
                             <li>
                                 <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                                    <p class="font-semibold">Help</p>
+                                    <p class="font-semibold">Bantuan</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT LOG OUT -->
                             <li>
                                 <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                                    <p class="font-semibold">Log out</p>
+                                    <p class="font-semibold">Keluar</p>
                                 </a>
                             </li>
                         </ul>
@@ -348,7 +350,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
             <!-- Header / Profile -->
             <div class="items-center gap-x-4 justify-end hidden sm:flex">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_username'} ?></p>
+                <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
             </div>
 
             <!-- Breadcrumb -->
@@ -357,8 +359,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                     <!-- NAVIGATOR HALAMAN HOME -->
 
                     <li>
-
-                        <a class="text-light-green hover:text-dark-green hover:font-semibold" href="#">Home</a>
+                        <a class="text-light-green hover:text-dark-green hover:font-semibold" href="#">Beranda</a>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>
@@ -366,22 +367,21 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                     <!-- NAVIGATOR HALAMAN COURSES -->
 
                     <li>
-                        <a class="text-light-green hover:text-dark-green hover:font-semibold" href="index.php">Courses</a>
+                        <a class="text-light-green hover:text-dark-green hover:font-semibold" href="index.php">Batch</a>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>
                     </li>
                     <!-- NAVIGATOR HALAMAN SUB TOPIC -->
-
                     <li>
-                        <a class="text-dark-green font-semibold" href="#">Sub Topic</a>
+                        <a class="text-dark-green font-semibold" href="#">Course</a>
                     </li>
                 </ul>
             </div>
             <!-- TITTLE -->
 
             <div class="p-2 lg:p-4">
-                <p class="text-lg md:text-xl lg:text-2xl xl:text-4xl text-dark-green font-semibold">List Sub Topic of <?= $courseData[0]->{'modul_name'}; ?></p>
+                <p class="text-lg md:text-xl lg:text-2xl xl:text-4xl text-dark-green font-semibold">Daftar Pertemuan dari <?= $courseData[0]->{'modul_name'}; ?></p>
             </div>
 
             <div class="p-2 lg:p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
