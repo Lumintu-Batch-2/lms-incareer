@@ -270,7 +270,7 @@ if (isset($_GET['act'])) {
             lms in-career
         </div>
         <div class="container flex flex-column justify-between mt-4 mb-4">
-            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_lumintu.png" alt="Logo Lumintu Logic">
             <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle2">
         </div>
     </div>
@@ -283,10 +283,10 @@ if (isset($_GET['act'])) {
                 <!-- Header -->
                 <div class="flex items-center space-x-4 px-2">
                     <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle">
-                    <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+                    <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_lumintu.png" alt="Logo Lumintu Logic">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]">
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]" />
 
                 <!-- List Menus -->
                 <div>
@@ -296,37 +296,44 @@ if (isset($_GET['act'])) {
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
-                                <p class="font-semibold">Dashboard</p>
+                                <p class="font-semibold">Beranda</p>
                             </a>
                         </li>
                         <!-- ICON DAN TEXT FORUM COURSES -->
                         <li>
-                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
-                                <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
-                                <p class="text-white font-semibold">Courses</p>
+                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/course_dark_icon.svg" alt="Course Icon">
+                                <p class="font-semibold">Materi</p>
                             </a>
                         </li>
                         <!-- Icon Assignment -->
                         <li>
-                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
-                                <p class="font-semibold">Assignment</p>
+                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
+                                <p class="text-white font-semibold">Penugasan</p>
+                            </a>
+                        </li>
+                        <!-- ICON DAN TEXT CONSULT -->
+                        <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                <p class="font-semibold">konsultasi</p>
                             </a>
                         </li>
                         <!-- ICON DAN TEXT SCHEDULE -->
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
-                                <p class="font-semibold">Schedule</p>
+                                <p class="font-semibold">Jadwal</p>
                             </a>
                         </li>
                         <!-- ICON DAN TEXT ATTENDANCE -->
-                        <li>
+                        <!-- <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
                                 <p class="font-semibold">Attendance</p>
                             </a>
-                        </li>
+                        </li> -->
                         <!-- ICON DAN TEXT SCORE -->
                         <!-- <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -334,13 +341,7 @@ if (isset($_GET['act'])) {
                                 <p class="font-semibold">Score</p>
                             </a>
                         </li> -->
-                        <!-- ICON DAN TEXT CONSULT -->
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
-                                <p class="font-semibold">Consult</p>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -352,14 +353,14 @@ if (isset($_GET['act'])) {
                     <li>
                         <a id="btnHelp" href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                            <p class="font-semibold">Help</p>
+                            <p class="font-semibold">Bantuan</p>
                         </a>
                     </li>
                     <!-- ICON DAN TEXT LOG OUT -->
                     <li>
                         <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                            <p class="font-semibold">Log out</p>
+                            <p class="font-semibold">Keluar</p>
                         </a>
                     </li>
                 </ul>
@@ -367,7 +368,7 @@ if (isset($_GET['act'])) {
         </div>
 
         <!-- Mobile navbar -->
-        <div id="left-nav" class="bg-opacity-50 bg-gray-500 fixed top-[130px] bottom-0 overflow-y-scroll inset-x-0 hidden z-40 transition-all ease-in-out duration-500 sm:hidden">
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 fixed top-[130px] bottom-0 overflow-y-scroll inset-x-0 hidden z-10 transition-all ease-in-out duration-500 sm:hidden">
 
             <div class="bg-white w-[250px] h-screen px-6 py-6 ">
                 <!-- Top nav -->
@@ -387,37 +388,44 @@ if (isset($_GET['act'])) {
                             <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
-                                    <p class="font-semibold">Dashboard</p>
+                                    <p class="font-semibold">Beranda</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT FORUM COURSES -->
                             <li>
-                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
-                                    <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
-                                    <p class="text-white font-semibold">Courses</p>
+                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/course_dark_icon.svg" alt="Course Icon">
+                                    <p class="font-semibold">Materi</p>
                                 </a>
                             </li>
                             <!-- Icon Assignment -->
                             <li>
-                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
-                                    <p class="font-semibold">Assignment</p>
+                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                    <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
+                                    <p class="text-white font-semibold">Penugasan</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT CONSULT -->
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                    <p class="font-semibold">Konsultasi</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT SCHEDULE -->
                             <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
-                                    <p class="font-semibold">Schedule</p>
+                                    <p class="font-semibold">Jadwal</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT ATTENDANCE -->
-                            <li>
+                            <!-- <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
                                     <p class="font-semibold">Attendance</p>
                                 </a>
-                            </li>
+                            </li> -->
                             <!-- ICON DAN TEXT SCORE -->
                             <!-- <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -425,25 +433,19 @@ if (isset($_GET['act'])) {
                                     <p class="font-semibold">Score</p>
                                 </a>
                             </li> -->
-                            <!-- ICON DAN TEXT CONSULT -->
-                            <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
-                                    <p class="font-semibold">Consult</p>
-                                </a>
-                            </li>
+                            
                             <!-- ICON DAN TEXT HELP -->
                             <li>
                                 <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                                    <p class="font-semibold">Help</p>
+                                    <p class="font-semibold">Bantuan</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT LOG OUT -->
                             <li>
                                 <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                                    <p class="font-semibold">Log out</p>
+                                    <p class="font-semibold">Keluar</p>
                                 </a>
                             </li>
                         </ul>
@@ -462,48 +464,35 @@ if (isset($_GET['act'])) {
             </div>
 
             <!-- Breadcrumb -->
-            <div class="">
+            <div class="p-2 lg:p-4">
                 <ul class="flex items-center gap-x-4 text-xs lg:text-base">
-                    <!-- NAVIGATOR HALAMAN HOME -->
                     <li class="flex items-center space-x-2">
-                        <div>
-                            <a class="text-light-green hover:text-dark-green hover:font-semibold" href="#">Home</a>
-                        </div>
-                        <div>
-                            <span class="text-light-green">/</span>
-                        </div>
+                        <a class="text-light-green hover:text-dark-green hover:font-semibold" href="#">Beranda</a>
                     </li>
-
-
-                    <!-- NAVIGATOR HALAMAN COURSES -->
-
-                    <div class="flex items-center space-x-2">
-                        <li>
-                            <a class="text-light-green hover:text-dark-green hover:font-semibold" href="index.php">Courses</a>
-                        </li>
-                        <li>
-                            <span class="text-light-green">/</span>
-                        </li>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <li>
-                            <a class="text-light-green" href="subject.php?course_id=<?= $_GET['course_id']; ?>">Sub Topic</a>
-                        </li>
-                        <li>
-                            <span class="text-light-green">/</span>
-                        </li>
-                    </div>
-                    <div>
-                        <li>
-                            <a class="text-dark-green font-semibold" href="#">Assignment</a>
-                        </li>
-                    </div>
+                    <li>
+                        <span class="text-light-green">/</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <a class="text-light-green hover:text-dark-green hover:font-semibold" href="index.php">Batch</a>
+                    </li>
+                    <li>
+                        <span class="text-light-green">/</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <a class="text-light-green" href="subject.php?course_id=<?= $_GET['course_id']; ?>">Course</a>
+                    </li>
+                    <li>
+                        <span class="text-light-green">/</span>
+                    </li>
+                    <li>
+                        <a class="text-dark-green font-semibold" href="#">Penugasan</a>
+                    </li>
                 </ul>
             </div>
 
             <!-- Topic Title -->
             <div class="topic-title">
-                <p class="text-sm sm:text-lg lg:text-2xl  xl:text-4xl text-dark-green font-semibold">Session# <?= $subModul[0]->{'modul_name'}; ?></p>
+                <p class="text-sm sm:text-lg lg:text-2xl  xl:text-4xl text-dark-green font-semibold">Pertemuan# <?= $subModul[0]->{'modul_name'}; ?></p>
             </div>
 
             <!-- Mentor -->
@@ -518,27 +507,27 @@ if (isset($_GET['act'])) {
             <!-- Tab -->
             <div class="bg-white w-full h-[50px] flex content-center px-10 tab-menu">
                 <ul class="flex items-center gap-x-8 text-sm lg:text-base">
-                    <li class="text-dark-green hover:text-cream hover:border-b-4 hover:border-cream h-[50px] flex items-center font-semibold  cursor-pointer">
-                        <p>Session</p>
-                    </li>
+                    <!-- <li class="text-dark-green hover:text-cream hover:border-b-4 hover:border-cream h-[50px] flex items-center font-semibold  cursor-pointer">
+                        <p>Sesi</p>
+                    </li> -->
                     <li class="text-dark-green hover:text-cream hover:border-b-4 hover:border-cream h-[50px] flex items-center font-semibold  cursor-pointer active">
-                        <p>Assignment</p>
+                        <p>Penugasan</p>
                     </li>
                 </ul>
             </div>
 
             <!-- DESKRIPSI -->
             <div class="bg-white w-full p-6 direction">
-                <p class="text-dark-green text-sm lg:text-base font-semibold">Description :</p>
+                <p class="text-dark-green text-sm lg:text-base font-semibold">Deskripsi :</p>
                 <p class="text-sm lg:text-base"><?= $subModul[0]->{'modul_description'}; ?></p>
             </div>
 
             <!-- TOMBOL TAMBAH ASSIGNMENT BARU -->
-            <a class="text-xs lg:text-base bg-cream text-white font-semibold justify-start text-center py-2 rounded-lg w-[120px] md:w-[170px] cursor-pointer" type="button" data-modal-toggle="addModal" id="btnAddAssignment">Add Assignment</a>
+            <a class="text-xs lg:text-base bg-cream text-white font-semibold justify-start text-center py-2 rounded-lg w-[120px] md:w-[170px] cursor-pointer" type="button" data-modal-toggle="addModal" id="btnAddAssignment">Tambah Tugas</a>
 
             <!-- CONTENT TABEL ASSIGNMENT -->
             <div class="relative">
-                <div class="assignment-table  overflow-x-auto ">
+                <div class="assignment-table">
                     <table class="shadow-lg bg-white" style="width: 100%">
                         <!-- MENGATUR PANJANG JARAK ANTARA FIELD SATU DENGAN YANG LAIN -->
                         <colgroup>
@@ -550,10 +539,10 @@ if (isset($_GET['act'])) {
                         <thead id="tableThead">
                             <!-- CONTENT TABEL [JUDUL FIELD] -->
                             <tr class="text-dark-green text-sm lg:text-base">
-                                <th class="border-b text-left px-4 py-2">Title</th>
-                                <th class="border-b text-center px-4 py-2">Due Date</th>
-                                <th class="border-b text-center px-4 py-2">Due Time</th>
-                                <th class="border-b text-center px-4 py-2">Actions</th>
+                                <th class="border-b text-left px-4 py-2">Judul</th>
+                                <th class="border-b text-center px-4 py-2">Batas Tanggal</th>
+                                <th class="border-b text-center px-4 py-2">Batas Waktu</th>
+                                <th class="border-b text-center px-4 py-2">Aksi</th>
                             </tr>
                         </thead>
                         <!-- CONTENT TABEL [ISI FIELD] -->
@@ -571,41 +560,49 @@ if (isset($_GET['act'])) {
                                 ?>
                                 <!-- MENAMPILKAN SELURUH INFORMASI ASSIGNMENT YANG TELAH DIBUAT -->
                                 <tr class="text-sm lg:text-base">
-                                    <td class="border-b px-4 py-2 flex items-center gap-x-2">
-                                        <p class="truncate max-w-[300px]"><?= $assignment['assignment_name'] ?></p>
-
-                                        <a href="#">
-                                            <img class="Desc w-3 sm:w-5 cursor-pointer" data-tooltip-target="tooltipDesc" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">
-                                        </a>
+                                    <td class="border-b px-4 py-2 ">
+                                        <div class="flex items-center gap-x-2">
+                                        <p class="truncate max-w-[300px]" data-tooltip-target="tooltipassignment<?=$assignment['assignment_id']?>"><?= $assignment['assignment_name']; ?></p>
+                                            <a href="#">
+                                                <img class="Desc w-3 sm:w-5 cursor-pointer" data-tooltip-target="tooltipDesc" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">
+                                            </a>
+                                        </div>
+                                        <div id="tooltipassignment<?=$assignment['assignment_id']?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                            <?= $assignment['assignment_name']; ?>
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
                                         <div id="tooltipDesc" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
-                                            Show Description
+                                             Deskripsi Tugas
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
                                     </td>
 
-                                    <td class="text-center"><?= $dueDate; ?></td>
-                                    <td class="text-center"><?= $dueTime; ?> WIB</td>
+                                    <td class="border-b px-4 py-2 text-center" style="word-break: break-all"><?= $dueDate; ?></td>
+                                    <td class="border-b px-4 py-2 text-center"><?= $dueTime; ?> WIB</td>
 
-                                    <td class="border-b px-4 py-2 flex items-center justify-center gap-x-2">
+                                    <td class="border-t px-4 py-2 flex flex-wrap items-center justify-center gap-x-2">
                                         <!-- COLLECTION -->
-                                        <a href="assignment_collection.php?course_id=<?= $_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . '&subject_id=' . $_GET['subject_id']; ?>"><img class="Collect w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipCollect" src="../../Img/icons/binoculars_icon.svg" alt="Assignment Collection Icon" type="button">
+                                        <a href="assignment_collection.php?course_id=<?= $_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . '&subject_id=' . $_GET['subject_id']; ?>">
+                                            <img class="Collect w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipCollect" src="../../Img/icons/binoculars_icon.svg" alt="Assignment Collection Icon" type="button">
                                         </a>
                                         <div id="tooltipCollect" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
-                                            Assignment Collection
+                                            Kumpulan Tugas
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
                                         <!-- EDIT -->
-                                        <a href="#"><img class="Edit w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipEdit" src="../../Img/icons/edit_icon.svg" alt="Assignment Collection Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>" data-eventid="<?= $assignment['event_id'] ?>">
+                                        <a href="#">
+                                            <img class="Edit w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipEdit" src="../../Img/icons/edit_icon.svg" alt="Assignment Collection Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>" data-eventid="<?= $assignment['event_id'] ?>">
                                         </a>
                                         <div id="tooltipEdit" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
-                                            Edit Button
+                                            Edit
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
                                         <!-- DELETE -->
-                                        <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>&event_id=<?= $assignment['event_id']; ?>"><img class="Delete w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipDelete" src="../../Img/icons/delete_icon.svg" alt="Delete Icon" onclick="return confirm('Apakah anda yakin menghapus data ini?')" type="button">
+                                        <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>&event_id=<?= $assignment['event_id']; ?>">
+                                            <img class="Delete w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipDelete" src="../../Img/icons/delete_icon.svg" alt="Delete Icon" onclick="return confirm('Apakah anda yakin menghapus data ini?')" type="button">
                                         </a>
                                         <div id="tooltipDelete" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
-                                            Delete Button
+                                            Hapus
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
 
@@ -620,7 +617,7 @@ if (isset($_GET['act'])) {
                                             <!-- Modal header -->
                                             <div class="flex justify-between items-center p-5 rounded-t border-b dark:border-gray-600">
                                                 <h3 class="text-base sm:text-lg lg:text-xl font-medium text-center">
-                                                    Description
+                                                    Deskripsi
                                                 </h3>
                                                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>">
                                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -636,7 +633,7 @@ if (isset($_GET['act'])) {
                                             </div>
                                             <!-- Modal footer -->
                                             <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
-                                                <button data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-transparent dark:focus:ring-dark-800 border border-gray-400">Close</button>
+                                                <button data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-transparent dark:focus:ring-dark-800 border border-gray-400">Tutup</button>
                                                 <!-- <button data-modal-toggle="medium-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button> -->
                                             </div>
                                         </div>
@@ -662,7 +659,7 @@ if (isset($_GET['act'])) {
                 <!-- Modal Edit header -->
                 <div class="flex justify-center items-start p-5 rounded-t ">
                     <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-dark">
-                        Edit Assignment
+                        Edit Tugas
                     </h3>
                 </div>
                 <!-- Modal Edit body -->
@@ -671,17 +668,17 @@ if (isset($_GET['act'])) {
                     <form method="POST" id="modalEditAssignment" enctype="multipart/form-data">
                         <!-- LABEL TITLE -->
                         <div class="mb-6">
-                            <label for="title" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Title</label>
+                            <label for="title" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Judul</label>
                             <input type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="title">
                         </div>
                         <!-- LABEL START DATE -->
                         <div class="mb-6">
-                            <label for="startDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Start Date</label>
+                            <label for="startDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Waktu Dimulai</label>
                             <input type="datetime-local" id="startDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="startDate">
                         </div>
                         <!-- LABEL DUE DATE -->
                         <div class="mb-6">
-                            <label for="dueDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Due Date</label>
+                            <label for="dueDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Batas Waktu</label>
                             <input type="datetime-local" id="dueDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="dueDate">
                         </div>
                         <!-- LABEL DESKRIPSI -->
@@ -693,11 +690,11 @@ if (isset($_GET['act'])) {
 
                         <!-- LABEL DROPDOWN TIPE ASSIGNMENT -->
                         <div class="mb-6">
-                            <label for="tipe" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Assigment Type</label>
+                            <label for="tipe" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Tipe Tugas</label>
                             <select id="tipe" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name="assign_type">
                                 <!-- CONTENT DROPDOWN -->
-                                <option value="exam">Exam</option>
-                                <option value="task">Assignment</option>
+                                <option value="exam">Ujian</option>
+                                <option value="task">Tugas</option>
 
                             </select>
                         </div>
@@ -710,7 +707,7 @@ if (isset($_GET['act'])) {
                 <!-- Modal Edit footer -->
                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
                     <!-- TOMBOL CLOSE -->
-                    <button data-modal-toggle="defaultModal" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:focus:ring-dark-800">Close</button>
+                    <button data-modal-toggle="defaultModal" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:focus:ring-dark-800">Tutup</button>
                     <!-- TOMBOL UPLOAD -->
                     <button type="submit" class="text-white bg-cream focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm font-medium px-5 py-2.5 hover:bg-gray-600 hover:text-white focus:z-10 dark:bg-[#DDB07F] dark:text--300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" name="edit_assignment" id="editAssign">Upload</button>
                 </div>
@@ -727,7 +724,7 @@ if (isset($_GET['act'])) {
                 <!-- Modal Add header -->
                 <div class="flex justify-center items-start p-5 rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-dark">
-                        Add Assignment
+                        Tambah Tugas
                     </h3>
                 </div>
                 <!-- Modal Add body -->
@@ -735,31 +732,31 @@ if (isset($_GET['act'])) {
                     <!-- CONTENT FORM TAMBAH ASSIGNMENT BARU -->
                     <form method="POST" action="" id="modalupload" enctype="multipart/form-data">
                         <div class="mb-6">
-                            <label for="upload_title" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Title</label>
+                            <label for="upload_title" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Judul</label>
                             <input type="text" id="upload_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="title">
                         </div>
                         <!-- LABEL START DATE -->
                         <div class="mb-6">
-                            <label for="upload_startDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Start Date</label>
+                            <label for="upload_startDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Waktu Dimulai</label>
                             <input type="datetime-local" id="upload_startDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="start-date">
                         </div>
                         <!-- LABEL DUE DATE -->
                         <div class="mb-6">
-                            <label for="upload_dueDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Due Date</label>
+                            <label for="upload_dueDate" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Batas Waktu</label>
                             <input type="datetime-local" id="upload_dueDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required name="end-date">
                         </div>
                         <!-- LABEL DESKRIPSI -->
                         <div class="mb-6">
-                            <label for="upload_deksripsi" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Deksripsi</label>
+                            <label for="upload_deksripsi" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Deskripsi</label>
                             <textarea id="upload_deksripsi" rows="4" class="block p-2.5 w-full text-sm text-dark-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-white-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" name="desc"></textarea>
                         </div>
                         <!-- LABEL DROPDOWN TIPE ASSIGNMENT -->
                         <div class="mb-6">
-                            <label for="upload_assign_type" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Assigment Type</label>
+                            <label for="upload_assign_type" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Tipe Tugas</label>
                             <select id="upload_assign_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name="assign_type">
                                 <!-- CONTENT DROPDOWN -->
-                                <option value="1">Exam</option>
-                                <option value="2">Assigment</option>
+                                <option value="1">Ujian</option>
+                                <option value="2">Tugas</option>
                                 <option value="3">Try Out</option>
 
                             </select>
@@ -779,7 +776,7 @@ if (isset($_GET['act'])) {
                 <!-- Modal Add footer -->
                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
                     <!-- TOMBOL CLOSE -->
-                    <button data-modal-toggle="addModal" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:focus:ring-dark-800" id="btnClsUp">Close</button>
+                    <button data-modal-toggle="addModal" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 hover:ring-2 hover:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:focus:ring-dark-800" id="btnClsUp">Tutup</button>
                     <!-- TOMBOL UPLOAD -->
                     <button type="submit" class="text-white bg-cream focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm font-medium px-5 py-2.5 hover:bg-gray-600 hover:text-white focus:z-10 dark:bg-[#DDB07F] dark:text--300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" name="upload" id="btnUpload">Upload</button>
                     <!-- FUNGSI DISABLE BUTTON -->
@@ -896,7 +893,7 @@ if (isset($_GET['act'])) {
                     "application/x-rar" // rar
                 ];
                 if (title == '' || dueDate == '' || assgType == '' || startDate == '' || description == '' || file == '') {
-                    alert('FIeld tidak boleh kosong');
+                    alert('Field tidak boleh kosong');
                     evt.preventDefault();
                 } else if (jQuery.inArray(file.files[0].type, validTypeFile) == -1) {
                     alert('Ekstensi tidak sesuai !!');
@@ -956,7 +953,7 @@ if (isset($_GET['act'])) {
                         cache: false,
                         processData: false,
                         success: function(data) {
-                            console.log(data);
+                            // console.log(data);
                             let val = JSON.parse(data);
                             if (val.is_ok) {
                                 alert(val.msg);

@@ -187,7 +187,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
             lms in-career
         </div>
         <div class="container flex flex-column justify-between mt-4 mb-4">
-            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_lumintu.png" alt="Logo Lumintu Logic">
             <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle2">
         </div>
     </div>
@@ -200,65 +200,67 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                 <!-- Header -->
                 <div class="flex items-center space-x-4 px-2">
                     <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle">
-                    <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+                    <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_lumintu.png" alt="Logo Lumintu Logic">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]" />
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]"/>
 
-                <!-- List Menus -->
-                <div>
-                    <ul class="flex flex-col gap-y-1">
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
-                                <p class="font-semibold">Dashboard</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
-                                <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
-                                <p class="text-white font-semibold">Courses</p>
-                            </a>
-                        </li>
-                        <!-- Icon Assignment -->
-                        <li>
-                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
-                                <p class="font-semibold">Assignment</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
-                                <p class="font-semibold">Forum Dicussion</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
-                                <p class="font-semibold">Schedule</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
-                                <p class="font-semibold">Attendance</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
-                                <p class="font-semibold">Score</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
-                                <p class="font-semibold">Consult</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    <!-- List Menus -->
+                    <div>
+                        <ul class="flex flex-col gap-y-1">
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
+                                    <p class="font-semibold">Beranda</p>
+                                </a>
+                            </li>
+                            <!-- <li>
+                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                    <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
+                                    <p class="text-white font-semibold">Courses</p>
+                                </a>
+                            </li> -->
+                            <!-- Icon Assignment -->
+                            <li>
+                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                    <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
+                                    <p class="text-white font-semibold">Assignment</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
+                                    <p class="font-semibold">Nilai</p>
+                                </a>
+                            </li>
+                            <!-- <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
+                                    <p class="font-semibold">Forum Dicussion</p>
+                                </a>
+                            </li> -->
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                    <p class="font-semibold">Konsultasi</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
+                                    <p class="font-semibold">Jadwal</p>
+                                </a>
+                            </li>
+                            <!-- <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
+                                    <p class="font-semibold">Attendance</p>
+                                </a>
+                            </li> -->
+                            
+                            
+                        </ul>
+                    </div>
             </div>
 
             <!-- Bottom nav -->
@@ -268,14 +270,14 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                     <li>
                         <a id="btnHelp" href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                            <p class="font-semibold">Help</p>
+                            <p class="font-semibold">Bantuan</p>
                         </a>
                     </li>
                     <!-- ICON DAN TEXT LOG OUT -->
                     <li>
                         <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                            <p class="font-semibold">Log out</p>
+                            <p class="font-semibold">Keluar</p>
                         </a>
                     </li>
                 </ul>
@@ -297,69 +299,72 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                 <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
                                 <!-- <p class="font-semibold"></p> -->
                             </a>
-                            <!-- ICON DAN TEXT DASHBOARD -->
+                        <!-- ICON DAN TEXT DASHBOARD -->    
                         </li>
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
-                                <p class="font-semibold">Dashboard</p>
+                                <p class="font-semibold">Beranda</p>
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
                                 <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
                                 <p class="text-white font-semibold">Courses</p>
                             </a>
-                        </li>
+                        </li> -->
                         <!-- Icon Assignment -->
                         <li>
-                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
-                                <p class="font-semibold">Assignment</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
-                                <p class="font-semibold">Forum Dicussion</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
-                                <p class="font-semibold">Schedule</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
-                                <p class="font-semibold">Attendance</p>
+                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
+                                <p class="text-white font-semibold">Penugasan</p>
                             </a>
                         </li>
                         <li>
                             <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
-                                <p class="font-semibold">Score</p>
+                                <p class="font-semibold">Nilai</p>
                             </a>
                         </li>
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
-                                <p class="font-semibold">Consult</p>
+                                <p class="font-semibold">Konsultasi</p>
                             </a>
                         </li>
+                        <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
+                                <p class="font-semibold">Jadwal</p>
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
+                                <p class="font-semibold">Forum Dicussion</p>
+                            </a>
+                        </li> -->
+                        
+                        <!-- <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
+                                <p class="font-semibold">Attendance</p>
+                            </a>
+                        </li> -->
+                        
+                        
                         <!-- ICON DAN TEXT HELP -->
                         <li>
                             <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                                <p class="font-semibold">Help</p>
+                                <p class="font-semibold">Bantuan</p>
                             </a>
                         </li>
                         <!-- ICON DAN TEXT LOG OUT -->
                         <li>
                             <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                                <p class="font-semibold">Log out</p>
+                                <p class="font-semibold">Keluar</p>
                             </a>
                         </li>
                     </ul>
@@ -377,55 +382,39 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
             </div>
 
             <!-- Breadcrumb -->
-            <div class="text-xs lg:text-base">
-                <ul class="flex items-center gap-x-4">
-                    <!-- NAVIGATOR HALAMAN HOME -->
-
+            <div class="p-2 lg:p-4">
+                <ul class="flex items-center gap-x-4 text-xs lg:text-base">
                     <li class="flex items-center space-x-2">
-                        <div>
-                            <a class="text-light-green hover:text-dark-green hover:font-semibold" href="#">Home</a>
-                        </div>
+                        <a class="text-light-green hover:text-dark-green hover:font-semibold" href="#">Beranda</a>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>
                     </li>
-                    <!-- NAVIGATOR HALAMAN COURSES -->
-
-                    <div class="flex items-center space-x-2">
-                        <li>
-                            <a class="text-light-green hover:text-dark-green hover:font-semibold" href="index.php">Courses</a>
-                        </li>
-                        <li>
-                            <span class="text-light-green">/</span>
-                        </li>
-                    </div>
-                    <!-- NAVIGATOR HALAMAN SUB TOPIC -->
-
-                    <div class="flex items-center space-x-2">
-                        <li>
-                            <a class="text-light-green" href="subject.php?course_id=<?= $_GET['course_id']; ?>">Sub Topic</a>
-                        </li>
-                        <li>
-                            <span class="text-light-green">/</span>
-                        </li>
-                    </div>
-                    <!-- NAVIGATOR HALAMAN ASSIGNMENT -->
-
-                    <div>
-                        <li>
-                            <a class="text-dark-green font-semibold" href="#">Assignment</a>
-                        </li>
-                    </div>
+                    <li class="flex items-center space-x-2">
+                        <a class="text-light-green hover:text-dark-green hover:font-semibold" href="index.php">Batch</a>
+                    </li>
+                    <li>
+                        <span class="text-light-green">/</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <a class="text-light-green" href="subject.php?course_id=<?= $_GET['course_id']; ?>">Course</a>
+                    </li>
+                    <li>
+                        <span class="text-light-green">/</span>
+                    </li>
+                    <li>
+                        <a class="text-dark-green font-semibold" href="#">Penugasan</a>
+                    </li>
                 </ul>
             </div>
 
             <!-- Topic Title -->
-            <div class="topic-title">
-                <p class="text-sm sm:text-lg lg:text-2xl xl:text-4xl text-dark-green font-semibold">Session#1 <?= $subModul[0]->{'modul_name'}; ?></p>
+            <div class="p-2 lg:p-4 topic-title">
+                <p class="text-sm sm:text-lg lg:text-2xl xl:text-4xl text-dark-green font-semibold">Pertemuan#1 <?= $subModul[0]->{'modul_name'}; ?></p>
             </div>
 
             <!-- Mentor -->
-            <div class="flex items-center gap-x-4 w-full bg-white py-4 px-5 lg:px-10 rounded-xl mentor-profile">
+            <div class="p-2 lg:p-4 flex items-center gap-x-4 w-full bg-white py-4 px-5 lg:px-10 rounded-xl mentor-profile">
                 <img class="w-8 lg:w-14" src="../../Img/icons/default_profile.svg" alt="Profile Image">
                 <div class="">
                     <p class="text-dark-green text-sm lg:text-base font-semibold"><?= $lectureData[0]->{'user_first_name'} . " " . $lectureData[0]->{'user_last_name'} ?></p>
@@ -437,19 +426,19 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
             <div class="bg-white w-full h-[50px] flex content-center px-10 tab-menu">
                 <ul class="flex items-center gap-x-8 text-sm lg:text-base">
                     <li class="text-dark-green hover:text-cream hover:border-b-4 hover:border-cream h-[50px] flex items-center font-semibold  cursor-pointer active">
-                        <p>Assignment</p>
+                        <p>Penugasan</p>
                     </li>
                 </ul>
             </div>
 
             <!-- Direction -->
             <div class="bg-white w-full p-6 direction course-title">
-                <p class="text-dark-green font-semibold text-sm lg:text-base">Directions :</p>
+                <p class="text-dark-green font-semibold text-sm lg:text-base">Deskripsi :</p>
                 <p class="text-sm lg:text-base"><?= $subModul[0]->{'modul_description'}; ?></p>
             </div>
 
             <!-- Table Assignment -->
-            <div class="relative overflow-x-auto">
+            <div class="relative ">
                 <table class="shadow-lg bg-white" style="width: 100%">
                     <colgroup>
                         <col span="1" style="width: 30%">
@@ -460,10 +449,10 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                     </colgroup>
                     <thead class="thead">
                         <tr class="text-dark-green text-sm lg:text-base">
-                            <th class="border-b text-left px-4 py-2">Title</th>
-                            <th class="border-b text-center px-4 py-2">Due Date</th>
-                            <th class="border-b text-center px-4 py-2">Due Time</th>
-                            <th class="border-b text-center px-4 py-2">Actions</th>
+                            <th class="border-b text-left px-4 py-2">Judul</th>
+                            <th class="border-b text-center px-4 py-2">Batas Tanggal</th>
+                            <th class="border-b text-center px-4 py-2">Batas Waktu</th>
+                            <th class="border-b text-center px-4 py-2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -478,19 +467,26 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                             $dueTime = date("H:i", strtotime($arrEndDate[1]));
                             ?>
                             <tr class="text-sm lg:text-base">
-                                <td class="border-b px-4 py-2 flex items-center gap-x-2">
-                                    <p class="truncate max-w-[300px]"><?= $assignment['assignment_name']; ?></p>
-                                    <a href="#">
-                                        <img class="Desc w-3 sm:w-5 cursor-pointer" data-tooltip-target="tooltipDesc" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">
-                                    </a>
+                                <td class="border-b px-4 py-2 ">
+                                    <div class="flex items-center gap-x-2">
+                                        <p class="truncate max-w-[300px]" data-tooltip-target="tooltipassignment<?=$assignment['assignment_id']?>"><?= $assignment['assignment_name']; ?></p>
+                                        <a href="#">
+                                            <img class="Desc w-3 sm:w-5 cursor-pointer" data-tooltip-target="tooltipDesc" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">
+                                        </a>
+                                    </div>
+                                    <div id="tooltipassignment<?=$assignment['assignment_id']?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                    <?= $assignment['assignment_name']; ?>
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
+                                    
                                     <div id="tooltipDesc" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
-                                        Show Description
+                                        Deskripsi Tugas
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
                                 </td>
                                 <td class="border-b px-4 py-2 text-center"><?= $dueDate; ?></td>
                                 <td class="border-b px-4 py-2 text-center"><?= $dueTime . " WIB"; ?></td>
-                                <td class="border-b px-4 py-2 flex items-center justify-center gap-x-2 ">
+                                <td class="border-b px-4 py-2 flex flex-wrap items-center justify-center gap-x-2 ">
 
                                     <?php
                                     require_once('../../Model/AssignmentQuestion.php');
@@ -502,7 +498,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         <img class="Download w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipDownload" src="../../Img/icons/download_icon.svg" alt="Download Icon">
                                     </a>
                                     <div id="tooltipDownload" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
-                                        Download Question
+                                        Unduh Soal
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
                                     <?php
@@ -523,7 +519,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                     ?>
                                             <img class="Upload w-5 sm:w-7 " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
                                             <div id="tooltip-default1" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-red-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-red-700">
-                                                You can't submit your work
+                                                Tugas ini sudah melewati batas waktu pengumpulan
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                             </div>
                                         <?php
@@ -531,7 +527,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         ?>
                                             <img class="Upload w-5 sm:w-7 cursor-pointer modalUpload" data-tooltip-target="tooltipUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
                                             <div id="tooltipUpload" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
-                                                Upload Submission
+                                                Upload Tugas
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                             </div>
                                         <?php
@@ -542,7 +538,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         ?>
                                             <img class="Upload w-5 sm:w-7 cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
                                             <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
-                                                Already submit !!
+                                                Sudah Mengumpulkan Tugas
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                             </div>
                                         <?php
@@ -551,7 +547,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         ?>
                                             <img class="Upload w-5 sm:w-7 " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
                                             <div id="tooltip-default1" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-red-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-red-700">
-                                                You can't submit your work
+                                                Anda Melewati Batas Jumlah Pengumpulan
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                             </div>
                                         <?php
@@ -563,7 +559,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
 
                                     <img class="History w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipHistory" src="../../Img/icons/history_icon.svg" alt="History Icon" type="button" data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>">
                                     <div id="tooltipHistory" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
-                                        Show Uploads History
+                                        Lihat Riwayat Upload
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
                                 </td>
@@ -576,7 +572,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         <!-- Modal header -->
                                         <div class="flex justify-center items-start p-5 rounded-t ">
                                             <h3 class="text-xl font-bold  lg:text-2xl text-dark-green">
-                                                ASSIGNMENT HISTORY
+                                                RIWAYAT UPLOAD
                                             </h3>
                                         </div>
                                         <!-- Modal body -->
@@ -585,8 +581,8 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                                 <div class="relative w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                                     <ul class="grid grid-cols-12 border-b border-gray-400 py-2">
                                                         <li><b>No</b></li>
-                                                        <li class="col-span-5"><b>Submission Time</b></li>
-                                                        <li class="col-span-5"><b>Title</b></li>
+                                                        <li class="col-span-5"><b>Waktu Pengumpulan Tugas</b></li>
+                                                        <li class="col-span-5"><b>Judul</b></li>
                                                         <li><b>Files</b></li>
                                                     </ul>
                                                     <?php
@@ -615,7 +611,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                                 </div>
                                             </div>
                                             <div class="flex justify-end p-6 space-x-3 rounded-b ">
-                                                <button data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>" class="w-32 bg-yellow-400 text-center py-1 text-white rounded-md hover:bg-yellow-600" type="button">Confirm</button>
+                                                <button data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>" class="w-32 bg-cream text-center py-1 text-white rounded-md hover:bg-gray-600" type="button">Tutup</button>
                                             </div>
 
                                         </div>
@@ -631,7 +627,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         <!-- Modal header -->
                                         <div class="flex justify-between items-center p-5 rounded-t border-b dark:border-gray-600">
                                             <h3 class="text-xl font-medium text-center">
-                                                Description
+                                                Deskripsi
                                             </h3>
                                             <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>">
                                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -647,7 +643,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         </div>
                                         <!-- Modal footer -->
                                         <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
-                                            <button data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" type="button" class="text-gray bg-cream focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent hover:text-white hover:bg-gray-600 dark:focus:ring-dark-800">Close</button>
+                                            <button data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" type="button" class="text-gray bg-cream focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent hover:text-white hover:bg-gray-600 dark:focus:ring-dark-800">Tutup</button>
                                             <!-- <button data-modal-toggle="medium-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button> -->
                                         </div>
                                     </div>
@@ -666,7 +662,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                         <!-- Modal header -->
                         <div class="flex justify-center items-start p-5 rounded-t ">
                             <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-dark">
-                                Upload Submission
+                                Upload Tugas
                             </h3>
                         </div>
                         <!-- Modal body -->
@@ -683,19 +679,19 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         <p class="text-gray-600" id="countFile"></p>
                                         <div class="flex text-lg text-gray-600">
                                             <label for="fileInput" class="relative cursor-pointer bg-white rounded-md font-medium hover:text-gray-500">
-                                                <span>Choose a file</span>
+                                                <span>Pilih file</span>
                                                 <input id="fileInput" name="fileInput" type="file" class="sr-only dropzone" data-assid="" onchange="readFile(event)" multiple>
                                                 <input type="hidden" name="assignId" id="inputasignid">
                                                 <input type="hidden" name="cf" id="cf">
                                             </label>
-                                            <p class="pl-1">or drag it here</p>
+                                            <p class="pl-1">atau seret kesini</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
-                                    <button data-modal-toggle="modalAdd" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center hover:ring-2 hover:ring-gray-400" id="closeModal">Close</button>
-                                    <button class=" bg-cream text-white w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-600" type="submit" name="submit" id="uploadSubmission">Submit</button>
-                                    <button disabled type="button" id="loading" class="hidden text-white bg-yellow-500 rounded font-medium ml-auto py-2 px-2 items-center">
+                                    <button data-modal-toggle="modalAdd" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center hover:ring-2 hover:ring-gray-400" id="closeModal">Tutup</button>
+                                    <button class=" bg-cream text-white w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-600" type="submit" name="submit" id="uploadSubmission">Kirim</button>
+                                    <button disabled type="button" id="loading" class="hidden text-white bg-cream rounded font-medium ml-auto py-2 px-2 items-center">
                                         <svg role="status" class="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
                                             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor" />

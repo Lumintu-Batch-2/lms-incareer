@@ -164,7 +164,7 @@ if (isset($_POST['submit1'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment Page</title>
+    <title>Halaman Tugas</title>
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -263,7 +263,7 @@ if (isset($_POST['submit1'])) {
             lms in-career
         </div>
         <div class="container flex flex-column justify-between mt-4 mb-4">
-            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+            <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_lumintu.png" alt="Logo Lumintu Logic">
             <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle2">
         </div>
     </div>
@@ -275,10 +275,10 @@ if (isset($_POST['submit1'])) {
                 <!-- Header -->
                 <div class="flex items-center space-x-4 px-2">
                     <img src="../../Img/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle">
-                    <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
+                    <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_lumintu.png" alt="Logo Lumintu Logic">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]">
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]" />
 
                 <!-- List Menus -->
                 <div>
@@ -288,37 +288,44 @@ if (isset($_POST['submit1'])) {
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
-                                <p class="font-semibold">Dashboard</p>
+                                <p class="font-semibold">Beranda</p>
                             </a>
                         </li>
                         <!-- ICON DAN TEXT FORUM COURSES -->
                         <li>
-                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
-                                <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
-                                <p class="text-white font-semibold">Courses</p>
+                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/course_dark_icon.svg" alt="Course Icon">
+                                <p class="font-semibold">Materi</p>
                             </a>
                         </li>
                         <!-- Icon Assignment -->
                         <li>
-                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
-                                <p class="font-semibold">Assignment</p>
+                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
+                                <p class="text-white font-semibold">Penugasan</p>
+                            </a>
+                        </li>
+                        <!-- ICON DAN TEXT CONSULT -->
+                        <li>
+                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                <p class="font-semibold">Konsultasi</p>
                             </a>
                         </li>
                         <!-- ICON DAN TEXT SCHEDULE -->
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
-                                <p class="font-semibold">Schedule</p>
+                                <p class="font-semibold">Jadwal</p>
                             </a>
                         </li>
                         <!-- ICON DAN TEXT ATTENDANCE -->
-                        <li>
+                        <!-- <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
                                 <p class="font-semibold">Attendance</p>
                             </a>
-                        </li>
+                        </li> -->
                         <!-- ICON DAN TEXT SCORE -->
                         <!-- <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -326,13 +333,7 @@ if (isset($_POST['submit1'])) {
                                 <p class="font-semibold">Score</p>
                             </a>
                         </li> -->
-                        <!-- ICON DAN TEXT CONSULT -->
-                        <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
-                                <p class="font-semibold">Consult</p>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -342,16 +343,16 @@ if (isset($_POST['submit1'])) {
                 <ul class="flex flex-col ">
                     <!-- ICON DAN TEXT HELP -->
                     <li>
-                        <a id="btnHelp" href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                            <p class="font-semibold">Help</p>
+                            <p class="font-semibold">Bantuan</p>
                         </a>
                     </li>
                     <!-- ICON DAN TEXT LOG OUT -->
                     <li>
                         <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                            <p class="font-semibold">Log out</p>
+                            <p class="font-semibold">Keluar</p>
                         </a>
                     </li>
                 </ul>
@@ -359,7 +360,7 @@ if (isset($_POST['submit1'])) {
         </div>
 
         <!-- Mobile navbar -->
-        <div id="left-nav" class="bg-opacity-50 bg-gray-500 fixed top-[130px] bottom-0 overflow-y-scroll inset-x-0 hidden z-40 transition-all ease-in-out duration-500 sm:hidden">
+        <div id="left-nav" class="bg-opacity-50 bg-gray-500 fixed top-[130px] bottom-0 overflow-y-scroll inset-x-0 hidden z-10 transition-all ease-in-out duration-500 sm:hidden">
 
             <div class="bg-white w-[250px] h-screen px-6 py-6 ">
                 <!-- Top nav -->
@@ -379,37 +380,44 @@ if (isset($_POST['submit1'])) {
                             <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
-                                    <p class="font-semibold">Dashboard</p>
+                                    <p class="font-semibold">Beranda</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT FORUM COURSES -->
                             <li>
-                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
-                                    <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
-                                    <p class="text-white font-semibold">Courses</p>
+                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/course_dark_icon.svg" alt="Course Icon">
+                                    <p class="font-semibold">Materi</p>
                                 </a>
                             </li>
                             <!-- Icon Assignment -->
                             <li>
-                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
-                                    <p class="font-semibold">Assignment</p>
+                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                    <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
+                                    <p class="text-white font-semibold">Penugasan</p>
+                                </a>
+                            </li>
+                            <!-- ICON DAN TEXT CONSULT -->
+                            <li>
+                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                    <p class="font-semibold">Konsultasi</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT SCHEDULE -->
                             <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
-                                    <p class="font-semibold">Schedule</p>
+                                    <p class="font-semibold">Jadwal</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT ATTENDANCE -->
-                            <li>
+                            <!-- <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
                                     <p class="font-semibold">Attendance</p>
                                 </a>
-                            </li>
+                            </li> -->
                             <!-- ICON DAN TEXT SCORE -->
                             <!-- <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -417,25 +425,19 @@ if (isset($_POST['submit1'])) {
                                     <p class="font-semibold">Score</p>
                                 </a>
                             </li> -->
-                            <!-- ICON DAN TEXT CONSULT -->
-                            <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
-                                    <p class="font-semibold">Consult</p>
-                                </a>
-                            </li>
+                            
                             <!-- ICON DAN TEXT HELP -->
                             <li>
                                 <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
-                                    <p class="font-semibold">Help</p>
+                                    <p class="font-semibold">Bantuan</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT LOG OUT -->
                             <li>
                                 <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
-                                    <p class="font-semibold">Log out</p>
+                                    <p class="font-semibold">Keluar</p>
                                 </a>
                             </li>
                         </ul>
@@ -450,7 +452,7 @@ if (isset($_POST['submit1'])) {
             <!-- Header / Profile -->
             <div class="items-center gap-x-4 justify-end hidden sm:flex">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_username'}  ?></p>
+                <p class="text-dark-green font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
             </div>
 
 
@@ -459,16 +461,16 @@ if (isset($_POST['submit1'])) {
 
             <div class="flex flex-col gap-y-2 topic-title">
                 <p class="text-xl text-center sm:text-2xl xl:text-4xl text-dark-green font-semibold">Assignment Collection</p>
-                <p class="text-base sm:text-lg lg:text-xl xl:text-2xl text-center text-dark-green">Task# <?= $assignData['assignment_name']; ?></p>
+                <p class="text-base sm:text-lg lg:text-xl xl:text-2xl text-center text-dark-green">Tugas# <?= $assignData['assignment_name']; ?></p>
             </div>
 
             <a href="assignment.php?course_id=<?= $_GET['course_id']; ?>&subject_id=<?= $_GET['subject_id']; ?>" class="text-dark-green flex items-center font-medium text-sm space-x-2 mb-8">
                 <img class="w-4 lg:w-5" src="../../Img/icons/back_icons.svg" alt="Back Image">
-                <p class="ml-2"> Back</p>
+                <p class="ml-2">Kembali</p>
             </a>
 
             <div id="table-finished">
-                <p class="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-dark-green font-semibold">Completed Assignment</p>
+                <p class="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-dark-green font-semibold">Tugas Selesai</p>
             </div>
 
             <!-- Table Assignment -->
@@ -487,11 +489,11 @@ if (isset($_POST['submit1'])) {
                         <thead>
                             <tr class="text-dark-green text-sm lg:text-base">
                                 <th class="border-b text-left px-4 py-2">No</th>
-                                <th class="border-b text-center px-4 py-2">Name</th>
-                                <th class="border-b text-center px-4 py-2">Published Date</th>
+                                <th class="border-b text-center px-4 py-2">Nama</th>
+                                <th class="border-b text-center px-4 py-2">Tanggal Pengumpulan</th>
                                 <th class="border-b text-center px-4 py-2">File</th>
-                                <th class="border-b text-center px-4 py-2">Score</th>
-                                <th class="border-b text-center px-4 py-2">Action</th>
+                                <th class="border-b text-center px-4 py-2">Nilai</th>
+                                <th class="border-b text-center px-4 py-2">Aksi</th>
 
                             </tr>
                         </thead>
@@ -516,7 +518,7 @@ if (isset($_POST['submit1'])) {
 
                                         foreach ($file as $key => $val) { ?>
                                             <a href="download.php?file=<?= $val['submission_filename']; ?>">
-                                                <p class=" border-t"><?= $val['submission_filename']; ?></p>
+                                                <p class="hover:text-cream"><?= $val['submission_filename']; ?></p>
                                             </a>
 
                                         <?php
@@ -559,7 +561,7 @@ if (isset($_POST['submit1'])) {
             </div>
 
             <div class="mt-8" id="table-unfinished">
-                <p class="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-dark-green font-semibold">Unfinished Assignment</p>
+                <p class="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-dark-green font-semibold">Tugas Belum Selesai</p>
             </div>
 
             <!-- Table unfinished assignment -->
@@ -576,11 +578,11 @@ if (isset($_POST['submit1'])) {
                         <thead>
                             <tr class="text-dark-green text-sm lg:text-base">
                                 <th class="border-b text-left px-4 py-2">No</th>
-                                <th class="border-b text-center px-4 py-2">Name</th>
-                                <th class="border-b text-center px-4 py-2">Published Date</th>
+                                <th class="border-b text-center px-4 py-2">Nama</th>
+                                <th class="border-b text-center px-4 py-2">Tanggal Pengumpulan</th>
                                 <th class="border-b text-center px-4 py-2">File</th>
-                                <th class="border-b text-center px-4 py-2">Score</th>
-                                <th class="border-b text-center px-4 py-2">Action</th>
+                                <th class="border-b text-center px-4 py-2">Nilai</th>
+                                <th class="border-b text-center px-4 py-2">Aksi</th>
 
                             </tr>
                         </thead>
@@ -625,7 +627,7 @@ if (isset($_POST['submit1'])) {
                 <!-- Modal header -->
                 <div class="flex justify-center items-start p-5 rounded-t ">
                     <h3 class="text-xl font-bold  lg:text-2xl text-dark-green">
-                        Edit Score
+                        Edit Nilai
                     </h3>
                 </div>
                 <!-- Modal body -->
@@ -635,11 +637,11 @@ if (isset($_POST['submit1'])) {
                             <input type="hidden" id="sid" name="sid">
                             <input type="hidden" id="studentId" name="studentId">
                             <input type="number" id="score" name="score" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                            <li class="font-semibold text-dark-green text-xs mt-2">Input score between 0-100</li>
+                            <li class="font-semibold text-dark-green text-xs mt-2">Masukan nilai dari 0-100</li>
                         </div>
                         <div class="flex justify-end p-6 space-x-3 rounded-b ">
-                            <button data-modal-toggle="defaultModal" class="w-24" type="button">Cancel</button>
-                            <button class="bg-yellow-600 text-white  font-semibold justify-end text-center py-2 rounded-lg w-24 ml-auto" type="submit" name="submit">Save</button>
+                            <button data-modal-toggle="defaultModal" class="w-24" type="button">Batal</button>
+                            <button class="bg-cream text-white  font-semibold justify-end text-center py-2 rounded-lg w-24 ml-auto" type="submit" name="submit">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -656,7 +658,7 @@ if (isset($_POST['submit1'])) {
                 <!-- Modal header -->
                 <div class="flex justify-center items-start p-5 rounded-t ">
                     <h3 class="text-xl font-bold  lg:text-2xl text-dark-green">
-                        Edit Score
+                        Edit Nilai
                     </h3>
                 </div>
                 <!-- Modal body -->
@@ -668,11 +670,11 @@ if (isset($_POST['submit1'])) {
                             <input type="hidden" id="studentId1" name="studentId1">
                             <input type="hidden" id="mentorid" name="mentorid" value="<?= $_SESSION['user_data']->{'user'}->{'user_id'} ?>">
                             <input type="number" id="score1" name="score1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                            <li class="font-semibold text-dark-green text-xs mt-2">Input score between 0-100</li>
+                            <li class="font-semibold text-dark-green text-xs mt-2">Masukan nilai dari 0-100</li>
                         </div>
                         <div class="flex justify-end p-6 space-x-3 rounded-b ">
-                            <button data-modal-toggle="defaultModal1" class="w-24" type="button">Cancel</button>
-                            <button class="bg-yellow-600 text-white  font-semibold justify-end text-center py-2 rounded-lg w-24 ml-auto" type="submit" name="submit1">Save</button>
+                            <button data-modal-toggle="defaultModal1" class="w-24" type="button">Batal</button>
+                            <button class="bg-cream text-white  font-semibold justify-end text-center py-2 rounded-lg w-24 ml-auto" type="submit" name="submit1">Simpan</button>
                         </div>
                     </form>
                 </div>
