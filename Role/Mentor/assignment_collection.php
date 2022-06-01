@@ -185,6 +185,10 @@ if (isset($_POST['submit1'])) {
     <!-- Tailwindcss -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
+
+    <!-- Intro Js -->
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
+    <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -338,7 +342,7 @@ if (isset($_POST['submit1'])) {
                 <ul class="flex flex-col ">
                     <!-- ICON DAN TEXT HELP -->
                     <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <a id="btnHelp" href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
                             <p class="font-semibold">Help</p>
                         </a>
@@ -452,18 +456,18 @@ if (isset($_POST['submit1'])) {
 
 
             <!-- Topic Title -->
-            
-            <div class="flex flex-col gap-y-2">
+
+            <div class="flex flex-col gap-y-2 topic-title">
                 <p class="text-xl text-center sm:text-2xl xl:text-4xl text-dark-green font-semibold">Assignment Collection</p>
-                <p class="text-base sm:text-lg lg:text-xl xl:text-2xl text-center text-dark-green">Task# <?= $assignData['assignment_name'];?></p>
-            </div>  
+                <p class="text-base sm:text-lg lg:text-xl xl:text-2xl text-center text-dark-green">Task# <?= $assignData['assignment_name']; ?></p>
+            </div>
 
             <a href="assignment.php?course_id=<?= $_GET['course_id']; ?>&subject_id=<?= $_GET['subject_id']; ?>" class="text-dark-green flex items-center font-medium text-sm space-x-2 mb-8">
                 <img class="w-4 lg:w-5" src="../../Img/icons/back_icons.svg" alt="Back Image">
                 <p class="ml-2"> Back</p>
             </a>
 
-            <div>
+            <div id="table-finished">
                 <p class="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-dark-green font-semibold">Completed Assignment</p>
             </div>
 
@@ -501,7 +505,7 @@ if (isset($_POST['submit1'])) {
                                     <td class="border-b px-4 py-2"><?= $no ?></td>
                                     <td class="border-b px-4 py-2 text-center"><?= $item['student_name']  ?></td>
                                     <td class="border-b px-4 py-2 text-center"><?= $item['submitted_date']  ?></td>
-                                    <td class="border-b px-4 py-2  ">
+                                    <td class="border-b px-4 py-2 filename">
                                         <?php
                                         require_once('../../Model/AssignmentSubmission.php');
                                         $multipleup = new AssignmentSubmission;
@@ -526,9 +530,9 @@ if (isset($_POST['submit1'])) {
                                     $objScores->setAssignmentId($item['assignment_id']);
                                     $score = $objScores->getScoreByStudentIdAndAssignmentId();
                                     ?>
-                                    <td class="border-b px-4 py-2 text-center "><?= $score['score_value']  ?></td>
+                                    <td class="border-b px-4 py-2 text-center score"><?= $score['score_value']  ?></td>
 
-                                    <td class="border-b px-4 py-2 "><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal" data-username="<?= $item['student_name']; ?>" data-tooltip-target="tooltip-default<?= $item['student_name']; ?>" data-scoreid="<?= $score['score_id'] ?>" data-student-id="<?= $item['student_id'] ?>" data-scorevalue="<?= $score['score_value']  ?>" alt="Edit Icon" type="button" data-target="#defaultModal" id="editbtn"></td>
+                                    <td class="border-b px-4 py-2"><img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal" data-username="<?= $item['student_name']; ?>" data-tooltip-target="tooltip-default<?= $item['student_name']; ?>" data-scoreid="<?= $score['score_id'] ?>" data-student-id="<?= $item['student_id'] ?>" data-scorevalue="<?= $score['score_value']  ?>" alt="Edit Icon" type="button" data-target="#defaultModal" id="editbtn"></td>
                                     <?php if ($score['mentor_id'] == 0) {
                                     ?>
                                         <div id="tooltip-default<?= $item['student_name']; ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
@@ -554,7 +558,7 @@ if (isset($_POST['submit1'])) {
                 </div>
             </div>
 
-            <div class="mt-8">
+            <div class="mt-8" id="table-unfinished">
                 <p class="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-dark-green font-semibold">Unfinished Assignment</p>
             </div>
 
@@ -699,6 +703,40 @@ if (isset($_POST['submit1'])) {
         // }
 
         $(document).ready(function() {
+            $('#btnHelp').click(function() {
+                introJs().setOptions({
+                    steps: [{
+                            intro: "Hello Selamat Datang Di Halaman Assignment Collection"
+                        }, {
+                            element: document.querySelector('.topic-title'),
+                            intro: "Ini merupakan halaman assignment collection dimana mentor akan memberikan score terhadap assignment yang di kumpulkan oleh students"
+                        }, {
+                            element: document.querySelector('#table-finished'),
+                            intro: "Ini merupakan tabel students yang telah mengumpulkan assignments"
+                        },
+                        {
+                            element: document.querySelector('#table-unfinished'),
+                            intro: "Ini merupakan tabel students yang telah belum/tidak mengumpulkan assignments"
+                        },
+                        {
+                            element: document.querySelector('.filename'),
+                            intro: "Untuk mendownload file assignment students click pada filename assignments collection"
+                        }, {
+                            element: document.querySelector('#editbtn'),
+                            intro: "Ini adalah tombol action untuk memberikan score pada Assignments Students"
+                        }, {
+                            title: 'Modal Add Score Assignment',
+                            intro: '<img src="../../Img/assets/modal_score.png" onerror="this.onerror=null;this.src=\'https://i.giphy.com/ujUdrdpX7Ok5W.gif\';" alt="" data-position="top">'
+                        }, {
+                            element: document.querySelector('.score'),
+                            intro: "Setelah mentor memberi score, score nanti akan tampil seperti ini"
+                        }
+
+                    ]
+                }).start();
+            })
+
+
             $(document).on('click', '#editbtn', function() {
                 let username = $(this).data('username');
                 let scoreID = $(this).data('scoreid');
@@ -739,9 +777,6 @@ if (isset($_POST['submit1'])) {
                     }
                 }
             })
-
-
-
 
         })
     </script>

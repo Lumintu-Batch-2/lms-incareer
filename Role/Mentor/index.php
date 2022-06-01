@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_data'])) {
 }
 
 switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
-    // KONDISI KETIKA USER MEMASUKI HALAMAN NAMUN LOGIN SEBAGAI ADMIN
+        // KONDISI KETIKA USER MEMASUKI HALAMAN NAMUN LOGIN SEBAGAI ADMIN
     case 1:
         echo "
         <script>
@@ -25,7 +25,7 @@ switch ($_SESSION['user_data']->{'user'}->{'role_id'}) {
         </script>
         ";
         break;
-    // KONDISI KETIKA USER MEMASUKI HALAMAN NAMUN LOGIN SEBAGAI STUDENT
+        // KONDISI KETIKA USER MEMASUKI HALAMAN NAMUN LOGIN SEBAGAI STUDENT
     case 3:
         echo "
         <script>
@@ -57,8 +57,8 @@ $usersData = json_decode(http_request_with_auth("https://account.lumintulogic.co
 $batchJson = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/batch.php", $token));
 
 $allBatch = array();
-for($i = 0; $i < count($batchJson->{'batch'}); $i++) {
-    if($batchJson->{'batch'}[$i]->{'batch_id'} == $_SESSION['user_data']->{'user'}->{'batch_id'}) {
+for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
+    if ($batchJson->{'batch'}[$i]->{'batch_id'} == $_SESSION['user_data']->{'user'}->{'batch_id'}) {
         array_push($allBatch, $batchJson->{'batch'}[$i]);
     }
 }
@@ -74,7 +74,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     }
 }
 
-// var_dump($courseData);
+
 
 ?>
 
@@ -155,14 +155,17 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         .sidebar {
             transition: .5s ease-in-out;
         }
+
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
 
         /* Hide scrollbar for IE, Edge and Firefox */
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
         }
     </style>
 
@@ -179,7 +182,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         </div>
     </div>
 
-    <div class="flex items-center">        
+    <div class="flex items-center">
         <!-- Left side (Sidebar) -->
         <div class="bg-white w-[350px] h-screen px-8 py-6 sm:flex flex-col justify-between sidebar in-active hidden">
             <!-- Top nav -->
@@ -190,12 +193,12 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                     <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_primary.svg" alt="Logo In Career">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]"/>
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]" />
 
                 <!-- List Menus -->
                 <div>
                     <ul class="flex flex-col gap-y-1">
-                        <!-- ICON DAN TEXT DASHBOARD -->    
+                        <!-- ICON DAN TEXT DASHBOARD -->
 
                         <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -286,7 +289,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                                     <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
                                     <!-- <p class="font-semibold"></p> -->
                                 </a>
-                            <!-- ICON DAN TEXT DASHBOARD -->    
+                                <!-- ICON DAN TEXT DASHBOARD -->
                             </li>
                             <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -395,7 +398,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
 
                         <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block flex-1  p-2.5">
                             <option selected></option>
-                            <?php for($i = 0; $i < count($allBatch); $i++) : ?>
+                            <?php for ($i = 0; $i < count($allBatch); $i++) : ?>
                                 <option value="<?= $allBatch[$i]->{'batch_id'}; ?>"><?= $allBatch[$i]->{'batch_name'}; ?></option>
                             <?php endfor ?>
                             <!-- <option value="US">Filter 2</option>
@@ -426,9 +429,9 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     <!-- CDN FLOWBITE -->
 
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
-    
+
     <!-- FUNGSI TOMBOL BUTTON TOGGLE SIDEBAR -->
-    
+
     <script>
         let btnToggle = document.getElementById('btnToggle');
         let btnToggle2 = document.getElementById('btnToggle2');
