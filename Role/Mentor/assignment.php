@@ -350,7 +350,7 @@ if (isset($_GET['act'])) {
                 <ul class="flex flex-col ">
                     <!-- ICON DAN TEXT HELP -->
                     <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <a id="btnHelp" href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
                             <p class="font-semibold">Help</p>
                         </a>
@@ -575,11 +575,11 @@ if (isset($_GET['act'])) {
                                         <p class="truncate max-w-[300px]"><?= $assignment['assignment_name'] ?></p>
 
                                         <a href="#">
-                                        <img class="w-3 sm:w-5 cursor-pointer" data-tooltip-target="tooltipDesc" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">
+                                            <img class="Desc w-3 sm:w-5 cursor-pointer" data-tooltip-target="tooltipDesc" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">
                                         </a>
                                         <div id="tooltipDesc" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                             Show Description
-                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
                                     </td>
 
@@ -588,21 +588,21 @@ if (isset($_GET['act'])) {
 
                                     <td class="border-b px-4 py-2 flex items-center justify-center gap-x-2">
                                         <!-- COLLECTION -->
-                                        <a href="assignment_collection.php?course_id=<?= $_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . '&subject_id=' . $_GET['subject_id']; ?>"><img class="w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipCollect" src="../../Img/icons/binoculars_icon.svg" alt="Assignment Collection Icon" type="button">
+                                        <a href="assignment_collection.php?course_id=<?= $_GET['course_id'] . '&assignment_id=' . $assignment['assignment_id'] . '&subject_id=' . $_GET['subject_id']; ?>"><img class="Collect w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipCollect" src="../../Img/icons/binoculars_icon.svg" alt="Assignment Collection Icon" type="button">
                                         </a>
                                         <div id="tooltipCollect" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                             Assignment Collection
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
                                         <!-- EDIT -->
-                                        <a href="#"><img class="w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipEdit" src="../../Img/icons/edit_icon.svg" alt="Assignment Collection Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>" data-eventid="<?= $assignment['event_id'] ?>">
+                                        <a href="#"><img class="Edit w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipEdit" src="../../Img/icons/edit_icon.svg" alt="Assignment Collection Icon" type="button" data-modal-toggle="defaultModal" data-target="#exampleModal<?= $assignment['assignment_id']; ?>" data-assigment-id="<?= $assignment['assignment_id'] ?>" id="editBtn" data-title="<?= $assignment['assignment_name'] ?>" data-date-start="<?= $assignment['assignment_start_date'] ?>" data-date-end="<?= $assignment['assignment_end_date'] ?>" data-desc="<?= $assignment['assignment_desc'] ?>" data-type="<?= $assignment['assignment_type'] ?>" data-eventid="<?= $assignment['event_id'] ?>">
                                         </a>
                                         <div id="tooltipEdit" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                             Edit Button
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
                                         <!-- DELETE -->
-                                        <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>&event_id=<?= $assignment['event_id']; ?>"><img class="w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipDelete" src="../../Img/icons/delete_icon.svg" alt="Delete Icon" onclick="return confirm('Apakah anda yakin menghapus data ini?')" type="button">
+                                        <a href="assignment.php?act=delete&assign_id=<?= $assignment['assignment_id'] ?>&subject_id=<?= $_GET['subject_id'] ?>&course_id=<?= $_GET['course_id']; ?>&event_id=<?= $assignment['event_id']; ?>"><img class="Delete w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipDelete" src="../../Img/icons/delete_icon.svg" alt="Delete Icon" onclick="return confirm('Apakah anda yakin menghapus data ini?')" type="button">
                                         </a>
                                         <div id="tooltipDelete" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                             Delete Button
@@ -611,7 +611,7 @@ if (isset($_GET['act'])) {
 
                                     </td>
                                 </tr>
-                               
+
                                 <!-- Description Modal -->
                                 <div id="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
                                     <div class="relative p-4 w-full max-w-lg h-full md:h-auto">
@@ -833,33 +833,41 @@ if (isset($_GET['act'])) {
 
 
         $(document).ready(function() {
+            $('#btnHelp').click(function() {
+                introJs().setOptions({
+                    steps: [{
+                            intro: "Hello Selamat Datang Di Halaman Assignment Mentor"
+                        }, {
+                            element: document.querySelector('.topic-title'),
+                            intro: "Ini merupakan halaman assignment dimana mentor akan melihat, membuat, mengedit, dan menghapus assignment"
+                        }, {
+                            element: document.querySelector('#tableThead'),
+                            intro: "Ini merupakan tabel dimana data assignment yang sudah di buat akan di tampilkan"
+                        },
+                        {
+                            element: document.querySelector('#btnAddAssignment'),
+                            intro: "Ini adalah tombol untuk menambahkan Assignment"
+                        }, {
+                            title: 'Modal Add Assignment',
+                            intro: '<img src="../../Img/assets/modal_assignments.png" onerror="this.onerror=null;this.src=\'https://i.giphy.com/ujUdrdpX7Ok5W.gif\';" alt="" data-position="top">'
+                        }, {
+                            element: document.querySelector('.Desc'),
+                            intro: "Ini adalah tombol untuk melihat Deskripsi"
+                        }, {
+                            element: document.querySelector('.Collect'),
+                            intro: "Ini adalah tombol untuk masuk ke halaman Assignment Collection"
+                        }, {
+                            element: document.querySelector('.Edit'),
+                            intro: "Ini adalah tombol untuk mengedit Assignment"
+                        }, {
+                            element: document.querySelector('.Delete'),
+                            intro: "Ini adalah tombol untuk menghapus Assignment"
+                        }
 
-            introJs().setOptions({
-                steps: [{
-                        intro: "Hello Selamat Datang Di Halaman Assignment Mentor"
-                    }, {
-                        element: document.querySelector('.topic-title'),
-                        intro: "Ini merupakan halaman assignment dimana mentor akan melihat, membuat, mengedit, dan menghapus assignment"
-                    }, {
-                        element: document.querySelector('#tableThead'),
-                        intro: "Ini merupakan tabel dimana data assignment yang sudah di buat akan di tampilkan"
-                    },
-                    {
-                        element: document.querySelector('#btnAddAssignment'),
-                        intro: "Ini adalah tombol untuk menambahkan Assignment"
-                    }, {
-                        title: 'Modal Add Assignment',
-                        intro: '<img src="../../Img/assets/modal_assignments.png" onerror="this.onerror=null;this.src=\'https://i.giphy.com/ujUdrdpX7Ok5W.gif\';" alt="" data-position="top">'
-                    }, {
-                        element: document.querySelector('#btnQuestion'),
-                        intro: "Ini adalah tombol untuk mengedit Assignment"
-                    }, {
-                        element: document.querySelector('#removeBtn'),
-                        intro: "Ini adalah tombol untuk menghapus Assignment"
-                    }
+                    ]
+                }).start();
+            })
 
-                ]
-            }).start();
             // FUNGSI UPLOAD ASSIGNMENT
             $('#btnUpload').click(function(evt) {
 
