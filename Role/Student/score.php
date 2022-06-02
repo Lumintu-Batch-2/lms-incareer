@@ -77,7 +77,10 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Nilai</title>
+    <title>Lumintu Logic</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../Img/logo/logo_lumintu1.ico">
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -209,7 +212,7 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                                 </a>
                             </li> -->
                             <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_COOKIE['X-LUMINTU-REFRESHTOKEN']; ?>&expiry=<?= $_SESSION['expiry']; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
                                     <p class="font-semibold">Konsultasi</p>
                                 </a>
@@ -237,14 +240,14 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                 <ul class="flex flex-col ">
                     <!-- ICON DAN TEXT HELP -->
                     <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <a id="btnHelp" href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
                             <p class="font-semibold">Bantuan</p>
                         </a>
                     </li>
                     <!-- ICON DAN TEXT LOG OUT -->
                     <li>
-                        <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <a href="../../logout.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white" onclick=" return confirm('Anda yakin ingin keluar?')">
                             <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
                             <p class="font-semibold">Keluar</p>
                         </a>
@@ -296,7 +299,7 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                             </a>
                         </li>
                         <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_COOKIE['X-LUMINTU-REFRESHTOKEN']; ?>&expiry=<?= $_SESSION['expiry']; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
                                 <p class="font-semibold">Konsultasi</p>
                             </a>
@@ -331,7 +334,7 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                         </li>
                         <!-- ICON DAN TEXT LOG OUT -->
                         <li>
-                            <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="../../logout.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white" onclick=" return confirm('Anda yakin ingin keluar?')">
                                 <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
                                 <p class="font-semibold">Keluar</p>
                             </a>

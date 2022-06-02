@@ -91,7 +91,11 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment Page</title>
+    <title>Lumintu Logic</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../Img/logo/logo_lumintu1.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../Img/logo/logo_lumintu1.ico" type="image/x-icon"/>
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -240,7 +244,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                 </a>
                             </li> -->
                             <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_COOKIE['X-LUMINTU-REFRESHTOKEN']; ?>&expiry=<?= $_SESSION['expiry']; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
                                     <p class="font-semibold">Konsultasi</p>
                                 </a>
@@ -275,7 +279,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                     </li>
                     <!-- ICON DAN TEXT LOG OUT -->
                     <li>
-                        <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <a href="../../logout.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white" onclick=" return confirm('Anda yakin ingin keluar?')">
                             <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
                             <p class="font-semibold">Keluar</p>
                         </a>
@@ -327,7 +331,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                             </a>
                         </li>
                         <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_COOKIE['X-LUMINTU-REFRESHTOKEN']; ?>&expiry=<?= $_SESSION['expiry']; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
                                 <p class="font-semibold">Konsultasi</p>
                             </a>
@@ -362,7 +366,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                         </li>
                         <!-- ICON DAN TEXT LOG OUT -->
                         <li>
-                            <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="../../logout.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white" onclick=" return confirm('Anda yakin ingin keluar?')">
                                 <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
                                 <p class="font-semibold">Keluar</p>
                             </a>
@@ -397,7 +401,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                         <span class="text-light-green">/</span>
                     </li>
                     <li class="flex items-center space-x-2">
-                        <a class="text-light-green" href="subject.php?course_id=<?= $_GET['course_id']; ?>">Course</a>
+                        <a class="text-light-green" href="subject.php?course_id=<?= $_GET['course_id']; ?>">Materi</a>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>

@@ -73,7 +73,10 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $courseData[0]->{'modul_name'}; ?></title>
+    <title>Lumintu Logic</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../Img/logo/logo_lumintu1.ico">
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -190,7 +193,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                         </li>
                          <!-- ICON DAN TEXT FORUM COURSES -->
                          <li>
-                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="http://lessons.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/course_dark_icon.svg" alt="Course Icon">
                                 <p class="font-semibold">Materi</p>
                             </a>
@@ -204,7 +207,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                         </li>
                         <!-- ICON DAN TEXT CONSULT -->
                         <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="http://lessons.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
                                 <p class="font-semibold">Konsultasi</p>
                             </a>
@@ -247,7 +250,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                     </li>
                     <!-- ICON DAN TEXT LOG OUT -->
                     <li>
-                        <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <a href="../../logout.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white" onclick=" return confirm('Anda yakin ingin keluar?')">
                             <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
                             <p class="font-semibold">Keluar</p>
                         </a>
@@ -282,7 +285,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                             </li>
                             <!-- ICON DAN TEXT FORUM COURSES -->
                             <li>
-                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="http://lessons.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/course_dark_icon.svg" alt="Course Icon">
                                     <p class="font-semibold">Materi</p>
                                 </a>
@@ -296,7 +299,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                             </li>
                             <!-- ICON DAN TEXT CONSULT -->
                             <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="http://lessons.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
                                     <p class="font-semibold">Konsultasi</p>
                                 </a>
@@ -332,7 +335,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                             </li>
                             <!-- ICON DAN TEXT LOG OUT -->
                             <li>
-                                <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="../../logout.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white" onclick=" return confirm('Anda yakin ingin keluar?')">
                                     <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
                                     <p class="font-semibold">Keluar</p>
                                 </a>
@@ -374,14 +377,14 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                     </li>
                     <!-- NAVIGATOR HALAMAN SUB TOPIC -->
                     <li>
-                        <a class="text-dark-green font-semibold" href="#">Course</a>
+                        <a class="text-dark-green font-semibold" href="#">Materi</a>
                     </li>
                 </ul>
             </div>
             <!-- TITTLE -->
 
             <div class="p-2 lg:p-4">
-                <p class="text-lg md:text-xl lg:text-2xl xl:text-4xl text-dark-green font-semibold">Daftar Pertemuan dari <?= $courseData[0]->{'modul_name'}; ?></p>
+                <p class="text-lg md:text-xl lg:text-2xl xl:text-4xl text-dark-green font-semibold">Daftar Materi dari Batch <?= $courseData[0]->{'modul_name'}; ?></p>
             </div>
 
             <div class="p-2 lg:p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
