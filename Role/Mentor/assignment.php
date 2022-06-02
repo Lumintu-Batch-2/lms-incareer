@@ -184,7 +184,10 @@ if (isset($_GET['act'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment Page</title>
+    <title>Lumintu Logic</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../../Img/logo/logo_lumintu1.ico">
+    <!-- <link rel="shortcut icon" href="../../Img/logo/favicon.ico" type="image/x-icon"/> -->
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -301,7 +304,7 @@ if (isset($_GET['act'])) {
                         </li>
                         <!-- ICON DAN TEXT FORUM COURSES -->
                         <li>
-                            <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="http://lessons.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/course_dark_icon.svg" alt="Course Icon">
                                 <p class="font-semibold">Materi</p>
                             </a>
@@ -315,9 +318,9 @@ if (isset($_GET['act'])) {
                         </li>
                         <!-- ICON DAN TEXT CONSULT -->
                         <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_COOKIE['X-LUMINTU-REFRESHTOKEN']; ?>&expiry=<?= $_SESSION['expiry']; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
-                                <p class="font-semibold">konsultasi</p>
+                                <p class="font-semibold">Konsultasi</p>
                             </a>
                         </li>
                         <!-- ICON DAN TEXT SCHEDULE -->
@@ -358,7 +361,7 @@ if (isset($_GET['act'])) {
                     </li>
                     <!-- ICON DAN TEXT LOG OUT -->
                     <li>
-                        <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <a href="../../logout.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white" onclick=" return confirm('Anda yakin ingin keluar?')">
                             <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
                             <p class="font-semibold">Keluar</p>
                         </a>
@@ -393,7 +396,7 @@ if (isset($_GET['act'])) {
                             </li>
                             <!-- ICON DAN TEXT FORUM COURSES -->
                             <li>
-                                <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="http://lessons.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/course_dark_icon.svg" alt="Course Icon">
                                     <p class="font-semibold">Materi</p>
                                 </a>
@@ -407,7 +410,7 @@ if (isset($_GET['act'])) {
                             </li>
                             <!-- ICON DAN TEXT CONSULT -->
                             <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_COOKIE['X-LUMINTU-REFRESHTOKEN']; ?>&expiry=<?= $_SESSION['expiry']; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
                                     <p class="font-semibold">Konsultasi</p>
                                 </a>
@@ -443,7 +446,7 @@ if (isset($_GET['act'])) {
                             </li>
                             <!-- ICON DAN TEXT LOG OUT -->
                             <li>
-                                <a href="assignment.php?act=logout" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="../../logout.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white" onclick=" return confirm('Anda yakin ingin keluar?')">
                                     <img class="w-5" src="../../Img/icons/logout_icon.svg" alt="Log out Icon">
                                     <p class="font-semibold">Keluar</p>
                                 </a>
@@ -456,7 +459,7 @@ if (isset($_GET['act'])) {
 
 
         <!-- Right side -->
-        <div class="bg-cgray w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll rightbar">
+        <div class="bg-cgray w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
             <!-- Header / Profile -->
             <div class="items-center gap-x-4 justify-end hidden sm:flex" id="profil_image2">
                 <img class="w-10" src="../../Img/icons/default_profile.svg" alt="Profile Image">
@@ -479,7 +482,7 @@ if (isset($_GET['act'])) {
                         <span class="text-light-green">/</span>
                     </li>
                     <li class="flex items-center space-x-2">
-                        <a class="text-light-green" href="subject.php?course_id=<?= $_GET['course_id']; ?>">Course</a>
+                        <a class="text-light-green" href="subject.php?course_id=<?= $_GET['course_id']; ?>">Materi</a>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>
@@ -527,7 +530,7 @@ if (isset($_GET['act'])) {
 
             <!-- CONTENT TABEL ASSIGNMENT -->
             <div class="relative">
-                <div class="assignment-table">
+                <div class="assignment-table overflow-x-auto">
                     <table class="shadow-lg bg-white" style="width: 100%">
                         <!-- MENGATUR PANJANG JARAK ANTARA FIELD SATU DENGAN YANG LAIN -->
                         <colgroup>
@@ -562,7 +565,7 @@ if (isset($_GET['act'])) {
                                 <tr class="text-sm lg:text-base">
                                     <td class="border-b px-4 py-2 ">
                                         <div class="flex items-center gap-x-2">
-                                        <p class="truncate max-w-[300px]" data-tooltip-target="tooltipassignment<?=$assignment['assignment_id']?>"><?= $assignment['assignment_name']; ?></p>
+                                        <p class="sm:truncate sm:max-w-[300px]" data-tooltip-target="tooltipassignment<?=$assignment['assignment_id']?>" style="word-break: break-all"><?= $assignment['assignment_name']; ?></p>
                                             <a href="#">
                                                 <img class="Desc w-3 sm:w-5 cursor-pointer" data-tooltip-target="tooltipDesc" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">
                                             </a>

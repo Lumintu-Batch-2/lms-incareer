@@ -18,6 +18,7 @@ if (isset($_POST['login'])) {
     if ($login->{'success'}) {
         $userData = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/user.php", $access_token));
         $_SESSION['user_data'] = $userData;
+        $_SESSION['expiry'] = $expiry;
         setcookie('X-LUMINTU-REFRESHTOKEN', $access_token, strtotime($expiry));
 
         switch ($userData->{'user'}->{'role_id'}) {
