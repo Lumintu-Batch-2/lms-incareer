@@ -698,6 +698,7 @@ if (isset($_GET['act'])) {
                                 <!-- CONTENT DROPDOWN -->
                                 <option value="exam">Ujian</option>
                                 <option value="task">Tugas</option>
+                                <option value="try out">Try Out</option>
 
                             </select>
                         </div>
@@ -1001,10 +1002,13 @@ if (isset($_GET['act'])) {
                 $('#dueDate').val(dueDate.slice(0, 10) + "T" + dueDate.slice(11, 16))
                 if (type == "task") {
                     $("option[value='task']").remove();
-                    $(type2).append(`<option value="${type}" selected>Assignment</option>`);
-                } else {
+                    $(type2).append(`<option value="${type}" selected>Tugas</option>`);
+                } else if (type == "exam") {
                     $("option[value='exam']").remove();
-                    $(type2).append(`<option value="${type}" selected>Exam</option>`);
+                    $(type2).append(`<option value="${type}" selected>Ujian</option>`);
+                } else {
+                    $("option[value='try out']").remove();
+                    $(type2).append(`<option value="${type}" selected>Try Out</option>`);
                 }
 
                 // $("#editAssign").click(() => {
