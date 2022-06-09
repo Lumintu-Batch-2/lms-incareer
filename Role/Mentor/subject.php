@@ -168,6 +168,8 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         </div>
     </div>
     <div class="flex items-center">
+        <!-- LIST MENU SIDEBAR [START]-->
+    <div class="flex items-center">
         <!-- Left side (Sidebar) -->
         <div class="bg-white w-[350px] h-screen px-8 py-6 sm:flex flex-col justify-between sidebar in-active hidden">
             <!-- Top nav -->
@@ -186,13 +188,13 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                         <!-- ICON DAN TEXT DASHBOARD -->
 
                         <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="https://account.lumintulogic.com/dashboard.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
                                 <p class="font-semibold">Beranda</p>
                             </a>
                         </li>
-                         <!-- ICON DAN TEXT FORUM COURSES -->
-                         <li>
+                        <!-- ICON DAN TEXT FORUM COURSES -->
+                        <li>
                             <a href="http://lessons.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/course_dark_icon.svg" alt="Course Icon">
                                 <p class="font-semibold">Materi</p>
@@ -207,14 +209,14 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                         </li>
                         <!-- ICON DAN TEXT CONSULT -->
                         <li>
-                            <a href="http://lessons.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_COOKIE['X-LUMINTU-REFRESHTOKEN']; ?>&expiry=<?= $_SESSION['expiry']; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
                                 <p class="font-semibold">Konsultasi</p>
                             </a>
                         </li>
                         <!-- ICON DAN TEXT SCHEDULE -->
                         <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="https://schedule.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
                                 <p class="font-semibold">Jadwal</p>
                             </a>
@@ -243,7 +245,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                 <ul class="flex flex-col ">
                     <!-- ICON DAN TEXT HELP -->
                     <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <a id="btnHelp" href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
                             <p class="font-semibold">Bantuan</p>
                         </a>
@@ -278,7 +280,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                                 <!-- ICON DAN TEXT DASHBOARD -->
                             </li>
                             <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="https://account.lumintulogic.com/dashboard.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
                                     <p class="font-semibold">Beranda</p>
                                 </a>
@@ -299,14 +301,14 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                             </li>
                             <!-- ICON DAN TEXT CONSULT -->
                             <li>
-                                <a href="http://lessons.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_COOKIE['X-LUMINTU-REFRESHTOKEN']; ?>&expiry=<?= $_SESSION['expiry']; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
                                     <p class="font-semibold">Konsultasi</p>
                                 </a>
                             </li>
                             <!-- ICON DAN TEXT SCHEDULE -->
                             <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="https://schedule.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
                                     <p class="font-semibold">Jadwal</p>
                                 </a>

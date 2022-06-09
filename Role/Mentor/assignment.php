@@ -297,7 +297,7 @@ if (isset($_GET['act'])) {
                         <!-- ICON DAN TEXT DASHBOARD -->
 
                         <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="https://account.lumintulogic.com/dashboard.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
                                 <p class="font-semibold">Beranda</p>
                             </a>
@@ -325,7 +325,7 @@ if (isset($_GET['act'])) {
                         </li>
                         <!-- ICON DAN TEXT SCHEDULE -->
                         <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="https://schedule.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
                                 <p class="font-semibold">Jadwal</p>
                             </a>
@@ -389,7 +389,7 @@ if (isset($_GET['act'])) {
                                 <!-- ICON DAN TEXT DASHBOARD -->
                             </li>
                             <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="https://account.lumintulogic.com/dashboard.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
                                     <p class="font-semibold">Beranda</p>
                                 </a>
@@ -417,7 +417,7 @@ if (isset($_GET['act'])) {
                             </li>
                             <!-- ICON DAN TEXT SCHEDULE -->
                             <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="https://schedule.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
                                     <p class="font-semibold">Jadwal</p>
                                 </a>
@@ -698,6 +698,7 @@ if (isset($_GET['act'])) {
                                 <!-- CONTENT DROPDOWN -->
                                 <option value="exam">Ujian</option>
                                 <option value="task">Tugas</option>
+                                <option value="try out">Try Out</option>
 
                             </select>
                         </div>
@@ -1001,10 +1002,13 @@ if (isset($_GET['act'])) {
                 $('#dueDate').val(dueDate.slice(0, 10) + "T" + dueDate.slice(11, 16))
                 if (type == "task") {
                     $("option[value='task']").remove();
-                    $(type2).append(`<option value="${type}" selected>Assignment</option>`);
-                } else {
+                    $(type2).append(`<option value="${type}" selected>Tugas</option>`);
+                } else if (type == "exam") {
                     $("option[value='exam']").remove();
-                    $(type2).append(`<option value="${type}" selected>Exam</option>`);
+                    $(type2).append(`<option value="${type}" selected>Ujian</option>`);
+                } else {
+                    $("option[value='try out']").remove();
+                    $(type2).append(`<option value="${type}" selected>Try Out</option>`);
                 }
 
                 // $("#editAssign").click(() => {

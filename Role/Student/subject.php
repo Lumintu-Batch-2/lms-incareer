@@ -173,7 +173,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                     <div>
                         <ul class="flex flex-col gap-y-1">
                             <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="https://account.lumintulogic.com/home.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
                                     <p class="font-semibold">Beranda</p>
                                 </a>
@@ -188,9 +188,9 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                             <li>
                                 <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
                                     <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
-                                    <p class="text-white font-semibold">Materi</p>
+                                    <p class="text-white font-semibold">Penugasan</p>
                                 </a>
-                            </li>                           
+                            </li>
                             <li>
                                 <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
@@ -210,7 +210,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                                 </a>
                             </li>
                             <li>
-                                <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <a href="https://schedule.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
                                     <p class="font-semibold">Jadwal</p>
                                 </a>
@@ -266,7 +266,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                         <!-- ICON DAN TEXT DASHBOARD -->    
                         </li>
                         <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="https://account.lumintulogic.com/home.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
                                 <p class="font-semibold">Beranda</p>
                             </a>
@@ -297,7 +297,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                             </a>
                         </li>
                         <li>
-                            <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                            <a href="https://schedule.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
                                 <p class="font-semibold">Jadwal</p>
                             </a>
