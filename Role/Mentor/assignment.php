@@ -656,7 +656,7 @@ if (isset($_GET['act'])) {
 
     <!-- Main Edit modal -->
     <div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-screen md:h-full">
-        <div class="relative p-4 w-full max-w-xl h-full">
+        <div class="relative p-4 w-full max-w-2xl h-full">
             <!-- Modal Edit content -->
             <div class="relative bg-white rounded-lg shadow ">
                 <!-- Modal Edit header -->
@@ -707,6 +707,10 @@ if (isset($_GET['act'])) {
                             <label for="input" class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Dokumen</label>
                             <input type="file" id="input" name="filename">
                         </div>
+                        <!-- CRITERIA FILE UPLOAD -->
+                        <p class="text-sm text-gray-400 font-base">*Format File .png .jpg .jpeg .txt .pdf .doc .xls .ppt .docx .xlsx .pptx .zip .rar</p>
+                        <p class="text-sm text-gray-400 font-base">*Maksimum File 2 MB</p>
+                        
                 </div>
                 <!-- Modal Edit footer -->
                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
@@ -722,7 +726,7 @@ if (isset($_GET['act'])) {
 
     <!-- Main Add modal -->
     <div id="addModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-screen md:h-full">
-        <div class="relative p-4 w-full max-w-xl h-full">
+        <div class="relative p-4 w-full max-w-2xl h-full">
             <!-- Modal Add content -->
             <div class="relative bg-white rounded-lg shadow ">
                 <!-- Modal Add header -->
@@ -770,6 +774,10 @@ if (isset($_GET['act'])) {
                             <label class="block mb-2 text-sm font-bold text-dark-900 dark:text-dark-300">Dokumen</label>
                             <input type="file" id="upload_file" name="filename" required>
                         </div>
+                        <!-- CRITERIA FILE UPLOAD -->
+                        <p class="text-sm text-gray-400 font-base">*Format File .png .jpg .jpeg .txt .pdf .doc .xls .ppt .docx .xlsx .pptx .zip .rar</p>
+                        <p class="text-sm text-gray-400 font-base">*Maksimum File 2 MB</p>
+                        
                 </div>
                 <div class="px-5">
                     <div class="progress hidden w-full bg-gray-200 rounded-full dark:bg-gray-700 " id="progressup">
