@@ -119,19 +119,31 @@ if (isset($_POST['submit'])) {
     $score->setScoreId($_POST['sid']);
     $score->setScoreValue($_POST['score']);
     $score->setMentorId($_SESSION['user_data']->{'user'}->{'user_id'});
-    $update  = $score->updateScore();
-    if ($update) {
+
+    if ($_POST['score'] == "") {
         echo "
         <script>
-            alert('Berhasil Menambahkan score');
-            location.replace('assignment_collection.php?course_id=" . $_GET['course_id'] . "&assignment_id=" . $_GET['assignment_id'] . "&subject_id=" . $_GET['subject_id'] . "');
+            alert('Tidak Boleh Kosong');
+        </script>";
+    } else if ($_POST['score'] <= 0 || $_POST['score'] >= 100) {
+        echo "
+        <script>
+            alert('Score dari 0-100');
         </script>";
     } else {
-        echo "
-        <script>
-            alert('Gagal');
-            location.replace('assignment_collection.php?course_id=" . $_GET['course_id'] . "&assignment_id=" . $_GET['assignment_id'] . "&subject_id=" . $_GET['subject_id'] . "');
-        </script>";
+        if ($score->updateScore()) {
+            echo "
+            <script>
+                alert('Berhasil Menambahkan score');
+                location.replace('assignment_collection.php?course_id=" . $_GET['course_id'] . "&assignment_id=" . $_GET['assignment_id'] . "&subject_id=" . $_GET['subject_id'] . "');
+            </script>";
+        } else {
+            echo "
+            <script>
+                alert('Gagal');
+                location.replace('assignment_collection.php?course_id=" . $_GET['course_id'] . "&assignment_id=" . $_GET['assignment_id'] . "&subject_id=" . $_GET['subject_id'] . "');
+            </script>";
+        }
     }
 }
 if (isset($_POST['submit1'])) {
@@ -139,19 +151,32 @@ if (isset($_POST['submit1'])) {
     $score = new Scores;
     $score->setScoreId($_POST['sid1']);
     $score->setScoreValue($_POST['score1']);
-    $update  = $score->updateScore();
-    if ($update) {
+    $score->setMentorId($_SESSION['user_data']->{'user'}->{'user_id'});
+    // $update  = $score->updateScore();
+    if ($_POST['score1'] == "") {
         echo "
         <script>
-            alert('Berhasil Menambahkan score');
-            location.replace('assignment_collection.php?course_id=" . $_GET['course_id'] . "&assignment_id=" . $_GET['assignment_id'] . "&subject_id=" . $_GET['subject_id'] . "');
+            alert('Tidak Boleh Kosong');
+        </script>";
+    } else if ($_POST['score1'] <= 0 || $_POST['score1'] >= 100) {
+        echo "
+        <script>
+            alert('Score dari 0-100');
         </script>";
     } else {
-        echo "
-        <script>
-            alert('Gagal');
-            location.replace('assignment_collection.php?course_id=" . $_GET['course_id'] . "&assignment_id=" . $_GET['assignment_id'] . "&subject_id=" . $_GET['subject_id'] . "');
-        </script>";
+        if ($score->updateScore()) {
+            echo "
+            <script>
+                alert('Berhasil Menambahkan score');
+                location.replace('assignment_collection.php?course_id=" . $_GET['course_id'] . "&assignment_id=" . $_GET['assignment_id'] . "&subject_id=" . $_GET['subject_id'] . "');
+            </script>";
+        } else {
+            echo "
+            <script>
+                alert('Gagal');
+                location.replace('assignment_collection.php?course_id=" . $_GET['course_id'] . "&assignment_id=" . $_GET['assignment_id'] . "&subject_id=" . $_GET['subject_id'] . "');
+            </script>";
+        }
     }
 }
 
@@ -165,7 +190,7 @@ if (isset($_POST['submit1'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lumintu Logic</title>
- 
+
     <!-- Favicon -->
     <link rel="icon" href="../../Img/logo/logo_lumintu1.ico">
 
@@ -336,7 +361,7 @@ if (isset($_POST['submit1'])) {
                                 <p class="font-semibold">Score</p>
                             </a>
                         </li> -->
-                        
+
                     </ul>
                 </div>
             </div>
@@ -428,7 +453,7 @@ if (isset($_POST['submit1'])) {
                                     <p class="font-semibold">Score</p>
                                 </a>
                             </li> -->
-                            
+
                             <!-- ICON DAN TEXT HELP -->
                             <li>
                                 <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -611,7 +636,7 @@ if (isset($_POST['submit1'])) {
                                     <td class="border-b px-4 py-2 text-center text-red-600"><?= $score['score_value'] ?></td>
 
                                     <td class="border-b px-4 py-2 ">
-                                        <img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal1" alt="Edit Icon" type="button" data-scoreid="<?= $score['score_id']; ?>" data-scorevalue="<?= $score['score_value']; ?>" data-target="#defaultModal1" id="editbtn1">
+                                        <img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal1" alt="Edit Icon" type="button" data-scoreid="<?= $score['score_id']; ?>" data-username="<?= $item['student_name']  ?>" data-scorevalue="<?= $score['score_value']; ?>" data-target="#defaultModal1" id="editbtn1">
                                     </td>
                                 </tr>
                             <?php $no++;
@@ -639,7 +664,7 @@ if (isset($_POST['submit1'])) {
                         <div class="mb-6">
                             <input type="hidden" id="sid" name="sid">
                             <input type="hidden" id="studentId" name="studentId">
-                            <input type="number" id="score" name="score" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                            <input type="number" id="score" name="score" min="0" max="100" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                             <li class="font-semibold text-dark-green text-xs mt-2">Masukan nilai dari 0-100</li>
                         </div>
                         <div class="flex justify-end p-6 space-x-3 rounded-b ">
@@ -666,13 +691,13 @@ if (isset($_POST['submit1'])) {
                 </div>
                 <!-- Modal body -->
                 <div class="px-6 space-y-6">
-                    <form class="flex flex-col gap-y-4" id="scoreform" action="" method="POST">
+                    <form class="flex flex-col gap-y-4" id="scoreform1" action="" method="POST">
                         <div class="mb-6">
                             <input type="hidden" id="sid1" name="sid1">
                             <input type="hidden" id="studentId1" name="studentId1">
                             <input type="hidden" id="studentId1" name="studentId1">
                             <input type="hidden" id="mentorid" name="mentorid" value="<?= $_SESSION['user_data']->{'user'}->{'user_id'} ?>">
-                            <input type="number" id="score1" name="score1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                            <input type="number" id="score1" min="0" max="100" name="score1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                             <li class="font-semibold text-dark-green text-xs mt-2">Masukan nilai dari 0-100</li>
                         </div>
                         <div class="flex justify-end p-6 space-x-3 rounded-b ">
@@ -749,22 +774,40 @@ if (isset($_POST['submit1'])) {
                 let scoreValue = $(this).data('scorevalue');
                 $('#sid').val(scoreID);
                 $('#studentId').val(studentId);
-                console.log(userID);
+                // console.log(userID);
 
                 $('#score').attr('placeholder', 'Input score for ' + username);
             })
             $(document).on('click', '#editbtn1', function() {
-                // let username = $(this).data('username');
+                let username = $(this).data('username');
                 let scoreID = $(this).data('scoreid');
                 // let studentId = $(this).data('student-id');
                 let scoreValue = $(this).data('scorevalue');
                 $('#sid1').val(scoreID);
                 $('#studentId1').val(studentId);
-                console.log(userID);
+                // console.log(userID);
 
                 $('#score1').attr('placeholder', 'Input score for ' + username);
             })
             $('#scoreform').validate({
+                errorClass: "error fail-alert",
+                validClass: "valid success-alert",
+                rules: {
+                    score: {
+                        number: true,
+                        min: 0,
+                        max: 100,
+                    }
+                },
+                messages: {
+                    score: {
+                        number: 'Score must be number',
+                        min: 'Min score is 0 ',
+                        max: 'max score is 100'
+                    }
+                }
+            })
+            $('#scoreform1').validate({
                 errorClass: "error fail-alert",
                 validClass: "valid success-alert",
                 rules: {
