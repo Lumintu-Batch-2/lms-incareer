@@ -95,7 +95,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
 
     <!-- Favicon -->
     <link rel="icon" href="../../Img/logo/logo_lumintu1.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="../../Img/logo/logo_lumintu1.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="../../Img/logo/logo_lumintu1.ico" type="image/x-icon" />
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -207,64 +207,64 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                     <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_lumintu.png" alt="Logo Lumintu Logic">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]"/>
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]" />
 
-                    <!-- List Menus -->
-                    <div>
-                        <ul class="flex flex-col gap-y-1">
-                            <li>
-                                <a href="https://account.lumintulogic.com/home.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
-                                    <p class="font-semibold">Beranda</p>
-                                </a>
-                            </li>
-                            <!-- <li>
+                <!-- List Menus -->
+                <div>
+                    <ul class="flex flex-col gap-y-1">
+                        <li>
+                            <a href="https://account.lumintulogic.com/home.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
+                                <p class="font-semibold">Beranda</p>
+                            </a>
+                        </li>
+                        <!-- <li>
                                 <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
                                     <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
                                     <p class="text-white font-semibold">Courses</p>
                                 </a>
                             </li> -->
-                            <!-- Icon Assignment -->
-                            <li>
-                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
-                                    <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
-                                    <p class="text-white font-semibold">Penugasan</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
-                                    <p class="font-semibold">Nilai</p>
-                                </a>
-                            </li>
-                            <!-- <li>
+                        <!-- Icon Assignment -->
+                        <li>
+                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
+                                <p class="text-white font-semibold">Penugasan</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
+                                <p class="font-semibold">Nilai</p>
+                            </a>
+                        </li>
+                        <!-- <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
                                     <p class="font-semibold">Forum Dicussion</p>
                                 </a>
                             </li> -->
-                            <li>
-                                <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_COOKIE['X-LUMINTU-REFRESHTOKEN']; ?>&expiry=<?= $_SESSION['expiry']; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
-                                    <p class="font-semibold">Konsultasi</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://schedule.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
-                                    <p class="font-semibold">Jadwal</p>
-                                </a>
-                            </li>
-                            <!-- <li>
+                        <li>
+                            <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_COOKIE['X-LUMINTU-REFRESHTOKEN']; ?>&expiry=<?= $_SESSION['expiry']; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                <p class="font-semibold">Konsultasi</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://schedule.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
+                                <p class="font-semibold">Jadwal</p>
+                            </a>
+                        </li>
+                        <!-- <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
                                     <p class="font-semibold">Attendance</p>
                                 </a>
                             </li> -->
-                            
-                            
-                        </ul>
-                    </div>
+
+
+                    </ul>
+                </div>
             </div>
 
             <!-- Bottom nav -->
@@ -303,7 +303,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                 <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
                                 <!-- <p class="font-semibold"></p> -->
                             </a>
-                        <!-- ICON DAN TEXT DASHBOARD -->    
+                            <!-- ICON DAN TEXT DASHBOARD -->
                         </li>
                         <li>
                             <a href="https://account.lumintulogic.com/home.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -348,15 +348,15 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                 <p class="font-semibold">Forum Dicussion</p>
                             </a>
                         </li> -->
-                        
+
                         <!-- <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
                                 <p class="font-semibold">Attendance</p>
                             </a>
                         </li> -->
-                        
-                        
+
+
                         <!-- ICON DAN TEXT HELP -->
                         <li>
                             <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -473,16 +473,16 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                             <tr class="text-sm lg:text-base">
                                 <td class="border-b px-4 py-2 ">
                                     <div class="flex items-center gap-x-2">
-                                        <p class="truncate max-w-[300px]" data-tooltip-target="tooltipassignment<?=$assignment['assignment_id']?>"><?= $assignment['assignment_name']; ?></p>
+                                        <p class="truncate max-w-[300px]" data-tooltip-target="tooltipassignment<?= $assignment['assignment_id'] ?>"><?= $assignment['assignment_name']; ?></p>
                                         <a href="#">
                                             <img class="Desc w-3 sm:w-5 cursor-pointer" data-tooltip-target="tooltipDesc" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">
                                         </a>
                                     </div>
-                                    <div id="tooltipassignment<?=$assignment['assignment_id']?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
-                                    <?= $assignment['assignment_name']; ?>
+                                    <div id="tooltipassignment<?= $assignment['assignment_id'] ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                        <?= $assignment['assignment_name']; ?>
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
-                                    
+
                                     <div id="tooltipDesc" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                         Deskripsi Tugas
                                         <div class="tooltip-arrow" data-popper-arrow></div>
@@ -492,7 +492,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                 <td class="border-b px-4 py-2 text-center"><?= $dueTime . " WIB"; ?></td>
                                 <td class="border-b px-4 py-2 flex flex-wrap items-center justify-center gap-x-2 ">
 
-                                <?php
+                                    <?php
                                     require_once('../../Model/AssignmentQuestion.php');
                                     $asq = new AssignmentQuestion;
                                     $asq->setAssignmentId($assignment['assignment_id']);
@@ -676,7 +676,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                     <div class="space-y-2 text-center">
                                         <!-- UPLOAD ICON -->
                                         <svg xmlns="http://www.w3.org/2000/svg" id="downloadIcon" class="mx-auto h-20 w-20 text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                         </svg>
                                         <!-- SELECTED ICON -->
                                         <svg xmlns="http://www.w3.org/2000/svg" id="prevDoc" class="mx-auto h-20 w-20 hidden" viewBox="0 0 20 20" fill="#DDB07F">
@@ -837,6 +837,54 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                 countFile.innerHTML = "";
             })
 
+            function checkEkstension() {
+                let reval;
+                let validTypeFile = [
+                    "image/png", // png
+                    "image/jpg", // jpg
+                    "image/jpeg", // jpeg
+                    "text/plain", // txt or html
+                    "application/pdf", // pdf
+                    "application/vnd.ms-powerpoint",
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // docx
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // xlsx
+                    "application/vnd.openxmlformats-officedocument.presentationml.presentation", // pptx
+                    "application/vnd.ms-excel", // xls
+                    "application/msword", // doc
+                    "application/zip", // zip
+                    "application/x-rar" // rar
+                ];
+                $.each(fileData.files, function(index, value) {
+                    // console.log(index, value);
+                    if (jQuery.inArray(value.type, validTypeFile) == -1) {
+                        console.log('EKSTENSI SALAH');
+                        reval = false;
+                        return false;
+                    } else {
+                        console.log('ekstensi benar');
+                        reval = true;
+                        return true;
+                    }
+                })
+                return reval;
+            }
+
+            function checkSize() {
+                let reval;
+                $.each(fileData.files, function(index, value) {
+                    // console.log(index, value);
+                    if (value.size > 2000000) {
+                        // console.log('File lebih besar dari 2mb');
+                        reval = false;
+                        return false;
+                    } else {
+                        // console.log('Sudah sesuai');
+                        reval = true;
+                        return true;
+                    }
+                })
+                return reval;
+            }
             $(document).on("click", "#uploadSubmission", function(evt) {
                 // evt.preventDefault();
                 // console.log('aaaa');
@@ -844,24 +892,38 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                     console.log('terisi');
                     let asid = document.getElementById('inputasignid');
                     let assignment_id = $(asid).val();
-                    $('#loading').removeClass('hidden');
-                    $('#uploadSubmission').hide();
-                    evt.preventDefault();
-                    $('#closeModal').removeClass('hover:ring-2 hover:ring-gray-400');
-                    $('#closeModal').attr("disabled", "disabled");
-                    let cf = document.getElementById("cf");
+                    if (checkEkstension() == false) {
+                        alert('Ekstensi tidak sesuai !!');
+                        evt.preventDefault();
+                    } else if (checkSize() == false) {
+                        alert('file tidak boleh lebih dari 2mb');
+                        evt.preventDefault();
+                    } else {
+                        $('#loading').removeClass('hidden');
+                        $('#uploadSubmission').hide();
+                        evt.preventDefault();
+                        $('#closeModal').removeClass('hover:ring-2 hover:ring-gray-400');
+                        $('#closeModal').attr("disabled", "disabled");
+                        let cf = document.getElementById("cf");
+                        let fileSize = [];
+                        let fileType = [];
+                        for (let i = 0; i < fileData.files.length; i++) {
+                            fileSize.push(fileData.files[i]['size']);
+                            fileType.push(fileData.files[i]['type']);
+                        }
+                        let cfile = cf.value;
+                        let data = {
+                            assigId: assignment_id,
+                            studId: student_id,
+                            count: cfile,
+                            filetype: fileType,
+                            filesize: fileSize,
+                        }
+                        console.log(data);
+                        console.log(fileData.files);
 
-                    let cfile = cf.value;
-                    let data = {
-                        assigId: assignment_id,
-                        studId: student_id,
-                        count: cfile
+                        insertSubmission(fileData, data);
                     }
-                    console.log(data);
-                    console.log(fileData.files);
-
-                    insertSubmission(fileData, data);
-
                 } else {
                     evt.preventDefault();
                     alert('tidak boleh kosong');
@@ -876,19 +938,33 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                     type: "post",
                     data: data,
                     success: function(data) {
+                        console.log('HASIL AJAX INSERT SUBMIT');
                         let dataJson = JSON.parse(data);
-                        let formData = new FormData();
-                        let arrFile = [];
+                        console.log(dataJson);
+                        if (dataJson != null || dataJson != '') {
+                            let formData = new FormData();
+                            let arrFile = [];
 
-                        for (let i = 0; i < fileData.files.length; i++) {
-                            arrFile.push(fileData.files[i]);
-                            formData.append("files[]", fileData.files[i]);
+                            for (let i = 0; i < fileData.files.length; i++) {
+                                arrFile.push(fileData.files[i]);
+                                formData.append("files[]", fileData.files[i]);
+                            }
+
+                            formData.append("data", JSON.stringify(dataJson));
+                            let statUpdate = updateFileSubmission(formData);
+                        } else {
+                            alert(dataJson.msg);
+                            $('#loading').addClass('hidden');
+                            $('#uploadSubmission').show();
+                            $('#closeModal').addClass('hover:ring-2 hover:ring-gray-400');
+                            $('#closeModal').removeAttr("disabled", "");
                         }
-
-                        formData.append("data", JSON.stringify(dataJson));
-                        let statUpdate = updateFileSubmission(formData);
                     },
                     error: function(xhr) {
+                        $('#loading').addClass('hidden');
+                        $('#uploadSubmission').show();
+                        $('#closeModal').addClass('hover:ring-2 hover:ring-gray-400');
+                        $('#closeModal').removeAttr("disabled", "");
                         alert('Error! Check your connection!');
                     }
                 })
@@ -909,11 +985,19 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                             alert(val.msg);
                             location.reload();
                         } else {
+                            $('#loading').addClass('hidden');
+                            $('#uploadSubmission').show();
+                            $('#closeModal').addClass('hover:ring-2 hover:ring-gray-400');
+                            $('#closeModal').removeAttr("disabled", "");
                             alert("Error! " + val.msg);
                             location.reload();
                         }
                     },
                     error: function(xhr) {
+                        $('#loading').addClass('hidden');
+                        $('#uploadSubmission').show();
+                        $('#closeModal').addClass('hover:ring-2 hover:ring-gray-400');
+                        $('#closeModal').removeAttr("disabled", "");
                         alert('Error! Check your connection!');
                     }
                 })
