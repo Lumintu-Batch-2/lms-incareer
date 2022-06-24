@@ -185,8 +185,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         </div>
     </div>
 
-    <div class="flex items-center">
-        <!-- LIST MENU SIDEBAR [START]-->
+    <!-- LIST MENU SIDEBAR [START]-->
     <div class="flex items-center">
         <!-- Left side (Sidebar) -->
         <div class="bg-white w-[350px] h-screen px-8 py-6 sm:flex flex-col justify-between sidebar in-active hidden">

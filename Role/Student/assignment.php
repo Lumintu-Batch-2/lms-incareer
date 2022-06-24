@@ -492,7 +492,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                 <td class="border-b px-4 py-2 text-center"><?= $dueTime . " WIB"; ?></td>
                                 <td class="border-b px-4 py-2 flex flex-wrap items-center justify-center gap-x-2 ">
 
-                                    <?php
+                                <?php
                                     require_once('../../Model/AssignmentQuestion.php');
                                     $asq = new AssignmentQuestion;
                                     $asq->setAssignmentId($assignment['assignment_id']);
@@ -660,9 +660,9 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
             </div>
             <!-- Main modal -->
             <div id="modalAdd" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+                <div class="relative p-4 w-full max-w-xl lg:max-w-3xl h-full md:h-auto items-center">
                     <!-- Modal content -->
-                    <div class="relative bg-white rounded-lg shadow ">
+                    <div class="relative  bg-white rounded-lg shadow ">
                         <!-- Modal header -->
                         <div class="flex justify-center items-start p-5 rounded-t ">
                             <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-dark">
@@ -671,27 +671,41 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                         </div>
                         <!-- Modal body -->
                         <div class="px-6 space-y-6" id="modalbdy">
-                            <form class="flex flex-col gap-y-4" action="" method="POST" enctype="multipart/form-data">
-                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 rounded-md">
+                            <form class="flex flex-col" action="" method="POST" enctype="multipart/form-data">
+                                <div class="mt-1 flex justify-center px-6 pt-9 pb-10 border-2 border-gray-300 rounded-md gap-y-4 lg:py-[120px]">
                                     <div class="space-y-2 text-center">
-                                        <svg class="mx-auto h-20 w-20 text-gray-400" id="downloadIcon" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M118.75 56.25H93.75V18.75H56.25V56.25H31.25L75 106.25L118.75 56.25ZM25 118.75H125V131.25H25V118.75Z" fill="#DDB07F" />
+                                        <!-- UPLOAD ICON -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" id="downloadIcon" class="mx-auto h-20 w-20 text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                         </svg>
+                                        <!-- SELECTED ICON -->
                                         <svg xmlns="http://www.w3.org/2000/svg" id="prevDoc" class="mx-auto h-20 w-20 hidden" viewBox="0 0 20 20" fill="#DDB07F">
                                             <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
                                         </svg>
+                                        <!-- TEXT ICON -->
                                         <p class="text-gray-600" id="countFile"></p>
+                                        <div class="text-lg text-gray-600 font-semibold">
+                                            <p class="text-center items-center">Tarik dan Lepas File disini</p>
+                                        </div>
+                                        <div class="text-lg text-gray-600 font-semibold">
+                                            <p class="text-center items-center">atau</p>
+                                        </div>
                                         <div class="flex text-lg text-gray-600">
-                                            <label for="fileInput" class="relative cursor-pointer bg-white rounded-md font-medium hover:text-gray-500">
-                                                <span>Pilih file</span>
+                                            <label for="fileInput" class="relative cursor-pointer bg-white rounded-md font-medium hover:text-gray-500 flex justify-items-center mx-auto">
+                                                <span class="font-semibold text-cream border-2 border-cream border-opacity-60 py-1 px-5 rounded-lg hover:shadow-md hover:font-bold hover:bg-opacity-60">Pilih file</span>
                                                 <input id="fileInput" name="fileInput" type="file" class="sr-only dropzone" data-assid="" onchange="readFile(event)" multiple>
                                                 <input type="hidden" name="assignId" id="inputasignid">
                                                 <input type="hidden" name="cf" id="cf">
                                             </label>
-                                            <p class="pl-1">atau seret kesini</p>
+                                            <!-- <p class="pl-1">atau seret kesini</p> -->
                                         </div>
                                     </div>
                                 </div>
+                                <!-- CRITERIA FILE UPLOAD -->
+                                <p class="text-sm text-gray-400 font-base">*Format File .png .jpg .jpeg .txt .pdf .doc .xls .ppt .docx .xlsx .pptx .zip .rar</p>
+                                <p class="text-sm text-gray-400 font-base">*Maksimum File 2 MB</p>
+                                <p class="text-sm text-gray-400 font-base">*Maksimum 3 Kali Upload</p>
+
                                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
                                     <button data-modal-toggle="modalAdd" type="button" class="text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center hover:ring-2 hover:ring-gray-400" id="closeModal">Tutup</button>
                                     <button class=" bg-cream text-white w-[120px] py-2 rounded font-medium ml-auto hover:bg-gray-600" type="submit" name="submit" id="uploadSubmission">Kirim</button>
