@@ -2,7 +2,8 @@
 
 session_start();
 
-$loginPath = "../../login.php";
+//$loginPath = "../../login.php";
+$loginPath = "https://account.lumintulogic.com/login.php";
 
 if (!isset($_SESSION['user_data'])) {
     header("location: " . $loginPath);
@@ -175,64 +176,64 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                     <img class="w-[150px] logo-incareer" src="../../Img/logo/logo_lumintu.png" alt="Logo Lumintu Logic">
                 </div>
 
-                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]"/>
+                <hr class="border-[1px] border-opacity-50 border-[#93BFC1]" />
 
-                    <!-- List Menus -->
-                    <div>
-                        <ul class="flex flex-col gap-y-1">
-                            <li>
-                                <a href="https://account.lumintulogic.com/home.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
-                                    <p class="font-semibold">Beranda</p>
-                                </a>
-                            </li>
-                            <!-- <li>
+                <!-- List Menus -->
+                <div>
+                    <ul class="flex flex-col gap-y-1">
+                        <li>
+                            <a href="https://account.lumintulogic.com/home.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/home_icon.svg" alt="Dashboard Icon">
+                                <p class="font-semibold">Beranda</p>
+                            </a>
+                        </li>
+                        <!-- <li>
                                 <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
                                     <img class="w-5" src="../../Img/icons/course_icon.svg" alt="Course Icon">
                                     <p class="text-white font-semibold">Courses</p>
                                 </a>
                             </li> -->
-                            <!-- Icon Assignment -->
-                            <li>
-                                <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
-                                    <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
-                                    <p class="text-white font-semibold">Penugasan</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
-                                    <p class="font-semibold">Nilai</p>
-                                </a>
-                            </li>
-                            <!-- <li>
+                        <!-- Icon Assignment -->
+                        <li>
+                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
+                                <p class="font-semibold">Penugasan</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                <img class="w-5" src="../../Img/icons/score_white_icon.svg" alt="Score Icon">
+                                <p class="text-white font-semibold">Nilai</p>
+                            </a>
+                        </li>
+                        <!-- <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/discussion_icon.svg" alt="Forum Icon">
                                     <p class="font-semibold">Forum Dicussion</p>
                                 </a>
                             </li> -->
-                            <li>
-                                <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_COOKIE['X-LUMINTU-REFRESHTOKEN']; ?>&expiry=<?= $_SESSION['expiry']; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
-                                    <p class="font-semibold">Konsultasi</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://schedule.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                    <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
-                                    <p class="font-semibold">Jadwal</p>
-                                </a>
-                            </li>
-                            <!-- <li>
+                        <li>
+                            <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_COOKIE['X-LUMINTU-REFRESHTOKEN']; ?>&expiry=<?= $_SESSION['expiry']; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/consult_icon.svg" alt="Consult Icon">
+                                <p class="font-semibold">Konsultasi</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://schedule.lumintulogic.com/auth.php?token=<?php echo ($_COOKIE['X-LUMINTU-REFRESHTOKEN']); ?>&expiry=<?php echo $_SESSION["expiry"]; ?>" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/schedule_icon.svg" alt="Schedule Icon">
+                                <p class="font-semibold">Jadwal</p>
+                            </a>
+                        </li>
+                        <!-- <li>
                                 <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                     <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
                                     <p class="font-semibold">Attendance</p>
                                 </a>
                             </li> -->
-                            
-                            
-                        </ul>
-                    </div>
+
+
+                    </ul>
+                </div>
             </div>
 
             <!-- Bottom nav -->
@@ -240,7 +241,7 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                 <ul class="flex flex-col ">
                     <!-- ICON DAN TEXT HELP -->
                     <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <a id="btnHelp" href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
                             <p class="font-semibold">Bantuan</p>
                         </a>
@@ -271,7 +272,7 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                                 <p class="font-semibold"><?= $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'} ?></p>
                                 <!-- <p class="font-semibold"></p> -->
                             </a>
-                        <!-- ICON DAN TEXT DASHBOARD -->    
+                            <!-- ICON DAN TEXT DASHBOARD -->
                         </li>
                         <li>
                             <a href="https://account.lumintulogic.com/home.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -287,15 +288,15 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                         </li> -->
                         <!-- Icon Assignment -->
                         <li>
-                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
-                                <img class="w-5" src="../../Img/icons/assignment_white_icon.svg" alt="Assignment Icon">
-                                <p class="text-white font-semibold">Penugasan</p>
+                            <a href="./index.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="../../Img/icons/assignment_icon.svg" alt="Assignment Icon">
+                                <p class="font-semibold">Penugasan</p>
                             </a>
                         </li>
                         <li>
-                            <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../../Img/icons/score_icon.svg" alt="Score Icon">
-                                <p class="font-semibold">Nilai</p>
+                            <a href="score.php" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 bg-cream">
+                                <img class="w-5" src="../../Img/icons/score_white_icon.svg" alt="Score Icon">
+                                <p class="text-white font-semibold">Nilai</p>
                             </a>
                         </li>
                         <li>
@@ -316,15 +317,15 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                                 <p class="font-semibold">Forum Dicussion</p>
                             </a>
                         </li> -->
-                        
+
                         <!-- <li>
                             <a href="" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                                 <img class="w-5" src="../../Img/icons/attendance_icon.svg" alt="Attendance Icon">
                                 <p class="font-semibold">Attendance</p>
                             </a>
                         </li> -->
-                        
-                        
+
+
                         <!-- ICON DAN TEXT HELP -->
                         <li>
                             <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -358,7 +359,7 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
             <div>
                 <ul class="flex items-center gap-x-4">
                     <li>
-                        <a class="text-light-green" href="#">Beranda</a>
+                        <a class="text-light-green" href="https://account.lumintulogic.com/home.php">Beranda</a>
                     </li>
                     <li>
                         <span class="text-light-green">/</span>
@@ -377,7 +378,7 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
 
                             <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block flex-1  p-2.5">
                                 <option selected></option>
-                                <?php for($i = 0; $i < count($allBatch); $i++) : ?>
+                                <?php for ($i = 0; $i < count($allBatch); $i++) : ?>
                                     <option value="<?= $allBatch[$i]->{'batch_id'}; ?>"><?= $allBatch[$i]->{'batch_name'}; ?></option>
                                 <?php endfor ?>
                                 <!-- <option value="US">Filter 2</option>
@@ -447,11 +448,13 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                                             <table>
                                                 <?php
                                                 $dataWeg = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_childs.php?id=$item->id"));
-                                                $dataWeg = $dataWeg->data; ?>
+                                                $dataWeg = $dataWeg->data;
+                                                $jmhCourse = count($dataWeg) ?>
+
                                                 <?php foreach ($dataWeg as $itemWeg) { ?>
                                                     <tr>
                                                         <td>
-                                                            <p class="py-2"><?= $itemWeg->modul_weight * 100 ?>%</p>
+                                                            <p class="py-2"><?= round(($item->modul_weight * 100) / $jmhCourse, 2)  ?>%</p>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -482,7 +485,7 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                                                                 echo (0);
                                                             } else {
                                                                 foreach ($s as $key => $value) {
-                                                                    $jumlah = $jumlah + ($value['score_value'] * $itemSub->modul_weight);
+                                                                    $jumlah = $jumlah + ($value['score_value'] * round(($item->modul_weight * 100) / $jmhCourse, 2));
                                                                     $dataModulWeg = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_childs.php?id=$item->id"));
                                                                     $dataWeight = $dataModulWeg->data;
                                                                     foreach ($dataWeight as $weight) {
@@ -518,7 +521,7 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                                                             $sc->setStudentId($_SESSION['user_data']->{'user'}->{'user_id'});
                                                             $s = $sc->getScoreByModulIdAndAssignmentId($itemSub->id);
                                                             foreach ($s as $key => $value) {
-                                                                $jumlah = $jumlah + ($value['score_value'] * $itemSub->modul_weight);
+                                                                $jumlah = $jumlah + (($value['score_value'] * round(($item->modul_weight * 100) / $jmhCourse, 2)) / 100);
                                                                 $dataModulWeg = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_childs.php?id=$item->id"));
                                                                 $dataWeight = $dataModulWeg->data;
                                                                 foreach ($dataWeight as $weight) {
@@ -532,7 +535,7 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
-                                                <p class="py-2"><?= number_format((float)$totalScore, 1, '.', '') . "<br />"; ?></p>
+                                                <p class="py-2"><?= round($totalScore, 1) . "<br />"; ?></p>
                                             </table>
                                         </td>
                                         <td class="px-6 py-4 font-medium text-gray-900 grade">

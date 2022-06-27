@@ -79,42 +79,55 @@ if (isset($_GET['act'])) {
                     $start_date = $date_start[0] . "T" . $date_start[1];
                     $end_date = $date_end[0] . "T" . $date_end[1];
 
-                    $curlData = [
-                        "created_by" => $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'},
-                        "event_start_time" => $start_date,
-                        "event_name" => $_POST['title'],
-                        "event_end_time" => $end_date,
-                        "event_description" => $_POST['desc'],
-                    ];
-                    $api_schedule = 'https://q4optgct.directus.app/items/events/' . $_POST['event_id'];
-                    $payload = json_encode($curlData);
-                    $ch = curl_init($api_schedule);
-                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-                    // curl_setopt($ch, CURLOPT_POST, true);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+                    if ((strtotime($date_start[0])) < strtotime(date('D'))) {
+                        $is_ok = false;
+                        $edit['msg'] = "Data start date tidak dapat kurang dari hari ini";
+                    } else if ((strtotime($date_end[0])) < strtotime(date('D'))) {
+                        $is_ok = false;
+                        $edit['msg'] = "Data end date tidak dapat kurang dari hari ini";
+                    } else if ((strtotime($date_start[0])) > strtotime($date_end[0])) {
+                        $is_ok = false;
+                        $edit['msg'] = "Data start date tidak dapat lebih dari end date";
+                    } else {
+                        $curlData = [
+                            "created_by" => $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'},
+                            "event_start_time" => $start_date,
+                            "event_name" => $_POST['title'],
+                            "event_end_time" => $end_date,
+                            "event_description" => $_POST['desc'],
+                        ];
+                        $api_schedule = 'https://q4optgct.directus.app/items/events/' . $_POST['event_id'];
+                        $payload = json_encode($curlData);
+                        $ch = curl_init($api_schedule);
+                        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+                        // curl_setopt($ch, CURLOPT_POST, true);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 
-                    // Set HTTP Header for POST request 
-                    curl_setopt(
-                        $ch,
-                        CURLOPT_HTTPHEADER,
-                        array(
-                            'Content-Type: application/json',
-                            'Content-Length: ' . strlen($payload)
-                        )
-                    );
+                        // Set HTTP Header for POST request 
+                        curl_setopt(
+                            $ch,
+                            CURLOPT_HTTPHEADER,
+                            array(
+                                'Content-Type: application/json',
+                                'Content-Length: ' . strlen($payload)
+                            )
+                        );
 
-                    // Submit the POST request
-                    $result = curl_exec($ch);
-                    $res = json_decode($result);
+                        // Submit the POST request
+                        $result = curl_exec($ch);
+                        $res = json_decode($result);
 
-                    // Close cURL session handle
-                    curl_close($ch);
-                    //    var_dump($dataArray);
-                    //     die;
-                    $edit = $objAssignment->editAssignment($dataArray, $_FILES, $_GET['subject_id']);
-                    $edit_status = $edit['is_ok'] ? "true" : "false";
+                        // Close cURL session handle
+                        curl_close($ch);
+                        //    var_dump($dataArray);
+                        //     die;
+                        $edit = $objAssignment->editAssignment($dataArray, $_FILES, $_GET['subject_id']);
+                        $edit_status = $edit['is_ok'] ? "true" : "false";
+                    }
+
+
                     if ($edit) {
                         echo "
                         <script>
@@ -344,7 +357,7 @@ if (isset($_GET['act'])) {
                                 <p class="font-semibold">Score</p>
                             </a>
                         </li> -->
-                        
+
                     </ul>
                 </div>
             </div>
@@ -436,7 +449,7 @@ if (isset($_GET['act'])) {
                                     <p class="font-semibold">Score</p>
                                 </a>
                             </li> -->
-                            
+
                             <!-- ICON DAN TEXT HELP -->
                             <li>
                                 <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -565,17 +578,17 @@ if (isset($_GET['act'])) {
                                 <tr class="text-sm lg:text-base">
                                     <td class="border-b px-4 py-2 ">
                                         <div class="flex items-center gap-x-2">
-                                        <p class="sm:truncate sm:max-w-[300px]" data-tooltip-target="tooltipassignment<?=$assignment['assignment_id']?>" style="word-break: break-all"><?= $assignment['assignment_name']; ?></p>
+                                            <p class="sm:truncate sm:max-w-[300px]" data-tooltip-target="tooltipassignment<?= $assignment['assignment_id'] ?>" style="word-break: break-all"><?= $assignment['assignment_name']; ?></p>
                                             <a href="#">
                                                 <img class="Desc w-3 sm:w-5 cursor-pointer" data-tooltip-target="tooltipDesc" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">
                                             </a>
                                         </div>
-                                        <div id="tooltipassignment<?=$assignment['assignment_id']?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                        <div id="tooltipassignment<?= $assignment['assignment_id'] ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                             <?= $assignment['assignment_name']; ?>
-                                        <div class="tooltip-arrow" data-popper-arrow></div>
-                                    </div>
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
                                         <div id="tooltipDesc" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
-                                             Deskripsi Tugas
+                                            Deskripsi Tugas
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
                                     </td>
@@ -710,7 +723,7 @@ if (isset($_GET['act'])) {
                         <!-- CRITERIA FILE UPLOAD -->
                         <p class="text-sm text-gray-400 font-base">*Format File .png .jpg .jpeg .txt .pdf .doc .xls .ppt .docx .xlsx .pptx .zip .rar</p>
                         <p class="text-sm text-gray-400 font-base">*Maksimum File 2 MB</p>
-                        
+
                 </div>
                 <!-- Modal Edit footer -->
                 <div class="flex justify-end p-6 space-x-2 rounded-b border-gray-200 dark:border-gray-600">
@@ -777,7 +790,7 @@ if (isset($_GET['act'])) {
                         <!-- CRITERIA FILE UPLOAD -->
                         <p class="text-sm text-gray-400 font-base">*Format File .png .jpg .jpeg .txt .pdf .doc .xls .ppt .docx .xlsx .pptx .zip .rar</p>
                         <p class="text-sm text-gray-400 font-base">*Maksimum File 2 MB</p>
-                        
+
                 </div>
                 <div class="px-5">
                     <div class="progress hidden w-full bg-gray-200 rounded-full dark:bg-gray-700 " id="progressup">
@@ -887,6 +900,7 @@ if (isset($_GET['act'])) {
                 let description = $("#upload_deksripsi").val();
                 let file = document.getElementById("upload_file");
 
+                let tanggal = new Date()
                 console.log(startDate);
                 // console.log(file.files[0].type);
                 let validTypeFile = [
@@ -913,6 +927,16 @@ if (isset($_GET['act'])) {
                 } else if (file.files[0].size > 2000000) {
                     alert('file tidak boleh lebih dari 2mb');
                     evt.preventDefault();
+
+                } else if (new Date(startDate).getTime() < tanggal.getTime()) {
+                    alert("Tanggal start date tidak dapat kurang dari hari ini")
+                    evt.preventDefault()
+                } else if (new Date(dueData).getTime() < tanggal.getTime()) {
+                    alert("Tanggal end date tidak dapat kurang dari hari ini")
+                    evt.preventDefault()
+                } else if (new Date(startDate).getTime() > new Date(dueData).getTime()) {
+                    alert("Start date tidak dapat lebih dari end date")
+                    evt.preventDefault()
                 } else {
                     $('#btnUpload').attr('disabled', 'true');
                     $('#btnClsUp').attr('disabled', 'true');
