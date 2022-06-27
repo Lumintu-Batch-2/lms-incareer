@@ -635,8 +635,8 @@ if (isset($_POST['submit1'])) {
                                     ?>
                                     <td class="border-b px-4 py-2 text-center text-red-600"><?= $score['score_value'] ?></td>
 
-                                    <td class="border-b px-4 py-2 ">
-                                        <img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" data-modal-toggle="defaultModal1" alt="Edit Icon" type="button" data-scoreid="<?= $score['score_id']; ?>" data-username="<?= $item['student_name']  ?>" data-scorevalue="<?= $score['score_value']; ?>" data-target="#defaultModal1" id="editbtn1">
+                                    <td class="border-b px-4 py-2">
+                                        <img class="w-5 lg:w-7 mx-auto cursor-pointer" src="../../Img/icons/edit_icon.svg" alt="Edit Icon" type="button" data-scoreid="<?= $score['score_id']; ?>" data-username="<?= $item['student_name']  ?>" data-scorevalue="<?= $score['score_value']; ?>" data-target="#defaultModal1" id="editbtn1">
                                     </td>
                                 </tr>
                             <?php $no++;
@@ -701,7 +701,7 @@ if (isset($_POST['submit1'])) {
                             <li class="font-semibold text-dark-green text-xs mt-2">Masukan nilai dari 0-100</li>
                         </div>
                         <div class="flex justify-end p-6 space-x-3 rounded-b ">
-                            <button data-modal-toggle="defaultModal1" class="w-24" type="button">Batal</button>
+                            <button id="btnBatal" class="w-24" type="button">Batal</button>
                             <button class="bg-cream text-white  font-semibold justify-end text-center py-2 rounded-lg w-24 ml-auto" type="submit" name="submit1">Simpan</button>
                         </div>
                     </form>
@@ -711,6 +711,8 @@ if (isset($_POST['submit1'])) {
     </div>
     <!-- END MODAL -->
 
+
+
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
 
@@ -719,6 +721,23 @@ if (isset($_POST['submit1'])) {
         let btnToggle2 = document.getElementById('btnToggle2');
         let sidebar = document.querySelector('.sidebar');
         let leftNav = document.getElementById("left-nav");
+        let targetModal = document.getElementById('defaultModal1');
+        let btnBatal = document.getElementById('btnBatal')
+        const options = {
+            placement: 'center',
+            backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40',
+            onHide: () => {
+                console.log('modal is hidden');
+            },
+            onShow: () => {
+                console.log('modal is shown');
+            },
+            onToggle: () => {
+                console.log('modal has been toggled');
+            }
+        };
+        let modal = new Modal(targetModal, options);
+
         btnToggle.onclick = function() {
             sidebar.classList.toggle('in-active');
         }
@@ -726,6 +745,8 @@ if (isset($_POST['submit1'])) {
         btnToggle2.onclick = function() {
             leftNav.classList.toggle('hidden');
         }
+
+
 
         // Bug on click mobile navbar
         // leftNav.onclick = function() {
@@ -764,6 +785,16 @@ if (isset($_POST['submit1'])) {
 
                     ]
                 }).start();
+            })
+
+            $('#editbtn1').click(function() {
+                if (confirm("Apakah yakin akan mengedit score")) {
+                    modal.show()
+                }
+            })
+
+            $('#btnBatal').click(function() {
+                modal.hide()
             })
 
 

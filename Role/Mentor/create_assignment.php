@@ -58,6 +58,8 @@ if (isset($_POST['data'])) {
     $modulJSON = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_modul_rows.php"));
     $token = $_COOKIE['X-LUMINTU-REFRESHTOKEN'];
     $usersData = json_decode(http_request_with_auth("https://account.lumintulogic.com/api/users.php", $token));
+    //print_r($usersData);
+    //die();
 
 
     for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
@@ -70,6 +72,9 @@ if (isset($_POST['data'])) {
         }
     }
 
+    //print_r($usersData);
+    //die();
+
     for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         if ($modulJSON->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
             array_push($modulData, $modulJSON->{'data'}[$i]);
@@ -81,63 +86,74 @@ if (isset($_POST['data'])) {
     $start_date = $date_start[0] . "T" . $date_start[1];
     $end_date = $date_end[0] . "T" . $date_end[1];
 
-    $arr = [
-        "event_type_id" => 2,
-        "created_by" => $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'},
-        "event_start_time" => $start_date,
-        "event_name" => $arrayData['title'],
-        "event_end_time" => $end_date,
-        "event_description" => $arrayData['desc'],
-        "batch_id" => $_SESSION['user_data']->{'user'}->{'batch_id'},
-        "modul_id" => $modulData[0]->{'id'}
-    ];
-
-    $payload = json_encode($arr);
-
-    $api_schedule = 'https://q4optgct.directus.app/items/events';
-
-    $ch = curl_init($api_schedule);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-
-    // Set HTTP Header for POST request 
-    curl_setopt(
-        $ch,
-        CURLOPT_HTTPHEADER,
-        array(
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($payload)
-        )
-    );
-
-    // Submit the POST request
-    $result = curl_exec($ch);
-    $res = json_decode($result);
-    $event_id = $res->{'data'}->{"event_id"};
-    $arrayData['event_id'] = $event_id;
-
-    // var_dump($result);
-
-    // Close cURL session handle
-    curl_close($ch);
-    // print_r($result);
-
-    require "../../Model/Assignments.php";
-    $objAsign = new Assignments;
-    // $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id'], $_SESSION['user']->{'user_id'}, $userData);
-    $create = $objAsign->createAssignment($arrayData, $_FILES, $_GET['subject_id'], $_SESSION['user_data']->{'user'}->{'user_id'}, $userData);
-
-
-    $create_status = $create['is_ok'] ? "true" : "false";
-
-    if ($create['is_ok'] && $event_id != null) {
-
-        $is_ok = true;
-        $msg = $create['msg'];
+    // Validasi start date dan end date
+    if ((strtotime($date_start[0])) < strtotime(date('D'))) {
+        $is_ok = false;
+        $msg = "Data start date tidak dapat kurang dari hari ini";
+    } else if ((strtotime($date_end[0])) < strtotime(date('D'))) {
+        $is_ok = false;
+        $msg = "Data end date tidak dapat kurang dari hari ini";
+    } else if ((strtotime($date_start[0])) > strtotime($date_end[0])) {
+        $is_ok = false;
+        $msg = "Data start date tidak dapat lebih dari end date";
     } else {
-        $msg = $create['msg'];
+        $arr = [
+            "event_type_id" => 2,
+            "created_by" => $_SESSION['user_data']->{'user'}->{'user_first_name'} . " " . $_SESSION['user_data']->{'user'}->{'user_last_name'},
+            "event_start_time" => $start_date,
+            "event_name" => $arrayData['title'],
+            "event_end_time" => $end_date,
+            "event_description" => $arrayData['desc'],
+            "batch_id" => $_SESSION['user_data']->{'user'}->{'batch_id'},
+            "modul_id" => $modulData[0]->{'id'}
+        ];
+
+        $payload = json_encode($arr);
+
+        $api_schedule = 'https://q4optgct.directus.app/items/events';
+
+        $ch = curl_init($api_schedule);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+
+        // Set HTTP Header for POST request 
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($payload)
+            )
+        );
+
+        // Submit the POST request
+        $result = curl_exec($ch);
+        $res = json_decode($result);
+        $event_id = $res->{'data'}->{"event_id"};
+        $arrayData['event_id'] = $event_id;
+
+        // var_dump($result);
+
+        // Close cURL session handle
+        curl_close($ch);
+        // print_r($result);
+
+        require "../../Model/Assignments.php";
+        $objAsign = new Assignments;
+        // $create = $objAsign->createAssignment($_POST, $_FILES, $_GET['subject_id'], $_SESSION['user']->{'user_id'}, $userData);
+        $create = $objAsign->createAssignment($arrayData, $_FILES, $_GET['subject_id'], $_SESSION['user_data']->{'user'}->{'user_id'}, $userData);
+
+        $create_status = $create['is_ok'] ? "true" : "false";
+
+        if ($create['is_ok'] && $event_id != null) {
+
+            $is_ok = true;
+            $msg = $create['msg'];
+        } else {
+            $msg = $create['msg'];
+        }
     }
 
     $resp = array(
