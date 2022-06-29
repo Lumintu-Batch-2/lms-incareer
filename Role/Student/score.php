@@ -467,8 +467,9 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                                                 $dataSub = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_childs.php?id=$item->id"));
                                                 $dataSub = $dataSub->data;
                                                 $modul_weight = 0;
-                                                $jumlah = 0;
+                                                $jmh_score = 0
                                                 ?>
+
                                                 <?php foreach ($dataSub as $itemSub) {
                                                 ?>
                                                     <tr>
@@ -479,21 +480,22 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                                                             $sc = new Scores;
                                                             $sc->setStudentId($_SESSION['user_data']->{'user'}->{'user_id'});
                                                             $s = $sc->getScoreByModulIdAndAssignmentId($itemSub->id);
-
+                                                            $jmh_task = count($s);
                                                             $totalScore = array();
                                                             if (count($s) == 0) {
                                                                 echo (0);
                                                             } else {
                                                                 foreach ($s as $key => $value) {
-                                                                    $jumlah = $jumlah + ($value['score_value'] * round(($item->modul_weight * 100) / $jmhCourse, 2));
+                                                                    $jmh_score += $value['score_value'];
                                                                     $dataModulWeg = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_childs.php?id=$item->id"));
                                                                     $dataWeight = $dataModulWeg->data;
                                                                     foreach ($dataWeight as $weight) {
                                                                         $modul_weight += $weight->modul_weight;
                                                                     }
                                                                 }
-                                                                echo $value['score_value'];
+                                                                echo $jmh_score / $jmh_task;
                                                             }
+
                                                             ?>
                                                             <p class="py-2"></p>
                                                         </td>
@@ -508,7 +510,7 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                                                 $dataSub = $dataSub->data;
                                                 $modul_weight = 0;
                                                 $jumlah = 0;
-                                                $totalScore = 0;
+                                                $jmh_score = 0;
                                                 ?>
                                                 <?php foreach ($dataSub as $itemSub) {
                                                 ?>
@@ -520,8 +522,10 @@ for ($i = 0; $i < count($batchJson->{'batch'}); $i++) {
                                                             $sc = new Scores;
                                                             $sc->setStudentId($_SESSION['user_data']->{'user'}->{'user_id'});
                                                             $s = $sc->getScoreByModulIdAndAssignmentId($itemSub->id);
+                                                            $jmh_task = count($s);
                                                             foreach ($s as $key => $value) {
-                                                                $jumlah = $jumlah + (($value['score_value'] * round(($item->modul_weight * 100) / $jmhCourse, 2)) / 100);
+                                                                $jmh_score += $value['score_value'];
+                                                                $jumlah = ($jmh_score / $jmh_task) * (round(($item->modul_weight * 100) / $jmhCourse, 2) / 100);
                                                                 $dataModulWeg = json_decode(http_request("https://lessons.lumintulogic.com/api/modul/read_childs.php?id=$item->id"));
                                                                 $dataWeight = $dataModulWeg->data;
                                                                 foreach ($dataWeight as $weight) {

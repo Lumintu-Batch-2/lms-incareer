@@ -148,7 +148,7 @@ class Scores
     {
         try {
             $stmt = $this->dbConn->prepare(
-                "SELECT scores.score_value, assignments.subject_id FROM scores, assignments WHERE scores.assignment_id=assignments.assignment_id AND scores.student_id =:sid AND assignments.subject_id =:sbid"
+                "SELECT scores.score_value, assignments.subject_id, sum(scores.score_value) as jmh_score FROM assignments, scores WHERE scores.student_id =:sid AND assignments.subject_id =:sbid GROUP BY assignments.subject_id, scores.score_value ORDER BY scores.score_value"
             );
 
             $stmt->bindParam(":sid", $this->studentId);
