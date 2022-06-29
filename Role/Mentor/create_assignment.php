@@ -74,7 +74,25 @@ if (isset($_POST['data'])) {
 
     //print_r($usersData);
     //die();
-
+    $validTypeFile = [
+        "image/png", // png
+        "image/jpg", // jpg
+        "image/jpeg", // jpeg
+        "text/plain", // txt or html
+        "application/pdf", // pdf
+        "application/vnd.ms-powerpoint",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // docx
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // xlsx
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation", // pptx
+        "application/vnd.ms-excel", // xls
+        "application/msword", // doc
+        "application/zip", // zip
+        "application/x-rar",
+        "application/x-gzip", // zip
+        "application/x-zip-compressed", // rar
+        "application/octet-stream", //zip
+        "application/x-rar-compressed", //rar
+    ];
     for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
         if ($modulJSON->{'data'}[$i]->{'id'} == $_GET['subject_id']) {
             array_push($modulData, $modulJSON->{'data'}[$i]);
@@ -96,6 +114,15 @@ if (isset($_POST['data'])) {
     } else if ((strtotime($date_start[0])) > strtotime($date_end[0])) {
         $is_ok = false;
         $msg = "Data start date tidak dapat lebih dari end date";
+    } else if (empty($arrayData['title']) || empty($start_date) || empty($end_date) || empty($arrayData['desc']) || empty($_FILES)) {
+        $is_ok = false;
+        $msg = "Tidak Boleh Kosong";
+    } else if (!in_array($_FILES['file']['type'], $validTypeFile)) {
+        $is_ok = false;
+        $msg = "Format Tidak Didukung";
+    } else if ($_FILES['file']['size'] > 2097152) {
+        $is_ok = false;
+        $msg = "file tidak boleh lebih dari 2mb";
     } else {
         $arr = [
             "event_type_id" => 2,

@@ -48,7 +48,8 @@ require_once('../../Model/Assignments.php');
 
 $objAssign = new Assignments;
 
-$allAssignments = $objAssign->getAssignmentBySubjectId($_GET['subject_id']);
+// $allAssignments = $objAssign->getAssignmentBySubjectId($_GET['subject_id']);
+$allAssignments = $objAssign->getAssignmentBySubjectIdForStudent($_GET['subject_id']);
 // var_dump($allAssignments);
 
 require "../../api/get_api_data.php";
@@ -272,7 +273,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                 <ul class="flex flex-col ">
                     <!-- ICON DAN TEXT HELP -->
                     <li>
-                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white" id="btnHelp">
+                        <a href="#" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                             <img class="w-5" src="../../Img/icons/help_icon.svg" alt="Help Icon">
                             <p class="font-semibold">Bantuan</p>
                         </a>
@@ -438,7 +439,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
             <!-- Direction -->
             <div class="bg-white w-full p-6 direction course-title">
                 <p class="text-dark-green font-semibold text-sm lg:text-base">Deskripsi :</p>
-                <p class="text-sm lg:text-base"><?= $subModul[0]->{'modul_description'}; ?></p>
+                <p class="text-sm lg:text-base"><?= htmlspecialchars_decode($subModul[0]->{'modul_description'}); ?></p>
             </div>
 
             <!-- Table Assignment -->
@@ -516,50 +517,62 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                     $csub = $objsubmit->getSubmissionByAssignIdAndStudentIdGroupBy();
                                     // echo ($_SESSION['user']->{'user_id'});
                                     // var_dump($initsubmit);
-
                                     if (count($initsubmit) == 1) {
+                                        // print('Init Submit');
+                                        if ((strtotime($now['now()']) > strtotime($assignment['assignment_end_date']))) { ?>
+                                            <!-- print('Melebihi deadline'); -->
 
-                                        if ((strtotime($now['now()']) >= strtotime($assignment['assignment_end_date']))) {
-                                    ?>
                                             <img class="Upload w-5 sm:w-7 " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
                                             <div id="tooltip-default1" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-red-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-red-700">
                                                 Tugas ini sudah melewati batas waktu pengumpulan
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                             </div>
-                                        <?php
-                                        } else {
-                                        ?>
-                                            <img class="Upload w-5 sm:w-7 cursor-pointer modalUpload" data-tooltip-target="tooltipUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
+                                        <?php } else { ?>
+                                            <!-- print('Upload tugas pertama'); -->
+                                            <img class="Upload w-5 sm:w-7 cursor-pointer modalUpload" data-tooltip-target="tooltipUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment["assignment_id"]; ?>" id="openModal">
                                             <div id="tooltipUpload" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                                 Upload Tugas
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                             </div>
-                                        <?php
-                                        }
+                                        <?php }
                                     } else {
-                                        if (count($csub) < 3) {
-                                            // echo (count($csub));
-                                        ?>
-                                            <img class="Upload w-5 sm:w-7 cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment['assignment_id']; ?>" id="openModal">
-                                            <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-black rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
+                                        if ((strtotime($now['now()']) > strtotime($assignment['assignment_end_date']))) { ?>
+                                            <!-- print('Melebihi deadline'); -->
+
+                                            <img class="Upload w-5 sm:w-7 " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
+                                            <div id="tooltip-default1" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-red-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-red-700">
+                                                Tugas ini sudah melewati batas waktu pengumpulan
+                                                <div class="tooltip-arrow" data-popper-arrow></div>
+                                            </div>
+                                        <?php } else if (count($csub) >= 1 and count($csub) < 3) { ?>
+                                            <!-- print('sudah mengumpulkan'); -->
+                                            <img class="Upload w-5 sm:w-7 cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment["assignment_id"]; ?>" id="openModal">
+                                            <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
                                                 Sudah Mengumpulkan Tugas
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                             </div>
-                                        <?php
-
-                                        } else if (count($csub) >= 3 || (strtotime($now['now()']) >= strtotime($assignment['assignment_end_date']))) {
-                                        ?>
+                                        <?php } else if (count($csub) >= 3) { ?>
+                                            <!-- print('Sudah melebihi batas'); -->
                                             <img class="Upload w-5 sm:w-7 " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
                                             <div id="tooltip-default1" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-red-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-red-700">
-                                                Anda Melewati Batas Jumlah Pengumpulan
+                                                Tugas ini sudah melewati batas jumlah pengumpulan
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                             </div>
-                                        <?php
-                                        }
-
-                                        ?>
-
-                                    <?php } ?>
+                                        <?php } else if (count($csub) >= 1 and count($csub) < 3 and (strtotime($now['now()']) > strtotime($assignment['assignment_end_date']))) { ?>
+                                            <!-- print('Mengumpulkan dan melebihi deadline'); -->
+                                            <img class="Upload w-5 sm:w-7 " data-tooltip-target="tooltip-default1" src="../../Img/icons/create_iconred.svg" alt="Create Icon" name="btnup" id="btnup">
+                                            <div id="tooltip-default1" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-red-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-red-700">
+                                                Sudah mengumpulkan namun sekarang sudah melewati batas waktu pengumpulan
+                                                <div class="tooltip-arrow" data-popper-arrow></div>
+                                            </div>
+                                        <?php } else { ?>
+                                            <img class="Upload w-5 sm:w-7 cursor-pointer modalUpload" data-tooltip-target="tooltipUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment["assignment_id"]; ?>" id="openModal">
+                                            <div id="tooltipUpload" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                                Upload Tugas
+                                                <div class="tooltip-arrow" data-popper-arrow></div>
+                                            </div>
+                                    <?php }
+                                    } ?>
 
                                     <img class="History w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipHistory" src="../../Img/icons/history_icon.svg" alt="History Icon" type="button" data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>">
                                     <div id="tooltipHistory" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
@@ -851,11 +864,17 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                     "application/vnd.openxmlformats-officedocument.presentationml.presentation", // pptx
                     "application/vnd.ms-excel", // xls
                     "application/msword", // doc
-                    "application/zip", // zip
-                    "application/x-rar" // rar
+                    "application/x-gzip", // zip
+                    "application/x-zip-compressed",
+                    "application/zip", //zip
+                    "application/octet-stream", //zip
+                    "multipart/x-zip", //zip
+                    "application/x-rar", // rar
+                    "application/x-rar-compressed", //rar
+                    ""
                 ];
                 $.each(fileData.files, function(index, value) {
-                    // console.log(index, value);
+                    console.log(value.type);
                     if (jQuery.inArray(value.type, validTypeFile) == -1) {
                         console.log('EKSTENSI SALAH');
                         reval = false;
@@ -873,7 +892,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                 let reval;
                 $.each(fileData.files, function(index, value) {
                     // console.log(index, value);
-                    if (value.size > 2000000) {
+                    if (value.size > 2097152) {
                         // console.log('File lebih besar dari 2mb');
                         reval = false;
                         return false;
@@ -892,10 +911,11 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                     console.log('terisi');
                     let asid = document.getElementById('inputasignid');
                     let assignment_id = $(asid).val();
-                    if (checkEkstension() == false) {
-                        alert('Ekstensi tidak sesuai !!');
-                        evt.preventDefault();
-                    } else if (checkSize() == false) {
+                    // if (checkEkstension() == false) {
+                    //     alert('Ekstensi tidak sesuai !!');
+                    //     evt.preventDefault();
+                    // } else 
+                    if (checkSize() == false) {
                         alert('file tidak boleh lebih dari 2mb');
                         evt.preventDefault();
                     } else {
@@ -919,10 +939,18 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                             filetype: fileType,
                             filesize: fileSize,
                         }
-                        console.log(data);
-                        console.log(fileData.files);
+                        // console.log(data);
+                        // console.log(fileData.files);
+                        let fd = new FormData();
+                        let arrFile = [];
 
-                        insertSubmission(fileData, data);
+                        for (let i = 0; i < fileData.files.length; i++) {
+                            arrFile.push(fileData.files[i]);
+                            fd.append("files[]", fileData.files[i]);
+                        }
+                        fd.append("data", JSON.stringify(data));
+
+                        insertSubmission(fileData, data, fd);
                     }
                 } else {
                     evt.preventDefault();
@@ -931,29 +959,43 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
             })
 
 
-            function insertSubmission(fileData, data) {
+            function insertSubmission(fileData, data, fd) {
                 let countSuccess = 0;
                 $.ajax({
                     url: "insert_submission.php",
                     type: "post",
-                    data: data,
+                    // data: data,
+                    data: fd,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
                     success: function(data) {
                         console.log('HASIL AJAX INSERT SUBMIT');
+                        console.log(data);
                         let dataJson = JSON.parse(data);
                         console.log(dataJson);
                         if (dataJson != null || dataJson != '') {
-                            let formData = new FormData();
-                            let arrFile = [];
+                            if (dataJson[0].is_ok == true) {
+                                let formData = new FormData();
+                                let arrFile = [];
 
-                            for (let i = 0; i < fileData.files.length; i++) {
-                                arrFile.push(fileData.files[i]);
-                                formData.append("files[]", fileData.files[i]);
+                                for (let i = 0; i < fileData.files.length; i++) {
+                                    arrFile.push(fileData.files[i]);
+                                    formData.append("files[]", fileData.files[i]);
+                                }
+
+                                formData.append("data", JSON.stringify(dataJson));
+                                let statUpdate = updateFileSubmission(formData);
+                            } else {
+                                alert(dataJson[0].msg);
+                                $('#loading').addClass('hidden');
+                                $('#uploadSubmission').show();
+                                $('#closeModal').addClass('hover:ring-2 hover:ring-gray-400');
+                                $('#closeModal').removeAttr("disabled", "");
                             }
 
-                            formData.append("data", JSON.stringify(dataJson));
-                            let statUpdate = updateFileSubmission(formData);
                         } else {
-                            alert(dataJson.msg);
+                            alert('something wrong');
                             $('#loading').addClass('hidden');
                             $('#uploadSubmission').show();
                             $('#closeModal').addClass('hover:ring-2 hover:ring-gray-400');
@@ -979,7 +1021,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                     cache: false,
                     processData: false,
                     success: function(data) {
-                        // console.log(data);
+                        console.log(data);
                         let val = JSON.parse(data);
                         if (val.is_ok) {
                             alert(val.msg);
