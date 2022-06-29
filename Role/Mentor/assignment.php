@@ -535,7 +535,7 @@ if (isset($_GET['act'])) {
             <!-- DESKRIPSI -->
             <div class="bg-white w-full p-6 direction">
                 <p class="text-dark-green text-sm lg:text-base font-semibold">Deskripsi :</p>
-                <p class="text-sm lg:text-base"><?= $subModul[0]->{'modul_description'}; ?></p>
+                <p class="text-sm lg:text-base"><?= htmlspecialchars_decode($subModul[0]->{'modul_description'}); ?></p>
             </div>
 
             <!-- TOMBOL TAMBAH ASSIGNMENT BARU -->
