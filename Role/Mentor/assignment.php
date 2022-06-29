@@ -916,7 +916,13 @@ if (isset($_GET['act'])) {
                     "application/vnd.ms-excel", // xls
                     "application/msword", // doc
                     "application/zip", // zip
-                    "application/x-rar" // rar
+                    "application/x-gzip", // zip
+                    "application/x-zip-compressed",
+                    "application/octet-stream", //zip
+                    "application/x-rar",
+                    "application/x-rar", // rar
+                    "application/x-rar-compressed", //rar
+                    "" // rar
                 ];
                 if (title == '' || dueDate == '' || assgType == '' || startDate == '' || description == '' || file == '') {
                     alert('Field tidak boleh kosong');
@@ -924,10 +930,9 @@ if (isset($_GET['act'])) {
                 } else if (jQuery.inArray(file.files[0].type, validTypeFile) == -1) {
                     alert('Ekstensi tidak sesuai !!');
                     evt.preventDefault();
-                } else if (file.files[0].size > 2000000) {
+                } else if (file.files[0].size > 2097152) {
                     alert('file tidak boleh lebih dari 2mb');
                     evt.preventDefault();
-
                 } else if (new Date(startDate).getTime() < tanggal.getTime()) {
                     alert("Tanggal start date tidak dapat kurang dari hari ini")
                     evt.preventDefault()
@@ -989,7 +994,7 @@ if (isset($_GET['act'])) {
                         cache: false,
                         processData: false,
                         success: function(data) {
-                            // console.log(data);
+                            console.log(data);
                             let val = JSON.parse(data);
                             if (val.is_ok) {
                                 alert(val.msg);
