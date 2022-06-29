@@ -125,7 +125,7 @@ if (isset($_POST['submit'])) {
         <script>
             alert('Tidak Boleh Kosong');
         </script>";
-    } else if ($_POST['score'] <= 0 || $_POST['score'] >= 100) {
+    } else if ($_POST['score'] <= 0 || $_POST['score'] > 100) {
         echo "
         <script>
             alert('Score dari 0-100');
