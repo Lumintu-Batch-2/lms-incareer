@@ -39,6 +39,7 @@ $assign->setAssignmentId($data->assigId);
 $assign->setStudentId($data->studId);
 $now = $assign->getCurrentDate();
 $sub = $assign->getSubmissionByAssignIdAndStudentId();
+$subcount = $assign->getSubmissionByAssignIdAndStudentIdGroupBy();
 if ((strtotime($now['now()']) > strtotime($deadline['assignment_end_date']))) {
     $arr = [[
         "is_ok" => false,
@@ -53,7 +54,7 @@ if ((strtotime($now['now()']) > strtotime($deadline['assignment_end_date']))) {
     ]];
     print_r(json_encode($arr));
     die();
-} else if (count($sub) >= 3) {
+} else if (count($subcount) >= 3) {
     $arr = [[
         "is_ok" => false,
         "msg" => 'Sudah Melebihi Batas Jumlah Pengumpulan',

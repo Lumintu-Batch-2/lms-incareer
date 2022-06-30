@@ -326,6 +326,10 @@ class Assignments
             $msg = "Tanggal selesai tidak boleh kosong!";
             goto out;
         }
+        if ($file['filename']['size'] > 2097152) {
+            $msg = "Tidak boleh lebih dari 2 mb";
+            goto out;
+        }
 
         $this->setAssignmentName($data['title']);
         $this->setAssignmentStartDate($data['start-date']);
@@ -347,7 +351,11 @@ class Assignments
             "application/vnd.ms-excel", // xls
             "application/msword", // doc
             "application/zip", // zip
-            "application/x-rar" // rar
+            "application/x-rar", // rar
+            "application/x-gzip", // zip
+            "application/x-zip-compressed", // rar
+            "application/octet-stream", //zip
+            "application/x-rar-compressed" //rar
         ];
 
 
