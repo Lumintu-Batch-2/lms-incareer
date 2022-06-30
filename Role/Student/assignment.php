@@ -598,7 +598,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                                 <div class="relative w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                                     <ul class="grid grid-cols-12 border-b border-gray-400 py-2">
                                                         <li><b>No</b></li>
-                                                        <li class="col-span-5"><b>Waktu Pengumpulan Tugas</b></li>
+                                                        <li class="col-span-5"><b>Waktu Pengumpulan</b></li>
                                                         <li class="col-span-5"><b>Judul</b></li>
                                                         <li><b>Files</b></li>
                                                     </ul>
