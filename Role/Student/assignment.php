@@ -479,12 +479,12 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                             <img class="Desc w-3 sm:w-5 cursor-pointer" data-tooltip-target="tooltipDesc" src="../../Img/icons/detail_icon.svg" alt="Download Icon" type="button" data-modal-toggle="medium-modal<?= "medium-modal" . $assignment['assignment_id'] ?>" id="showDesc" data-desc="<?= $assignment['assignment_desc'] ?>">
                                         </a>
                                     </div>
-                                    <div id="tooltipassignment<?= $assignment['assignment_id'] ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                    <div id="tooltipassignment<?= $assignment['assignment_id'] ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-gray-700 bg-gray-300 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                         <?= $assignment['assignment_name']; ?>
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
 
-                                    <div id="tooltipDesc" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                    <div id="tooltipDesc" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                         Deskripsi Tugas
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
@@ -502,7 +502,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                     <a href="download.php?file=<?= $question['question_filename'] . '&type=q'; ?>">
                                         <img class="Download w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipDownload" src="../../Img/icons/download_icon.svg" alt="Download Icon">
                                     </a>
-                                    <div id="tooltipDownload" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                    <div id="tooltipDownload" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-gray-700 bg-gray-300 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                         Unduh Soal
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
@@ -530,7 +530,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         <?php } else { ?>
                                             <!-- print('Upload tugas pertama'); -->
                                             <img class="Upload w-5 sm:w-7 cursor-pointer modalUpload" data-tooltip-target="tooltipUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment["assignment_id"]; ?>" id="openModal">
-                                            <div id="tooltipUpload" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                            <div id="tooltipUpload" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-gray-700 bg-gray-300 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                                 Upload Tugas
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                             </div>
@@ -547,7 +547,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                         <?php } else if (count($csub) >= 1 and count($csub) < 3) { ?>
                                             <!-- print('sudah mengumpulkan'); -->
                                             <img class="Upload w-5 sm:w-7 cursor-pointer modalUpload" data-tooltip-target="tooltip-default" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment["assignment_id"]; ?>" id="openModal">
-                                            <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
+                                            <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-gray-700 bg-gray-300 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip ">
                                                 Sudah Mengumpulkan Tugas
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                             </div>
@@ -567,7 +567,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                             </div>
                                         <?php } else { ?>
                                             <img class="Upload w-5 sm:w-7 cursor-pointer modalUpload" data-tooltip-target="tooltipUpload" src="../../Img/icons/create_icon.svg" alt="Create Icon" type="button" data-modal-toggle="modalAdd" data-assignid="<?= $assignment["assignment_id"]; ?>" id="openModal">
-                                            <div id="tooltipUpload" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                            <div id="tooltipUpload" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-gray-700 bg-gray-300 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                                 Upload Tugas
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                             </div>
@@ -575,7 +575,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                                     } ?>
 
                                     <img class="History w-5 sm:w-7 cursor-pointer" data-tooltip-target="tooltipHistory" src="../../Img/icons/history_icon.svg" alt="History Icon" type="button" data-modal-toggle="historymodal<?= $assignment['assignment_id']; ?>">
-                                    <div id="tooltipHistory" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
+                                    <div id="tooltipHistory" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-gray-700 bg-gray-300 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark-bg-cream ">
                                         Lihat Riwayat Upload
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
@@ -673,7 +673,7 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
             </div>
             <!-- Main modal -->
             <div id="modalAdd" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                <div class="relative p-4 w-full max-w-xl lg:max-w-3xl h-full md:h-auto items-center">
+                <div class="relative w-full max-w-sm max-h-sm h-full lg:h-auto items-center">
                     <!-- Modal content -->
                     <div class="relative  bg-white rounded-lg shadow ">
                         <!-- Modal header -->
@@ -685,24 +685,13 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                         <!-- Modal body -->
                         <div class="px-6 space-y-6" id="modalbdy">
                             <form class="flex flex-col" action="" method="POST" enctype="multipart/form-data">
-                                <div class="mt-1 flex justify-center px-6 pt-9 pb-10 border-2 border-gray-300 rounded-md gap-y-4 lg:py-[120px]">
+                                <div class="mt-1 flex justify-center px-3 pt-4 pb-5 border-2 border-gray-300 rounded-md gap-y-4 lg:py-[30px]">
                                     <div class="space-y-2 text-center">
                                         <!-- UPLOAD ICON -->
                                         <svg xmlns="http://www.w3.org/2000/svg" id="downloadIcon" class="mx-auto h-20 w-20 text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                         </svg>
-                                        <!-- SELECTED ICON -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" id="prevDoc" class="mx-auto h-20 w-20 hidden" viewBox="0 0 20 20" fill="#DDB07F">
-                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
-                                        </svg>
-                                        <!-- TEXT ICON -->
-                                        <p class="text-gray-600" id="countFile"></p>
-                                        <div class="text-lg text-gray-600 font-semibold">
-                                            <p class="text-center items-center">Tarik dan Lepas File disini</p>
-                                        </div>
-                                        <div class="text-lg text-gray-600 font-semibold">
-                                            <p class="text-center items-center">atau</p>
-                                        </div>
+                                        
                                         <div class="flex text-lg text-gray-600">
                                             <label for="fileInput" class="relative cursor-pointer bg-white rounded-md font-medium hover:text-gray-500 flex justify-items-center mx-auto">
                                                 <span class="font-semibold text-cream border-2 border-cream border-opacity-60 py-1 px-5 rounded-lg hover:shadow-md hover:font-bold hover:bg-opacity-60">Pilih file</span>
