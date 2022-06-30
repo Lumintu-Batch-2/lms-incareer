@@ -398,7 +398,7 @@ for ($i = 0; $i < count($modulJSON->{'data'}); $i++) {
                             <img src="../../Img/icons/dokumen_icon.svg" alt="dokumen"><?= $subject->{'id'}; ?>
                         </p>
                     </a>
-                    <div id="tooltip-default<?= $subject->{'id'}; ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-cream rounded-lg opacity-0 transition-opacity duration-300 tooltip max-w-[150px] shadow-lg shadow-gray-400">
+                    <div id="tooltip-default<?= $subject->{'id'}; ?>" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-gray-700 bg-gray-300 rounded-lg opacity-0 transition-opacity duration-300 tooltip max-w-[150px] shadow-lg shadow-gray-400">
                         <?= $subject->{'modul_name'}; ?>
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
