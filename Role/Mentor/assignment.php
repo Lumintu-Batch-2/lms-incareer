@@ -890,6 +890,7 @@ if (isset($_GET['act'])) {
                 }).start();
             })
 
+
             // FUNGSI UPLOAD ASSIGNMENT
             $('#btnUpload').click(function(evt) {
 
@@ -900,8 +901,22 @@ if (isset($_GET['act'])) {
                 let description = $("#upload_deksripsi").val();
                 let file = document.getElementById("upload_file");
 
-                let tanggal = new Date()
-                console.log(startDate);
+                let tanggal = new Date();
+                const hari = tanggal.getDate();
+                const bulan = tanggal.getMonth();
+                const tahun = tanggal.getFullYear();
+                const fullTanggal = [tahun, bulan, hari].join('/');
+
+                let StartDateYear = new Date(startDate).getFullYear();
+                let StartDateMonth = new Date(startDate).getMonth();
+                let StartDateDay = new Date(startDate).getDate();
+                const fullStartDate = [StartDateYear, StartDateMonth, StartDateDay].join('/');
+
+                let DueDataYear = new Date(dueData).getFullYear();
+                let DueDataMonth = new Date(dueData).getMonth();
+                let DueDataDay = new Date(dueData).getDate();
+                const fullDueData = [DueDataYear, DueDataMonth, DueDataDay].join('/');
+
                 // console.log(file.files[0].type);
                 let validTypeFile = [
                     "image/png", // png
@@ -933,13 +948,13 @@ if (isset($_GET['act'])) {
                 } else if (file.files[0].size > 2097152) {
                     alert('file tidak boleh lebih dari 2mb');
                     evt.preventDefault();
-                } else if (new Date(startDate).getTime() < tanggal.getTime()) {
+                } else if (fullStartDate < fullTanggal) {
                     alert("Tanggal start date tidak dapat kurang dari hari ini")
                     evt.preventDefault()
-                } else if (new Date(dueData).getTime() < tanggal.getTime()) {
+                } else if (fullDueData < fullTanggal) {
                     alert("Tanggal end date tidak dapat kurang dari hari ini")
                     evt.preventDefault()
-                } else if (new Date(startDate).getTime() > new Date(dueData).getTime()) {
+                } else if (fullStartDate > fullDueData) {
                     alert("Start date tidak dapat lebih dari end date")
                     evt.preventDefault()
                 } else {
