@@ -1,7 +1,8 @@
 <?php
 
 session_start();
-
+// print_r($_FILES);
+// die();
 $loginPath = "../../login.php";
 if (!isset($_COOKIE['X-LUMINTU-REFRESHTOKEN'])) {
     unset($_SESSION['user_data']);
@@ -54,8 +55,13 @@ $validTypeFile = [
     "application/vnd.openxmlformats-officedocument.presentationml.presentation", // pptx
     "application/vnd.ms-excel", // xls
     "application/msword", // doc
-    "application/zip", // zip
-    "application/x-rar" // rar
+    "application/x-gzip", // zip
+    "application/x-zip-compressed", //zip compressed
+    "application/zip", //zip
+    "application/octet-stream", //zip
+    "multipart/x-zip", //zip
+    "application/x-rar", // rar
+    "application/x-rar-compressed" //rar
 ];
 
 $is_ok = false;
@@ -67,7 +73,7 @@ for ($i = 0; $i < count($_FILES['files']['name']); $i++) {
         goto out;
     }
 
-    if ($_FILES['files']['size'][$i] > 2000000) {
+    if ($_FILES['files']['size'][$i] > 2097152) {
         $msg = "Batas maksimal upload file 2 MB!";
         goto out;
     }

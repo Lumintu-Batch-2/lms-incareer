@@ -189,12 +189,20 @@ class Assignments
             "application/vnd.ms-excel", // xls
             "application/msword", // doc
             "application/zip", // zip
-            "application/x-rar" // rar
+            "application/x-rar",
+            "application/x-gzip", // zip
+            "application/x-zip-compressed", // rar
+            "application/octet-stream", //zip
+            "application/x-rar-compressed", //rar
         ];
 
 
         if (!in_array($file['file']['type'], $validTypeFile)) {
             $msg = "Format file tidak didukung!";
+            goto out;
+        }
+        if ($file['file']['size'] > 2097152) {
+            $msg = "Tidak boleh lebih dari 2 mb";
             goto out;
         }
 
@@ -443,6 +451,24 @@ class Assignments
         try {
             if ($stmt->execute()) {
                 $assigments = $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $assigments;
+    }
+    public function getAssignmentBySubjectIdForStudent($id)
+    {
+        $stmt = $this->dbConn->prepare(
+            "SELECT * FROM assignments WHERE subject_id = :sid AND now() > assignment_start_date"
+        );
+
+        $stmt->bindParam(":sid", $id);
+
+        try {
+            if ($stmt->execute()) {
+                $assigments = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
         } catch (Exception $e) {
             return $e->getMessage();
