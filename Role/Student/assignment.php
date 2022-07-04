@@ -687,10 +687,17 @@ echo "<input type='hidden' id='student_id' value='" . $_SESSION['user_data']->{'
                             <form class="flex flex-col" action="" method="POST" enctype="multipart/form-data">
                                 <div class="mt-1 flex justify-center px-3 pt-4 pb-5 border-2 border-gray-300 rounded-md gap-y-4 lg:py-[30px]">
                                     <div class="space-y-2 text-center">
+                                        
                                         <!-- UPLOAD ICON -->
                                         <svg xmlns="http://www.w3.org/2000/svg" id="downloadIcon" class="mx-auto h-20 w-20 text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                         </svg>
+                                        <!-- SELECTED ICON -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" id="prevDoc" class="mx-auto h-20 w-20 hidden" viewBox="0 0 20 20" fill="#DDB07F">
+                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+                                        </svg>
+                                        <!-- TEXT ICON -->
+                                        <p class="text-gray-600" id="countFile"></p>
                                         
                                         <div class="flex text-lg text-gray-600">
                                             <label for="fileInput" class="relative cursor-pointer bg-white rounded-md font-medium hover:text-gray-500 flex justify-items-center mx-auto">

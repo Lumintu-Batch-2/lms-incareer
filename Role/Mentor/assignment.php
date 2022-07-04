@@ -147,7 +147,7 @@ if (isset($_GET['act'])) {
             // FUNGSI DELETE ASSIGNMENT
         case "delete":
             if ($_GET['assign_id']) {
-                $api_schedule = 'https://q4optgct.directus.app/items/events/' . $_GET['event_id'];
+                $api_schedule = 'https://q4optgct.directus.app/items/events/580' . $_GET['event_id'];
                 // $payload = json_encode($curlData);
                 $ch = curl_init($api_schedule);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
@@ -739,7 +739,7 @@ if (isset($_GET['act'])) {
 
     <!-- Main Add modal -->
     <div id="addModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-screen md:h-full">
-        <div class="relative p-4 w-full max-w-2xl h-full">
+        <div class="relative p-4 w-full max-w-xl h-full">
             <!-- Modal Add content -->
             <div class="relative bg-white rounded-lg shadow ">
                 <!-- Modal Add header -->
